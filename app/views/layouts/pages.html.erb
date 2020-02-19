@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <meta name="description" content="Bootstrap Admin App + Ruby on Rails">
+   <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
+   <title>Angle - Bootstrap Admin Template</title>
+
+   <!-- =============== APP STYLES ===============-->
+   <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
+   <!-- =============== VIEW STYLES ===============-->
+   <%= stylesheet_link_tag params[:controller] %>
+   <%= yield :vendor_css_area %>
+   <%= csrf_meta_tags %>
+   <%= csp_meta_tag %>
+</head>
+
+<body>
+   <div class="wrapper">
+      <%= yield %>
+   </div>
+   <div class="p-lg text-center">
+      <span>&copy;</span>
+      <span>2016</span>
+      <span>-</span>
+      <span>Angle</span>
+      <br>
+      <span>Bootstrap Admin Template</span>
+   </div>
+
+   <!-- =============== APP SCRIPTS ===============-->
+   <%= javascript_packs_with_chunks_tag 'application', params[:controller] %>
+   <%= yield :vendor_js_area %>
+
+   <%= yield :body_area %>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * ------------------------------
+ * --- Angle Main Stylesheet
+ * ------------------------------
+ *= require angle/bootstrap
+ *= require angle/app
+ *
+ * ------------------------------
+ * --- Vendor assets
+ * ------------------------------
+ * ---- FontAwesome
+ *= require @fortawesome/fontawesome-free/css/brands.css
+ *= require @fortawesome/fontawesome-free/css/regular.css
+ *= require @fortawesome/fontawesome-free/css/solid.css
+ *= require @fortawesome/fontawesome-free/css/fontawesome.css
+ * ---- Simple Line Icons
+ *= require simple-line-icons/css/simple-line-icons
+ * ---- Animate.css
+ *= require animate.css/animate.min
+ * ---- Whirl (spinners)
+ *= require whirl/dist/whirl
+ *
+ * ------------------------------
+ * --- Assets paths redefinition
+ * ------------------------------
+ *= require fonts
+ *= require vendor.assets
+ *
+ */
