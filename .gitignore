@@ -73,3 +73,6 @@ yarn-debug.log*
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+#para evitar problemas de bd
+config/database.yml
