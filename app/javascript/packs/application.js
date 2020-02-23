@@ -9,7 +9,7 @@ require("modernizr/modernizr.custom.js");
 // //require("turbolinks").start()
 // require("@rails/activestorage").start()
 // require("channels")
-
+import '../stylesheets/application'
 //--- Bootstrap
 //import 'bootstrap';
 

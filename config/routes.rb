@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'welcome/index'
   resources :estates
   resources :cities
   resources :departaments

@@ -1,0 +1,26 @@
+<table class="table table-bordered card-transparent w-100">
+  <thead>
+  <tr>
+  <tr>
+    <th class="text-center">
+      <strong>NAME</strong>
+    </th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <% estates.each do |estate| %>
+    <tr>
+      <td class="text-center"><%= estate.name %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div class="card card-body bg-gray-lighter">
+  <div>
+    <%= page_entries_info estates, :model => 'estate', :class => 'align-middle' %>
+  </div>
+</div>
+
+<%= will_paginate estates, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
