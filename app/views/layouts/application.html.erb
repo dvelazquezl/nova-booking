@@ -9,7 +9,9 @@
    <title>Angle - Bootstrap Admin Template</title>
 
    <!-- =============== VIEW STYLES ===============-->
+   <% if (controller.controller_name != "sessions") && (controller.controller_name != "registrations") && (controller.controller_name != "passwords") %>
    <%= stylesheet_link_tag params[:controller] %>
+   <% end %>
    <!-- =============== APP STYLES ===============-->
    <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
 
@@ -37,6 +39,16 @@
       <section class="section-container">
          <!-- Page content-->
          <div class="content-wrapper">
+           <% if notice %>
+             <div class="alert alert-success">
+               <%= notice%>
+             </div>
+           <% end %>
+           <% if alert %>
+             <div class="alert alert-danger">
+               <%= alert %>
+             </div>
+           <% end %>
             <%= yield %>
          </div>
       </section>
@@ -47,7 +59,9 @@
    </div>
 
    <!-- =============== APP SCRIPTS ===============-->
+   <% if (controller.controller_name != "sessions") && (controller.controller_name != "registrations") && (controller.controller_name != "passwords") %>
    <%= javascript_packs_with_chunks_tag 'application', params[:controller] %>
+  <% end %>
    <%= yield :vendor_js_area %>
 
    <%= yield :body_area %>
