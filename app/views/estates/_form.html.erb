@@ -26,6 +26,11 @@
     <%= form.text_field :city_id %>
   </div>
 
+  <div class="field">
+    <%= form.label "Upload_image/s" %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -69,6 +69,6 @@ class EstatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def estate_params
-      params.require(:estate).permit(:name, :address, :city_id)
+      params.require(:estate).permit(:name, :address, :city_id, images: [])
     end
 end

@@ -15,5 +15,11 @@
   <%= @estate.city_id %>
 </p>
 
+<div class="field">
+  <% @estate.images.each do |image| %>
+    <%= image_tag image %>
+  <% end %>
+</div>
+
 <%= link_to 'Edit', edit_estate_path(@estate) %> |
 <%= link_to 'Back', estates_path %>
