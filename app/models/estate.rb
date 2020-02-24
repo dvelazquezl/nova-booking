@@ -3,6 +3,7 @@
 class Estate < ApplicationRecord
   belongs_to :city
   has_many_attached :images
+  has_many :rooms
   # default for will_paginate
   self.per_page = 1
 
