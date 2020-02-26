@@ -1,11 +1,31 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Editar Cuenta</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    Nombre<br />
+    <%= f.text_field :name%>
+  </div>
+
+  <div class="field">
+    Apellido<br />
+    <%= f.text_field :last_name%>
+  </div>
+
+  <div class="field">
+    Correo<br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    Telefono<br />
+    <%= f.text_field :phone%>
+  </div>
+
+  <div class="field">
+    Direccion<br />
+    <%= f.text_field :address%>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -17,7 +37,7 @@
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
       <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <em><%= @minimum_password_length %> caracteres minimo</em>
     <% end %>
   </div>
 
