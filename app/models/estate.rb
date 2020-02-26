@@ -3,7 +3,8 @@
 class Estate < ApplicationRecord
   belongs_to :city
   has_many_attached :images
-  has_many :rooms
+  has_many :rooms, dependent: :delete_all
+  accepts_nested_attributes_for :rooms, :allow_destroy => true
   # default for will_paginate
   self.per_page = 1
 
