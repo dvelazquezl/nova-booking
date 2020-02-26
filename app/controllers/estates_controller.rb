@@ -15,6 +15,7 @@ class EstatesController < ApplicationController
   # GET /estates/new
   def new
     @estate = Estate.new
+    @rooms = @estate.rooms.build
   end
 
   # GET /estates/1/edit
@@ -69,6 +70,6 @@ class EstatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def estate_params
-      params.require(:estate).permit(:name, :address, :city_id, images: [])
+      params.require(:estate).permit(:name, :address, :city_id, images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :price, :status, :room_type])
     end
 end

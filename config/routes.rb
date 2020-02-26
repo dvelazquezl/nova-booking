@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+
   get 'welcome/index'
+
+  devise_for :users do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
   resources :estates
   resources :cities
   resources :departaments
