@@ -2,6 +2,7 @@
 
 class Estate < ApplicationRecord
   belongs_to :city
+  has_and_belongs_to_many :facilities
   has_many_attached :images
   has_many :rooms, dependent: :delete_all
   accepts_nested_attributes_for :rooms, :allow_destroy => true
