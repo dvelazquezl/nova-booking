@@ -1,4 +1,6 @@
 class OwnersController < ApplicationController
+
+  before_action :authenticate_user!
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -58,6 +60,6 @@ class OwnersController < ApplicationController
   end
 
   def owner_params
-    params.require(:owner).permit(:phone, :address, :about, :name, :email)
+    params.require(:owner).permit(:phone, :address, :about, :name, :email, :image)
   end
 end
