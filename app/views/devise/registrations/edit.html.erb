@@ -4,28 +4,8 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    Nombre<br />
-    <%= f.text_field :name%>
-  </div>
-
-  <div class="field">
-    Apellido<br />
-    <%= f.text_field :last_name%>
-  </div>
-
-  <div class="field">
-    Correo<br />
+    <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    Telefono<br />
-    <%= f.text_field :phone%>
-  </div>
-
-  <div class="field">
-    Direccion<br />
-    <%= f.text_field :address%>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -47,7 +27,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(necesitamos tu contraseña actual para confirmar los cambios)</i><br />
+    <%= f.label :current_password %> <i>(necesitamos su contraseña actual para confirmar los cambios)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
