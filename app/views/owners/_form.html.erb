@@ -71,7 +71,7 @@
                     <%= form.text_area :address, class: "form-control" %>
                   </div>
                 </div>
-
+                <%= form.hidden_field :user_id, value: current_user.id %>
 
                 <div class="form-group row">
                   <div class="col-xl-2 col-md-3 col-4"></div>
