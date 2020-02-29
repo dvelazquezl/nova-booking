@@ -2,8 +2,8 @@
   <div class="col-lg-4">
     <div class="card card-default">
       <div class="card-body text-center">
-        <div class="py-4">
-          <img class="img-fluid rounded-circle img-thumbnail thumb96" src="<%= image_path('angle/user/02.jpg') %>" alt="Contact" />
+        <div class="py-4 text-center">
+           <%= image_tag @owner.image, alt: "rss fit", height: "150", width:"150"%>
         </div>
         <h3 class="m-0 text-bold"><%= @owner.name %></h3>
         <div class="my-3">
@@ -57,7 +57,7 @@
                 <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right" >Dirección</label>
                 <div class="col-xl-10 col-md-9 col-8">
                   <label class=" col-form-label text-right"></label>
-                  <%= image_tag @owner.image %>
+                  <%= @owner.address %>
                 </div>
               </div>
               <div class="form-group row">
