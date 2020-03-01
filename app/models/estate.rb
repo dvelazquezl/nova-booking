@@ -59,18 +59,4 @@ class Estate < ApplicationRecord
         ['Name (Z-A)', 'name_desc']
     ]
   end
-
-  scope :with_any_facility_ids, ->(facility_ids) {
-    # get a reference to the join table
-    facilities_estate = FacilitiesEstate.arel_table
-    # get a reference to the filtered table
-    estates = Estate.arel_table
-    # let AREL generate a complex SQL query
-    where(
-        FacilitiesEstate
-            .where(facilities_estate[:estate_id].eq(estates[:id]))
-            .where(facilities_estate[:facility_id].in([*facility_ids].map(&:to_i)))
-            .exists?
-        )
-  }
   end
