@@ -1,83 +1,42 @@
-<%= form_with(model: room, local: true) do |form| %>
-  <% if estate.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(estate.errors.count, "error") %> prohibited this estate from being saved:</h2>
-
-      <ul>
-        <% estate.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="card card-default">
-    <div class="card-body">
-      <form id="example-form" action="#">
-        <div>
-          <h4>Nombre
-            <br/>
-          </h4>
-          <fieldset>
-            <div class="field">
-              <label for="userName">Nombre para tu propiedad *</label>
-              <br/>
-              <%= form.text_field :name %>
-              <!--input class="form-control required" id="userName" name="userName" type="text" /-->
-            </div>
-          </fieldset>
-          <h4>Ubicacion
-            <br/>
-          </h4>
-          <fieldset>
-            <div class="field">
-              <label for="address">Direccion de calle *</label>
-              <br/>
-              <%= form.text_field :address %>
-              <!--input class="form-control required" name="address" type="text" /-->
-            </div>
-            <div class="field">
-              <label for="city">Ciudad *</label>
-              <br/>
-              <%#= form.label :city_id %>
-              <%= form.text_field :city_id %>
-            </div>
-            <label for="email">Departamento *</label>
-            <input class="form-control required" id="email" name="email" type="text" />
-          </fieldset>
-          <h4>Caracteristicas
-            <br/>
-          </h4>
-          <fieldset>
-            <label for="room">Habitaciones *</label>
-            <input class="form-control required" name="room"/>
-          </fieldset>
-          <h4>Fotos
-            <br/>
-          </h4>
-          <fieldset>
-            <div class="field">
-              <%= form.label "Upload_image/s" %>
-              <%= form.file_field :images, multiple: true %>
-            </div>
-          </fieldset>
-          <h4>Finish
-            <br/>
-          </h4>
-          <fieldset>
-            <p class="lead">One last check</p>
-            <div class="checkbox c-checkbox">
-              <label>
-                <input type="checkbox" required="required" name="terms" />
-                <span class="fa fa-check"></span>I agree with the Terms and Conditions.</label>
-            </div>
-          </fieldset>
+<fieldset style="margin: 0; border: 0; padding: 0;">
+  <div class="row">
+    <div class="col-md-6">
+        <div class="card-body">
+          <div class="form-group">
+            <label>Tipo de habitacion</label>
+            <%= f.text_field :room_type, class: "form-control", required: "required" %>
+          </div>
         </div>
-      </form>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Capacidad</label>
+          <%= f.text_field :capacity, class: "form-control", required: "required",  placeholder: "¿Cuántos invitados pueden quedarse en esta habitación?"%>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Cantidad</label>
+          <%= f.text_field :quantity, class: "form-control", required: "required", placeholder: "Numero de habitaciones (de este tipo)" %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="card-body">
+          <div class="form-group">
+            <label>Nombre de la habitacion</label>
+            <%= f.text_field :description, class: "form-control", required: "required" %>
+          </div>
+        </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Precio</label>
+          <%= f.text_field :price, class: "form-control", required: "required" %>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+
+</fieldset>
