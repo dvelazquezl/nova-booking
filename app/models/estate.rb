@@ -5,7 +5,8 @@ class Estate < ApplicationRecord
   has_and_belongs_to_many :facilities
   has_many_attached :images
   has_many :rooms, dependent: :delete_all
-  accepts_nested_attributes_for :rooms, :allow_destroy => true
+  accepts_nested_attributes_for :rooms, allow_destroy: true
+  belongs_to :owner
   # default for will_paginate
   self.per_page = 1
 
