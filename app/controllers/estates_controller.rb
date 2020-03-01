@@ -18,6 +18,11 @@ class EstatesController < ApplicationController
     @rooms = @estate.rooms.build
   end
 
+  # GET /estates/new_room
+  def new_room
+    @room = Room.new
+  end
+
   # GET /estates/1/edit
   def edit
   end
