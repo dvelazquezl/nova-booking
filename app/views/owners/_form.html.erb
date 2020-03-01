@@ -5,17 +5,20 @@
         <div class="card-body text-center">
           <div class="py-4">
           <%if @owner.image.attached? %>
-
+              <div class="py-4 text-center" id="target">
+                <%= image_tag @owner.image, alt: "rss fit", height: "150", width:"150"%>
+              </div>
           <%else %>
-              <img class="img-fluid rounded-circle img-thumbnail thumb96" src="<%= image_path('angle/user/perfil.png') %>" alt="Contact" />
-          <%end %>
+              <div id="target">
+                <img class="img-fluid thumb96" src="<%= image_path('angle/user/perfil.png') %>" alt="Contact" height="150" width="150" />
+              </div>
+           <%end %>
             <p></p>
             <div class="form-group row">
               <div class="col-xl-12 col-md-9 col-8"   >
-                <input type="file" id="file"/>
-                <label for="file" class="btn-3"><span>Subir Imagen</span></label>
-                <%= form.hidden_field :image, id: "hiddenImage"%>
+                <%= form.file_field :image,multiple: false,  id: "pictureInput"%>
               </div>
+
             </div>
           </div>
 
@@ -68,7 +71,7 @@
                     <%= form.text_area :address, class: "form-control" %>
                   </div>
                 </div>
-
+                <%= form.hidden_field :user_id, value: current_user.id %>
 
                 <div class="form-group row">
                   <div class="col-xl-2 col-md-3 col-4"></div>

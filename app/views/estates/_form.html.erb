@@ -11,73 +11,67 @@
     </div>
   <% end %>
 
-  <div class="card card-default">
-    <div class="card-body">
-      <form id="example-form" action="#">
-        <div>
-          <h4>Nombre
-            <br/>
-          </h4>
-          <fieldset>
-            <div class="field">
-              <label for="userName">Nombre para tu propiedad *</label>
-              <br/>
-              <%= form.text_field :name %>
-              <!--input class="form-control required" id="userName" name="userName" type="text" /-->
-            </div>
-          </fieldset>
-          <h4>Ubicacion
-            <br/>
-          </h4>
-          <fieldset>
-            <div class="field">
-              <label for="address">Direccion de calle *</label>
-              <br/>
-              <%= form.text_field :address %>
-              <!--input class="form-control required" name="address" type="text" /-->
-            </div>
-            <div class="field">
-              <label for="city">Ciudad *</label>
-              <br/>
-              <%#= form.label :city_id %>
-              <%= form.text_field :city_id %>
-            </div>
-            <label for="email">Departamento *</label>
-            <input class="form-control required" id="email" name="email" type="text" />
-          </fieldset>
-          <h4>Caracteristicas
-            <br/>
-          </h4>
-          <fieldset>
-            <label for="room">Habitaciones *</label>
-            <input class="form-control required" name="room"/>
-          </fieldset>
-          <h4>Fotos
-            <br/>
-          </h4>
-          <fieldset>
-            <div class="field">
-              <%= form.label "Upload_image/s" %>
-              <%= form.file_field :images, multiple: true %>
-            </div>
-          </fieldset>
-          <h4>Finish
-            <br/>
-          </h4>
-          <fieldset>
-            <p class="lead">One last check</p>
-            <div class="checkbox c-checkbox">
-              <label>
-                <input type="checkbox" required="required" name="terms" />
-                <span class="fa fa-check"></span>I agree with the Terms and Conditions.</label>
-            </div>
-          </fieldset>
+  <div class="row">
+    <div class="col-md-6">
+      <!-- START card-->
+      <div class="card card-default">
+        <div class="card-header">
+          <h5><strong>Nombre y Ubicacion</strong></h5>
         </div>
-      </form>
+        <div class="card-body">
+            <div class="form-group">
+              <label>Nombre de la propiedad *</label>
+              <%= form.text_field :name, class: "form-control", required: "required" %>
+            </div>
+            <div class="form-group">
+              <label>Direccion de calle *</label>
+              <%= form.text_field :address, class: "form-control", required: "required" %>
+            </div>
+            <div class="form-group">
+              <label>Ciudad *</label>
+              <%= form.select :city_id,
+                              options_from_collection_for_select(City.all, "id", "name", form.object.city_id),
+                              class: "custom-select custom-select-sm", required: "required" %>
+            </div>
+        </div>
+      </div>
+      <!-- END card-->
+    </div>
+    <div class="col-md-6">
+      <!-- START card-->
+      <div class="card card-default">
+        <div class="card-header">
+          <h5><strong>Fotos</strong></h5>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Agrega al menos una foto a tu propiedad</label>
+          </div>
+          <div id="dropzone-area">
+            <%= form.file_field :images, multiple: true, class: "dropzone mb-3 card d-flex flex-row justify-content-center flex-wrap" %>
+            <div id="dropzone-previews"></div>
+          </div>
+        </div>
+      </div>
+      <!-- END card-->
     </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <%= form.hidden_field :owner_id %>
+
+  <div class="card card-default">
+    <div class="card-header">
+      <h5><strong>Habitaciones</strong></h5>
+    </div>
+    <div class="card-body">
+    </div>
   </div>
+  <fieldset>
+    <div class="form-group row">
+      <div class="col-md-4">
+        <%= link_to 'Atras', estates_path, class: "btn btn-secondary" %>
+        <%= form.submit 'Guardar datos', class: "btn btn-primary" %>
+      </div>
+    </div>
+  </fieldset>
 <% end %>

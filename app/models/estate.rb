@@ -7,6 +7,7 @@ class Estate < ApplicationRecord
   has_many :facilities, through: :facilities_estates
   has_many :rooms, dependent: :delete_all
   accepts_nested_attributes_for :rooms, allow_destroy: true
+  belongs_to :owner
   # default for will_paginate
   self.per_page = 10
 
