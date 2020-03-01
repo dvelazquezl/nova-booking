@@ -1,5 +1,5 @@
 class EstatesController < ApplicationController
-  before_action :set_estate, only: [:show, :edit, :update, :destroy]
+  before_action :set_estate, only: %i[show edit update destroy]
 
   # GET /estates
   # GET /estates.json
@@ -15,6 +15,7 @@ class EstatesController < ApplicationController
   # GET /estates/new
   def new
     @estate = Estate.new
+    @estate.owner_id = 1
     @rooms = @estate.rooms.build
   end
 
@@ -68,13 +69,14 @@ class EstatesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_estate
-      @estate = Estate.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def estate_params
-      params.require(:estate).permit(:name, :address, :city_id, images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :price, :status, :room_type])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_estate
+    @estate = Estate.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def estate_params
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
+  end
 end
