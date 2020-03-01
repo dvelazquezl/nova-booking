@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div class="container">
   <%= puts @filterrific.inspect %>
   <%= form_for_filterrific @filterrific do |f| %>
@@ -52,4 +53,61 @@
       </div>
     </div>
   <% end %>
+=======
+
+<section class="container">
+  <header>
+    <h1>
+      Busca ofertas de hotel
+    </h1>
+    <h6>
+      La forma más fácil de encontrar hotel
+    </h6>
+  </header>
+  <section class="row main-filter-section" style="height: 300px">
+    <div class="col-6" style="background-color: grey">
+      <div class="card card-body bg-white mx-auto" style="width: 50rem;">
+        <%= puts @filterrific.inspect %>
+        <%= form_for_filterrific @filterrific do |f| %>
+          <div class="form-group row">
+            <div class="col-3">
+              <label class="font-weight-bold">Destination</label>
+              <%= f.text_field :search_query,
+                               :class => 'filterrific-periodically-observed form-control' %>
+            </div>
+
+            <div class="col-3">
+              <div>
+                <label class="font-weight-bold">Check-in</label>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div >
+                <label class="font-weight-bold">Check-out</label>
+              </div>
+            </div>
+
+            <div>
+              <div class="col-3">
+                <label class="font-weight-bold">People</label>
+              </div>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-6" style="background-color: #5d9cec">
+      <p>descripciones</p>
+    </div>
+  </section>
+</section>
+
+<div id="results">
+  <%= render(
+          partial: 'welcome/list',
+          locals: {estates: @estates}
+      ) %>
+>>>>>>> Stashed changes
 </div>
