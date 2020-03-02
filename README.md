@@ -8,7 +8,11 @@ El projecto esta funcionando con las ultimas modificaciones hechas en el reposit
 * Rails Version
     5.2.1
 
-* npm install
+* rbenv install 2.6.3 (o tu comando rvm)
+
+* rbenv global 2.6.3 (o tu comando rvm)
+
+* gem bundle install, bundle update, npm install
 
 * crear los css y los js correspondientes del MVC (modelo, vista, controlador) si no existen.
 
