@@ -12,7 +12,11 @@ El projecto esta funcionando con las ultimas modificaciones hechas en el reposit
 
 * rbenv global 2.6.3 (o tu comando rvm)
 
-* gem bundle install, bundle update, npm install
+* gem intall bundle 
+
+* bundle update
+
+* npm install
 
 * crear los css y los js correspondientes del MVC (modelo, vista, controlador) si no existen.
 
