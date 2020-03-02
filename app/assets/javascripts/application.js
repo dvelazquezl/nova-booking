@@ -2,7 +2,7 @@
 // listed below.
 //
 
-//= require rails-ujs
+////= require rails-ujs
 
 //--- Angle
 //= require angle/modules/common/wrapper.js

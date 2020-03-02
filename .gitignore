@@ -76,3 +76,5 @@ yarn-debug.log*
 
 #para evitar problemas de bd
 config/database.yml
+*.lock
+*.gitignore
