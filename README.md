@@ -18,6 +18,10 @@ El projecto esta funcionando con las ultimas modificaciones hechas en el reposit
 
 * npm install
 
+* rails db:create
+
+* rails db:migrate
+
 * crear los css y los js correspondientes del MVC (modelo, vista, controlador) si no existen.
 
 * si hay algun error de compilacion, agregar las lineas correspondientes en config/initializers/assets.rb (siga el ejemplo de los que ya estan)
