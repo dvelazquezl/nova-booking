@@ -93,7 +93,7 @@ $nav-top-item-desktop-active:   $nav-top-item-mobile-active;
             right: 0;
         }
     } // Top navbar dropdown on desktop
-    @include media-breakpoint-up(sm) {
+    @include media-breakpoint-up(lg) {
         .dropdown {
             position: relative;
             .dropdown-menu {
@@ -129,10 +129,7 @@ $nav-top-item-desktop-active:   $nav-top-item-mobile-active;
         &,
         &:hover,
         &:focus {
-            display: inline-block;
-            box-shadow: 0 -3px 0 rgba(0,0,0,.125) inset;
             background-color: transparent;
-            @include transition(all .2s);
         }
     } // the button to toggle search
     .navbar-nav>li>[data-toggle='navbar-search'] {

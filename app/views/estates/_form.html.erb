@@ -1,0 +1,118 @@
+<%= form_with(model: estate, local: true) do |form| %>
+  <% if estate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(estate.errors.count, "error") %> prohibited this estate from being saved:</h2>
+
+      <ul>
+        <% estate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card card-default">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xl-4">
+          <h5><strong>Selecciona el tipo de tu propiedad: </strong></h5>
+        </div>
+        <div class="col-xl-2">
+          <!-- START card-->
+            <label class="c-radio">
+              <input id="inlineradio10" type="radio" name="i-radio" value="option1" checked="checked" />
+              <span class="fa fa-building"></span>Un depertamento
+            </label>
+          <!-- END card-->
+        </div>
+        <div class="col-xl-2">
+          <!-- START card-->
+            <label class="c-radio">
+              <input id="inlineradio20" type="radio" name="i-radio" value="option2" checked="checked" />
+              <span class="fa fa-home"></span>Una casa
+            </label>
+          <!-- END card-->
+        </div>
+        <div class="col-xl-2">
+          <!-- START card-->
+            <label class="c-radio">
+              <input id="inlineradio30" type="radio" name="i-radio" value="option3" checked="checked" />
+              <span class="fa fa-hotel"></span>Hotel
+            </label>
+          <!-- END card-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <!-- START card-->
+      <div class="card card-default">
+        <div class="card-header">
+          <h5><strong>Nombre y Ubicacion</strong></h5>
+        </div>
+        <div class="card-body height_div">
+            <div class="form-group">
+              <label>Nombre de la propiedad *</label>
+              <%= form.text_field :name, class: "form-control", required: "required" %>
+            </div>
+            <div class="form-group">
+              <label>Direccion de calle *</label>
+              <%= form.text_field :address, class: "form-control", required: "required" %>
+            </div>
+            <div class="form-group">
+              <label>Ciudad *</label>
+              <%= form.select :city_id,
+                              options_from_collection_for_select(City.all, "id", "name", form.object.city_id),
+                              class: "custom-select custom-select-sm", required: "required" %>
+            </div>
+        </div>
+      </div>
+      <!-- END card-->
+    </div>
+    <div class="col-md-6">
+      <!-- START card-->
+      <div class="card card-default">
+        <div class="card-header">
+          <h5><strong>Fotos</strong></h5>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Agrega al menos una foto a tu propiedad</label>
+          </div>
+          <div>
+            <fieldset>
+              <div id = "" class="field">
+                <%= form.label "Upload_image/s" %>
+                <%= form.file_field :images, multiple: true, id: "pictureInput" %>
+              </div>
+              <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <!-- END card-->
+    </div>
+  </div>
+
+  <%= form.hidden_field :owner_id %>
+  <br/>
+  <div class="content-heading">Habitaciones</div>
+  <div class="card card-default">
+    <div class="card-body">
+      <%= form.fields_for :rooms, @rooms do |f| %>
+        <%= render 'room_form', f: f %>
+      <% end %>
+    </div>
+  </div>
+  <fieldset>
+    <div class="form-group row">
+      <div class="col-md-4">
+        <%= link_to 'Atras', estates_path, class: "btn btn-secondary" %>
+        <%= form.submit 'Guardar datos', class: "btn btn-primary" %>
+      </div>
+    </div>
+  </fieldset>
+<% end %>

@@ -7,12 +7,15 @@
    <meta name="description" content="Bootstrap Admin App + Ruby on Rails">
    <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
    <title>Angle - Bootstrap Admin Template</title>
-
+   <!-- =============== VENDOR STYLES ===============-->
+   <%= stylesheet_link_tag 'base' %>
+   <!-- =============== VIEW VENDOR STYLES ===============-->
+   <%= stylesheet_link_tag params[:controller] %>
+  <%= yield :vendor_css_area %>
    <!-- =============== APP STYLES ===============-->
    <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
-   <!-- =============== VIEW STYLES ===============-->
-   <%= stylesheet_link_tag params[:controller] %>
-   <%= yield :vendor_css_area %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
    <%= csrf_meta_tags %>
 </head>
 
@@ -39,13 +42,12 @@
          <%= render partial: "layouts/partials/footer" %>
       </footer>
    </div>
-
+   <!-- =============== VENDOR SCRIPTS ===============-->
+   <%= javascript_include_tag 'base' %>
+   <!-- =============== VIEW VENDOR SCRIPTS ===============-->
+   <%= javascript_include_tag params[:controller] %>
    <!-- =============== APP SCRIPTS ===============-->
-   <%= javascript_packs_with_chunks_tag 'application', params[:controller] %>
-   <%= yield :vendor_js_area %>
-
-   <%= yield :body_area %>
-
+   <%= javascript_include_tag 'application' %>
 </body>
 
 </html>
