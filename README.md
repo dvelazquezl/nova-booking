@@ -12,15 +12,13 @@ El projecto esta funcionando con las ultimas modificaciones hechas en el reposit
 
 * rbenv global 2.6.3 (o tu comando rvm)
 
-* gem intall bundle 
+* gem install bundle 
 
 * bundle update
 
 * npm install
 
-* rails db:create
-
-* rails db:migrate
+* rails db:create, rails db:migrate (si no tienes la base de datos con las migraciones)
 
 * crear los css y los js correspondientes del MVC (modelo, vista, controlador) si no existen.
 
