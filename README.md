@@ -7,10 +7,11 @@ El projecto esta funcionando con las ultimas modificaciones hechas en el reposit
 
 * Rails Version
     5.2.1
+* rbenv o rvm (o tu versionador de ruby)
 
-* rbenv install 2.6.3 (o tu comando rvm)
+* rbenv install 2.6.3 | rvm install ruby-2.6.3
 
-* rbenv global 2.6.3 (o tu comando rvm)
+* rbenv global 2.6.3 | rvm use 2.6.3
 
 * gem install bundle 
 
