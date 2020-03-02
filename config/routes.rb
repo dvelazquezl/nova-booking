@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   resources :cities
   resources :departaments
   resources :owners
-  resources :estates
+  resources :estates do
+    collection do
+      get :new_room
+    end
+  end
   resources :users, only: [:index]
   resources :rooms
   resources :facilities
