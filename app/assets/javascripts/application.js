@@ -27,31 +27,29 @@
 
 // for image preview for file fields
 // div where image will be added should have id="target"
-$(function() {
-    const HEIGHT = 150;
-    const WIDTH = 150;
-    $('#pictureInput').on('change', function(event) {
-        let files = event.target.files;
+const HEIGHT = 150;
+const WIDTH = 150;
+$(document).on('change', '#pictureInput', function (event) {
+    let files = event.target.files;
 
-        Array.from(files).forEach(file => {
-            let reader = new FileReader();
-            reader.onload = function (file) {
-                let img = new Image();
-                img.src = file.target.result;
-                img.classList.add("img-thumbnail");
-                img.setAttribute('alt', 'rss fit');
-                img.setAttribute('height', HEIGHT);
-                img.setAttribute('width', WIDTH);
-                $('#target').append(img);
-                $('img').css("display", "inline-block")
-            };
-            reader.readAsDataURL(file);
-        });
+    Array.from(files).forEach(file => {
+        let reader = new FileReader();
+        reader.onload = function (file) {
+            let img = new Image();
+            img.src = file.target.result;
+            img.classList.add("img-thumbnail");
+            img.setAttribute('alt', 'rss fit');
+            img.setAttribute('height', HEIGHT);
+            img.setAttribute('width', WIDTH);
+            $('#target').append(img);
+            $('img').css("display", "inline-block")
+        };
+        reader.readAsDataURL(file);
     });
 
-    $('#pictureInput').on('change', function() {
+    if (Array.from(files).length > 0) {
         $('#target').empty();
-    });
+    }
 });
 
 $(document).on('click', '.remove_fields', function (e) {
@@ -63,7 +61,7 @@ $(document).on('click', '.remove_fields', function (e) {
 $(document).on('click', '.add_fields', function (e) {
     //$('.ocultar').hide()
 
-    let name =  $(this).parent("p").val()
+    let name = $(this).parent("p").val()
     //$ ( '#roomsTable' ). append ( "<tr> <td> 1 </td> <td>"+name+" </td> </tr>" );
     //console.log("add fields link clicked")
     let time = new Date().getTime()
