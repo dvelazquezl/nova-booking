@@ -10,8 +10,8 @@
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
 
-///= require jquery3
-///= require bootstrap
+////= require jquery3
+////= require bootstrap
 //= require turbolinks
 
 //= require filterrific/filterrific-jquery
@@ -47,6 +47,10 @@ $(function() {
             };
             reader.readAsDataURL(file);
         });
+    });
+
+    $('#pictureInput').on('change', function() {
+        $('#target').empty();
     });
 });
 
