@@ -61,6 +61,6 @@ class Estate < ApplicationRecord
   end
 
   extend Enumerize
-  enumerize :estate_type, in: [:one_apartment, :homes, :hotel]
+  enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
 end
