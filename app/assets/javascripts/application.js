@@ -59,7 +59,7 @@ $(document).on('click', '.remove_fields', function (e) {
 });
 
 $(document).on('click', '.add_fields', function (e) {
-    //$('.ocultar').hide()
+    $('.ocultar').fadeOut(400)
 
     let name = $(this).parent("p").val()
     //$ ( '#roomsTable' ). append ( "<tr> <td> 1 </td> <td>"+name+" </td> </tr>" );
