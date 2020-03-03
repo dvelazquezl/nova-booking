@@ -15,6 +15,15 @@
   <%= @estate.city_id %>
 </p>
 
+<p>
+  <strong>Status:</strong>
+  <% if @estate.status == false %>
+    <%= "Cerrado" %>
+  <% else %>
+    <%= "Abierto" %>
+  <% end %>
+<p>
+
 <div class="field">
   <% @estate.images.each do |image| %>
     <%= image_tag image %>

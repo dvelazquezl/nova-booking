@@ -35,11 +35,6 @@ class EstatesController < ApplicationController
       redirect_to new_owner_path
     end
   end
-  # def new
-  #   @estate = Estate.new
-  #   @estate.owner_id = Owner.find_by(user_id: current_user.id).id
-  #   @rooms = @estate.rooms.build
-  # end
   
   # GET /estates/new_room
   def new_room
@@ -86,6 +81,26 @@ class EstatesController < ApplicationController
     @estate.destroy
     respond_to do |format|
       format.html { redirect_to estates_url, notice: 'Estate was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  # dar de alta una propiedad
+  def suscribe
+    @estate = Estate.find(params[:id])
+    @estate.update_attribute(:status, true)
+    respond_to do |format|
+      format.html { redirect_to estates_url, notice: 'Estate was successfully suscribed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  # dar de baja una propiedad
+  def unsuscribe
+    @estate = Estate.find(params[:id])
+    @estate.update_attribute(:status, false)
+    respond_to do |format|  
+      format.html { redirect_to estates_url, notice: 'Estate was successfully unsuscribed.' }
       format.json { head :no_content }
     end
   end
