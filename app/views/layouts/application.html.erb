@@ -7,17 +7,27 @@
    <meta name="description" content="Bootstrap Admin App + Ruby on Rails">
    <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
    <title>Angle - Bootstrap Admin Template</title>
-   <!-- =============== VENDOR STYLES ===============-->
-   <%= stylesheet_link_tag 'base' %>
-   <!-- =============== VIEW VENDOR STYLES ===============-->
-   <%= stylesheet_link_tag params[:controller] %>
-   <%= yield :vendor_css_area %>
-   <!-- =============== APP STYLES ===============-->
-   <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
-   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-   <%= csrf_meta_tags %>
-   <%= csp_meta_tag %>
+  <!-- =============== VENDOR STYLES ===============-->
+  <%= stylesheet_link_tag 'base' %>
+  <!-- =============== VIEW VENDOR STYLES ===============-->
+  <%= stylesheet_link_tag params[:controller] %>
+  <%= yield :vendor_css_area %>
+  <!-- =============== APP STYLES ===============-->
+  <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <!-- =============== VENDOR SCRIPTS ===============-->
+  <%= javascript_include_tag 'base' %>
+  <!-- =============== VIEW VENDOR SCRIPTS ===============-->
+  <%= javascript_include_tag params[:controller] %>
+  <%= yield :vendor_js_area %>
+  <!-- =============== APP SCRIPTS ===============-->
+  <%= javascript_include_tag 'application' %>
+  <!--================ PRINT =====================-->
+  <%= stylesheet_link_tag 'application', media: 'print' %>
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 </head>
 
 <body>
@@ -52,13 +62,6 @@
          <%= render partial: "layouts/partials/footer" %>
       </footer>
    </div>
-   <!-- =============== VENDOR SCRIPTS ===============-->
-   <%= javascript_include_tag 'base' %>
-   <!-- =============== VIEW VENDOR SCRIPTS ===============-->
-   <%= javascript_include_tag params[:controller] %>
-   <%= yield :vendor_js_area %>
-   <!-- =============== APP SCRIPTS ===============-->
-   <%= javascript_include_tag 'application' %>
 
    <%= yield :body_area %>
 

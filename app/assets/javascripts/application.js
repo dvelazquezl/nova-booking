@@ -2,7 +2,7 @@
 // listed below.
 //
 
-////= require rails-ujs
+//= require rails-ujs
 
 //--- Angle
 //= require angle/modules/common/wrapper.js
@@ -10,8 +10,8 @@
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
 
-//= require jquery3
-//= require bootstrap
+///= require jquery3
+///= require bootstrap
 //= require turbolinks
 
 //= require filterrific/filterrific-jquery
@@ -57,11 +57,10 @@ $(document).on('click', '.remove_fields', function (e) {
 });
 
 $(document).on('click', '.add_fields', function (e) {
-    $('.ocultar').hide()
+    //$('.ocultar').hide()
 
     let name =  $(this).parent("p").val()
-    console.log(name)
-    $ ( '#roomsTable' ). append ( "<tr> <td> 1 </td> <td>"+name+" </td> </tr>" );
+    //$ ( '#roomsTable' ). append ( "<tr> <td> 1 </td> <td>"+name+" </td> </tr>" );
     //console.log("add fields link clicked")
     let time = new Date().getTime()
     let regexp = new RegExp($(this).data('id'), 'g')
