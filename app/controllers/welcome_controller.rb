@@ -3,10 +3,10 @@
 class WelcomeController < ApplicationController
   def index
     (@filterrific = initialize_filterrific(
-        Estate,
+        Estate.only_published,
         params[:filterrific],
         select_options: {
-            sorted_by: Estate.options_for_sorted_by,
+            sorted_by: Estate.only_published.options_for_sorted_by,
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])

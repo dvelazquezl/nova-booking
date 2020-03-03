@@ -10,6 +10,8 @@ class Estate < ApplicationRecord
   # default for will_paginate
   self.per_page = 2
 
+  scope :only_published, -> { where(status: true) }
+
   filterrific :default_filter_params => { :sorted_by => 'name_asc' },
               :available_filters => %w[
                 sorted_by

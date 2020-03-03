@@ -1,17 +1,17 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <table class="table table-bordered w-100">
+      <table class="table table-bordered">
         <% estates.each do |estate| %>
           <tr>
             <td>
               <div class="media align-items-center">
                 <a class="mr-4" href="#">
-                  <%= image_tag estate.images.first, alt: "rss feed", height: 100, width: 100 %>
+                  <%= image_tag estate.images.first, alt: "rss feed", height: 150, width: 150 %>
                 </a>
-                <div class="media-body  d-flex">
+                <div class="media-body d-flex">
                   <div class="">
-                    <h4 class="m-0"><%= estate.name %></h4>
+                    <h4 class="m-0" style="font-size:25px"><%= estate.name %></h4>
                     <small class="text-muted"><%= estate.city.name %> | Show on map</small>
                     <p><%= estate.address %></p>
                   </div>
@@ -23,8 +23,10 @@
               </div>
 
               <div class="media-body d-flex">
-                <div class="ml-auto">
-                    <button class="btn btn-sm btn-primary">Reservar</button>
+                <div class="btn-group ml-auto" role="group">
+                    <%= link_to owner_path(estate.owner_id) do %>
+                      <button class="btn btn-sm btn-primary">Contacto</button>
+                    <% end %>
                 </div>
               </div>
             </td>

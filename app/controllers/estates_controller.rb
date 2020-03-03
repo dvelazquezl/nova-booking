@@ -5,19 +5,7 @@ class EstatesController < ApplicationController
   # GET /estates
   # GET /estates.json
   def index
-    (@filterrific = initialize_filterrific(
-        Estate,
-        params[:filterrific],
-        select_options: {
-            sorted_by: Estate.options_for_sorted_by,
-        },
-        )) || return
-    @estates = @filterrific.find.page(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.js
-      end
+    @estates = Estate.all
   end
 
   # GET /estates/1
