@@ -28,10 +28,19 @@ class EstatesController < ApplicationController
   # GET /estates/new
   def new
     @estate = Estate.new
-    @estate.owner_id = Owner.find_by(user_id: current_user.id).id
-    @rooms = @estate.rooms.build
+    if Owner.find_by(user_id: current_user.id)
+      @estate.owner_id = Owner.find_by(user_id: current_user.id).id
+      @rooms = @estate.rooms.build
+    else
+      redirect_to new_owner_path
+    end
   end
-
+  # def new
+  #   @estate = Estate.new
+  #   @estate.owner_id = Owner.find_by(user_id: current_user.id).id
+  #   @rooms = @estate.rooms.build
+  # end
+  
   # GET /estates/new_room
   def new_room
     @room = Room.new
