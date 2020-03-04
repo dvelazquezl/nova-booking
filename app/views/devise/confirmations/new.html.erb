@@ -1,16 +1,25 @@
-<h2>Resend confirmation instructions</h2>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="card col-7">
+  <article class="card-body">
+    <h2 class="card-title text-center mb-4 mt-1">Reenviar Instrucciones de Confirmacion</h2>
+    <hr>
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control" %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-  </div>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
 
-  <div class="actions">
-    <%= f.submit "Reenviar instrucciones de confirmacion" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+        <div class="form-group">
+          <%= f.submit "Reenviar" ,class: "btn btn-primary btn-block"%>
+        </div> <!-- form-group// -->
+        <p class="text-center"><%= render "devise/shared/links" %></p>
+      </form>
+    <% end %>
+  </article>
+</div> <!-- card.// -->
