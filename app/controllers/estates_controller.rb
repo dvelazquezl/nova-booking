@@ -45,7 +45,7 @@ class EstatesController < ApplicationController
 
     respond_to do |format|
       if @estate.save
-        format.html { redirect_to @estate, notice: 'Estate was successfully created.' }
+        format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
         format.json { render :show, status: :created, location: @estate }
       else
         format.html { render :new }
@@ -59,7 +59,7 @@ class EstatesController < ApplicationController
   def update
     respond_to do |format|
       if @estate.update(estate_params)
-        format.html { redirect_to @estate, notice: 'Estate was successfully updated.' }
+        format.html { redirect_to @estate, notice: 'Propiedad actualizada exitosamente.' }
         format.json { render :show, status: :ok, location: @estate }
       else
         format.html { render :edit }
@@ -73,7 +73,7 @@ class EstatesController < ApplicationController
   def destroy
     @estate.destroy
     respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Estate was successfully destroyed.' }
+      format.html { redirect_to estates_url, notice: 'Propiedad eliminada exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -83,7 +83,7 @@ class EstatesController < ApplicationController
     @estate = Estate.find(params[:id])
     @estate.update_attribute(:status, true)
     respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Estate was successfully suscribed.' }
+      format.html { redirect_to estates_url, notice: 'Propiedad publicada exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -93,7 +93,7 @@ class EstatesController < ApplicationController
     @estate = Estate.find(params[:id])
     @estate.update_attribute(:status, false)
     respond_to do |format|  
-      format.html { redirect_to estates_url, notice: 'Estate was successfully unsuscribed.' }
+      format.html { redirect_to estates_url, notice: 'Propiedad dada de baja exitosamente.' }
       format.json { head :no_content }
     end
   end
