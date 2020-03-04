@@ -5,7 +5,8 @@ class EstatesController < ApplicationController
   # GET /estates
   # GET /estates.json
   def index
-    @estates = Estate.estates_by_user(current_user.id)
+    owner_id = Owner.find_by(user_id: current_user.id).id
+    @estates = Estate.estates_by_owner(owner_id)
   end
 
   # GET /estates/1
