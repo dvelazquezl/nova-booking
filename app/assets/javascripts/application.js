@@ -58,12 +58,26 @@ $(document).on('click', '.remove_fields', function (e) {
     e.preventDefault()
 });
 
+$(document).on('click', '.show_fields', function (e) {
+    $(this).siblings('.ocultar').fadeIn(400)
+    $(this).siblings('.description').text('')
+    //console.log($(this).siblings('.ocultar').find('.room_name').val())
+
+});
+
+$(document).on('click', '.hide_fields', function (e) {
+    $(this).siblings('.ocultar').fadeOut(400)
+    let description = $(this).siblings('.ocultar').find('.room_name').val()
+    $(this).siblings('.description').text(description)
+    //console.log($(this).siblings('.ocultar').find('.room_name').val())
+});
+
+
 $(document).on('click', '.add_fields', function (e) {
     $('.ocultar').fadeOut(400)
+    let description = $('.room_name').last().val()
+    $('.description').last().text(description)
 
-    let name = $(this).parent("p").val()
-    //$ ( '#roomsTable' ). append ( "<tr> <td> 1 </td> <td>"+name+" </td> </tr>" );
-    //console.log("add fields link clicked")
     let time = new Date().getTime()
     let regexp = new RegExp($(this).data('id'), 'g')
     //console.log()
