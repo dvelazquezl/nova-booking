@@ -68,7 +68,7 @@ $(document).on('click', '.show_fields', function (e) {
 $(document).on('click', '.hide_fields', function (e) {
     $(this).siblings('.ocultar').fadeOut(400)
     let description = $(this).siblings('.ocultar').find('.room_name').val()
-    $(this).siblings('.description').text(description)
+    $(this).siblings('.description').html("<h3><strong>" + description + "</strong></h3>")
     //console.log($(this).siblings('.ocultar').find('.room_name').val())
 });
 
@@ -76,7 +76,7 @@ $(document).on('click', '.hide_fields', function (e) {
 $(document).on('click', '.add_fields', function (e) {
     $('.ocultar').fadeOut(400)
     let description = $('.room_name').last().val()
-    $('.description').last().text(description)
+    $('.description').last().html("<h3><strong>" + description + "</strong></h3>")
 
     let time = new Date().getTime()
     let regexp = new RegExp($(this).data('id'), 'g')
