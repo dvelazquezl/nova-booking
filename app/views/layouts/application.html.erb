@@ -31,7 +31,7 @@
 </head>
 
 <body>
-   <div>
+   <div class="content-wrapper">
       <!-- top navbar-->
       <header class="topnavbar-wrapper">
          <%= render partial: "layouts/partials/topnavbar" %>
@@ -49,16 +49,14 @@
            <% end %>
            <%= yield %>
          </div>
+
+         <%= yield :body_area %>
+
+        <!-- Page footer-->
+        <footer class="footer-bottom">
+          <%= render partial: "layouts/partials/footer" %>
+        </footer>
       </section>
-
-      <%= yield :body_area %>
-
-      <!-- Page footer-->
-      <footer class="footer-container">
-         <%= render partial: "layouts/partials/footer" %>
-      </footer>
    </div>
-
 </body>
-
 </html>
