@@ -22,16 +22,10 @@
         /* remove margin used for sidebar and expand the content */
         padding: 0 !important;
         width: 100% !important;
-        border: 0; /* optional: remove top border used to separate the page heading */
     }
+
 
     .content-wrapper {
         overflow: hidden !important;
     }
-
-    /* hide sidebar container */
-    .aside-container { display: none !important; }
-    /* remove space used for the sidebar */
-    .footer-container { margin: 0 !important; }
-
 }

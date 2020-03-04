@@ -58,11 +58,10 @@
             margin-right: auto;
             .content-wrapper .content-heading {
                 display: none;
-                +.breadcrumb { display: none; }
             }
         }
         .section-container {
-            // margin-top: 0;
+            margin-top: 0;
         }
         .offsidebar {
             margin-top: $navbar-hg;

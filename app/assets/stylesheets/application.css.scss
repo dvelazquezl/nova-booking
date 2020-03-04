@@ -2,12 +2,15 @@
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
- * ------------------------------
  * --- Angle Main Stylesheet
- * ------------------------------
+ *
  *= require angle/bootstrap
  *= require angle/app
  *
+ * --- Assets paths redefinition
+ *
+ *= require fonts
+ *= require vendor.assets
  * ------------------------------
  * --- Vendor assets
  * ------------------------------
@@ -22,11 +25,6 @@
  *= require animate.css/animate.min
  * ---- Whirl (spinners)
  *= require whirl/dist/whirl
- *
- * ------------------------------
- * --- Assets paths redefinition
- * ------------------------------
- *= require fonts
- *= require vendor.assets
- *
  */
+@import 'components/_filterrific_filter';
+@import 'components/datepicker';

@@ -7,16 +7,27 @@
    <meta name="description" content="Bootstrap Admin App + Ruby on Rails">
    <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
    <title>Angle - Bootstrap Admin Template</title>
+  <!-- =============== VENDOR STYLES ===============-->
+  <%= stylesheet_link_tag 'base' %>
+  <!-- =============== VIEW VENDOR STYLES ===============-->
+  <%= stylesheet_link_tag params[:controller] %>
+  <%= yield :vendor_css_area %>
+  <!-- =============== APP STYLES ===============-->
+  <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <!-- =============== VENDOR SCRIPTS ===============-->
+  <%= javascript_include_tag 'base' %>
+  <!-- =============== VIEW VENDOR SCRIPTS ===============-->
+  <%= javascript_include_tag params[:controller] %>
+  <%= yield :vendor_js_area %>
+  <!-- =============== APP SCRIPTS ===============-->
+  <%= javascript_include_tag 'application' %>
+  <!--================ PRINT =====================-->
+  <%= stylesheet_link_tag 'application', media: 'print' %>
 
-   <!-- =============== VIEW STYLES ===============-->
-   <%= stylesheet_link_tag params[:controller] %>
-   <!-- =============== APP STYLES ===============-->
-   <%= stylesheet_link_tag 'application', media: 'all', id: "maincss" %>
-
-   <%= yield :vendor_css_area %>
-
-   <%= csrf_meta_tags %>
-   <%= csp_meta_tag %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 </head>
 
 <body>
@@ -37,7 +48,13 @@
       <section class="section-container">
          <!-- Page content-->
          <div class="content-wrapper">
-            <%= yield %>
+           <% if notice %>
+             <p class="alert alert-success"><%= notice %></p>
+           <% end %>
+           <% if alert %>
+             <p class="alert alert-danger"><%= alert %></p>
+           <% end %>
+           <%= yield %>
          </div>
       </section>
       <!-- Page footer-->
@@ -45,10 +62,6 @@
          <%= render partial: "layouts/partials/footer" %>
       </footer>
    </div>
-
-   <!-- =============== APP SCRIPTS ===============-->
-   <%= javascript_packs_with_chunks_tag 'application', params[:controller] %>
-   <%= yield :vendor_js_area %>
 
    <%= yield :body_area %>
 

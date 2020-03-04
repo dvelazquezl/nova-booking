@@ -53,6 +53,9 @@ body {
     height: auto;
     min-height: 100%;
     overflow-x: hidden;
+    &.ng-leave {
+        display: none;
+    }
     // Contains the main sidebar
     .aside-container {
         // visibility: hidden;

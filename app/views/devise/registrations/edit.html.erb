@@ -1,0 +1,59 @@
+<div class="card col-6">
+  <article class="card-body">
+    <h2 class="card-title text-center mb-4 mt-1">Actualizar Cuenta</h2>
+    <hr>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>
+          </div> <!-- input-group.// -->
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %>
+        </div> <!-- form-group// -->
+
+        <div class="form-group">
+          <% if @minimum_password_length %>
+            <i><%= @minimum_password_length %> caracteres minimo (dejar en blanco si no deseas cambiarlo)</i><br />
+          <% else %>
+            <i>dejar en blanco si no deseas cambiarlo</i><br />
+          <% end %>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Nueva contraseña"%>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmar contraseña"%>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
+        <br>
+        <div class="form-group">
+          <i>necesitamos su contraseña actual para confirmar los cambios</i>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", placeholder: "Contraseña actual"%>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
+
+        <div class="form-group">
+          <%= f.submit "Actualizar" ,class: "btn btn-primary btn-block"%>
+        </div> <!-- form-group// -->
+        <p class="text-center"><%= link_to "Atras", :back %></p>
+      </form>
+    <% end %>
+  </article>
+</div> <!-- card.// -->
