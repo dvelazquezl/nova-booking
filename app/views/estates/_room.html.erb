@@ -1,11 +1,11 @@
-<fieldset style="margin: 0; border: 0; padding: 0;">
+<fieldset style="margin: 0; border: 0; padding: 0;" class="card-body">
 
   <div class="row ocultar">
     <div class="col-md-6">
       <div class="card-body">
         <div class="form-group">
           <label>Tipo de habitacion</label>
-          <%= f.select :room_type, Room.room_type.options, class: "form-control", required: "required" %>
+          <%= f.select :room_type, Room.room_type.options, class: "component-select", required: "required" %>
         </div>
       </div>
       <div class="card-body">
@@ -24,6 +24,9 @@
 
 
     <div class="col-md-6">
+      <br>
+      <br>
+      <br>
       <div class="card-body">
         <div class="form-group">
           <label>Nombre de la habitacion</label>
@@ -40,14 +43,14 @@
 
   </div>
 
+  <div class="description card-body"></div>
+
   <%= link_to "Eliminar" do%>
-    <div class=" remove_fields btn btn-link text-danger">
+    <div class=" remove_fields btn btn-link text-danger" title="Eliminar">
       <i class="fas fa-trash-alt"></i>
     </div>
   <%end %>
-
-  <p class="description"></p>
-  <button type="button" class="show_fields">fade in </button>
-  <button type="button" class="hide_fields">fade out </button>
-
+  <button type="button" title="Mazimizar" class="show_fields btn btn-link text-primary"><i class="fas fa-chevron-circle-up"></i></button>
+  <button type="button"  title="Minimizar" class="hide_fields btn btn-link text-primary"><i class="fas fa-chevron-circle-down"></i></button>
+  <hr style="border: 1px solid #48a7f4">
 </fieldset>
