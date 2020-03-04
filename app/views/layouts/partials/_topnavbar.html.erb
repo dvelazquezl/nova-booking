@@ -1,8 +1,10 @@
 <!-- START Top Navbar-->
 <nav class="navbar topnavbar">
   <!-- START navbar header-->
-  <div class="navbar-header" style="background-color: black">
-      <% link_to 'Nova Booking', welcome_index_path %>
+  <div class="navbar-header">
+    <%= link_to welcome_index_path do %>
+      <em class="fa-4x mr-2 fas fa-home" id="home-icon"></em>
+    <%end %>
   </div>
   <!-- END navbar header-->
   <!-- START Left navbar-->
