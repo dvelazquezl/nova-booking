@@ -74,7 +74,4 @@ gem 'filterrific'
 gem 'listen'
 gem 'javascript', '~> 0.1.0'
 
-
-group :assets do
-  gem 'uglifier'
-end
+gem 'uglifier', '~> 4.2'
