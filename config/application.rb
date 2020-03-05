@@ -51,5 +51,6 @@ module Angle
                                  'singleview.css'
                                 ]
 
+
   end
 end
