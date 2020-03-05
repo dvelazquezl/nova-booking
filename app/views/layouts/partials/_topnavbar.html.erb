@@ -1,29 +1,27 @@
 <!-- START Top Navbar-->
-<nav class="navbar topnavbar">
+<nav class="navbar topnavbar row">
   <!-- START navbar header-->
   <div class="navbar-header">
-    <strong>Nova Booking</strong>
+    <%= link_to welcome_index_path do %>
+      <em class="fa-4x mr-2 fas fa-home" id="home-icon"></em>
+    <%end %>
   </div>
   <!-- END navbar header-->
   <!-- START Left navbar-->
   <ul class="navbar-nav mr-auto flex-row">
-
     <!-- START User avatar toggle-->
     <li class="nav-item d-none d-md-block">
-      <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-      <p class="navbar-text float-right">
-      </p>
-      <a class="nav-link" id="user-block-toggle" href="#user-block" data-toggle="collapse">
+      <a class="nav-link" id="user-block-toggle">
         <em class="icon-user"></em>
         <% if user_signed_in? %>
-          <strong><%= current_user.email %></strong>.
+          <%= current_user.email  %>
         <% end %>
       </a>
     </li>
     <!-- END User avatar toggle-->
-
   </ul>
   <!-- END Left navbar-->
+
   <!-- START Right Navbar-->
   <ul class="navbar-nav flex-row">
     <!-- START OPTIONS -->
@@ -32,12 +30,18 @@
         <ul class="navbar-nav mr-auto">
           <% if user_signed_in? %>
             <li class="nav-item active">
-              <%= link_to 'Etidar perfil', edit_user_registration_path, :class => "nav-link" %>
+              <%= link_to 'Mis propiedades', estates_path, :class => "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to 'Editar perfil', edit_user_registration_path, :class => "nav-link" %>
             </li>
             <li class="nav-item">
               <%= link_to "Cerrar sesion", destroy_user_session_path, method: :delete, :class => "nav-link"  %>
             </li>
           <% else %>
+            <li class="nav-item active">
+              <%= link_to 'Registrar tu propiedad', new_estate_path, :class => "nav-link" %>
+            </li>
             <li class="nav-item">
               <%= link_to "Registrarse", new_user_registration_path, :class => "nav-link" %>
             </li>

@@ -7,10 +7,27 @@
 //= require datatables.net-keytable-bs/css/keyTable.bootstrap
 //= require datatables.net-responsive-bs/css/responsive.bootstrap
 
-.main-section-header{
+  .main-section-header{
     padding-left: 80px;
   }
-  
+
+  .main-section-header .main-title{
+    font-size: 40px;
+    font-family: Bookman;
+    word-spacing: -5px;
+    color: #287F99;
+    font-weight: bold;
+  }
+
+  .main-section-header .main-subtitle{
+    font-size: 15px;
+    font-family: Bookman;
+  }
+
+  .main-filter-section{
+    height: 300px;
+  }
+
   .main-filter-section .filter-block{
     padding: 0px;
   }
@@ -28,6 +45,7 @@
   .main-filter-section .form-control{
     padding-left: 2.375rem;
     height: 70px;
+    border-color: #287F99;
   }
   
   .main-filter-section .form-control-feedback {
@@ -40,4 +58,27 @@
     text-align: center;
     pointer-events: none;
     color: #aaa;
+  }
+
+table, th, td, tr {
+  border: 2px solid lightgray;
+  background-color: floralwhite;
+}
+
+  #description-list{
+    list-style: none;
+    text-align: center;
+  }
+
+  #description-list li{
+    margin: 30px;
+    font-family: Bookman;
+  }
+
+  #home-icon {
+    color: white;
+  }
+
+  #home-icon:hover {
+    color: black;
   }

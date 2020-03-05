@@ -1,16 +1,28 @@
-<h2>Forgot your password?</h2>
+<div class="container">
+  <div class="row justify-content-center">
+<div class="card col-7">
+  <article class="card-body">
+    <h2 class="card-title text-center mb-4 mt-1">Enviarme instrucciones para restablecer mi contraseña</h2>
+    <hr>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <%= f.email_field :email, placeholder: "Email", autofocus: true, autocomplete: "email", class: "form-control" %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="form-group">
+          <%= f.submit "Enviar" ,class: "btn btn-primary btn-block"%>
+        </div> <!-- form-group// -->
+        <p class="text-center"><%= render "devise/shared/links" %></p>
+      </form>
+    <% end %>
+  </article>
+</div> <!-- card.// -->
   </div>
-
-  <div class="actions">
-    <%= f.submit "Enviarme instrucciones para restablecer mi contraseña" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

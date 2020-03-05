@@ -5,19 +5,12 @@ class EstatesController < ApplicationController
   # GET /estates
   # GET /estates.json
   def index
-    (@filterrific = initialize_filterrific(
-        Estate,
-        params[:filterrific],
-        select_options: {
-            sorted_by: Estate.options_for_sorted_by,
-        },
-        )) || return
-    @estates = @filterrific.find.page(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.js
-      end
+    owner = Owner.find_by(user_id: current_user.id)
+    if owner
+      @estates = Estate.estates_by_owner(owner.id)
+    else
+      @estates = []
+    end
   end
 
   # GET /estates/1
@@ -52,7 +45,7 @@ class EstatesController < ApplicationController
 
     respond_to do |format|
       if @estate.save
-        format.html { redirect_to @estate, notice: 'Estate was successfully created.' }
+        format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
         format.json { render :show, status: :created, location: @estate }
       else
         format.html { render :new }
@@ -66,7 +59,7 @@ class EstatesController < ApplicationController
   def update
     respond_to do |format|
       if @estate.update(estate_params)
-        format.html { redirect_to @estate, notice: 'Estate was successfully updated.' }
+        format.html { redirect_to @estate, notice: 'Propiedad actualizada exitosamente.' }
         format.json { render :show, status: :ok, location: @estate }
       else
         format.html { render :edit }
@@ -80,7 +73,7 @@ class EstatesController < ApplicationController
   def destroy
     @estate.destroy
     respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Estate was successfully destroyed.' }
+      format.html { redirect_to estates_url, notice: 'Propiedad eliminada exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -90,7 +83,7 @@ class EstatesController < ApplicationController
     @estate = Estate.find(params[:id])
     @estate.update_attribute(:status, true)
     respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Estate was successfully suscribed.' }
+      format.html { redirect_to estates_url, notice: 'Propiedad publicada exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -100,7 +93,7 @@ class EstatesController < ApplicationController
     @estate = Estate.find(params[:id])
     @estate.update_attribute(:status, false)
     respond_to do |format|  
-      format.html { redirect_to estates_url, notice: 'Estate was successfully unsuscribed.' }
+      format.html { redirect_to estates_url, notice: 'Propiedad dada de baja exitosamente.' }
       format.json { head :no_content }
     end
   end
@@ -114,6 +107,6 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
   end
 end

@@ -1,25 +1,40 @@
-<h2>Change your password</h2>
+<div class="container">
+  <div class="row justify-content-center">
+<div class="card col-6">
+  <article class="card-body">
+    <h2 class="card-title text-center mb-4 mt-1">Cambiar mi contraseña</h2>
+    <hr>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :reset_password_token %>
+      <form>
+        <div class="form-group">
+          <% if @minimum_password_length %>
+            <em><%= @minimum_password_length %> caracteres minimo</em>
+          <% end %>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Contraseña nueva"%>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmar nueva contraseña"%>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
-
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+        <div class="form-group">
+          <%= f.submit "Actualizar" ,class: "btn btn-primary btn-block"%>
+        </div> <!-- form-group// -->
+        <p class="text-center"><%= render "devise/shared/links" %></p>
+      </form>
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+  </article>
+</div> <!-- card.// -->
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
