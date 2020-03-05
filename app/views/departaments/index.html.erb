@@ -1,12 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Departaments</h1>
+<h1>Departamentos</h1>
 
-<table>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+
   <thead>
     <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
+      <th>Departamento</th>
+      <th colspan="3">Acciones</th>
     </tr>
   </thead>
 
@@ -14,14 +16,16 @@
     <% @departaments.each do |departament| %>
       <tr>
         <td><%= departament.name %></td>
-        <td><%= link_to 'Show', departament %></td>
-        <td><%= link_to 'Edit', edit_departament_path(departament) %></td>
-        <td><%= link_to 'Destroy', departament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', departament %></td>
+        <td><%= link_to 'Editar', edit_departament_path(departament) %></td>
+        <td><%= link_to 'Eliminar', departament, method: :delete, data: { confirm: 'Estas seguro?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
+
 
 <br>
 
-<%= link_to 'New Departament', new_departament_path %>
+<%= link_to 'Nuevo Departamento', new_departament_path, :class => "mb-1 btn btn-primary" %>
