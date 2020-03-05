@@ -32,14 +32,14 @@
           </td>
           <td>
             <% if estate.status %>
-              <%= link_to 'Dar de baja', unsuscribe_estate_path(estate), method: :post, data: { confirm: 'Are you sure?' } %>
+              <%= link_to 'Dar de baja', unsuscribe_estate_path(estate), method: :post, data: { confirm: 'Estás seguro?' } %>
             <% else %>
-              <%= link_to 'Publicar', suscribe_estate_path(estate), method: :post, data: { confirm: 'Are you sure?' } %>
+              <%= link_to 'Publicar', suscribe_estate_path(estate), method: :post, data: { confirm: 'Estás seguro?' } %>
             <% end %>
           </td>
           <td><%= link_to 'Ver', estate %></td>
           <td><%= link_to 'Editar', edit_estate_path(estate) %></td>
-          <td><%= link_to 'Eliminar', estate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Eliminar', estate, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
         </tr>
         <% end %>
       </tbody>
