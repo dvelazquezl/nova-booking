@@ -6,9 +6,9 @@
     "license": "https://wrapbootstrap.com/help/licenses",
     "private": true,
     "scripts": {
-        "start": "node index.js",
         "modernizr": "modernizr -c modernizr-config.json -d vendor/assets/javascripts/modernizr.js",
-        "postinstall": "npm run modernizr"
+        "postinstall": "npm run modernizr",
+        "start": "node server.js"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "5.5.0",
