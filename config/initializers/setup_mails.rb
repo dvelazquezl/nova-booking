@@ -5,6 +5,6 @@ ActionMailer::Base.smtp_settings = {
     :authentication       =>  :plain,
     :user_name            =>  'angel-marecos',
     :password             =>  'leirbag27',
-    :domain               =>  'novabooking-test.herokuapp.com',
+    :domain               =>  'heroku.com',
     :enable_starttls_auto  =>  true
 }
