@@ -15,7 +15,7 @@
             <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>
           </div> <!-- input-group.// -->
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <div>Esperando confirmacion de cuenta para: <%= resource.unconfirmed_email %></div>
           <% end %>
         </div> <!-- form-group// -->
 
