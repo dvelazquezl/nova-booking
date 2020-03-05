@@ -10,6 +10,9 @@ class Estate < ApplicationRecord
   # default for will_paginate
   self.per_page = 2
 
+  scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
+  scope :only_published, -> { where(status: true) }
+
   filterrific :default_filter_params => { :sorted_by => 'name_asc' },
               :available_filters => %w[
                 sorted_by
@@ -59,6 +62,6 @@ class Estate < ApplicationRecord
   end
 
   extend Enumerize
-  enumerize :estate_type, in: [:one_apartment, :homes, :hotel]
+  enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
 end

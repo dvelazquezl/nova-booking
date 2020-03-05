@@ -1,14 +1,14 @@
 
 <section class="container">
   <header class="main-section-header">
-    <h1>
+    <h1 class="main-title">
       Busca ofertas de hotel
     </h1>
-    <h6>
+    <h6 class="main-subtitle">
       La forma más fácil de encontrar hotel
     </h6>
   </header>
-  <section class="row main-filter-section" style="height: 300px">
+  <section class="row main-filter-section">
     <div class="col-md-6 col-sm-12 d-flex align-items-center main-filter">
       <div class="col-12 filter-block">
         <%= puts @filterrific.inspect %>
@@ -22,12 +22,12 @@
 
             <div class="row has-search d-flex align-items-center">
               <span class="fa fa-search form-control-feedback" ></span>
-              <input type="date" class="form-control datetimepicker-input" placeholder="Search" style="padding-left: 2.375rem;">
+              <input type="date" class="form-control datetimepicker-input">
             </div>
 
             <div class="row has-search d-flex align-items-center">
               <span class="fa fa-search form-control-feedback"></span>
-              <input type="date" class="form-control datetimepicker-input" placeholder="Search" style="padding-left: 2.375rem;">
+              <input type="date" class="form-control datetimepicker-input">
             </div>
             
           </div>
@@ -35,29 +35,29 @@
       </div>
     </div>
 
-    <div class="col-md-6 col-sm-12" style="background-color: #5d9cec">
-      <div class="row">
-        <ul class="col-12">
+    <div class="col-md-6 col-sm-12 d-flex align-items-center" id="description-section">
+
+        <ul class="col-12" id="description-list">
           <li>
-            <em class="fa-2x mr-2 fas fa-check"></em>
+            <em class="mr-2 fas fa-check"></em>
             <span>
-              <strong>Compara más de un millón de hoteles en todo el mundo</strong>
+              ¡Busca una ciudad o un lugar famoso!
             </span>
           </li>
           <li>
-            <em class="fa-2x mr-2 fas fa-check"></em>
+            <em class="mr-2 fas fa-check"></em>
             <span>
-              <strong>Compara más de un millón de hoteles en todo el mundo</strong>
+              Compara miles de hoteles en todo el Paraguay.
             </span>
           </li>
           <li>
-            <em class="fa-2x mr-2 fas fa-check"></em>
+            <em class="mr-2 fas fa-check"></em>
             <span>
-              <strong>Compara más de un millón de hoteles en todo el mundo</strong>
+              Encuentra el hotel que mejor se adecue a tu viaje.
             </span>
           </li>
         </ul>
-      </div>
+
     </div>
   </section>
 </section>
