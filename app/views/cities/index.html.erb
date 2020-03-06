@@ -1,13 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Cities</h1>
+<h1>Ciudades</h1>
 
-<table>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+
+
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Departament</th>
-      <th colspan="3"></th>
+      <th>Ciudad</th>
+      <th>Departamento</th>
+      <th colspan="3">Acciones</th>
     </tr>
   </thead>
 
@@ -15,15 +18,17 @@
     <% @cities.each do |city| %>
       <tr>
         <td><%= city.name %></td>
-        <td><%= city.departament_id %></td>
-        <td><%= link_to 'Show', city %></td>
-        <td><%= link_to 'Edit', edit_city_path(city) %></td>
-        <td><%= link_to 'Destroy', city, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= city.departament.name %></td>
+        <td><%= link_to 'Ver', city %></td>
+        <td><%= link_to 'Editar', edit_city_path(city) %></td>
+        <td><%= link_to 'Eliminar', city, method: :delete, data: { confirm: 'Estas seguro?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
 
 <br>
 
-<%= link_to 'New City', new_city_path %>
+
+<%= link_to 'Nueva Ciudad', new_city_path, :class => "mb-1 btn btn-primary"%>
