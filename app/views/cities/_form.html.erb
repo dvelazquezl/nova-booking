@@ -22,7 +22,7 @@
               </div>
               <div class="field">
                 <label>Depatamento </label>
-                <%= form.collection_select(:departament_id, Departament.all, :id, :name, :prompt => 'Departamento') %>
+                <%= form.collection_select(:departament_id, Departament.all, :id, :name, {:prompt => 'Departamento'}, {required: true}) %>
                 <%= link_to 'Crear Departamento', new_departament_path, :class => "mb-1 btn btn-secondary" %>
               </div>
             </div>
