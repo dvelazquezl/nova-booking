@@ -1,47 +1,10 @@
 <h1>Mis Propiedades</h1>
 
-<div class="table-responsive">
-  <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Direccion</th>
-            <th>Ciudad</th>
-            <th>Estado</th>
-            <th colspan="4">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @estates.each do |estate| %>
-        <tr>
-          <td><%= estate.name %></td>
-          <td><%= estate.address %></td>
-          <td><%= City.find_by(id: estate.city_id).name %></td>
-          <td>
-            <% if estate.status %>
-              <span class="badge badge-green float-center">
-                <%= "Publicado" %>
-              </span>
-            <% else %>
-              <span class="badge badge-warning float-center">
-                <%= "No publicado" %>
-              </span>
-            <% end %>
-          </td>
-          <td>
-            <% if estate.status %>
-              <%= link_to 'Dar de baja', unsuscribe_estate_path(estate), method: :post, data: { confirm: 'Estás seguro?' } %>
-            <% else %>
-              <%= link_to 'Publicar', suscribe_estate_path(estate), method: :post, data: { confirm: 'Estás seguro?' } %>
-            <% end %>
-          </td>
-          <td><%= link_to 'Ver', estate %></td>
-          <td><%= link_to 'Editar', edit_estate_path(estate) %></td>
-          <td><%= link_to 'Eliminar', estate, method: :delete, data: { confirm: 'Estás seguro?' } %></td>
-        </tr>
-        <% end %>
-      </tbody>
-  </table>
+<div id="results">
+  <%= render(
+    partial: 'estates/list',
+    locals: {estates: @estates}
+  ) %>
 </div>
 
 <br>
