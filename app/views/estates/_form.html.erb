@@ -66,6 +66,7 @@
               <%= form.select :city_id,
                               options_from_collection_for_select(City.all, "id", "name", form.object.city_id),
                               class: "custom-select custom-select-sm", required: "required" %>
+              <%= link_to 'Crear Ciudad', new_city_path, :class => "mb-1 btn btn-secondary" %>
             </div>
         </div>
       </div>
@@ -84,8 +85,8 @@
           <div>
             <fieldset>
               <div id = "" class="field">
-                <%= form.label "Upload_image/s" %>
-                <%= form.file_field :images, multiple: true, id: "pictureInput", required: "required" %>
+                <%= form.label "Sube la foto de tu propiedad: " %>
+                <%= form.file_field :images, multiple: true, id: "pictureInput", required: "required", accept: "image/*" %>
               </div>
               <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
               </div>

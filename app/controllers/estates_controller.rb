@@ -7,7 +7,16 @@ class EstatesController < ApplicationController
   def index
     owner = Owner.find_by(user_id: current_user.id)
     if owner
-      @estates = Estate.estates_by_owner(owner.id)
+      (@filterrific = initialize_filterrific(
+        Estate.estates_by_owner(owner.id),
+        params[:filterrific]
+      )) || return
+      @estates = @filterrific.find.page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.js
+      end
     else
       @estates = []
     end

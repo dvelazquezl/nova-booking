@@ -5,6 +5,7 @@
     <h2 class="card-title text-center mb-4 mt-1">Reenviar Instrucciones de Confirmacion</h2>
     <hr>
     <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
       <form>
         <div class="form-group">
           <div class="input-group">
