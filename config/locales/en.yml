@@ -269,3 +269,10 @@ en:
         few:   propiedades
         other: propiedades
 
+  enumerize:
+    room:
+      room_type:
+        single: "Simple"
+        double: "Doble"
+        family: "Familiar"
+
