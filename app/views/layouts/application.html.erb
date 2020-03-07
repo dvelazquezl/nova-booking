@@ -41,13 +41,7 @@
       <section class="section-container">
          <!-- Page content-->
          <div class="content-wrapper">
-           <% if notice %>
-             <p class="alert alert-success"><%= notice %></p>
-           <% end %>
-           <% if alert %>
-             <p class="alert alert-danger"><%= alert %></p>
-           <% end %>
-           <%= yield %>
+           <%= render partial: "layouts/partials/notice_alert" %>
          </div>
 
          <%= yield :body_area %>
