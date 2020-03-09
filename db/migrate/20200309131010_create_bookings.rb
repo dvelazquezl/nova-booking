@@ -7,6 +7,7 @@ class CreateBookings < ActiveRecord::Migration[5.2]
       t.datetime :date_end
       t.datetime :date_creation
       t.integer :total_amount
+      t.boolean :booking_state
 
       t.timestamps
     end
