@@ -1,5 +1,17 @@
 <fieldset style="margin: 0; border: 0; padding: 0;" class="card-body">
-
+  <button style="float: right;" type="button" title="Mazimizar" class="show_fields btn btn-link text-primary">
+    <i class="fas fa-chevron-circle-up"></i>
+  </button>
+  <button style="float: right;" type="button" title="Minimizar" class="hide_fields btn btn-link text-primary">
+    <i class="fas fa-chevron-circle-down"></i>
+  </button>
+  <%= link_to "Eliminar" do %>
+    <div style="float: right;" class=" remove_fields btn btn-link text-danger" title="Eliminar">
+      <i class="fas fa-trash-alt"></i>
+    </div>
+  <% end %>
+  <br>
+  <br>
   <div class="row ocultar">
     <div class="col-md-6">
       <div class="card card-default">
@@ -14,9 +26,9 @@
 
             <div class="card-body col-6">
               <div class="form-group">
-                <label>Tipo de habitacion</label>
+                <label>Tipo de habitacion *</label>
                 <br>
-                <%= f.select :room_type, Room.room_type.options,{ prompt: "Seleccionar"}, {required: 'true', class: 'form-control'} %>
+                <%= f.select :room_type, Room.room_type.options, {prompt: "Seleccionar"}, {required: 'true', class: 'form-control'} %>
               </div>
             </div>
           </div>
@@ -77,12 +89,6 @@
 
   <div class="description card-body"></div>
 
-  <%= link_to "Eliminar" do%>
-    <div class=" remove_fields btn btn-link text-danger" title="Eliminar">
-      <i class="fas fa-trash-alt"></i>
-    </div>
-  <%end %>
-  <button type="button" title="Mazimizar" class="show_fields btn btn-link text-primary"><i class="fas fa-chevron-circle-up"></i></button>
-  <button type="button"  title="Minimizar" class="hide_fields btn btn-link text-primary"><i class="fas fa-chevron-circle-down"></i></button>
+
   <hr style="border: 1px solid #48a7f4">
 </fieldset>
