@@ -53,8 +53,10 @@
          <%= yield :body_area %>
 
         <!-- Page footer-->
-        <footer class="content-footer">
-          <%= render partial: "layouts/partials/footer" %>
+        <footer class="footer font-small fixed-bottom">
+          <div class="footer-content">
+            <%= render partial: "layouts/partials/footer" %>
+          </div>
         </footer>
       </section>
    </div>
