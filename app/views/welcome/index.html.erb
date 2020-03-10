@@ -21,16 +21,3 @@
   </section>
 </section>
 
-<div id="results">
-  <%= render(
-          partial: 'welcome/list',
-          locals: {estates: @estates}
-      ) %>
-</div>
-
-<script>
-    $(function(){
-        $('.pagination a').attr('data-remote', 'true')
-    });
-</script>
-
