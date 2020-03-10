@@ -34,7 +34,7 @@
                 <input type="file"  id = "pictureInput"   accept= "image/*" />
                 <label for="pictureInput" >Cambiar Foto</label>
               </div>
-              <%= form.file_field :image,multiple: false,   accept: "image/*" %>
+              <%= form.hidden_field :image,multiple: false%>
             </div>
           </div>
 
