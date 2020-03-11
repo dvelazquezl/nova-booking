@@ -4,7 +4,7 @@
       <table class="table table-bordered">
         <% estates.each do |estate| %>
           <tr>
-            <td>
+            <td class="results-background">
               <div class="media align-items-center">
                 <a class="mr-4" href="#">
                   <%= image_tag estate.images.first, alt: "rss feed", height: 150, width: 150 %>
@@ -32,12 +32,12 @@
           </tr>
         <% end %>
       </table>
-      <div class="card card-columns-2 card-body bg-gray-light">
+      <div class="card-columns-2 card-body">
         <div class="row row-flush">
-          <div class="col">
+          <div class="col col-6 align-items-center">
             <%= will_paginate estates, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
           </div>
-          <div class="col">
+          <div class="col col-9">
             <%= page_entries_info estates, :model => 'estate', :class => 'align-middle' %>
           </div>
         </div>
