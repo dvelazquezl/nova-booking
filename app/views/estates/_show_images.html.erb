@@ -4,9 +4,9 @@
   <div class="carousel-inner" role="listbox">
 
     <div class="carousel-item active">
-      <%= image_tag @estate.images.first, class: "d-block w-100", style: 'height: 300px;background-color: #ADD8E6;' %>
+      <%= image_tag images.first, class: "d-block w-100", style: (defined?(h_size) == nil ? '' : 'height: '+h_size.to_s)+';background-color: #ADD8E6;' %>
     </div>
-    <% @estate.images.drop(1).each do |image| %>
+    <% images.drop(1).each do |image| %>
       <div class="carousel-item">
         <%= image_tag image, class: "d-block w-100", style: 'height: 300px;background-color: #ADD8E6;' %>
       </div>
@@ -25,7 +25,7 @@
   </a>
   <!--/.Controls-->
   <ol class="carousel-indicators">
-    <% @estate.images.each_with_index do |image, i| %>
+    <% images.each_with_index do |image, i| %>
       <li data-target='#carousel-thumb' data-slide-to="<%= i %>" class="<%= i == 0 ? 'active' : '' %>">
         <%= image_tag image, class: "d-block w-100 img-fluid", style: 'height: 30px;background-color: #ADD8E6;' %>
       </li>
