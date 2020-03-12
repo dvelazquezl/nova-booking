@@ -51,6 +51,28 @@ $(document).on('change', '#pictureInput', function (event) {
         $('#target').empty();
     }
 });
+$(document).on('change', '#pictureInput2', function (event) {
+  let files = event.target.files;
+
+  Array.from(files).forEach(file => {
+      let reader = new FileReader();
+      reader.onload = function (file) {
+          let img = new Image();
+          img.src = file.target.result;
+          img.classList.add("img-thumbnail");
+          img.setAttribute('alt', 'rss fit');
+          img.setAttribute('height', HEIGHT);
+          img.setAttribute('width', WIDTH);
+          $('#target2').append(img);
+          $('img').css("display", "inline-block")
+      };
+      reader.readAsDataURL(file);
+  });
+
+  if (Array.from(files).length > 0) {
+      $('#target2').empty();
+  }
+});
 
 $(document).on('click', '.remove_fields', function (e) {
     //elimina el partial que tiene estos enlaces

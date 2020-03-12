@@ -69,16 +69,16 @@
           <h5><strong>Fotos</strong></h5>
         </div>
         <div class="card-body">
-          <!-- Borrar -->
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
+          <div>
+            <fieldset>
+              <div class="field">
+                <%= f.label "Sube fotos para tu habitacion: " %>
+                <%= f.file_field :images, multiple: true, id: "pictureInput2", accept: "image/*" %>
+              </div>
+              <div id="target2" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
+              </div>
+            </fieldset>
+          </div>
         </div>
       </div>
       <!-- END card-->
