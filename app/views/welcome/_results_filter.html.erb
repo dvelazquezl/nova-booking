@@ -1,0 +1,29 @@
+<div class="col-12 results-filter-block">
+  <%= puts @filterrific.inspect %>
+  <%= form_for_filterrific(@filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
+    <%#= form_for_filterrific @filterrific do |f| %>
+    <div class="form-group col-12">
+      <div class="row has-search d-flex align-items-center results-block">
+        <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
+                         :class => 'filterrific-periodically-observed form-control' %>
+      </div>
+      <div class="row has-search d-flex align-items-center results-block">
+        <%= f.date_field(:with_date_gte, class: 'form-control datetime-input',
+                         :'id' => 'filterrific_with_date_gte',
+                         :'data-target' => '#filterrific_with_date_gte',
+                         :'data-toggle' => 'datepicker',
+                         :'value' => '') %>
+      </div>
+      <div class="row has-search d-flex align-items-center results-block">
+        <%= f.date_field(:with_date_gte, class: 'form-control datetime-input',
+                         :'id' => 'filterrific_with_date_gte',
+                         :'data-target' => '#filterrific_with_date_gte',
+                         :'data-toggle' => 'datepicker',
+                         :'value' => '') %>
+      </div>
+      <div class="row has-search d-flex align-items-center results-block">
+        <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>

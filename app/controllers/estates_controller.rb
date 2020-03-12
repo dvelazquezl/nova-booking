@@ -5,7 +5,7 @@ class EstatesController < ApplicationController
   # GET /estates
   # GET /estates.json
   def index
-    owner = Owner.find_by(user_id: current_user.id)
+    owner = helpers.current_owner
     if owner
       (@filterrific = initialize_filterrific(
         Estate.estates_by_owner(owner.id),
@@ -116,6 +116,6 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
   end
 end
