@@ -17,7 +17,7 @@ class Estate < ApplicationRecord
               :available_filters => %w[
                 sorted_by
                 search_query
-                with_date_lt
+                with_date_lte
                 with_date_gte
               ]
 
@@ -70,7 +70,7 @@ class Estate < ApplicationRecord
     where("estates.created_at >= ?", ref_date)
   }
 
-  scope :with_date_lt, ->(ref_date) {
+  scope :with_date_lte, ->(ref_date) {
     where('estates.created_at <= ?', ref_date)
   }
 end
