@@ -66,11 +66,4 @@ class Estate < ApplicationRecord
   extend Enumerize
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
-  scope :with_date_gte, ->(ref_date) {
-    where("estates.created_at >= ?", ref_date)
-  }
-
-  scope :with_date_lt, ->(ref_date) {
-    where("estates.created_at >= ?", ref_date)
-  }
 end
