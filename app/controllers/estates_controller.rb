@@ -5,7 +5,7 @@ class EstatesController < ApplicationController
   # GET /estates
   # GET /estates.json
   def index
-    owner = Owner.find_by(user_id: current_user.id)
+    owner = helpers.current_owner
     if owner
       (@filterrific = initialize_filterrific(
         Estate.estates_by_owner(owner.id),
