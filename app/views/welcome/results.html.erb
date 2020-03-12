@@ -1,0 +1,18 @@
+<section class="row results-filter-section">
+    <div class="col-3">
+        <%= render partial: "welcome/results_filter" %>
+    </div>
+    <div class="col-md-9">
+      <div id="results">
+        <%= render(
+                partial: 'welcome/list',
+                locals: {estates: @estates}
+            ) %>
+      </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('.pagination a').attr('data-remote', 'true')
+    });
+</script>
