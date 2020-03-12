@@ -65,6 +65,7 @@ gem 'turbolinks', '~> 5'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem 'enumerize'
+gem 'data_migrate'
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
