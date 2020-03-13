@@ -8,15 +8,19 @@
                          :class => 'filterrific-periodically-observed form-control' %>
       </div>
       <div class="row has-search d-flex align-items-center results-block">
-        <%= f.date_field(:with_date_gte, class: 'form-control datetime-input',
-                         :'id' => 'filterrific_with_date_gte',
+        <%= f.text_field(:with_date_gte, class: 'form-control datepicker',
+                         :'data-provide' => 'datepicker',
+                         :'data-date-start-date' => "+0d",
+                         :'id' => 'with_date_gte',
                          :'data-target' => '#filterrific_with_date_gte',
                          :'data-toggle' => 'datepicker',
                          :'value' => '') %>
       </div>
       <div class="row has-search d-flex align-items-center results-block">
-        <%= f.date_field(:with_date_lte, class: 'form-control datetime-input',
-                         :'id' => 'filterrific_with_date_lte',
+        <%= f.text_field(:with_date_lte, class: 'form-control datepicker',
+                         :'data-provide' => 'datepicker',
+                         :'data-date-start-date' => "+0d",
+                         :'id' => 'with_date_lte',
                          :'data-target' => '#filterrific_with_date_lte',
                          :'data-toggle' => 'datepicker',
                          :'value' => '') %>
@@ -27,3 +31,14 @@
     </div>
   <% end %>
 </div>
+<script>
+    $(function () {
+        $('#with_date_gte, #with_date_lte').datepicker({
+            todayHighlight: true,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            clearBtn : true,
+            startDate : new Date()
+        });
+    });
+</script>
