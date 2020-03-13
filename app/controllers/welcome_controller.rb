@@ -15,8 +15,6 @@ class WelcomeController < ApplicationController
       format.html
       format.js
     end
-
-    render :index, locals: { filterrific: @filterrific }
   end
 
   def results
@@ -33,7 +31,6 @@ class WelcomeController < ApplicationController
       format.html
       format.js
     end
-    render :results, locals: { filterrific: @filterrific }
   end
 
 end

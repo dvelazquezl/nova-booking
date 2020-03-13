@@ -20,8 +20,6 @@ class EstatesController < ApplicationController
     else
       @estates = []
     end
-
-    render :index, locals: { estates: @estates }
   end
 
   # GET /estates/1
@@ -38,8 +36,8 @@ class EstatesController < ApplicationController
     else
       redirect_to new_owner_path
     end
-    render :new, locals: { rooms: @rooms }
   end
+  
   # GET /estates/new_room
   def new_room
     @room = Room.new
@@ -103,7 +101,7 @@ class EstatesController < ApplicationController
   def unsuscribe
     @estate = Estate.find(params[:id])
     @estate.update_attribute(:status, false)
-    respond_to do |format|
+    respond_to do |format|  
       format.html { redirect_to estates_url, notice: 'Propiedad dada de baja exitosamente.' }
       format.json { head :no_content }
     end
