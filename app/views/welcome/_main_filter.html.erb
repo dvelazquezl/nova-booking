@@ -10,7 +10,7 @@
       </div>
       <div class="row">
         <div class="col-md-5 col-sm-12 has-search d-flex align-items-center">
-          <span class="fa fa-search form-control-feedback"></span>
+          <span class="fa fa-calendar form-control-feedback"></span>
           <%= f.text_field(:with_date_gte, class: 'form-control datepicker',
                            :'data-provide' => 'datepicker',
                            :'data-date-start-date' => "+0d",
@@ -19,11 +19,11 @@
                            :'data-toggle' => 'datepicker',
                            :'value' => '') %>
         </div>
-        <div class="col-md-2 col-sm-12 d-flex align-items-center justify-content-center">
-          <i class="fa-3x mr-2 fa fa-arrows-alt-h"></i>
+        <div class="col-md-2 col-sm-12 d-flex align-items-center">
+          <i class="fa-3x mr-2 fa fa-arrows-alt-h align-middle"></i>
         </div>
         <div class="col-md-5 col-sm-12 has-search d-flex align-items-center">
-          <span class="fa fa-search form-control-feedback"></span>
+          <span class="fa fa-calendar form-control-feedback"></span>
           <%= f.text_field(:with_date_lte, class: 'form-control datepicker',
                            :'data-provide' => 'datepicker',
                            :'data-date-start-date' => "+0d",
@@ -45,8 +45,8 @@
             todayHighlight: true,
             autoclose: true,
             format: "mm/dd/yyyy",
-            clearBtn : true,
-            startDate : new Date()
+            clearBtn: true,
+            startDate: new Date()
         });
     });
 </script>
