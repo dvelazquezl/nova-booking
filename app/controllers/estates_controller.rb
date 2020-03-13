@@ -33,9 +33,13 @@ class EstatesController < ApplicationController
     if Owner.find_by(user_id: current_user.id)
       @estate.owner_id = Owner.find_by(user_id: current_user.id).id
       @rooms = @estate.rooms.build
+      @room_facilities = Facility.where(facility_type: :room)
+      @estate_facilities = Facility.where(facility_type: :estate)
     else
       redirect_to new_owner_path
     end
+
+    render :new, locals: {rooms: @rooms}
   end
   
   # GET /estates/new_room
@@ -52,6 +56,7 @@ class EstatesController < ApplicationController
   def create
     @estate = Estate.new(estate_params)
 
+    byebug
     respond_to do |format|
       if @estate.save
         format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
@@ -116,6 +121,6 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: []])
   end
 end
