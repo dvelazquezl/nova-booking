@@ -8,7 +8,7 @@
     </div>
     <% images.drop(1).each do |image| %>
       <div class="carousel-item">
-        <%= image_tag image, class: "d-block w-100", style: 'height: 300px;background-color: #ADD8E6;' %>
+        <%= image_tag image, class: "d-block w-100", style: (defined?(h_size) == nil ? '' : 'height: '+h_size.to_s)+';background-color: #ADD8E6;' %>
       </div>
     <% end %>
 
