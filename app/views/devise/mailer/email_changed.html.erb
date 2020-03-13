@@ -188,7 +188,8 @@
               <!-- Body content -->
               <tr>
                 <td class="content-cell">
-                  <h1>Tu correo ha sido cambiado</h1>
+                  <h1>Hola <%= @resource.email %>!</h1>
+                  <p>Tu correo ha sido cambiado</p>
                   <% if @resource.try(:unconfirmed_email?) %>
                     <p>Nos comunicamos con usted para notificarle que su correo electrónico se ha sido cambiado a <%= @resource.unconfirmed_email %>.</p>
                   <% else %>

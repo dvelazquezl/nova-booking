@@ -1,17 +1,10 @@
-<p>Hola <%= @resource.email %>!</p>
-
-<p>su cuenta ha sido bloqueada debido a un número excesivo de intentos fallidos de inicio de sesión.</p>
-
-<p>Chaga clic en el enlace a continuación para desbloquear su cuenta:</p>
-
-<p><%= link_to 'Desbloquear mi cuenta', unlock_url(@resource, unlock_token: @token) %></p>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Confirmar correo</title>
+  <title>Desbloquear cuenta</title>
   <style type="text/css" rel="stylesheet" media="all">
     /* Base ------------------------------ */
     *:not(br):not(tr):not(html) {
@@ -195,7 +188,8 @@
               <!-- Body content -->
               <tr>
                 <td class="content-cell">
-                  <h1>Su cuenta ha sido bloqueada debido a un número excesivo de intentos fallidos de inicio de sesión.</h1>
+                  <h1>Hola <%= @resource.email %>!</h1>
+                  <p>Su cuenta ha sido bloqueada debido a un número excesivo de intentos fallidos de inicio de sesión.</p>
 
                   <p>Haga click en el enlace  para desbloquear su cuenta:</p>
                   <!-- Action -->
