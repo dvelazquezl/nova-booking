@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_195745) do
+ActiveRecord::Schema.define(version: 2020_03_10_013752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,36 +36,61 @@ ActiveRecord::Schema.define(version: 2020_03_01_195745) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "booking_details", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.bigint "room_id", null: false
+    t.integer "quantity"
+    t.integer "subtotal"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_booking_details_on_booking_id"
+    t.index ["room_id"], name: "index_booking_details_on_room_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.string "client_name"
+    t.string "client_email"
+    t.datetime "date_start"
+    t.datetime "date_end"
+    t.datetime "date_creation"
+    t.integer "total_amount"
+    t.boolean "booking_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cities", force: :cascade do |t|
     t.string "name"
     t.bigint "departament_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["departament_id"], name: "index_cities_on_departament_id"
   end
 
   create_table "departaments", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "estates", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.bigint "city_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.bigint "owner_id", null: false
     t.string "estate_type"
+    t.boolean "status", default: false, null: false
+    t.string "description"
     t.index ["city_id"], name: "index_estates_on_city_id"
     t.index ["owner_id"], name: "index_estates_on_owner_id"
   end
 
   create_table "facilities", force: :cascade do |t|
     t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "facilities_estates", id: false, force: :cascade do |t|
@@ -87,8 +112,8 @@ ActiveRecord::Schema.define(version: 2020_03_01_195745) do
   create_table "owners", force: :cascade do |t|
     t.string "phone"
     t.string "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "about"
     t.string "name"
     t.bigint "user_id", null: false
@@ -101,8 +126,8 @@ ActiveRecord::Schema.define(version: 2020_03_01_195745) do
     t.integer "price"
     t.string "status"
     t.string "room_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.bigint "estate_id", null: false
     t.integer "quantity"
     t.index ["estate_id"], name: "index_rooms_on_estate_id"
@@ -114,13 +139,18 @@ ActiveRecord::Schema.define(version: 2020_03_01_195745) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "booking_details", "bookings"
+  add_foreign_key "booking_details", "rooms"
   add_foreign_key "cities", "departaments"
   add_foreign_key "estates", "cities"
   add_foreign_key "estates", "owners"
