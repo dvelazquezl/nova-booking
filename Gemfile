@@ -78,7 +78,3 @@ gem 'javascript', '~> 0.1.0'
 gem "rails_best_practices"
 gem "brakeman"
 gem "rubycritic"
-
-
-group :assets do
-  gem 'uglifier', '>= 1.3.0'
