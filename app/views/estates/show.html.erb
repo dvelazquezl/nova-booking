@@ -28,5 +28,12 @@
   <% end %>
 </div>
 
+<div id="results">
+  <%= render(
+          partial: 'estates/facilities_list',
+          locals: {facilities: @facilities}
+      ) %>
+</div>
+
 <%= link_to 'Edit', edit_estate_path(@estate) %> |
 <%= link_to 'Back', estates_path %>
