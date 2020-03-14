@@ -27,18 +27,19 @@ class EstatesController < ApplicationController
   # GET /estates/1
   # GET /estates/1.json
   def show
+    @facilities = @estate.facilities_estates
   end
 
   # GET /estates/new
   def new
-    @estate = Estate.new
     if Owner.find_by(user_id: current_user.id)
+      @estate = Estate.new
       @estate.owner_id = Owner.find_by(user_id: current_user.id).id
       @rooms = @estate.rooms.build
+      render :new, locals: { rooms: @rooms}
     else
       redirect_to new_owner_path
     end
-    render :new, locals: { rooms: @rooms}
   end
   # GET /estates/new_room
   def new_room
