@@ -1,13 +1,13 @@
 
-<%= form_with(model: owner, local: true) do |form| %>
+<%= form_with(model: @owner, local: true) do |form| %>
 
-  <%if owner.errors.any? %>
+  <%if @owner.errors.any? %>
     <div>
       <h2> <%- pluralize(@owner.errors.count, "error") %>
       Lo sentimos ha ocurrido un error
       </h2>
       <ul>
-        <%owner.errors.full_messages.each do |message| %>
+        <%@owner.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <%end %>
       </ul>
@@ -18,6 +18,7 @@
       <div class="card card-default">
         <div class="card-body text-center">
           <div class="py-4">
+            <p></p>
           <%if @owner.image.attached? %>
               <div class="py-4 text-center" id="target">
                 <%= image_tag @owner.image, alt: "rss fit"%>
@@ -28,6 +29,7 @@
               </div>
            <%end %>
             <div class="form-group row">
+
               <div class="form-group col-xl-12 col-md-12 col-12" >
                 <label for="pictureInput" class="btn btn-secondary">
                   <em class="fas fa-camera mr-2"></em> Cambiar Foto
