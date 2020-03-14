@@ -65,6 +65,7 @@ gem 'turbolinks', '~> 5'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 gem 'enumerize'
+gem 'data_migrate'
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
@@ -74,4 +75,10 @@ gem 'filterrific'
 gem 'listen'
 gem 'javascript', '~> 0.1.0'
 
-gem 'uglifier', '~> 4.2'
+gem "rails_best_practices"
+gem "brakeman"
+gem "rubycritic"
+
+
+group :assets do
+  gem 'uglifier', '>= 1.3.0'

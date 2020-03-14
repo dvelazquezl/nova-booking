@@ -7,6 +7,7 @@ class Estate < ApplicationRecord
   has_many :rooms, dependent: :delete_all
   accepts_nested_attributes_for :rooms, allow_destroy: true
   belongs_to :owner
+  delegate :name, :to => :city, :prefix => true
   # default for will_paginate
   self.per_page = 2
 
@@ -17,6 +18,8 @@ class Estate < ApplicationRecord
               :available_filters => %w[
                 sorted_by
                 search_query
+                with_date_lt
+                with_date_gte
               ]
 
   scope :search_query, lambda { |query|
@@ -64,4 +67,11 @@ class Estate < ApplicationRecord
   extend Enumerize
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
+  scope :with_date_gte, ->(ref_date) {
+    where("estates.created_at >= ?", ref_date)
+  }
+
+  scope :with_date_lt, ->(ref_date) {
+    where('estates.created_at <= ?', ref_date)
+  }
 end
