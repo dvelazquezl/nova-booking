@@ -28,27 +28,22 @@
                 <img class="img-fluid thumb96" src="<%= image_path('angle/user/perfil.png')  %>"  />
               </div>
            <%end %>
-            <br>
             <div class="form-group row">
 
               <div class="form-group col-xl-12 col-md-12 col-12" >
-                <label for="image-input" class="btn btn-secondary">
+                <label for="pictureInput" class="btn btn-secondary">
                   <em class="fas fa-camera mr-2"></em> Cambiar Foto
                 </label>
-                <input id="image-input" type="file" class="d-none">
+                <%= form.file_field :image,multiple: false, class: "d-none", id: "pictureInput"%>
               </div>
-
-              <%= form.hidden_field :image,multiple: false%>
             </div>
           </div>
-
           <div class="my-3">
             <div class="col-xl-12 col-md-12 col-12">
               <label class="text-bold  text-right">Acerca de mi</label>
               <%= form.text_area :about, class: "form-control" %>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -111,4 +106,5 @@
     </div>
   </div>
 <% end %>
+
 
