@@ -27,6 +27,7 @@ class EstatesController < ApplicationController
   # GET /estates/1
   # GET /estates/1.json
   def show
+    @facilities = @estate.facilities_estates
   end
 
   # GET /estates/new
