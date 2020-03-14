@@ -1,0 +1,42 @@
+<div class="container-fluid box-placeholder">
+  <!-- TITLES -->
+  <div class="col-12">
+    <div class="row">
+      <div class="col-md-12 ">
+        <h1><%= @estate.name %></h1>
+      </div>
+      <div class="col-md-12">
+        <div><%= @estate.address %></div>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
+
+  <!-- ESTATE DETAILS -->
+  <div class="col-12">
+    <div class="row">
+      <div class="col-md-4 col-sm-12">
+
+      </div>
+      <div class="col-md-8 col-sm-12">
+        <%= render partial: "estates/show_images", :locals => { images: @estate.images, h_size: '300px'} %>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
+
+  <!-- DESCRIPTION SECTION -->
+  <div class="col-12">
+    <dl class="row">
+      <dt class="col-sm-3">Descripcion:</dt>
+      <dd class="col-sm-9">Es un excelente hotel.</dd>
+    </dl>
+  </div>
+  <!-- END -->
+
+  <!--  -->
+  <div class="row" style="background-color: #ff902b">
+
+  </div>
+  <!-- END -->
+</div>
