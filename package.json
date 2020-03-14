@@ -1,14 +1,13 @@
 {
-    "name": "nova-booking",
-    "version": "0.1",
-    "description": "Nova Booking",
-    "author": "fiuni' student",
+    "name": "angle",
+    "version": "0.0.0",
+    "description": "Angle - Bootstrap Admin Template",
+    "author": "@themicon_co",
     "license": "https://wrapbootstrap.com/help/licenses",
     "private": true,
     "scripts": {
         "modernizr": "modernizr -c modernizr-config.json -d vendor/assets/javascripts/modernizr.js",
-        "postinstall": "npm run modernizr",
-        "start": "node server.js"
+        "postinstall": "npm run modernizr"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "5.5.0",

@@ -6,8 +6,6 @@
 //= require datatables.net-bs4/css/dataTables.bootstrap4
 //= require datatables.net-keytable-bs/css/keyTable.bootstrap
 //= require datatables.net-responsive-bs/css/responsive.bootstrap
-@import 'components/_filterrific_filter';
-@import 'components/datepicker';
 
   .main-section-header{
     padding-left: 80px;
@@ -40,12 +38,9 @@
   }
   
   .main-filter-section .has-search{
-    padding-left: 0px;
-    padding-right: 0px;
     padding-bottom: 2px;
     padding-top: 2px;
   }
-
   
   .main-filter-section .form-control{
     padding-left: 2.375rem;
@@ -88,10 +83,3 @@ table, th, td, tr {
     color: black;
   }
 
-  .results-block {
-    padding: 5px;
-  }
-
-  .results-background{
-    background-color: white;
-  }

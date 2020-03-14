@@ -5,7 +5,7 @@ class EstatesController < ApplicationController
   # GET /estates
   # GET /estates.json
   def index
-    owner = helpers.current_owner
+    owner = Owner.find_by(user_id: current_user.id)
     if owner
       (@filterrific = initialize_filterrific(
         Estate.estates_by_owner(owner.id),
@@ -20,8 +20,6 @@ class EstatesController < ApplicationController
     else
       @estates = []
     end
-
-    render :index, locals: { estates: @estates }
   end
 
   # GET /estates/1
@@ -38,8 +36,8 @@ class EstatesController < ApplicationController
     else
       redirect_to new_owner_path
     end
-    render :new, locals: { rooms: @rooms}
   end
+  
   # GET /estates/new_room
   def new_room
     @room = Room.new
@@ -103,7 +101,7 @@ class EstatesController < ApplicationController
   def unsuscribe
     @estate = Estate.find(params[:id])
     @estate.update_attribute(:status, false)
-    respond_to do |format|
+    respond_to do |format|  
       format.html { redirect_to estates_url, notice: 'Propiedad dada de baja exitosamente.' }
       format.json { head :no_content }
     end
@@ -118,6 +116,6 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
   end
 end

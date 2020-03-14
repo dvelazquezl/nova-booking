@@ -3,46 +3,52 @@
   <!-- START navbar header-->
   <div class="navbar-header">
     <%= link_to welcome_index_path do %>
-      <img class="img-fluid" src="<%= image_path('angle/logo.png') %>" alt="App Logo">
+      <em class="fa-4x mr-2 fas fa-home" id="home-icon"></em>
     <%end %>
   </div>
   <!-- END navbar header-->
+  <!-- START Left navbar-->
+  <ul class="navbar-nav mr-auto flex-row">
+    <!-- START User avatar toggle-->
+    <li class="nav-item d-none d-md-block">
+      <a class="nav-link" id="user-block-toggle">
+        <em class="icon-user"></em>
+        <% if user_signed_in? %>
+          <%= current_user.email  %>
+        <% end %>
+      </a>
+    </li>
+    <!-- END User avatar toggle-->
   </ul>
   <!-- END Left navbar-->
+
   <!-- START Right Navbar-->
   <ul class="navbar-nav flex-row">
     <!-- START OPTIONS -->
     <li class="nav-item d-none d-md-block">
       <nav class="navbar navbar-expand-lg">
         <ul class="navbar-nav mr-auto">
-          <% if user_signed_in? && is_owner? %>
+          <% if user_signed_in? %>
             <li class="nav-item active">
               <%= link_to 'Mis propiedades', estates_path, :class => "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to 'Editar perfil', edit_user_registration_path, :class => "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Cerrar sesion", destroy_user_session_path, method: :delete, :class => "nav-link"  %>
             </li>
           <% else %>
             <li class="nav-item active">
               <%= link_to 'Registrar tu propiedad', new_estate_path, :class => "nav-link" %>
             </li>
+            <li class="nav-item">
+              <%= link_to "Registrarse", new_user_registration_path, :class => "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Iniciar Sesion", new_user_session_path, :class => "nav-link" %>
+            </li>
           <% end %>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <% if user_signed_in? %>
-                <%= current_user.email  %>
-              <% else %>
-                Iniciar Sesión
-              <% end %>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <% if user_signed_in? %>
-                <a class="dropdown-item"><%= link_to 'Cambiar Contraseña', edit_user_registration_path, :class => "nav-link" %></a>
-                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link"  %></a>
-              <% else %>
-                <a class="dropdown-item"><%= link_to "Iniciar Sesión", new_user_session_path, :class => "nav-link" %></a>
-                <a class="dropdown-item"><%= link_to "Registrarse", new_user_registration_path, :class => "nav-link" %></a>
-              <% end %>
-            </div>
-          </li>
         </ul>
       </nav>
     </li>
