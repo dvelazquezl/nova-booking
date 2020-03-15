@@ -4,10 +4,10 @@ class Facility < ApplicationRecord
   has_many :estates, through: :facilities_estates
 
   extend Enumerize
-
   enumerize :facility_type, in: [:estate, :room]
 
-  def self.options_for_select
-    order("LOWER(description)").map { |e| [e.description, e.id] }
-  end
+  #def self.options_for_select
+  #  order("LOWER(description)").map { |e| [e.description, e.id] }
+  #end
+
 end
