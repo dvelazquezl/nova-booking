@@ -12,6 +12,7 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.new
+
   end
 
   def edit
@@ -19,7 +20,7 @@ class BookingsController < ApplicationController
   end
 
   def create
-    @booking = Booking.new(owner_params)
+    @booking = Booking.new(booking_params)
 
     respond_to do |format|
       if @booking.save
@@ -34,8 +35,8 @@ class BookingsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @booking.update(owner_params)
-        format.html { redirect_to @booking, notice: 'La reserva fue actualizado correctamente.' }
+      if @booking.update(booking_params)
+        format.html { redirect_to @booking, notice: 'La reserva fue actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @booking }
       else
         format.html { render :edit }
@@ -47,7 +48,7 @@ class BookingsController < ApplicationController
   def destroy
     @booking.destroy
     respond_to do |format|
-      format.html { redirect_to owners_url, notice: 'La reserva fue eliminado satifactoriamente.' }
+      format.html { redirect_to bookings_url, notice: 'La reserva fue eliminado satifactoriamente.' }
       format.json { head :no_content }
     end
   end
