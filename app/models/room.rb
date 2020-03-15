@@ -5,6 +5,6 @@ class Room < ApplicationRecord
   extend Enumerize
 
   enumerize :room_type, in: [:single, :double, :family]
-  enumerize :status, in: [:available, :occupied]
+  enumerize :status, in: [:published, :not_published]
 
 end
