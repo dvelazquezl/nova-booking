@@ -1,4 +1,4 @@
-<fieldset style="margin: 0; border: 0; padding: 0;" class="card-body">
+<fieldset style="margin: 0; border: 0; padding: 0;" class="card-body detail">
   <button style="float: right;" type="button" title="Mazimizar" class="show_fields btn btn-link text-primary">
     <i class="fas fa-chevron-circle-down"></i>
   </button>
@@ -89,16 +89,16 @@
           <h5><strong>Fotos</strong></h5>
         </div>
         <div class="card-body">
-          <!-- Borrar -->
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
+          <div>
+            <fieldset class="picture">
+              <div class="field">
+                <%= f.label "Sube fotos para tu habitacion: " %>
+                <%= f.file_field :images, multiple: true, class: "pictureInput2", accept: "image/*" %>
+              </div>
+              <div class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
+              </div>
+            </fieldset>
+          </div>
         </div>
       </div>
       <!-- END card-->
