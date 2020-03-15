@@ -22,7 +22,7 @@
               <% end %>
             </td>
             <td class="col-2"><%= r.price %></td>
-            <td class="col-2"><%= r.select :quantity, options_for_select([["Select One", ""], "Cell", "Work", "Office", "Home", "Other"]), :class => 'genForm_dropBox' %></td>
+            <td class="col-2"><%= r.quantity %></td>
             <td class="col-2"></td>
           </tr>
         <% end %>
