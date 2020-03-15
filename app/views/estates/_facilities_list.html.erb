@@ -1,0 +1,5 @@
+<ul>
+  <% facilities.each do |facility| %>
+      <li><%=Facility.find_by(id: facility.facility_id).description %> <% if facility.quantity > 1 %> <%= facility.quantity %> <% end %></li>
+  <%end %>
+</ul>
