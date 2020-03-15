@@ -13,6 +13,7 @@ class Estate < ApplicationRecord
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
   scope :only_published, -> { where(status: true) }
+  scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
   filterrific :default_filter_params => { :sorted_by => 'name_asc' },
               :available_filters => %w[
