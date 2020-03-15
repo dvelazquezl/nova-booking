@@ -35,6 +35,7 @@ class EstatesController < ApplicationController
     if Owner.find_by(user_id: current_user.id)
       @estate = Estate.new
       @estate.owner_id = Owner.find_by(user_id: current_user.id).id
+      @estate.status = false
       @rooms = @estate.rooms.build
       render :new, locals: { rooms: @rooms}
     else
@@ -54,6 +55,7 @@ class EstatesController < ApplicationController
   # POST /estates.json
   def create
     @estate = Estate.new(estate_params)
+    @estate.isPublished
 
     respond_to do |format|
       if @estate.save

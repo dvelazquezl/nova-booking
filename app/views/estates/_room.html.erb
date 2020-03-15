@@ -24,14 +24,22 @@
               </div>
             </div>
 
-            <div class="card-body col-6">
+            <div class="card-body col-4">
               <div class="form-group">
                 <label>Tipo de habitacion *</label>
                 <br>
                 <%= f.select :room_type, Room.room_type.options, {prompt: "Seleccionar"}, {required: 'true', class: 'form-control'} %>
               </div>
             </div>
-          </div>
+
+            <div class="card-body col-2">
+              <div class="form-group">
+                <br>
+                <br>
+                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: true}, "published", "not_published" %><span class="fa fa-bullhorn "></span> Publicado</label>
+              </div>
+              </div>
+            </div>
 
           <div class="row">
             <div class="card-body col-4">
