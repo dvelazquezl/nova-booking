@@ -55,7 +55,7 @@ class EstatesController < ApplicationController
   # POST /estates.json
   def create
     @estate = Estate.new(estate_params)
-    @estate.status = @estate.rooms.any? {|room| room.status == "published"}
+    @estate.isPublished
 
     respond_to do |format|
       if @estate.save
