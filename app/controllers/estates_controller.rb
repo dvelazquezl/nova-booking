@@ -38,7 +38,7 @@ class EstatesController < ApplicationController
       @rooms = @estate.rooms.build
       @room_facilities = Facility.where(facility_type: :room)
       @estate_facilities = Facility.where(facility_type: :estate)
-      render :new, locals: { rooms: @rooms}
+      render :new, locals: { rooms: @rooms, estate_facilities: @estate_facilities}
     else
       redirect_to new_owner_path
     end
