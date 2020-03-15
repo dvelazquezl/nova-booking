@@ -1,0 +1,33 @@
+<div class="card card-default">
+  <div class="card-header"><h5><strong>Disponibilidad</strong></h5></div>
+  <!-- START table-responsive-->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" id="table-ext-1">
+      <thead>
+      <tr>
+        <th>Tipo de habitacion</th>
+        <th>Capacidad</th>
+        <th>Precio</th>
+        <th>Seleccionar habitacion</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <% @rooms.each do |r| %>
+          <tr>
+            <td><%= r.room_type %></td>
+            <td class="col-2">
+              <% r.capacity.to_i.times do %>
+                <em class="fa-lg fas fa-user"></em>
+              <% end %>
+            </td>
+            <td class="col-2"><%= r.price %></td>
+            <td class="col-2"><%= r.select :quantity, options_for_select([["Select One", ""], "Cell", "Work", "Office", "Home", "Other"]), :class => 'genForm_dropBox' %></td>
+            <td class="col-2"></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <!-- END table-responsive-->
+</div>
