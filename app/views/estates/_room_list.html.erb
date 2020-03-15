@@ -1,33 +1,52 @@
-<div class="card card-default">
-  <div class="card-header"><h5><strong>Disponibilidad</strong></h5></div>
-  <!-- START table-responsive-->
-  <div class="table-responsive">
-    <table class="table table-bordered table-hover" id="table-ext-1">
-      <thead>
-      <tr>
-        <th>Tipo de habitacion</th>
-        <th>Capacidad</th>
-        <th>Precio</th>
-        <th>Seleccionar habitacion</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-        <% @rooms.each do |r| %>
-          <tr>
-            <td><%= r.room_type %></td>
-            <td class="col-2">
-              <% r.capacity.to_i.times do %>
-                <em class="fa-lg fas fa-user"></em>
-              <% end %>
-            </td>
-            <td class="col-2"><%= r.price %></td>
-            <td class="col-2"><%= r.quantity %></td>
-            <td class="col-2"></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card card-default">
+        <div class="card-header"><h5><strong>Disponibilidad</strong></h5></div>
+        <!-- START table-responsive-->
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover" id="table-ext-1">
+            <thead>
+            <tr>
+              <th>Tipo de habitacion</th>
+              <th>Capacidad</th>
+              <th>Precio</th>
+              <th>Seleccionar habitacion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @rooms.each do |r| %>
+              <tr>
+                <td class="col-2"><%= r.room_type %></td>
+                <td class="col-2">
+                  <% r.capacity.to_i.times do %>
+                    <em class="fa-lg fas fa-user"></em>
+                  <% end %>
+                </td>
+                <td class="col-2"><%= r.price %></td>
+                <td class="col-2">
+                  <select class="custom-select custom-select-sm">
+                    <option selected="">0</option>
+                    <% r.quantity.times do |q| %>
+                      <option value=<% q + 1 %>><%= q + 1 %></option> #mejorar el + 1
+                    <% end %>
+                  </select>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+        <!-- END table-responsive-->
+      </div>
+    </div>
+    <div class="col col-lg-2">
+        <div class="card bg-light mb-3">
+          <div class="card-body">
+            <h5><strong>Sumatoria</strong></h5> #valor que se debe modificar con la sumatoria de hab
+            <button class="btn btn-primary">Reservar</button>
+          </div>
+        </div>
+    </div>
   </div>
-  <!-- END table-responsive-->
 </div>
