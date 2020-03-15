@@ -1,13 +1,13 @@
 
-<%= form_with(model: @owner, local: true) do |form| %>
+<%= form_with(model: owner, local: true) do |form| %>
 
-  <%if @owner.errors.any? %>
+  <%if owner.errors.any? %>
     <div>
       <h2> <%- pluralize(@owner.errors.count, "error") %>
       Lo sentimos ha ocurrido un error
       </h2>
       <ul>
-        <%@owner.errors.full_messages.each do |message| %>
+        <%owner.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <%end %>
       </ul>
