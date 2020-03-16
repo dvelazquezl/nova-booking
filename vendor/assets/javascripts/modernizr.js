@@ -1,5 +1,5 @@
 /*!
- * modernizr v3.6.0
+ * modernizr v3.9.1
  * Build https://modernizr.com/download?-bgpositionshorthand-bgpositionxy-bgrepeatspace_bgrepeatround-bgsizecover-borderradius-cssanimations-csscalc-csstransforms-csstransforms3d-csstransitions-flexboxtweener-fontface-inlinesvg-localstorage-multiplebgs-preserve3d-sessionstorage-smil-svg-svgasimg-svgclippaths-svgfilters-svgforeignobject-websqldatabase-setclasses-dontmin
  *
  * Copyright (c)
@@ -10,6 +10,7 @@
  *  Patrick Kettner
  *  Stu Cox
  *  Richard Herrera
+ *  Veeck
 
  * MIT License
  */
@@ -23,20 +24,19 @@
 */
 
 ;(function(window, document, undefined){
+
   var tests = [];
   
 
   /**
-   *
    * ModernizrProto is the constructor for Modernizr
    *
    * @class
    * @access public
    */
-
   var ModernizrProto = {
     // The current version, dummy
-    _version: '3.6.0',
+    _version: '3.9.1',
 
     // Any settings that don't work as separate modules
     // can go in here as configuration.
@@ -95,20 +95,20 @@
    * @function is
    * @param {*} obj - A thing we want to check the type of
    * @param {string} type - A string to compare the typeof against
-   * @returns {boolean}
+   * @returns {boolean} true if the typeof the first parameter is exactly the specified type, false otherwise
    */
-
   function is(obj, type) {
     return typeof obj === type;
   }
+
   ;
 
   /**
    * Run through all tests and detect their support in the current UA.
    *
    * @access private
+   * @returns {void}
    */
-
   function testRunner() {
     var featureNames;
     var feature;
@@ -143,7 +143,6 @@
         // Run the test, or use the raw value if it's not a function
         result = is(feature.fn, 'function') ? feature.fn() : feature.fn;
 
-
         // Set each of the names on the Modernizr object
         for (nameIdx = 0; nameIdx < featureNames.length; nameIdx++) {
           featureName = featureNames[nameIdx];
@@ -158,8 +157,8 @@
           if (featureNameSplit.length === 1) {
             Modernizr[featureNameSplit[0]] = result;
           } else {
-            // cast to a Boolean, if not one already
-            if (Modernizr[featureNameSplit[0]] && !(Modernizr[featureNameSplit[0]] instanceof Boolean)) {
+            // cast to a Boolean, if not one already or if it doesnt exist yet (like inputtypes)
+            if (!Modernizr[featureNameSplit[0]] || Modernizr[featureNameSplit[0]] && !(Modernizr[featureNameSplit[0]] instanceof Boolean)) {
               Modernizr[featureNameSplit[0]] = new Boolean(Modernizr[featureNameSplit[0]]);
             }
 
@@ -179,7 +178,6 @@
    * @access private
    * @returns {HTMLElement|SVGElement} The root element of the document
    */
-
   var docElement = document.documentElement;
   
 
@@ -189,8 +187,8 @@
    * @access private
    * @returns {boolean}
    */
-
   var isSVG = docElement.nodeName.toLowerCase() === 'svg';
+
   
 
   /**
@@ -200,7 +198,6 @@
    * @function setClasses
    * @param {string[]} classes - Array of class names
    */
-
   // Pass in an and array of class names, e.g.:
   //  ['no-webp', 'borderradius', ...]
   function setClasses(classes) {
@@ -220,14 +217,15 @@
 
     if (Modernizr._config.enableClasses) {
       // Add the new classes
-      className += ' ' + classPrefix + classes.join(' ' + classPrefix);
+      if (classes.length > 0) {
+        className += ' ' + classPrefix + classes.join(' ' + classPrefix);
+      }
       if (isSVG) {
         docElement.className.baseVal = className;
       } else {
         docElement.className = className;
       }
     }
-
   }
 
   ;
@@ -242,7 +240,6 @@
    * @function createElement
    * @returns {HTMLElement|SVGElement} An HTML or SVG element
    */
-
   function createElement() {
     if (typeof document.createElement !== 'function') {
       // This is the case in IE7, where the type of createElement is "object".
@@ -266,7 +263,7 @@
     "name": "MDN Docs",
     "href": "https://developer.mozilla.org/en/CSS/background-position"
   }, {
-    "name": "W3 Spec",
+    "name": "W3C Spec",
     "href": "https://www.w3.org/TR/css3-background/#background-position"
   }, {
     "name": "Demo",
@@ -276,7 +273,7 @@
 !*/
 /* DOC
 Detects if you can use the shorthand method to define multiple parts of an
-element's background-position simultaniously.
+element's background-position simultaneously.
 
 eg `background-position: right 10px bottom 10px`
 */
@@ -305,14 +302,12 @@ eg `background-position: right 10px bottom 10px`
    * @access private
    * @returns {string} The string representing the vendor-specific style properties
    */
-
   var omPrefixes = 'Moz O ms Webkit';
   
 
   var cssomPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.split(' ') : []);
   ModernizrProto._cssomPrefixes = cssomPrefixes;
   
-
 
   /**
    * contains checks to see if a string contains another string
@@ -321,9 +316,8 @@ eg `background-position: right 10px bottom 10px`
    * @function contains
    * @param {string} str - The string we want to check for substrings
    * @param {string} substr - The substring we want to search the first string for
-   * @returns {boolean}
+   * @returns {boolean} true if and only if the first string 'str' contains the second string 'substr'
    */
-
   function contains(str, substr) {
     return !!~('' + str).indexOf(substr);
   }
@@ -335,7 +329,6 @@ eg `background-position: right 10px bottom 10px`
    *
    * @access private
    */
-
   var modElem = {
     elem: createElement('modernizr')
   };
@@ -368,7 +361,6 @@ eg `background-position: right 10px bottom 10px`
    * @returns {HTMLElement|SVGElement} Returns the real body of a document, or an
    * artificially created element that stands in for the body
    */
-
   function getBody() {
     // After page load injecting a fake body doesn't work so check if body exists
     var body = document.body;
@@ -390,12 +382,11 @@ eg `background-position: right 10px bottom 10px`
    * @access private
    * @function injectElementWithStyles
    * @param {string} rule - String representing a css rule
-   * @param {function} callback - A function that is used to test the injected element
+   * @param {Function} callback - A function that is used to test the injected element
    * @param {number} [nodes] - An integer representing the number of additional nodes you want injected
    * @param {string[]} [testnames] - An array of strings that are used as ids for the additional nodes
-   * @returns {boolean}
+   * @returns {boolean} the result of the specified callback test
    */
-
   function injectElementWithStyles(rule, callback, nodes, testnames) {
     var mod = 'modernizr';
     var style;
@@ -454,7 +445,6 @@ eg `background-position: right 10px bottom 10px`
     }
 
     return !!ret;
-
   }
 
   ;
@@ -468,12 +458,12 @@ eg `background-position: right 10px bottom 10px`
    * @param {string} name - String name of camelCase prop we want to convert
    * @returns {string} The kebab-case version of the supplied name
    */
-
   function domToCSS(name) {
     return name.replace(/([A-Z])/g, function(str, m1) {
       return '-' + m1.toLowerCase();
     }).replace(/^ms-/, '-ms-');
   }
+
   ;
 
 
@@ -483,11 +473,11 @@ eg `background-position: right 10px bottom 10px`
    *
    * @access private
    * @function computedStyle
-   * @param {HTMLElement|SVGElement} - The element we want to find the computed styles of
-   * @param {string|null} [pseudoSelector]- An optional pseudo element selector (e.g. :before), of null if none
-   * @returns {CSSStyleDeclaration}
+   * @param {HTMLElement|SVGElement} elem - The element we want to find the computed styles of
+   * @param {string|null} [pseudo] - An optional pseudo element selector (e.g. :before), of null if none
+   * @param {string} prop - A CSS property
+   * @returns {CSSStyleDeclaration} the value of the specified CSS property
    */
-
   function computedStyle(elem, pseudo, prop) {
     var result;
 
@@ -524,12 +514,11 @@ eg `background-position: right 10px bottom 10px`
    * @param {string} value - A string representing the value we want to check via @supports
    * @returns {boolean|undefined} A boolean when @supports exists, undefined otherwise
    */
-
   // Accepts a list of property names and a single value
   // Returns `undefined` if native detection not available
   function nativeTestProps(props, value) {
     var i = props.length;
-    // Start with the JS API: http://www.w3.org/TR/css3-conditional/#the-css-interface
+    // Start with the JS API: https://www.w3.org/TR/css3-conditional/#the-css-interface
     if ('CSS' in window && 'supports' in window.CSS) {
       // Try every prefixed variant of the property
       while (i--) {
@@ -548,7 +537,7 @@ eg `background-position: right 10px bottom 10px`
       }
       conditionText = conditionText.join(' or ');
       return injectElementWithStyles('@supports (' + conditionText + ') { #modernizr { position: absolute; } }', function(node) {
-        return computedStyle(node, null, 'position') == 'absolute';
+        return computedStyle(node, null, 'position') === 'absolute';
       });
     }
     return undefined;
@@ -564,12 +553,12 @@ eg `background-position: right 10px bottom 10px`
    * @param {string} name - String name of kebab-case prop we want to convert
    * @returns {string} The camelCase version of the supplied name
    */
-
   function cssToDOM(name) {
     return name.replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
       return m1 + m2.toUpperCase();
     }).replace(/^-/, '');
   }
+
   ;
 
   // testProps is a generic CSS / DOM property test.
@@ -600,12 +589,12 @@ eg `background-position: right 10px bottom 10px`
     var afterInit, i, propsLength, prop, before;
 
     // If we don't have a style element, that means we're running async or after
-    // the core tests, so we'll need to create our own elements to use
+    // the core tests, so we'll need to create our own elements to use.
 
-    // inside of an SVG element, in certain browsers, the `style` element is only
+    // Inside of an SVG element, in certain browsers, the `style` element is only
     // defined for valid tags. Therefore, if `modernizr` does not have one, we
     // fall back to a less used element and hope for the best.
-    // for strict XHTML browsers the hardly used samp element is used
+    // For strict XHTML browsers the hardly used samp element is used.
     var elems = ['modernizr', 'tspan', 'samp'];
     while (!mStyle.style && elems.length) {
       afterInit = true;
@@ -647,16 +636,16 @@ eg `background-position: right 10px bottom 10px`
           // supported. If `value` is empty string, it'll fail here (because
           // it hasn't changed), which matches how browsers have implemented
           // CSS.supports()
-          if (mStyle.style[prop] != before) {
+          if (mStyle.style[prop] !== before) {
             cleanElems();
-            return prefixed == 'pfx' ? prop : true;
+            return prefixed === 'pfx' ? prop : true;
           }
         }
         // Otherwise just return true, or the property name if this is a
         // `prefixed()` call
         else {
           cleanElems();
-          return prefixed == 'pfx' ? prop : true;
+          return prefixed === 'pfx' ? prop : true;
         }
       }
     }
@@ -669,7 +658,7 @@ eg `background-position: right 10px bottom 10px`
   /**
    * List of JavaScript DOM values used for tests
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr._domPrefixes
    * @optionName Modernizr._domPrefixes
    * @optionProp domPrefixes
@@ -683,7 +672,6 @@ eg `background-position: right 10px bottom 10px`
    * Modernizr._domPrefixes === [ "Moz", "O", "ms", "Webkit" ];
    * ```
    */
-
   var domPrefixes = (ModernizrProto._config.usePrefixes ? omPrefixes.toLowerCase().split(' ') : []);
   ModernizrProto._domPrefixes = domPrefixes;
   
@@ -693,11 +681,10 @@ eg `background-position: right 10px bottom 10px`
    *
    * @access private
    * @function fnBind
-   * @param {function} fn - a function you want to change `this` reference to
-   * @param {object} that - the `this` you want to call the function with
-   * @returns {function} The wrapped version of the supplied function
+   * @param {Function} fn - a function you want to change `this` reference to
+   * @param {Object} that - the `this` you want to call the function with
+   * @returns {Function} The wrapped version of the supplied function
    */
-
   function fnBind(fn, that) {
     return function() {
       return fn.apply(that, arguments);
@@ -712,9 +699,9 @@ eg `background-position: right 10px bottom 10px`
    *
    * @access private
    * @function testDOMProps
-   * @param {array.<string>} props - An array of properties to test for
-   * @param {object} obj - An object or Element you want to use to test the parameters again
-   * @param {boolean|object} elem - An Element to bind the property lookup again. Use `false` to prevent the check
+   * @param {Array<string>} props - An array of properties to test for
+   * @param {Object} obj - An object or Element you want to use to test the parameters again
+   * @param {boolean|Object} elem - An Element to bind the property lookup again. Use `false` to prevent the check
    * @returns {false|*} returns false if the prop is unsupported, otherwise the value that is supported
    */
   function testDOMProps(props, obj, elem) {
@@ -732,7 +719,7 @@ eg `background-position: right 10px bottom 10px`
 
         // let's bind a function
         if (is(item, 'function')) {
-          // bind to obj unless overriden
+          // bind to obj unless overridden
           return fnBind(item, elem || obj);
         }
 
@@ -754,7 +741,7 @@ eg `background-position: right 10px bottom 10px`
    * @access private
    * @function testPropsAll
    * @param {string} prop - A string of the property to test for
-   * @param {string|object} [prefixed] - An object to check the prefixed properties on. Use a string to skip
+   * @param {string|Object} [prefixed] - An object to check the prefixed properties on. Use a string to skip
    * @param {HTMLElement|SVGElement} [elem] - An element used to test the property and value against
    * @param {string} [value] - A string of a css value
    * @param {boolean} [skipValueTest] - An boolean representing if you want to test if value sticks when set
@@ -788,7 +775,7 @@ eg `background-position: right 10px bottom 10px`
   /**
    * testAllProps determines whether a given CSS property is supported in the browser
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr.testAllProps
    * @optionName Modernizr.testAllProps()
    * @optionProp testAllProps
@@ -797,6 +784,7 @@ eg `background-position: right 10px bottom 10px`
    * @param {string} prop - String naming the property to test (either camelCase or kebab-case)
    * @param {string} [value] - String of the value to test
    * @param {boolean} [skipValueTest=false] - Whether to skip testing that the value is supported when using non-native detection
+   * @returns {false|string} returns the string version of the property, or false if it is unsupported
    * @example
    *
    * testAllProps determines whether a given CSS property, in some prefixed form,
@@ -821,11 +809,12 @@ eg `background-position: right 10px bottom 10px`
    * testAllProps('shapeOutside', 'content-box', true);
    * ```
    */
-
   function testAllProps(prop, value, skipValueTest) {
     return testPropsAll(prop, undefined, undefined, value, skipValueTest);
   }
+
   ModernizrProto.testAllProps = testAllProps;
+
   
 /*!
 {
@@ -885,7 +874,7 @@ Detects the ability to use round and space as properties for background-repeat
   "tags": ["css"],
   "builderAliases": ["css_backgroundsizecover"],
   "notes": [{
-    "name" : "MDN Docs",
+    "name": "MDN Docs",
     "href": "https://developer.mozilla.org/en/CSS/background-size"
   }]
 }
@@ -919,8 +908,8 @@ Detects the ability to use round and space as properties for background-repeat
   "tags": ["css"],
   "warnings": ["Android < 4 will pass this test, but can only animate a single property at a time"],
   "notes": [{
-    "name" : "Article: 'Dispelling the Android CSS animation myths'",
-    "href": "https://goo.gl/OGw5Gm"
+    "name": "Article: 'Dispelling the Android CSS animation myths'",
+    "href": "https://web.archive.org/web/20180602074607/https://daneden.me/2011/12/14/putting-up-with-androids-bullshit/"
   }]
 }
 !*/
@@ -933,9 +922,9 @@ Detects whether or not elements can be animated using CSS
 
   /**
    * List of property values to set for css tests. See ticket #21
-   * http://git.io/vUGl4
+   * https://github.com/modernizr/modernizr/issues/21
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr._prefixes
    * @optionName Modernizr._prefixes
    * @optionProp prefixes
@@ -962,7 +951,6 @@ Detects whether or not elements can be animated using CSS
    * rule === 'display:flex; display:-webkit-flex; display:-moz-flex; display:-o-flex; display:-ms-flex; display:flex'
    * ```
    */
-
   // we use ['',''] rather than an empty array in order to allow a pattern of .`join()`ing prefixes to test
   // values in feature detects to continue to work
   var prefixes = (ModernizrProto._config.usePrefixes ? ' -webkit- -moz- -o- -ms- '.split(' ') : ['','']);
@@ -1012,7 +1000,7 @@ Method of allowing calculated values for length units. For example:
 
   Modernizr.addTest('csstransforms', function() {
     // Android < 3.0 is buggy, so we sniff and blacklist
-    // http://git.io/hHzL7w
+    // https://github.com/Modernizr/Modernizr/issues/903
     return navigator.userAgent.indexOf('Android 2.') === -1 &&
            testAllProps('transform', 'scale(1)', true);
   });
@@ -1025,14 +1013,14 @@ Method of allowing calculated values for length units. For example:
   "tags": ["css"],
   "builderAliases": ["css_supports"],
   "notes": [{
-    "name": "W3 Spec",
-    "href": "http://dev.w3.org/csswg/css3-conditional/#at-supports"
-  },{
+    "name": "W3C Spec (The @supports rule)",
+    "href": "https://dev.w3.org/csswg/css3-conditional/#at-supports"
+  }, {
     "name": "Related Github Issue",
     "href": "https://github.com/Modernizr/Modernizr/issues/648"
-  },{
-    "name": "W3 Info",
-    "href": "http://dev.w3.org/csswg/css3-conditional/#the-csssupportsrule-interface"
+  }, {
+    "name": "W3C Spec (The CSSSupportsRule interface)",
+    "href": "https://dev.w3.org/csswg/css3-conditional/#the-csssupportsrule-interface"
   }]
 }
 !*/
@@ -1048,7 +1036,7 @@ Method of allowing calculated values for length units. For example:
   "caniuse": "transforms3d",
   "tags": ["css"],
   "warnings": [
-    "Chrome may occassionally fail this test on some systems; more info: https://code.google.com/p/chromium/issues/detail?id=129004"
+    "Chrome may occasionally fail this test on some systems; more info: https://bugs.chromium.org/p/chromium/issues/detail?id=129004"
   ]
 }
 !*/
@@ -1066,7 +1054,7 @@ Method of allowing calculated values for length units. For example:
   "notes": [{
     "name": "MDN Docs",
     "href": "https://developer.mozilla.org/en-US/docs/Web/CSS/transform-style"
-  },{
+  }, {
     "name": "Related Github Issue",
     "href": "https://github.com/Modernizr/Modernizr/issues/1748"
   }]
@@ -1132,7 +1120,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   /**
    * testStyles injects an element with style element and some CSS rules
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr.testStyles
    * @optionName Modernizr.testStyles()
    * @optionProp testStyles
@@ -1183,9 +1171,7 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
    *   elem.lastChild === document.getElementById('bar'); // true
    * }, 2, ['foo', 'bar']);
    * ```
-   *
    */
-
   var testStyles = ModernizrProto.testStyles = injectElementWithStyles;
   
 /*!
@@ -1196,21 +1182,21 @@ Detects support for `transform-style: preserve-3d`, for getting a proper 3D pers
   "tags": ["css"],
   "knownBugs": [
     "False Positive: WebOS https://github.com/Modernizr/Modernizr/issues/342",
-    "False Postive: WP7 https://github.com/Modernizr/Modernizr/issues/538"
+    "False Positive: WP7 https://github.com/Modernizr/Modernizr/issues/538"
   ],
   "notes": [{
     "name": "@font-face detection routine by Diego Perini",
     "href": "http://javascript.nwbox.com/CSSSupport/"
-  },{
+  }, {
     "name": "Filament Group @font-face compatibility research",
     "href": "https://docs.google.com/presentation/d/1n4NyG4uPRjAA8zn_pSQ_Ket0RhcWC6QlZ6LMjKeECo0/edit#slide=id.p"
-  },{
+  }, {
     "name": "Filament Grunticon/@font-face device testing results",
     "href": "https://docs.google.com/spreadsheet/ccc?key=0Ag5_yGvxpINRdHFYeUJPNnZMWUZKR2ItMEpRTXZPdUE#gid=0"
-  },{
+  }, {
     "name": "CSS fonts on Android",
     "href": "https://stackoverflow.com/questions/3200069/css-fonts-on-android"
-  },{
+  }, {
     "name": "@font-face and Android",
     "href": "http://archivist.incutio.com/viewlist/css-discuss/115960"
   }]
@@ -1295,7 +1281,7 @@ Detects support for SVG in `<embed>` or `<object>` elements.
   
 
 
-   // _l tracks listeners for async tests, as well as tests that execute after the initial run
+  // _l tracks listeners for async tests, as well as tests that execute after the initial run
   ModernizrProto._l = {};
 
   /**
@@ -1303,12 +1289,13 @@ Detects support for SVG in `<embed>` or `<object>` elements.
    * asynchronous, they may not finish before your scripts run. As a result you
    * will get a possibly false negative `undefined` value.
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr.on
    * @access public
    * @function on
    * @param {string} feature - String name of the feature detect
-   * @param {function} cb - Callback function returning a Boolean - true if feature is supported, false if not
+   * @param {Function} cb - Callback function returning a Boolean - true if feature is supported, false if not
+   * @returns {void}
    * @example
    *
    * ```js
@@ -1321,7 +1308,6 @@ Detects support for SVG in `<embed>` or `<object>` elements.
    * });
    * ```
    */
-
   ModernizrProto.on = function(feature, cb) {
     // Create the list of listeners if it doesn't exist
     if (!this._l[feature]) {
@@ -1344,15 +1330,15 @@ Detects support for SVG in `<embed>` or `<object>` elements.
    * _trigger is the private function used to signal test completion and run any
    * callbacks registered through [Modernizr.on](#modernizr-on)
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr._trigger
    * @access private
    * @function _trigger
    * @param {string} feature - string name of the feature detect
-   * @param {function|boolean} [res] - A feature detection function, or the boolean =
+   * @param {Function|boolean} [res] - A feature detection function, or the boolean =
    * result of a feature detection function
+   * @returns {void}
    */
-
   ModernizrProto._trigger = function(feature, res) {
     if (!this._l[feature]) {
       return;
@@ -1376,20 +1362,22 @@ Detects support for SVG in `<embed>` or `<object>` elements.
   /**
    * addTest allows you to define your own feature detects that are not currently
    * included in Modernizr (under the covers it's the exact same code Modernizr
-   * uses for its own [feature detections](https://github.com/Modernizr/Modernizr/tree/master/feature-detects)). Just like the offical detects, the result
+   * uses for its own [feature detections](https://github.com/Modernizr/Modernizr/tree/master/feature-detects)).
+   * Just like the official detects, the result
    * will be added onto the Modernizr object, as well as an appropriate className set on
    * the html element when configured to do so
    *
-   * @memberof Modernizr
+   * @memberOf Modernizr
    * @name Modernizr.addTest
    * @optionName Modernizr.addTest()
    * @optionProp addTest
    * @access public
    * @function addTest
-   * @param {string|object} feature - The string name of the feature detect, or an
+   * @param {string|Object} feature - The string name of the feature detect, or an
    * object of feature detect names and test
-   * @param {function|boolean} test - Function returning true if feature is supported,
+   * @param {Function|boolean} test - Function returning true if feature is supported,
    * false if not. Otherwise a boolean representing the results of a feature detection
+   * @returns {Object} the Modernizr object to allow chaining
    * @example
    *
    * The most common way of creating your own feature detects is by calling
@@ -1414,7 +1402,7 @@ Detects support for SVG in `<embed>` or `<object>` elements.
    *  in a statement that will return a boolean value works just fine.
    *
    * ```js
-   * Modernizr.addTest('hasJquery', 'jQuery' in window);
+   * Modernizr.addTest('hasjquery', 'jQuery' in window);
    * ```
    *
    * Just like before, when the above runs `Modernizr.hasjquery` will be true if
@@ -1441,10 +1429,9 @@ Detects support for SVG in `<embed>` or `<object>` elements.
    * There is really no difference between the first methods and this one, it is
    * just a convenience to let you write more readable code.
    */
-
   function addTest(feature, test) {
 
-    if (typeof feature == 'object') {
+    if (typeof feature === 'object') {
       for (var key in feature) {
         if (hasOwnProp(feature, key)) {
           addTest(key, feature[ key ]);
@@ -1457,11 +1444,11 @@ Detects support for SVG in `<embed>` or `<object>` elements.
       var last = Modernizr[featureNameSplit[0]];
 
       // Again, we don't check for parent test existence. Get that right, though.
-      if (featureNameSplit.length == 2) {
+      if (featureNameSplit.length === 2) {
         last = last[featureNameSplit[1]];
       }
 
-      if (typeof last != 'undefined') {
+      if (typeof last !== 'undefined') {
         // we're going to quit if you're trying to overwrite an existing test
         // if we were to allow it, we'd do this:
         //   var re = new RegExp("\\b(no-)?" + feature + "\\b");
@@ -1470,10 +1457,10 @@ Detects support for SVG in `<embed>` or `<object>` elements.
         return Modernizr;
       }
 
-      test = typeof test == 'function' ? test() : test;
+      test = typeof test === 'function' ? test() : test;
 
       // Set the value (this is the magic, right here).
-      if (featureNameSplit.length == 1) {
+      if (featureNameSplit.length === 1) {
         Modernizr[featureNameSplit[0]] = test;
       } else {
         // cast to a Boolean, if not one already
@@ -1485,7 +1472,7 @@ Detects support for SVG in `<embed>` or `<object>` elements.
       }
 
       // Set a single class (either `feature` or `no-feature`)
-      setClasses([(!!test && test != false ? '' : 'no-') + featureNameSplit.join('-')]);
+      setClasses([(!!test && test !== false ? '' : 'no-') + featureNameSplit.join('-')]);
 
       // Trigger the event
       Modernizr._trigger(feature, test);
@@ -1505,13 +1492,13 @@ Detects support for SVG in `<embed>` or `<object>` elements.
 {
   "name": "SVG as an <img> tag source",
   "property": "svgasimg",
-  "caniuse" : "svg-img",
+  "caniuse": "svg-img",
   "tags": ["svg"],
   "aliases": ["svgincss"],
   "authors": ["Chris Coyier"],
   "notes": [{
     "name": "HTML5 Spec",
-    "href": "http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element"
+    "href": "https://www.w3.org/TR/html5/embedded-content-0.html#the-img-element"
   }]
 }
 !*/
@@ -1521,7 +1508,7 @@ Detects support for SVG in `<embed>` or `<object>` elements.
   // https://gist.github.com/chriscoyier/8774501
 
   // Now a Sync test based on good results here
-  // http://codepen.io/chriscoyier/pen/bADFx
+  // https://codepen.io/chriscoyier/pen/bADFx
 
   // Note http://www.w3.org/TR/SVG11/feature#Image is *supposed* to represent
   // support for the `<image>` tag in SVG, not an SVG file linked from an `<img>`
@@ -1538,7 +1525,6 @@ Detects support for SVG in `<embed>` or `<object>` elements.
    * @function toStringFn
    * @returns {function} An abstracted toString function
    */
-
   var toStringFn = ({}).toString;
   
 /*!
@@ -1583,7 +1569,7 @@ See [this discussion](https://github.com/Modernizr/Modernizr/issues/213) regardi
     var result = false;
     try {
       result = 'SVGFEColorMatrixElement' in window &&
-        SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE == 2;
+        SVGFEColorMatrixElement.SVG_FECOLORMATRIX_TYPE_SATURATE === 2;
     }
     catch (e) {}
     return result;
@@ -1633,7 +1619,7 @@ Detects support for inline SVG in HTML (not within XHTML).
   Modernizr.addTest('inlinesvg', function() {
     var div = createElement('div');
     div.innerHTML = '<svg/>';
-    return (typeof SVGRect != 'undefined' && div.firstChild && div.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
+    return (typeof SVGRect !== 'undefined' && div.firstChild && div.firstChild.namespaceURI) === 'http://www.w3.org/2000/svg';
   });
 
 /*!
@@ -1643,7 +1629,7 @@ Detects support for inline SVG in HTML (not within XHTML).
   "caniuse": "svg-smil",
   "tags": ["svg"],
   "notes": [{
-  "name": "W3C Synchronised Multimedia spec",
+  "name": "W3C Spec",
   "href": "https://www.w3.org/AudioVideo/"
   }]
 }
@@ -1661,9 +1647,6 @@ Detects support for inline SVG in HTML (not within XHTML).
   "property": "localstorage",
   "caniuse": "namevalue-storage",
   "tags": ["storage"],
-  "knownBugs": [],
-  "notes": [],
-  "warnings": [],
   "polyfills": [
     "joshuabell-polyfill",
     "cupcake",

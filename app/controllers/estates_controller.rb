@@ -35,8 +35,11 @@ class EstatesController < ApplicationController
     if Owner.find_by(user_id: current_user.id)
       @estate = Estate.new
       @estate.owner_id = Owner.find_by(user_id: current_user.id).id
+      @estate.status = false
       @rooms = @estate.rooms.build
-      render :new, locals: { rooms: @rooms}
+      @room_facilities = Facility.where(facility_type: :room)
+      @estate_facilities = Facility.where(facility_type: :estate)
+      render :new, locals: { rooms: @rooms, estate_facilities: @estate_facilities}
     else
       redirect_to new_owner_path
     end
@@ -54,6 +57,7 @@ class EstatesController < ApplicationController
   # POST /estates.json
   def create
     @estate = Estate.new(estate_params)
+    @estate.isPublished
 
     respond_to do |format|
       if @estate.save
@@ -119,6 +123,8 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
+
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: [], images:[]])
+
   end
 end
