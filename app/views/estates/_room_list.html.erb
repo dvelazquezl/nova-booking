@@ -14,23 +14,25 @@
               <th>Seleccionar habitacion</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="mytable">
             <% @rooms.each do |r| %>
-              <tr>
+              <tr id="row">
                 <td class="col-2"><%= r.room_type %></td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
                     <em class="fa-lg fas fa-user"></em>
                   <% end %>
                 </td>
-                <td class="col-2"><%= r.price %></td>
+                <td class="col-2" id="price"><%= r.price %></td>
                 <td class="col-2">
-                  <select class="custom-select custom-select-sm">
-                    <option selected="">0</option>
-                    <% r.quantity.times do |q| %>
-                      <option value=<% q + 1 %>><%= q + 1 %></option> #mejorar el + 1
-                    <% end %>
-                  </select>
+                  <label>
+                    <select class="custom-select custom-select-sm" id="quantity">
+                      <option value="0">0</option>
+                      <% r.quantity.times do |q| %>
+                        <option value=<%= q + 1 %>><%= q + 1 %></option> #mejorar el + 1
+                      <% end %>
+                    </select>
+                  </label>
                 </td>
               </tr>
             <% end %>
@@ -41,12 +43,30 @@
       </div>
     </div>
     <div class="col col-lg-2">
-        <div class="card bg-light mb-3">
+        <div class="card card-default mb-3">
           <div class="card-body">
-            <h5><strong>Sumatoria</strong></h5> #valor que se debe modificar con la sumatoria de hab
+            <div class="card-header">
+              <h5><strong>Total</strong></h5>
+            </div>
+            <label for="total"></label><input class="form-control" id="total" type="text" disabled/>
+          </div>
+          <div class="card-footer">
             <button class="btn btn-primary">Reservar</button>
           </div>
         </div>
     </div>
   </div>
 </div>
+
+<script>
+
+  function addValues() {
+      let total = 0;
+      $('#mytable tr').each(function () {
+          let sum = parseInt($('#quantity option:selected').val()) * parseInt($('#price').text());
+          total = total + sum;
+      });
+      $('#total').val(total);
+  }
+  $(document).on('change', '#row', addValues());
+</script>
