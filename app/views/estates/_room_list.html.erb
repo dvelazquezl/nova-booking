@@ -23,14 +23,16 @@
                     <em class="fa-lg fas fa-user"></em>
                   <% end %>
                 </td>
-                <td class="col-2"><%= r.price %></td>
+                <td class="col-2" id="price"><%= r.price %></td>
                 <td class="col-2">
-                  <select class="custom-select custom-select-sm">
-                    <option selected="">0</option>
-                    <% r.quantity.times do |q| %>
-                      <option value=<% q + 1 %>><%= q + 1 %></option> #mejorar el + 1
-                    <% end %>
-                  </select>
+                  <label>
+                    <select class="custom-select custom-select-sm" id="quantity" onchange="addValues()">
+                      <option value="0">0</option>
+                      <% r.quantity.times do |q| %>
+                        <option><%= q + 1 %></option>
+                      <% end %>
+                    </select>
+                  </label>
                 </td>
               </tr>
             <% end %>
@@ -41,10 +43,15 @@
       </div>
     </div>
     <div class="col col-lg-2">
-        <div class="card bg-light mb-3">
+        <div class="card card-default mb-3">
           <div class="card-body">
-            <h5><strong>Sumatoria</strong></h5> #valor que se debe modificar con la sumatoria de hab
-            <button class="btn btn-primary">Reservar</button>
+            <div class="card-header">
+              <h5><strong>Total</strong></h5>
+            </div>
+            <label for="total"></label><input class="form-control" id="total" type="text" disabled/>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" id="book">Reservar</button>
           </div>
         </div>
     </div>
@@ -63,15 +70,28 @@
       <div class="modal-body">
         ...
       </div>
-      <div class="modal-footer">
+      <!--div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      </div-->
     </div>
   </div>
 </div>
-
 <script>
+  const book = $('#book');
+  $(document).ready(function () {
+      book.prop('disabled', true);
+  });
+
+  function addValues() {
+      let total = 0;
+      $('tbody tr').each(function () {
+          let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text());
+          total = total + sum;
+      });
+      $('#total').val(total);
+      total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
+  }
+
   viewRoom = function(habitacion){
       $('#showRoomTitle').text(habitacion);
   }
