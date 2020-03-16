@@ -79,7 +79,5 @@ gem "rails_best_practices"
 gem "brakeman"
 gem "rubycritic"
 
+gem 'uglifier', '>= 1.3.0'
 
-group :assets do
-  gem 'uglifier', '>= 1.3.0'
-end
