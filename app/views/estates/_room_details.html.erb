@@ -13,7 +13,8 @@
             <div class="col-md-8 col-sm-12">
               <%= render partial: "estates/show_images", :locals => { images: room.images, h_size: '300px'} %>
             </div>
-            <div class="col-md-8 col-sm-12">
+            <div class="col-md-4 col-sm-12">
+              <h4>Comodidades</h4>
               <%= render partial: "estates/facilities_list", :locals => { facilities: room.facilities_rooms} %>
             </div>
           </div>
