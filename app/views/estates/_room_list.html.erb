@@ -17,7 +17,11 @@
             <tbody>
             <% @rooms.each do |r| %>
               <tr>
-                <td class="col-2"><button type="button" class="btn btn-link" data-toggle="modal" data-target="#showRoom" onclick="viewRoom('<%= r.room_type %>');"><%= r.room_type %></button></td>
+                <td class="col-2">
+                  <button type="button" class="btn btn-link" onclick="viewRoom('\<\%j render \'room_details\', room: @estate.rooms.find {|r| r.id == ' + '<%= r.id %>'+'}\%\>');">
+                    <%= r.room_type %>
+                  </button>
+                </td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
                     <em class="fa-lg fas fa-user"></em>
@@ -58,24 +62,6 @@
   </div>
 </div>
 
-<div class="modal fade" id="showRoom" tabindex="-1" role="dialog" aria-labelledby="showRoom" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="showRoomTitle">hola</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <!--div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div-->
-    </div>
-  </div>
-</div>
 <script>
   const book = $('#book');
   $(document).ready(function () {
@@ -92,7 +78,9 @@
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
 
-  viewRoom = function(habitacion){
-      $('#showRoomTitle').text(habitacion);
+  viewRoom = function(param){
+      //console.log(id);
+      console.log(param.type)
+      $(param).modal();
   }
 </script>
