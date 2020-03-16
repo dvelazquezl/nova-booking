@@ -14,9 +14,9 @@
               <th>Seleccionar habitacion</th>
             </tr>
             </thead>
-            <tbody id="mytable">
+            <tbody>
             <% @rooms.each do |r| %>
-              <tr id="row">
+              <tr>
                 <td class="col-2"><%= r.room_type %></td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
@@ -29,7 +29,7 @@
                     <select class="custom-select custom-select-sm" id="quantity">
                       <option value="0">0</option>
                       <% r.quantity.times do |q| %>
-                        <option value=<%= q + 1 %>><%= q + 1 %></option> #mejorar el + 1
+                        <option><%= q + 1 %></option>
                       <% end %>
                     </select>
                   </label>
@@ -51,7 +51,7 @@
             <label for="total"></label><input class="form-control" id="total" type="text" disabled/>
           </div>
           <div class="card-footer">
-            <button class="btn btn-primary">Reservar</button>
+            <button class="btn btn-primary" onclick="addValues()">Reservar</button>
           </div>
         </div>
     </div>
@@ -59,14 +59,13 @@
 </div>
 
 <script>
-
   function addValues() {
       let total = 0;
-      $('#mytable tr').each(function () {
-          let sum = parseInt($('#quantity option:selected').val()) * parseInt($('#price').text());
+      $('tbody tr').each(function () {
+          let sum = parseInt($(this).find('option:selected').text()) * parseInt($(this).find('#price').text());
           total = total + sum;
       });
       $('#total').val(total);
   }
-  $(document).on('change', '#row', addValues());
+  //$(document).on('change', '#quantity', addValues());
 </script>
