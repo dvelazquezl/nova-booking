@@ -17,7 +17,7 @@
             <tbody>
             <% rooms.each do |r| %>
               <tr>
-                <td class="col-2"><%= r.room_type %></td>
+                <td class="col-2"><%= r.room_type.text %></td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
                     <em class="fa-lg fas fa-user"></em>
