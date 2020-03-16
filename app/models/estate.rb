@@ -74,4 +74,8 @@ class Estate < ApplicationRecord
   scope :with_date_lt, ->(ref_date) {
     where('estates.created_at <= ?', ref_date)
   }
+
+  def isPublished
+    self.status = self.rooms.any? {|room| room.status == "published"}
+  end
 end

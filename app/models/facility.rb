@@ -5,6 +5,7 @@ class Facility < ApplicationRecord
   has_many :facilities_rooms
   has_many :rooms, through: :facilities_rooms
 
+
   extend Enumerize
   enumerize :facility_type, in: [:estate, :room]
 
