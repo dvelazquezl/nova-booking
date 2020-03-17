@@ -3,7 +3,7 @@
 
   <%if owner.errors.any? %>
     <div>
-      <h2> <%- pluralize(@owner.errors.count, "error") %>
+      <h2> <%- pluralize(owner.errors.count, "error") %>
       Lo sentimos ha ocurrido un error
       </h2>
       <ul>
@@ -19,9 +19,9 @@
         <div class="card-body text-center">
           <div class="py-4">
             <p></p>
-          <%if @owner.image.attached? %>
+          <%if owner.image.attached? %>
               <div class="py-4 text-center" id="target">
-                <%= image_tag @owner.image, alt: "rss fit"%>
+                <%= image_tag owner.image, alt: "rss fit"%>
               </div>
           <%else %>
               <div id="target">

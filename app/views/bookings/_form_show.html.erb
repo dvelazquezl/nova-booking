@@ -10,14 +10,14 @@
             <div class="form-group">
               <label>Nombre y Apellido</label>
               <br>
-              <label><%=@booking.client_name%></label>
+              <label><%=booking.client_name%></label>
             </div>
           </div>
           <div class="card-body">
             <div class="form-group">
               <label>Correo </label>
               <br>
-              <label><%=@booking.client_email%></label>
+              <label><%=booking.client_email%></label>
             </div>
           </div>
         </div>
@@ -27,14 +27,14 @@
             <div class="form-group">
               <label>Llegada</label>
               <br>
-              <label><%=@booking.date_start.strftime("%Y-%m-%d") %></label>
+              <label><%=booking.date_start.strftime("%Y-%m-%d") %></label>
             </div>
           </div>
           <div class="card-body">
             <div class="form-group">
               <label>Salida </label>
               <br>
-             <label><%=@booking.date_end.strftime("%Y-%m-%d")%></label>
+             <label><%=booking.date_end.strftime("%Y-%m-%d")%></label>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
           </tr>
           </thead>
           <tbody>
-          <% @booking.booking_details.each do |f| %>
+          <% booking.booking_details.each do |f| %>
             <tr>
               <td><%= Room.find(f.room_id).room_type.text %> </td>
               <td><%=Room.find(f.room_id).capacity %></td>
@@ -69,7 +69,7 @@
             <div class="text-right h3">TOTAL</div>
           </div>
           <div class="col-3">
-            <div class="text-right h3"> <%=@booking.total_amount %></div>
+            <div class="text-right h3"> <%=booking.total_amount %></div>
 
           </div>
         </div>

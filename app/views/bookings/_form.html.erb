@@ -1,4 +1,4 @@
-<%= form_with(model: @booking, local: true) do |form| %>
+<%= form_with(model: booking, local: true) do |form| %>
 
   <div class="row">
     <div class="col-lg-6"></div>
@@ -21,7 +21,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-6">
           <div class="card-body">
             <div class="form-group">
@@ -49,7 +48,7 @@
           </tr>
           </thead>
           <tbody>
-          <%= form.fields_for :booking_details, @booking.booking_details do |f| %>
+          <%= form.fields_for :booking_details, booking.booking_details do |f| %>
             <tr>
               <td><%= f.label :room_type, :value => Room.find(f.object.room_id).room_type.text %></td>
               <td><%=f.label :capacity,:value => Room.find(f.object.room_id).capacity %></td>
