@@ -17,7 +17,9 @@
             <tbody>
             <% rooms.each do |r| %>
               <tr>
-                <td class="col-2"><%= r.room_type.text %></td>
+                <td class="col-2">
+                  <%= link_to r.room_type, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
+                </td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
                     <em class="fa-lg fas fa-user"></em>
@@ -28,7 +30,7 @@
                   <label>
                     <select class="custom-select custom-select-sm" id="quantity" onchange="addValues()">
                       <option value="0">0</option>
-                      <% r.quantity.times do |q| %>
+                      <% (r.quantity != nil ? r.quantity : 0).times do |q| %>
                         <option><%= q + 1 %></option>
                       <% end %>
                     </select>
@@ -57,7 +59,7 @@
     </div>
   </div>
 </div>
-
+<div id="room-content"></div>
 <script>
   const book = $('#book');
   $(document).ready(function () {
