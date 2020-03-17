@@ -38,3 +38,24 @@
 #estate-title {
   font-family: Bookman;
 }
+
+.facilities-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  height: 100%;
+}
+
+.facility {
+  width: 50%;
+}
+
+#carousel-thumb {
+  height: 100%;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0 5px 7px rgba(34, 25, 25, 0.4);
+  border-radius: 10px;
+  -moz-box-shadow: 0 5px 7px rgba(34,25,25,0.4);
+  -webkit-box-shadow: 0 5px 7px rgba(34, 25, 25, 0.4);
+}
