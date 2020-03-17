@@ -27,14 +27,16 @@ class EstatesController < ApplicationController
   # GET /estates/1
   # GET /estates/1.json
   def show
+    @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
   end
 
   # GET /estates/new
   def new
-    if Owner.find_by(user_id: current_user.id)
+    owner = Owner.find_by(user_id: current_user.id)
+    if owner
       @estate = Estate.new
-      @estate.owner_id = Owner.find_by(user_id: current_user.id).id
+      @estate.owner_id = owner.id
       @estate.status = false
       @rooms = @estate.rooms.build
       @room_facilities = Facility.where(facility_type: :room)
