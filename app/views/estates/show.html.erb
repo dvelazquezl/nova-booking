@@ -1,4 +1,4 @@
-<div class="container box-placeholder">
+<div class="container-fluid box-placeholder">
   <!-- TITLES -->
   <div class="col-12">
     <div class="row">
@@ -25,21 +25,20 @@
     </div>
   </div>
   <!-- END -->
-  <hr class="my-4">
+  <hr class="my-2" style="height: 2px;">
   <!-- ESTATE DETAILS -->
   <div class="col-12" id="estate-details">
-    <div class="row">
-      <div class="col-md-6 col-sm-12 overflow-auto"
-           id="facilities-div">
-        <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
-      </div>
-      <div class="col-md-6 col-sm-12" id="carousel-div">
+    <div class="row details">
+      <div class="col-md-9 col-sm-12" id="carousel-div">
         <%= render partial: "estates/show_images", :locals => { images: @estate.images } %>
+      </div>
+      <div class="col-md-3 col-sm-12 overflow-auto" id="facilities-div">
+        <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
       </div>
     </div>
   </div>
   <!-- END -->
-  <br>
+  <br class="col-12">
   <!-- DESCRIPTION SECTION -->
   <div class="col-12">
     <dl class="row">
