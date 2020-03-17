@@ -18,9 +18,7 @@
             <% @rooms.each do |r| %>
               <tr>
                 <td class="col-2">
-                  <button type="button" class="btn btn-link" onclick="viewRoom('<%= r.id %>');">
-                    <%= r.room_type %>
-                  </button>
+                  <%= link_to r.room_type, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
                 </td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
@@ -32,7 +30,7 @@
                   <label>
                     <select class="custom-select custom-select-sm" id="quantity" onchange="addValues()">
                       <option value="0">0</option>
-                      <% r.quantity.times do |q| %>
+                      <% (r.quantity != nil ? r.quantity : 0).times do |q| %>
                         <option><%= q + 1 %></option>
                       <% end %>
                     </select>
@@ -61,7 +59,7 @@
     </div>
   </div>
 </div>
-
+<div id="room-content"></div>
 <script>
   const book = $('#book');
   $(document).ready(function () {
@@ -76,10 +74,5 @@
       });
       $('#total').val(total);
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
-  }
-
-  viewRoom = function(id){
-      //console.log(id);
-      $('<%= j render "room_details", room: @estate.rooms.find {|r| r.id == 18 } %>').modal();
   }
 </script>
