@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <% @rooms.each do |r| %>
+            <% rooms.each do |r| %>
               <tr>
                 <td class="col-2">
                   <%= link_to r.room_type, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
