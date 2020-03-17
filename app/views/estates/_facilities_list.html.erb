@@ -1,7 +1,6 @@
 <ul>
   <% facilities.each do |facility| %>
-      #Trae las comodidades
       <li><%=Facility.find_by(id: facility.facility_id).description %></li>
   <%end %>
 </ul>
-#fin de partial
+
