@@ -27,12 +27,13 @@
   <!-- END -->
   <hr class="my-4">
   <!-- ESTATE DETAILS -->
-  <div class="col-12" style="height: 300px">
-    <div class="row" style="height: 100%">
-      <div class="col-md-6 col-sm-12 overflow-auto">
+  <div class="col-12" id="estate-details">
+    <div class="row">
+      <div class="col-md-6 col-sm-12 overflow-auto"
+           id="facilities-div">
         <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
       </div>
-      <div class="col-md-6 col-sm-12" style="height: 100%">
+      <div class="col-md-6 col-sm-12" id="carousel-div">
         <%= render partial: "estates/show_images", :locals => { images: @estate.images } %>
       </div>
     </div>

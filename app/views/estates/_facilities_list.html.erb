@@ -1,6 +1,9 @@
-<ul class="facilities-list">
+<ul class="facilities-list d-flex align-items-center">
   <% facilities.each do |facility| %>
-      <li class="facility"><%=Facility.find_by(id: facility.facility_id).description %></li>
+      <li class="facility">
+        <i class="fas fa-check-circle text-info mr-3"></i>
+        <%=Facility.find_by(id: facility.facility_id).description %>
+      </li>
   <%end %>
 </ul>
 
