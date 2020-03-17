@@ -26,6 +26,7 @@ class BookingsController < ApplicationController
       if @booking.save
         format.html { redirect_to @booking, notice: 'La reserva fue creado satifactoriamente.' }
         format.json { render :show, status: :created, location: @booking }
+        UserMailer.new_booking(@booking).dilever_now
       else
         format.html { render :new }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
@@ -60,6 +61,6 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :booking_state, booking_detail_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
+    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :booking_state, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
   end
 end
