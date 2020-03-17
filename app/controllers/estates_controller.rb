@@ -27,14 +27,16 @@ class EstatesController < ApplicationController
   # GET /estates/1
   # GET /estates/1.json
   def show
+    @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
   end
 
   # GET /estates/new
   def new
-    if Owner.find_by(user_id: current_user.id)
+    owner = Owner.find_by(user_id: current_user.id)
+    if owner
       @estate = Estate.new
-      @estate.owner_id = Owner.find_by(user_id: current_user.id).id
+      @estate.owner_id = owner.id
       @estate.status = false
       @rooms = @estate.rooms.build
       @room_facilities = Facility.where(facility_type: :room)
@@ -91,6 +93,13 @@ class EstatesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to estates_url, notice: 'Propiedad eliminada exitosamente.' }
       format.json { head :no_content }
+    end
+  end
+
+  def room
+    @room = Room.find(params[:id])
+    respond_to do |format|
+      format.js { }
     end
   end
 
