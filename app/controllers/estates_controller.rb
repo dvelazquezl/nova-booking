@@ -102,6 +102,7 @@ class EstatesController < ApplicationController
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
+    @images = @estate.images
     render :show_detail, locals: { estate: @estate}
   end
 
