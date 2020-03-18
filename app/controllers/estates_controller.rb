@@ -96,6 +96,14 @@ class EstatesController < ApplicationController
     end
   end
 
+  # GET /estates/1/show_detail
+  def show_detail
+    @estate = Estate.find(params[:id])
+    @rooms = @estate.rooms
+    @facilities = @estate.facilities_estates
+    render :show_detail, locals: { estate: @estate}
+  end
+
   def room
     @room = Room.find(params[:id])
     respond_to do |format|
