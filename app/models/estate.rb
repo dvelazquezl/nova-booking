@@ -9,7 +9,7 @@ class Estate < ApplicationRecord
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
   # default for will_paginate
-  self.per_page = 2
+  self.per_page = 5
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
   scope :only_published, -> { where(status: true) }
