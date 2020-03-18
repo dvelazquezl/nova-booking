@@ -29,12 +29,6 @@
     height:130px;
   }
 
-.scroll_facility {
-  padding-top: 2px;
-  overflow-y: scroll;
-  height: 200px;
-}
-
 #estate-title {
   font-family: Bookman;
 }
@@ -60,7 +54,7 @@
   width: 100%;
 }
 
-.carousel-thumbnails{
+.carousel-thumbnails {
   height: 100%;
   padding: 15px;
   background-color: white;
@@ -102,3 +96,10 @@
   text-align: justify;
   font-size: large;
 }
+
+.scroll_facility_room {
+  padding-top: 2px;
+  overflow-y: scroll;
+  height:300px;
+}
+

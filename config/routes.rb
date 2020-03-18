@@ -15,11 +15,14 @@ Rails.application.routes.draw do
       get :new_room
     end
   end
+
+  get 'rooms/:id', to: 'estates#room', :as => 'room_estate'
   match 'estates/:id/suscribe', :to => 'estates#suscribe', :as => 'suscribe_estate', :via => :post
   match 'estates/:id/unsuscribe', :to => 'estates#unsuscribe', :as => 'unsuscribe_estate', :via => :post
   resources :users, only: [:index]
   resources :rooms
   resources :facilities
+  resources :bookings
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

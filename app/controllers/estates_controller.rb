@@ -97,6 +97,13 @@ class EstatesController < ApplicationController
     end
   end
 
+  def room
+    @room = Room.find(params[:id])
+    respond_to do |format|
+      format.js { }
+    end
+  end
+
   # dar de alta una propiedad
   def suscribe
     @estate = Estate.find(params[:id])
