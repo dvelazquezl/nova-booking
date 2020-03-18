@@ -4,8 +4,7 @@ class DepartamentsController < ApplicationController
   # GET /departaments
   # GET /departaments.json
   def index
-    @departaments = Departament.page(params[:page])
-    render :index, locals: { departaments: @departaments }
+    @departaments = Departament.all
   end
 
   # GET /departaments/1

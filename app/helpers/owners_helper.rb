@@ -8,8 +8,4 @@ module OwnersHelper
     current_owner != nil
   end
 
-  def user_email(user_id)
-    User.find_by_id(user_id).email
-  end
-
 end

@@ -1,4 +1,6 @@
-<div>
-  <div class="content-heading">Editar Ciudad</div>
-  <%= render 'form', city: @city %>
-</div>
+<h1>Editar Ciudad</h1>
+
+<%= render 'form', city: @city %>
+
+<%= link_to 'Show', @city %> |
+<%= link_to 'Back', cities_path %>
