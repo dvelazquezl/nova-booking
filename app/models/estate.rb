@@ -69,11 +69,13 @@ class Estate < ApplicationRecord
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
   scope :with_date_gte, ->(ref_date) {
-    where("estates.created_at >= ?", ref_date)
+    where("bookings.date_start >= ?", ref_date).joins(rooms: {booking_details: :bookings})
+    #where("estates.created_at >= ?", ref_date)
   }
 
   scope :with_date_lte, ->(ref_date) {
-    where('estates.created_at <= ?', ref_date)
+    where("bookings.date_start <= ?", ref_date).joins(rooms: {booking_details: :bookings})
+    #where('estates.created_at <= ?', ref_date)
   }
 
   def isPublished
