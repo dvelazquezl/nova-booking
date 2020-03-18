@@ -53,8 +53,8 @@
           <tbody>
           <% booking.booking_details.each do |f| %>
             <tr>
-              <td><%= room_type(f)%> </td>
-              <td><%=room_capacity(f) %></td>
+              <td><%= room_type_for(f)%> </td>
+              <td><%=room_capacity_for(f) %></td>
               <td><%=f.quantity %></td>
               <td><%= f.subtotal / f.quantity %></td>
               <td><%= f.subtotal %></td>

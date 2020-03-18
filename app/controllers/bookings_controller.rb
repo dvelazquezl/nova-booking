@@ -12,7 +12,16 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.new
-
+    @booking.client_name = params[:client_name]
+    @booking.date_start = params[:date_start]
+    @booking.date_end = params[:date_start]
+    @booking.total_amount = params[:total_amount]
+    @booking.booking_state = true
+    params[:booking_details].each_pair {|key,value|
+      @booking.booking_details.build(room_id: value["room_id"],
+                                     quantity: value["quantity"],
+                                     subtotal: value["subtotal"])
+      }
   end
 
   def edit
@@ -26,7 +35,6 @@ class BookingsController < ApplicationController
       if @booking.save
         format.html { redirect_to @booking, notice: 'La reserva fue creado satifactoriamente.' }
         format.json { render :show, status: :created, location: @booking }
-        UserMailer.new_booking(@booking).dilever_now
       else
         format.html { render :new }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
