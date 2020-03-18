@@ -52,6 +52,46 @@ $(document).on('change', '#pictureInput', function (event) {
     }
 });
 
+// ****************************************************************************** //
+
+// Fuente: https://gist.github.com/gordonbrander/2230317
+
+var ID = function () {
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+// ****************************************************************************** //
+
+$(document).on('change', '.picture .pictureInput2', function(event) {
+  let files = event.target.files;
+
+  $(this).closest('div').next().attr('id', ID());
+  let targetId = $(this).closest('div').next().attr('id');
+
+  Array.from(files).forEach(file => {
+    let reader = new FileReader();
+    reader.onload = function (file) {
+        let img = new Image();
+        img.src = file.target.result;
+        img.classList.add("img-thumbnail");
+        img.setAttribute('alt', 'rss fit');
+        img.setAttribute('height', HEIGHT);
+        img.setAttribute('width', WIDTH);
+        $('#'+targetId).append(img);
+        $('img').css("display", "inline-block")
+    };
+    reader.readAsDataURL(file);
+  });
+
+  if (Array.from(files).length > 0) {
+      $('#'+targetId).empty();
+  }
+
+});
+
 $(document).on('click', '.remove_fields', function (e) {
     //elimina el partial que tiene estos enlaces
     $(this).closest('fieldset').detach();
