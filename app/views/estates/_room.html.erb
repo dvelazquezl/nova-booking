@@ -1,9 +1,9 @@
-<fieldset style="margin: 0; border: 0; padding: 0;" class="card-body detail">
+<fieldset style="margin: 0; border: 0; padding: 0;" class="card-body">
   <button style="float: right;" type="button" title="Mazimizar" class="show_fields btn btn-link text-primary">
-    <i class="fas fa-chevron-circle-down"></i>
+    <i class="fas fa-chevron-circle-up"></i>
   </button>
   <button style="float: right;" type="button" title="Minimizar" class="hide_fields btn btn-link text-primary">
-    <i class="fas fa-chevron-circle-up"></i>
+    <i class="fas fa-chevron-circle-down"></i>
   </button>
   <%= link_to "Eliminar" do %>
     <div style="float: right;" class=" remove_fields btn btn-link text-danger" title="Eliminar">
@@ -24,22 +24,14 @@
               </div>
             </div>
 
-            <div class="card-body col-4">
+            <div class="card-body col-6">
               <div class="form-group">
                 <label>Tipo de habitacion *</label>
                 <br>
                 <%= f.select :room_type, Room.room_type.options, {prompt: "Seleccionar"}, {required: 'true', class: 'form-control'} %>
               </div>
             </div>
-
-            <div class="card-body col-2">
-              <div class="form-group">
-                <br>
-                <br>
-                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: true}, "published", "not_published" %><span class="fa fa-bullhorn "></span> Publicado</label>
-              </div>
-              </div>
-            </div>
+          </div>
 
           <div class="row">
             <div class="card-body col-4">
@@ -63,18 +55,6 @@
               </div>
             </div>
           </div>
-
-          <h5><strong>Comodidades</strong></h5>
-          <div class="row scroll_facility">
-              <%= f.collection_check_boxes :facility_ids, room_facilities, :id, :description do |m| %>
-              <div class="col-4">
-                <div class="form-check form-check-inline">
-                    <label class="checkbox c-checkbox c-checkbox-rounded"> <%= m.check_box %><span class="fa fa-check"></span><%= m.label %></label>
-                </div>
-              </div>
-              <% end %>
-
-          </div>
         </div>
         <br>
         <br>
@@ -89,16 +69,16 @@
           <h5><strong>Fotos</strong></h5>
         </div>
         <div class="card-body">
-          <div>
-            <fieldset class="picture">
-              <div class="field">
-                <%= f.label "Sube fotos para tu habitacion: " %>
-                <%= f.file_field :images, multiple: true, class: "pictureInput2", accept: "image/*" %>
-              </div>
-              <div class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
-              </div>
-            </fieldset>
-          </div>
+          <!-- Borrar -->
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
         </div>
       </div>
       <!-- END card-->
