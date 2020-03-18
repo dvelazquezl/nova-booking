@@ -27,25 +27,18 @@ class EstatesController < ApplicationController
   # GET /estates/1
   # GET /estates/1.json
   def show
-    @rooms = @estate.rooms
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
   end
 
   # GET /estates/new
   def new
-    owner = Owner.find_by(user_id: current_user.id)
-    if owner
-      @estate = Estate.new
-      @estate.owner_id = owner.id
-      @estate.status = false
+    @estate = Estate.new
+    if Owner.find_by(user_id: current_user.id)
+      @estate.owner_id = Owner.find_by(user_id: current_user.id).id
       @rooms = @estate.rooms.build
-      @room_facilities = Facility.where(facility_type: :room)
-      @estate_facilities = Facility.where(facility_type: :estate)
-      render :new, locals: { rooms: @rooms, estate_facilities: @estate_facilities}
     else
       redirect_to new_owner_path
     end
+    render :new, locals: { rooms: @rooms}
   end
   # GET /estates/new_room
   def new_room
@@ -60,7 +53,6 @@ class EstatesController < ApplicationController
   # POST /estates.json
   def create
     @estate = Estate.new(estate_params)
-    @estate.isPublished
 
     respond_to do |format|
       if @estate.save
@@ -97,22 +89,6 @@ class EstatesController < ApplicationController
     end
   end
 
-  # GET /estates/1/show_detail
-  def show_detail
-    @estate = Estate.find(params[:id])
-    @rooms = @estate.rooms
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    render :show_detail, locals: { estate: @estate}
-  end
-
-  def room
-    @room = Room.find(params[:id])
-    respond_to do |format|
-      format.js { }
-    end
-  end
-
   # dar de alta una propiedad
   def suscribe
     @estate = Estate.find(params[:id])
@@ -142,8 +118,6 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: [], images:[]])
-
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, images: [], rooms_attributes: %i[id estate_id description capacity price status room_type])
   end
 end

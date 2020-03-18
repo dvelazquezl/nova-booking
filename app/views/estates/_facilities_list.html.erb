@@ -1,8 +1,0 @@
-<ul class="facilities-list">
-  <% facilities.each do |facility| %>
-      <li class="facility">
-        <i class="fas fa-check-circle text-info mr-2"></i>
-        <%=Facility.find_by(id: facility.facility_id).description %>
-      </li>
-  <%end %>
-</ul>
