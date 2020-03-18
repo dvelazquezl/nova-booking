@@ -35,6 +35,8 @@ class BookingsController < ApplicationController
       if @booking.save
         format.html { redirect_to @booking, notice: 'La reserva fue creado satifactoriamente.' }
         format.json { render :show, status: :created, location: @booking }
+        UserMailer.new_booking(@booking).deliver_now
+        UserMailer.new_booking_owner(@booking).deliver_now
       else
         format.html { render :new }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
