@@ -39,11 +39,14 @@
   font-family: Bookman;
 }
 
+.title-section{
+  padding-left: 10%;
+}
+
 .facilities-list {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  align-content: stretch;
+  flex-flow: column wrap;
   height: 100%;
   color: black;
   font-size: smaller;
@@ -88,9 +91,14 @@
 }
 
 #facilities-div, #carousel-div {
-  height: 300px;
+  height: 400px;
 }
 
 .details {
   height: auto;
+}
+
+#description-text{
+  text-align: justify;
+  font-size: large;
 }

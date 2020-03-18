@@ -1,15 +1,11 @@
-<div class="container-fluid box-placeholder">
+<div class="container box-placeholder">
   <!-- TITLES -->
   <div class="col-12">
-    <div class="row">
-      <div class="col-md-1 col-sm-1 d-flex justify-content-center align-items-center">
-        <i class="fa-3x fas fa-home" id="estate-t-icon">
-        </i>
-      </div>
-      <div class="col-md-11 col-sm-1 d-flex align-items-center">
+    <div class="row title-section">
+      <div class="col-12 d-flex align-items-center">
         <div class="row">
           <div class="col-12">
-            <h1 id="estate-title">
+            <h1 class="text-info" id="estate-title">
               <%= @estate.name %>
             </h1>
           </div>
@@ -25,7 +21,17 @@
     </div>
   </div>
   <!-- END -->
-  <hr class="my-2" style="height: 2px;">
+  <br>
+  <!-- DESCRIPTION SECTION -->
+  <div class="col-12">
+    <div class="container">
+      <p class="col-12" id="description-text">
+        &emsp;&emsp;<%= + @estate.description %>
+      </p>
+    </div>
+  </div>
+  <!-- END -->
+
   <!-- ESTATE DETAILS -->
   <div class="col-12" id="estate-details">
     <div class="row details">
@@ -38,16 +44,6 @@
     </div>
   </div>
   <!-- END -->
-  <br class="col-12">
-  <!-- DESCRIPTION SECTION -->
-  <div class="col-12">
-    <dl class="row">
-      <dt class="col-sm-3">Descripcion:</dt>
-      <dd class="col-sm-9">Es un excelente hotel.</dd>
-    </dl>
-  </div>
-  <!-- END -->
-
   <!-- Availability table -->
   <br/>
   <div class="col-12">
