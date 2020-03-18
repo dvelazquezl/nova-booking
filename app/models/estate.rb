@@ -9,7 +9,7 @@ class Estate < ApplicationRecord
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
   # default for will_paginate
-  self.per_page = 2
+  self.per_page = 5
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
   scope :only_published, -> { where(status: true) }
@@ -74,4 +74,8 @@ class Estate < ApplicationRecord
   scope :with_date_lt, ->(ref_date) {
     where('estates.created_at <= ?', ref_date)
   }
+
+  def isPublished
+    self.status = self.rooms.any? {|room| room.status == "published"}
+  end
 end
