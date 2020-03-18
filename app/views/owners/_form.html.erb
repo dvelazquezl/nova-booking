@@ -21,13 +21,13 @@
 
             <%if owner.image.attached? %>
               <div class="py-4 text-center" id="target">
-                <%= image_tag owner.image, alt: "rss fit"%>
+                <%= image_tag owner.image, alt: "rss fit", height: "150", width:"150"%>
               </div>
             <%else %>
               <div id="target">
                 <img class="img-fluid thumb96" src="<%= image_path('angle/user/perfil.png')  %>"  />
               </div>
-            <%end %>
+            <%end%>
             <br>
             <div class="form-group row">
               <div class="form-group col-xl-12 col-md-12 col-12" >
