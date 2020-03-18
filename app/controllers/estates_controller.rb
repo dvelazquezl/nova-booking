@@ -29,6 +29,7 @@ class EstatesController < ApplicationController
   def show
     @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
+    @images = @estate.images
   end
 
   # GET /estates/new

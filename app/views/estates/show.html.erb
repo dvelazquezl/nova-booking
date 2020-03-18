@@ -30,7 +30,7 @@
   <div class="col-12" id="estate-details">
     <div class="row details">
       <div class="col-md-9 col-sm-12" id="carousel-div">
-        <%= render partial: "estates/show_images", :locals => { images: @estate.images } %>
+        <%= render partial: "estates/show_images", :locals => { images: @images} %>
       </div>
       <div class="col-md-3 col-sm-12 overflow-auto" id="facilities-div">
         <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
