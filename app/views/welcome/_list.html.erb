@@ -23,7 +23,7 @@
                         </div>
                         <div class="media-body d-flex">
                             <div class="btn-group ml-auto" role="group">
-                                <%= link_to estate_path(estate) do %>
+                                <%= link_to estate_path(estate, :city => params["filterrific"]["search_query"], :from => params["filterrific"]["with_date_gte"], :to => params["filterrific"]["with_date_lte"]) do %>
                                 <button class="btn btn-sm btn-primary">Elige Habitación</button>
                                 <% end %>
                             </div>

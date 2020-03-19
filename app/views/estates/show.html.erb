@@ -1,67 +1,77 @@
-<div class="container box-placeholder">
-  <!-- TITLES -->
-  <div class="col-12">
-    <div class="row title-section">
-      <div class="col-12">
-        <div class="row d-flex align-items-center">
-          <div class="col-md-11 col-sm-12">
-            <h1 class="text-info" id="estate-title">
-              <%= @estate.name %>
-            </h1>
-          </div>
-          <div class="col-md-1 col-sm-12">
-            <%= link_to owner_path(estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
-              Contacto
-            <% end %>
-          </div>
-          <div class="col-12 d-flex align-items-center">
-            <em class="mr-1 fa-1x fas fa-map-marker-alt"></em>
-            <span>
-              <%= @estate.address %>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END -->
-  <br>
-  <!-- DESCRIPTION SECTION -->
-  <div class="col-12">
-    <div class="container">
-      <p class="col-12" id="description-text">
-        &emsp;&emsp;<%= @estate.description %>
-      </p>
-    </div>
-  </div>
-  <!-- END -->
 
-  <!-- ESTATE DETAILS -->
-  <div class="col-12" id="estate-details">
-    <div class="row details">
-      <div class="col-md-7 col-sm-12" id="carousel-div">
-        <%= render partial: "estates/show_images", :locals => { images: @images, h_size: '340px'} %>
-      </div>
-      <div class="col-md-4 col-sm-12" id="facilities-div">
-        <div class="row">
-          <div class="col-12 facilities-title">
-            <h3>COMODIDADES</h3>
-          </div>
-          <div class="col-12 overflow-auto facilities-list-div">
-            <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
+  <div class="row results-filter-section">
+  <div class="col-2">
+    <%= render(
+            partial: "estates/results_filter",
+            locals: {filterrific: filterrific}
+        ) %>
+  </div>
+  <!-- TITLES -->
+  <div class="col-10">
+    <div class="container box-placeholder">
+      <div class="col-12">
+        <div class="row title-section">
+          <div class="col-12">
+            <div class="row d-flex align-items-center">
+              <div class="col-md-11 col-sm-12">
+                <h1 class="text-info" id="estate-title">
+                  <%= @estate.name %>
+                </h1>
+              </div>
+              <div class="col-md-1 col-sm-12">
+                <%= link_to owner_path(@estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
+                  Contacto
+                <% end %>
+              </div>
+              <div class="col-12 d-flex align-items-center">
+                <em class="mr-1 fa-1x fas fa-map-marker-alt"></em>
+                <span>
+                  <%= @estate.address %>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- END -->
+      <br>
+      <!-- DESCRIPTION SECTION -->
+      <div class="col-12">
+        <div class="container">
+          <p class="col-12" id="description-text">
+            &emsp;&emsp;<%= @estate.description %>
+          </p>
+        </div>
+      </div>
+      <!-- END -->
+
+      <!-- ESTATE DETAILS -->
+      <div class="col-12" id="estate-details">
+        <div class="row details">
+          <div class="col-md-7 col-sm-12" id="carousel-div">
+            <%= render partial: "estates/show_images", :locals => {images: @images, h_size: '340px'} %>
+          </div>
+          <div class="col-md-4 col-sm-12" id="facilities-div">
+            <div class="row">
+              <div class="col-12 facilities-title">
+                <h3>COMODIDADES</h3>
+              </div>
+              <div class="col-12 overflow-auto facilities-list-div">
+                <%= render partial: "estates/facilities_list", :locals => {facilities: @facilities} %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END -->
+      <!-- Availability table -->
+      <br/>
+      <div class="col-12">
+        <%= render 'room_list', rooms: @rooms %>
+      </div>
     </div>
-  </div>
-  <!-- END -->
-  <!-- Availability table -->
-  <br/>
-  <div class="col-12">
-    <%= render 'room_list', rooms: @rooms %>
   </div>
 </div>
-
 <div>
   sphdafhaspdofsadp
 </div>
