@@ -82,8 +82,7 @@ class Estate < ApplicationRecord
         inner join public.bookings as b1 on b1.id = bd1.booking_id
         where b1.booking_state != false
         and r1.id = ro.id
-        and (b1.date_start <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date).joins(rooms: {booking_detail: :booking})
-    #where("estates.created_at >= ?", ref_date)
+        and (b1.date_start <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date)
   }
 
   scope :with_date_lte, ->(ref_date) {
@@ -100,8 +99,7 @@ class Estate < ApplicationRecord
         inner join public.bookings as b1 on b1.id = bd1.booking_id
         where b1.booking_state != false
         and r1.id = ro.id
-        and (b1.date_end <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date).joins(rooms: {booking_detail: :booking})
-    #where('estates.created_at <= ?', ref_date)
+        and (b1.date_end <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date)
   }
 
   def isPublished
