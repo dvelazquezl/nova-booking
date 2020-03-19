@@ -25,7 +25,7 @@
                     <em class="fa-lg fas fa-user"></em>
                   <% end %>
                 </td>
-                <td class="col-2" id="price"><%= r.price %></td>
+                <td class="col-2" id="price"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
                 <td class="col-2">
                   <label>
                     <select class="custom-select custom-select-sm" id="quantity" onchange="addValues()">
