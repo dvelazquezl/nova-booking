@@ -69,10 +69,10 @@
   function addValues() {
       let total = 0;
       $('tbody tr').each(function () {
-          let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text());
+          let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text().split(".").join(""));
           total = total + sum;
       });
-      $('#total').val(total);
+      $('#total').val(total.toLocaleString("en-US").split(",").join("."));
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
 </script>
