@@ -27,9 +27,22 @@ class EstatesController < ApplicationController
   # GET /estates/1
   # GET /estates/1.json
   def show
+    (@filterrific = initialize_filterrific(
+        Estate.with_rooms,
+        params[:filterrific],
+        select_options: {
+            sorted_by: Estate.with_rooms.options_for_sorted_by,
+        },
+        )) || return
+    @estates = @filterrific.find.page(params[:page])
     @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    respond_to do |format|
+      format.html
+      format.js
+    end
+    render :show, locals: {filterrific: @filterrific}
   end
 
   # GET /estates/new
