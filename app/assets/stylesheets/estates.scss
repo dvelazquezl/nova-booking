@@ -34,24 +34,7 @@
 }
 
 .title-section{
-  padding-left: 10%;
-}
-
-.facilities-list {
-  list-style: none;
-  display: flex;
-  flex-flow: column wrap;
-  height: 100%;
-  color: black;
-  font-size: smaller;
-}
-
-.facilities-list li {
-  padding: 3px;
-}
-
-.facility {
-  width: 100%;
+  padding-left: 1.5%;
 }
 
 .carousel-thumbnails {
@@ -79,17 +62,36 @@
   background-color: #EEEEEE;
 }
 
+.details {
+  height: auto;
+}
+
 #facilities-div {
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 10%;
 }
 
 #facilities-div, #carousel-div {
   height: 400px;
 }
 
-.details {
-  height: auto;
+.facilities-list {
+  padding-left: 0;
+  list-style: none;
+  height: 100%;
+  color: black;
+  font-size: large;
+}
+
+.facility {
+  padding: 3px;
+}
+
+.facilities-title {
+  height: 40px
+}
+
+.facilities-list-div {
+  height: 360px;
 }
 
 #description-text{
