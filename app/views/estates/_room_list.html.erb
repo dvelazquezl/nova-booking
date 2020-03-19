@@ -8,15 +8,20 @@
           <table class="table table-bordered table-hover" id="table-ext-1">
             <thead>
             <tr>
+              <th></th>
               <th>Tipo de habitacion</th>
               <th>Capacidad</th>
               <th>Precio</th>
               <th>Seleccionar habitacion</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="rooms">
             <% rooms.each do |r| %>
               <tr>
+                <td id="booking_info">
+                  <div class="room_id" hidden="true"><%=r.id%></div>
+                  <div class="price" hidden="true"><%=r.price%></div>
+                </td>
                 <td class="col-2">
                   <%= link_to r.room_type, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
                 </td>
@@ -25,10 +30,10 @@
                     <em class="fa-lg fas fa-user"></em>
                   <% end %>
                 </td>
-                <td class="col-2" id="price"><%= r.price %></td>
+                <td class="col-2 price" id="price"><%= r.price %></td>
                 <td class="col-2">
                   <label>
-                    <select class="custom-select custom-select-sm" id="quantity" onchange="addValues()">
+                    <select class="custom-select custom-select-sm quantity" id="quantity" onchange="addValues()">
                       <option value="0">0</option>
                       <% (r.quantity != nil ? r.quantity : 0).times do |q| %>
                         <option><%= q + 1 %></option>
@@ -75,4 +80,5 @@
       $('#total').val(total);
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
+
 </script>

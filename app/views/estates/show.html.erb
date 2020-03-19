@@ -50,3 +50,30 @@
     <%= render 'room_list', rooms: @rooms %>
   </div>
 </div>
+<script>
+$(document).ready(function(){
+
+
+  $('#book').click(function(event) {
+      let booking_details = [];
+      let total_amount = $("#total").val();
+      $('table > #rooms > tr').each(function () {
+          const quantity = parseInt($('option:selected', this).text());
+          if(quantity > 0){
+            const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
+            const price = parseInt($(this).find("#booking_info").find(".price").text());
+            const subtotal = quantity * price;
+            booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
+          }
+
+        });
+        var params = {client_name: "", client_email:"", date_start: "2020-03-18 02:18:31.825918",
+                               date_end: "2020-03-21 02:18:31.825918", total_amount: total_amount, booking_details: booking_details};
+         $.get("/bookings/new",params, function(data) {
+                     $("body").html(data);
+                 });
+      });
+});
+
+
+</script>
