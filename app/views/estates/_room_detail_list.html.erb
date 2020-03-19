@@ -26,7 +26,7 @@
                     <em class="fa-lg fas fa-user"></em>
                   <% end %>
                 </td>
-                <td class="text-center"><%= r.price %></td>
+                <td class="text-center"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
                 <td class="text-center"><%= r.quantity %></td>
                 <td class="text-center">
                   <% if r.status.published? %>
