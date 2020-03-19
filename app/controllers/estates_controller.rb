@@ -38,11 +38,12 @@ class EstatesController < ApplicationController
     @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
     @images = @estate.images
+
     respond_to do |format|
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: params[:from], to: params[:to]}
   end
 
   # GET /estates/new
