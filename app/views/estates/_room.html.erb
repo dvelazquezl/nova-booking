@@ -45,21 +45,21 @@
             <div class="card-body col-4">
               <div class="form-group">
                 <label title="Numero de habitaciones (de este tipo)">Cantidad *</label>
-                <%= f.text_field :quantity, class: "form-control", required: "required", type: "number" %>
+                <%= f.text_field :quantity, class: "form-control", required: "required", maxlength:"3", type: "number"%>
               </div>
             </div>
 
             <div class="card-body col-4">
               <div class="form-group">
                 <label title="¿Cuántos invitados pueden quedarse en esta habitación?">Capacidad *</label>
-                <%= f.text_field :capacity, class: "form-control", required: "required", type: "number" %>
+                <%= f.text_field :capacity, class: "form-control", required: "required", maxlength:"3", type: "number"%>
               </div>
             </div>
 
             <div class="card-body col-4">
               <div class="form-group">
                 <label>Precio *</label>
-                <%= f.text_field :price, class: "form-control", required: "required", type: "number" %>
+                <%= f.number_field :price, class: "form-control number", required: "required", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57"%>
               </div>
             </div>
           </div>
@@ -112,3 +112,15 @@
 
   <hr style="border: 1px solid #48a7f4">
 </fieldset>
+
+<script>
+    $(".number").on("keyup", function(event ) {
+        let input = $(event.target).val();
+        input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input?parseInt(input, 10):0;
+        $(event.target).val(function () {
+            let num = (input === 0)?"":input.toLocaleString("en-US");
+            return num.split(",").join(".");
+        });
+    });
+</script>

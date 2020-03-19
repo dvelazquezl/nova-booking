@@ -1,4 +1,4 @@
-<%= form_with(model: estate, local: true) do |form| %>
+<%= form_with(model: estate, local: true, id: 'form-estate') do |form| %>
   <% if estate.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(estate.errors.count, "error") %> prohibited this estate from being saved:</h2>
@@ -134,3 +134,11 @@
     </div>
   </fieldset>
 <% end %>
+<script>
+  $("#form-estate").on("submit", function(evt){
+    $(".number").each(function (ind, input) {
+      input.value = input.value.split(".").join("");
+    });
+  });
+</script>
+
