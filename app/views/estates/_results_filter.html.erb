@@ -8,7 +8,7 @@
                          :value => params[:city]%>
       </div>
       <div class="row has-search d-flex align-items-center results-block">
-        <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
+        <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker date_start',
                          :'data-provide' => 'datepicker',
                          :'data-date-start-date' => "+0d",
                          :'id' => 'with_date_gte',
@@ -17,7 +17,7 @@
                          :'value' => params[:from]) %>
       </div>
       <div class="row has-search d-flex align-items-center results-block">
-        <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker',
+        <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker date_end',
                          :'data-provide' => 'datepicker',
                          :'data-date-start-date' => "+0d",
                          :'id' => 'with_date_lte',

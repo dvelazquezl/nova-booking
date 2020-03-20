@@ -8,27 +8,32 @@
           <table class="table table-bordered table-hover" id="table-ext-1">
             <thead>
             <tr>
+              <th></th>
               <th>Tipo de habitacion</th>
               <th>Capacidad</th>
               <th>Precio</th>
               <th>Seleccionar habitacion</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="rooms">
             <% rooms.each do |r| %>
               <tr>
+                <td id="booking_info">
+                  <div class="room_id" hidden="true"><%=r.id%></div>
+                  <div class="price" hidden="true"><%=r.price%></div>
+                </td>
                 <td class="col-2">
-                  <%= link_to r.room_type, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
+                  <%= link_to r.description, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
                 </td>
                 <td class="col-2">
                   <% r.capacity.to_i.times do %>
                     <em class="fa-lg fas fa-user"></em>
                   <% end %>
                 </td>
-                <td class="col-2" id="price"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+                <td class="col-2 price" id="price"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
                 <td class="col-2">
                   <label>
-                    <select class="custom-select custom-select-sm" id="quantity" onchange="addValues()">
+                    <select class="custom-select custom-select-sm quantity" id="quantity" onchange="addValues()">
                       <option value="0">0</option>
                       <% (r.quantity != nil ? r.quantity : 0).times do |q| %>
                         <option><%= q + 1 %></option>
@@ -45,7 +50,7 @@
       </div>
     </div>
     <div class="col col-lg-2">
-        <div class="card card-default mb-3">
+        <div class="card card-default mb-4">
           <div class="card-body">
             <div class="card-header">
               <h5><strong>Total</strong></h5>
@@ -69,10 +74,11 @@
   function addValues() {
       let total = 0;
       $('tbody tr').each(function () {
-          let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text());
+          let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text().split(".").join(""));
           total = total + sum;
       });
-      $('#total').val(total);
+      $('#total').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
+
 </script>

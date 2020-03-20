@@ -99,7 +99,7 @@ class Estate < ApplicationRecord
         inner join public.bookings as b1 on b1.id = bd1.booking_id
         where b1.booking_state != false
         and r1.id = ro.id
-        and (b1.date_end <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date)
+        and (b1.date_end <= ? or b1.date_start >= ?))) = 0))", ref_date, ref_date)
   }
 
   def isPublished
