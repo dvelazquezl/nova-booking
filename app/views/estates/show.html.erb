@@ -1,32 +1,100 @@
-<p>
-  <strong>Name:</strong>
-  <%= @estate.name %>
-</p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @estate.address %>
-</p>
+  <div class="row results-filter-section">
+  <div class="col-2">
+    <%= render(
+            partial: "estates/results_filter",
+            locals: {filterrific: filterrific}
+        ) %>
+  </div>
+  <!-- TITLES -->
+  <div class="col-10">
+    <div class="container box-placeholder">
+      <div class="col-12">
+        <div class="row title-section">
+          <div class="col-12">
+            <div class="row d-flex align-items-center">
+              <div class="col-md-11 col-sm-12">
+                <h1 class="text-info" id="estate-title">
+                  <%= @estate.name %>
+                </h1>
+              </div>
+              <div class="col-md-1 col-sm-12">
+                <%= link_to owner_path(@estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
+                  Contacto
+                <% end %>
+              </div>
+              <div class="col-12 d-flex align-items-center">
+                <em class="mr-1 fa-1x fas fa-map-marker-alt"></em>
+                <span>
+                  <%= @estate.address %>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END -->
+      <br>
+      <!-- DESCRIPTION SECTION -->
+      <div class="col-12">
+        <div class="container">
+          <p class="col-12" id="description-text">
+            &emsp;&emsp;<%= @estate.description %>
+          </p>
+        </div>
+      </div>
+      <!-- END -->
 
-<p>
-  <strong>City:</strong>
-  <%= @estate.city_id %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <% if @estate.status == false %>
-    <%= "Cerrado" %>
-  <% else %>
-    <%= "Abierto" %>
-  <% end %>
-<p>
-
-<div class="field">
-  <% @estate.images.each do |image| %>
-    <%= image_tag image %>
-  <% end %>
+      <!-- ESTATE DETAILS -->
+      <div class="col-12" id="estate-details">
+        <div class="row details">
+          <div class="col-md-8 col-sm-12" id="carousel-div">
+            <%= render partial: "estates/show_images", :locals => {images: @images, h_size: '340px'} %>
+          </div>
+          <div class="col-md-4 col-sm-12" id="facilities-div">
+            <div class="row">
+              <div class="col-12 facilities-title">
+                <h3>COMODIDADES</h3>
+              </div>
+              <div class="col-12 overflow-auto facilities-list-div">
+                <%= render partial: "estates/facilities_list", :locals => {facilities: @facilities} %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END -->
+      <!-- Availability table -->
+      <br/>
+      <div class="col-12">
+        <%= render 'room_list', rooms: @rooms %>
+      </div>
+    </div>
+  </div>
 </div>
+<script>
+$(document).ready(function(){
 
-<%= link_to 'Edit', edit_estate_path(@estate) %> |
-<%= link_to 'Back', estates_path %>
+  $('#book').click(function(event) {
+      let booking_details = [];
+      const total_amount = $("#total").val().split(" ")[0].split(".").join("");
+      const date_start = $(".date_start").val();
+      const date_end = $(".date_end").val();
+      $('table > #rooms > tr').each(function () {
+          const quantity = parseInt($('option:selected', this).text());
+          if(quantity > 0){
+            const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
+            const price = parseInt($(this).find("#booking_info").find(".price").text());
+            const subtotal = quantity * price;
+            booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
+          }
+        });
+       let pr = escape(JSON.stringify(booking_details))
+       const url = "/bookings/new?date_start="+date_start+"&date_end="+date_end+"&total_amount="+total_amount.toString()
+                    +"&booking_details="+pr;
+       window.location.href = url;
+      });
+});
+
+
+</script>
