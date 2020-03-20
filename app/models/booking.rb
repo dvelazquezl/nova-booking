@@ -5,7 +5,7 @@ class Booking < ApplicationRecord
     def self.booking_new(booking,params)
         booking.client_name = params[:client_name]
         booking.date_start = params[:date_start]
-        booking.date_end = params[:date_start]
+        booking.date_end = params[:date_end]
         booking.total_amount = params[:total_amount]
         booking.booking_state = true
         booking_details = JSON.parse(CGI.unescape(params[:booking_details]))
