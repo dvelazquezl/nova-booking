@@ -72,3 +72,29 @@
     </div>
   </div>
 </div>
+<script>
+$(document).ready(function(){
+
+  $('#book').click(function(event) {
+      let booking_details = [];
+      const total_amount = $("#total").val().split(" ")[0].split(".").join("");
+      const date_start = $(".date_start").val();
+      const date_end = $(".date_end").val();
+      $('table > #rooms > tr').each(function () {
+          const quantity = parseInt($('option:selected', this).text());
+          if(quantity > 0){
+            const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
+            const price = parseInt($(this).find("#booking_info").find(".price").text());
+            const subtotal = quantity * price;
+            booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
+          }
+        });
+       let pr = escape(JSON.stringify(booking_details))
+       const url = "/bookings/new?date_start="+date_start+"&date_end="+date_end+"&total_amount="+total_amount.toString()
+                    +"&booking_details="+pr;
+       window.location.href = url;
+      });
+});
+
+
+</script>
