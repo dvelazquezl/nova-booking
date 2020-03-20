@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-5 col-sm-12 has-search d-flex align-items-center">
                 <span class="fa fa-calendar form-control-feedback"></span>
-                <%= f.text_field(:with_date_gte, class: 'form-control datepicker',
+                <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
                            :'data-provide' => 'datepicker',
                            :'data-date-start-date' => "+0d",
                            :'id' => 'with_date_gte',
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-5 col-sm-12 has-search d-flex align-items-center">
                 <span class="fa fa-calendar form-control-feedback"></span>
-                <%= f.text_field(:with_date_lte, class: 'form-control datepicker',
+                <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker',
                            :'data-provide' => 'datepicker',
                            :'data-date-start-date' => "+0d",
                            :'id' => 'with_date_lte',
@@ -42,7 +42,7 @@
         $('#with_date_gte, #with_date_lte').datepicker({
             todayHighlight: true,
             autoclose: true,
-            format: "mm/dd/yyyy",
+            format: "YYYY/MM/DD",
             clearBtn: true,
             startDate: new Date()
         });

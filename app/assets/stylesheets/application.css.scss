@@ -28,3 +28,15 @@
  */
 @import 'components/_filterrific_filter';
 @import 'components/datepicker';
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap');
+
+.footer-text {
+  font-family: PT Sans Narrow;
+}
+
+.footer-content {
+  padding-left: 1%;
+  font-size: small;
+  background-color: #909FA7;
+  color: white;
+}

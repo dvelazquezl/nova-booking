@@ -1,79 +1,74 @@
-<div class="container box-placeholder">
+
+  <div class="row results-filter-section">
+  <div class="col-2">
+    <%= render(
+            partial: "estates/results_filter",
+            locals: {filterrific: filterrific}
+        ) %>
+  </div>
   <!-- TITLES -->
-  <div class="col-12">
-    <div class="row title-section">
-      <div class="col-12 d-flex align-items-center">
-        <div class="row">
+  <div class="col-10">
+    <div class="container box-placeholder">
+      <div class="col-12">
+        <div class="row title-section">
           <div class="col-12">
-            <h1 class="text-info" id="estate-title">
-              <%= @estate.name %>
-            </h1>
-          </div>
-          <div class="col-12 d-flex align-items-center">
-            <em class="mr-1 fa-1x fas fa-map-marker-alt">
-            </em>
-            <span>
-              <%= @estate.address %>
-            </span>
+            <div class="row d-flex align-items-center">
+              <div class="col-md-11 col-sm-12">
+                <h1 class="text-info" id="estate-title">
+                  <%= @estate.name %>
+                </h1>
+              </div>
+              <div class="col-md-1 col-sm-12">
+                <%= link_to owner_path(@estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
+                  Contacto
+                <% end %>
+              </div>
+              <div class="col-12 d-flex align-items-center">
+                <em class="mr-1 fa-1x fas fa-map-marker-alt"></em>
+                <span>
+                  <%= @estate.address %>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- END -->
-  <br>
-  <!-- DESCRIPTION SECTION -->
-  <div class="col-12">
-    <div class="container">
-      <p class="col-12" id="description-text">
-        &emsp;&emsp;<%= + @estate.description %>
-      </p>
-    </div>
-  </div>
-  <!-- END -->
+      <!-- END -->
+      <br>
+      <!-- DESCRIPTION SECTION -->
+      <div class="col-12">
+        <div class="container">
+          <p class="col-12" id="description-text">
+            &emsp;&emsp;<%= @estate.description %>
+          </p>
+        </div>
+      </div>
+      <!-- END -->
 
-  <!-- ESTATE DETAILS -->
-  <div class="col-12" id="estate-details">
-    <div class="row details">
-      <div class="col-md-7 col-sm-12" id="carousel-div">
-        <%= render partial: "estates/show_images", :locals => { images: @images, h_size: '340px'} %>
+      <!-- ESTATE DETAILS -->
+      <div class="col-12" id="estate-details">
+        <div class="row details">
+          <div class="col-md-8 col-sm-12" id="carousel-div">
+            <%= render partial: "estates/show_images", :locals => {images: @images, h_size: '340px'} %>
+          </div>
+          <div class="col-md-4 col-sm-12" id="facilities-div">
+            <div class="row">
+              <div class="col-12 facilities-title">
+                <h3>COMODIDADES</h3>
+              </div>
+              <div class="col-12 overflow-auto facilities-list-div">
+                <%= render partial: "estates/facilities_list", :locals => {facilities: @facilities} %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-3 col-sm-12 overflow-auto" id="facilities-div">
-        <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
+      <!-- END -->
+      <!-- Availability table -->
+      <br/>
+      <div class="col-12">
+        <%= render 'room_list', rooms: @rooms %>
       </div>
     </div>
-  </div>
-  <!-- END -->
-  <!-- Availability table -->
-  <br/>
-  <div class="col-12">
-    <%= render 'room_list', rooms: @rooms %>
   </div>
 </div>
-<script>
-$(document).ready(function(){
-
-
-  $('#book').click(function(event) {
-      let booking_details = [];
-      let total_amount = $("#total").val();
-      $('table > #rooms > tr').each(function () {
-          const quantity = parseInt($('option:selected', this).text());
-          if(quantity > 0){
-            const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
-            const price = parseInt($(this).find("#booking_info").find(".price").text());
-            const subtotal = quantity * price;
-            booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
-          }
-
-        });
-        var params = {client_name: "", client_email:"", date_start: "2020-03-18 02:18:31.825918",
-                               date_end: "2020-03-21 02:18:31.825918", total_amount: total_amount, booking_details: booking_details};
-         $.get("/bookings/new",params, function(data) {
-                     $("body").html(data);
-                 });
-      });
-});
-
-
-</script>
