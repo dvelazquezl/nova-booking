@@ -8,7 +8,7 @@
           <table class="table table-bordered table-hover" id="table-ext-1">
             <thead>
             <tr>
-              <th></th>
+              <th hidden="true"></th>
               <th>Tipo de habitacion</th>
               <th>Capacidad</th>
               <th>Precio</th>
@@ -18,7 +18,7 @@
             <tbody id="rooms">
             <% rooms.each do |r| %>
               <tr>
-                <td id="booking_info">
+                <td id="booking_info" hidden="true">
                   <div class="room_id" hidden="true"><%=r.id%></div>
                   <div class="price" hidden="true"><%=r.price%></div>
                 </td>
