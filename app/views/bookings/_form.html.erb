@@ -51,11 +51,11 @@
           <tbody>
           <%= form.fields_for :booking_details, booking.booking_details do |f| %>
             <tr>
-              <td><%= f.label :room_type, :value => room_type(f)%></td>
-              <td><%=f.label :capacity,:value =>room_capacity(f)%></td>
-              <td><%= f.label :quantity, :value => f.object.quantity %></td>
-              <td><%= f.label :price, :value => f.object.subtotal / f.object.quantity %></td>
-              <td><%= f.label :subtotal, :value => f.object.subtotal %></td>
+              <td><%=Room.room_type_for(f.object.room_id)%></td>
+              <td><%=Room.room_capacity_for(f.object.room_id)%></td>
+              <td><%=f.object.quantity %></td>
+              <td><%=number_to_currency(f.object.subtotal / f.object.quantity , :unit => "Gs", :separator => ".", :precision => 0) %></td>
+              <td><%=number_to_currency( f.object.subtotal, :unit => "Gs", :separator => ".", :precision => 0) %></td>
               <%= f.hidden_field :room_id %>
               <%= f.hidden_field :quantity %>
               <%= f.hidden_field :subtotal %>
@@ -70,8 +70,8 @@
           <div class="col-9">
             <div class="text-right h3">TOTAL</div>
           </div>
-          <div class="col-3">
-            <div class="text-right h3"> <%= form.label :total_amount, :value => form.object.total_amount %></div>
+          <div class="col-6">
+            <div class="text-right h3"> <%= number_to_currency( form.object.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></div>
             <%= form.hidden_field :total_amount %>
             <%= form.hidden_field :date_creation %>
             <%= form.hidden_field :booking_state, :value => true %>

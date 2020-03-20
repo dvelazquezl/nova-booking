@@ -11,17 +11,7 @@ class BookingsController < ApplicationController
   end
 
   def new
-    @booking = Booking.new
-    @booking.client_name = params[:client_name]
-    @booking.date_start = params[:date_start]
-    @booking.date_end = params[:date_start]
-    @booking.total_amount = params[:total_amount]
-    @booking.booking_state = true
-    params[:booking_details].each_pair {|key,value|
-      @booking.booking_details.build(room_id: value["room_id"],
-                                     quantity: value["quantity"],
-                                     subtotal: value["subtotal"])
-      }
+    @booking = Booking.booking_new(Booking.new, params)
   end
 
   def edit
