@@ -5,6 +5,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   has_one :owner
 
+  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true, message: 'no es valido, solo debe contener caracteres alfanumericos'
+  validates_length_of :username, minimum: 5, maximum: 20
+  validate :validate_username
+  def validate_username
+    if User.where(email: username).exists?
+      errors.add(:username, :invalid)
+    end
+  end
   attr_writer :login
   def login
     @login || self.username || self.email
