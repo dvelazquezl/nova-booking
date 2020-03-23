@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true, message: 'no es valido, solo debe contener caracteres alfanumericos'
   validates_length_of :username, minimum: 5, maximum: 20
+  validates_uniqueness_of :username
   validate :validate_username
   def validate_username
     if User.where(email: username).exists?
@@ -21,6 +22,6 @@ class User < ApplicationRecord
   def self.find_for_database_authentication warden_conditions
     conditions = warden_conditions.dup
     login = conditions.delete(:login)
-    where(conditions).where(["lower(username) = :value OR lower(email) = :value", {value: login.strip.downcase}]).first
+    where(conditions).where(["username = :value OR lower(email) = :value", {value: login.strip.downcase}]).first
   end
 end
