@@ -1,3 +1,4 @@
+#model for facilities
 class Facility < ApplicationRecord
 
   has_many :facilities_estates

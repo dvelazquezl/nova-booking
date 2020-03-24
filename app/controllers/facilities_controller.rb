@@ -1,3 +1,4 @@
+#controller for creating, editing, and deleting facilities
 class FacilitiesController < ApplicationController
   before_action :set_facility, only: [:edit, :update, :destroy]
 
@@ -15,7 +16,6 @@ class FacilitiesController < ApplicationController
 
   def create
     @facility = Facility.new(facility_params)
-
     respond_to do |format|
       if @facility.save
         format.html { redirect_to facilities_url, notice: 'Comodidad creada exitosamente.' }
