@@ -9,6 +9,7 @@ class Facility < ApplicationRecord
   extend Enumerize
   enumerize :facility_type, in: [:estate, :room]
 
+  self.per_page = 10
   #def self.options_for_select
   #  order("LOWER(description)").map { |e| [e.description, e.id] }
   #end

@@ -1,0 +1,41 @@
+<%= form_with(model: facility, local: true) do |form| %>
+  <% if facility.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(facility.errors.count, "error") %> prohibited this facility from being saved:</h2>
+
+      <ul>
+        <% facility.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div align="center">
+    <div class="col-5">
+      <div class="card card-default">
+        <div class="card-body">
+          <div class="row">
+            <div class="card-body height_div">
+              <div class="form-group text-left">
+                <label>Descripcion </label>
+                <%= form.text_field :description, class: "form-control", required: "required" %>
+              </div>
+              <div class="form-group text-left">
+                <label>Tipo </label>
+                <%= form.select :facility_type, Facility.facility_type.options ,{prompt: 'Seleccionar'},
+                                {class: 'form-control', required: 'required'} %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <fieldset>
+        <div class="form-group row">
+          <%= link_to 'Atras', facilities_path, class: "btn btn-secondary" %>
+          <%= form.submit 'Guardar', class: "btn btn-primary" %>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+<% end %>
