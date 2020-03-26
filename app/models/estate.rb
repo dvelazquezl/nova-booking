@@ -69,7 +69,7 @@ class Estate < ApplicationRecord
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
   scope :with_date_gte, ->(ref_date) {
-    where("estates.id in
+    Estate.only_published.where("estates.id in
     ( select distinct ro.estate_id
      from public.rooms as ro
      where ro.id not in
@@ -85,11 +85,11 @@ class Estate < ApplicationRecord
                     join public.bookings as b1 on b1.id = bd1.booking_id
                     where b1.booking_state != false
                       and r1.id = r.id
-                      and ((b.date_start >= ?) or (b.date_end >= ?)", ref_date, ref_date)
+                      and ((b1.date_start >= ?) or (b1.date_end >= ?)", ref_date, ref_date)
   }
 
   scope :with_date_lte, ->(ref_date) {
-    where("((b.date_end <= ?) or (b.date_start <= ?)))) = 0)))", ref_date, ref_date)
+    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0)))", ref_date, ref_date)
   }
 
   def isPublished
