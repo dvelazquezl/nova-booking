@@ -11,7 +11,7 @@
                 <div class="form-group col-10">
                   <label>Nombre y Apellido *</label>
                   <% if user_signed_in?%>
-                    <%= form.text_field :client_name, class: "form-control", required: "required", value: "Pamela Tamay" %>
+                    <%= form.text_field :client_name, class: "form-control", required: "required" %>
                   <%else %>
                     <%= form.text_field :client_name, class: "form-control", required: "required" %>
                   <%end %>
