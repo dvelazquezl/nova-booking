@@ -81,3 +81,4 @@ gem "rubycritic"
 
 gem 'uglifier', '>= 1.3.0'
 
+gem 'selectize-rails'
