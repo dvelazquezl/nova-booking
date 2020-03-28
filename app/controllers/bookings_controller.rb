@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-  before_action :authenticate_user! , except: :show
+  before_action :authenticate_user! , except: [:new, :create, :show]
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -8,6 +8,7 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
+    @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
   end
 
   def new
@@ -23,6 +24,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
+        @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
         format.html { redirect_to @booking, notice: 'La reserva fue creado satifactoriamente.' }
         format.json { render :show, status: :created, location: @booking }
         UserMailer.new_booking(@booking).deliver_now
