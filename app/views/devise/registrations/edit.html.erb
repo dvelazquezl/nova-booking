@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
 <div class="card col-6">
   <article class="card-body">
-    <h2 class="card-title text-center mb-4 mt-1">Actualizar Cuenta</h2>
+    <h2 class="card-title text-center mb-4 mt-1">Actualizar Perfil</h2>
     <hr>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
@@ -11,6 +11,15 @@
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <%= f.text_field :username, autofocus: true, autocomplete: "username", placeholder: "Nombre de usuario", class: "form-control" %>
+          </div> <!-- input-group.// -->
+        </div> <!-- form-group// -->
+
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
             </div>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>
           </div> <!-- input-group.// -->
