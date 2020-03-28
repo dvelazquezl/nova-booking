@@ -5,7 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   has_one :owner
 
-  validates_format_of :username, with: /\A.*[0-9].*\z/m, :multiline => true, message: 'no es valido, solo debe contener caracteres alfanumericos'
   validates_length_of :username, minimum: 5, maximum: 20
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
   validate :validate_username
