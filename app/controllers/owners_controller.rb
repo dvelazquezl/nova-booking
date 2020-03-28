@@ -36,7 +36,7 @@ class OwnersController < ApplicationController
   def update
     respond_to do |format|
       if @owner.update(owner_params)
-        format.html { redirect_to @owner, notice: 'Propietario fue actualizado correctamente.' }
+        format.html { redirect_to @owner, notice: 'Tu perfil fue actualizado correctamente.' }
         format.json { render :show, status: :ok, location: @owner }
       else
         format.html { render :edit }

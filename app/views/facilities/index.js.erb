@@ -1,0 +1,8 @@
+<% js = escape_javascript(
+  render(
+    :partial => 'facility/list',
+    :locals => { :facilities => @facilities }
+  )
+) %>
+$("#results").html("<%= js %>");
+$('.pagination a').attr('data-remote', 'true');
