@@ -25,9 +25,13 @@
                 <td class="col-2">
                   <%= link_to r.description, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
                 </td>
-                <td class="col-2">
-                  <% r.capacity.to_i.times do %>
-                    <em class="fa-lg fas fa-user"></em>
+                <td class="col-2" data-toggle="tooltip" data-placement="left" title="Capacidad: <%= r.capacity %>">
+                  <% if r.capacity.to_i >= 5 %>
+                    <em class="fas fa-users"> 5 +</em>
+                  <% else %>
+                    <% r.capacity.to_i.times do %>
+                      <em class="fa-lg fas fa-user"></em>
+                    <% end %>
                   <% end %>
                 </td>
                 <td class="col-2 price" id="price"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
@@ -81,4 +85,7 @@
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
 
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  });
 </script>

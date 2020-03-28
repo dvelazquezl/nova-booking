@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'estates/:id/show_detail', :to => 'estates#show_detail', :as => 'show_detail_estate'
   resources :users, only: [:index]
   resources :rooms
-  resources :facilities
+  resources :facilities, except: :show
   resources :bookings
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
