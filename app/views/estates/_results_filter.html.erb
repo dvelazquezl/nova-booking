@@ -1,36 +1,51 @@
-<div class="col-12 results-filter-block">
-  <%= puts filterrific.inspect %>
-  <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
-    <div class="form-group col-12">
-      <div class="row has-search d-flex align-items-center results-block">
-        <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
-                         :class => 'filterrific-periodically-observed form-control',
-                         :value => params[:city]%>
+<div class="jumbotron jumbotron-fluid">
+  <div class="col-12 results-filter-block">
+    <%= puts filterrific.inspect %>
+    <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
+      <div class="form-group">
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
+                           :class => 'filterrific-periodically-observed form-control',
+                           :value => params[:city]%>
+        </div>
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker date_start',
+                           :'data-provide' => 'datepicker',
+                           :'data-date-start-date' => "+0d",
+                           :'id' => 'with_date_gte',
+                           :'data-target' => '#filterrific_with_date_gte',
+                           :'data-toggle' => 'datepicker',
+                           :'value' => params[:from]) %>
+        </div>
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker date_end',
+                           :'data-provide' => 'datepicker',
+                           :'data-date-start-date' => "+0d",
+                           :'id' => 'with_date_lte',
+                           :'data-target' => '#filterrific_with_date_lte',
+                           :'data-toggle' => 'datepicker',
+                           :'value'=> params[:to]) %>
+        </div>
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
+        </div>
       </div>
-      <div class="row has-search d-flex align-items-center results-block">
-        <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker date_start',
-                         :'data-provide' => 'datepicker',
-                         :'data-date-start-date' => "+0d",
-                         :'id' => 'with_date_gte',
-                         :'data-target' => '#filterrific_with_date_gte',
-                         :'data-toggle' => 'datepicker',
-                         :'value' => params[:from]) %>
-      </div>
-      <div class="row has-search d-flex align-items-center results-block">
-        <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker date_end',
-                         :'data-provide' => 'datepicker',
-                         :'data-date-start-date' => "+0d",
-                         :'id' => 'with_date_lte',
-                         :'data-target' => '#filterrific_with_date_lte',
-                         :'data-toggle' => 'datepicker',
-                         :'value'=> params[:to]) %>
-      </div>
-      <div class="row has-search d-flex align-items-center results-block">
-        <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
-      </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
+
+<div class="jumbotron jumbotron-fluid">
+  <h4>&emsp;&emsp; Filtrar por:</h4>
+  <hr>
+
+  <!--FILTRO POR FECHA-->
+  <h5>Tu presupuesto</h5>
+  <input id="ex" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
+  <!--FIN-->
+  <hr>
+
+</div>
+
 <script>
     $(function() {
         $('#with_date_gte, #with_date_lte').datepicker({
@@ -41,4 +56,6 @@
             startDate: new Date()
         });
     });
+
+    $("#ex").slider({});
 </script>
