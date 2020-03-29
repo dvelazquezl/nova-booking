@@ -1,5 +1,22 @@
 //= require jquery3
 //= require bootstrap
-//= require filterrific/filterrific-jquery
 
-//= require components/datepicker
+$(function() {
+$( "#with_date_gte" ).datepicker(
+    {
+            todayHighlight: true,
+            autoclose: true,
+            format: "YYYY/MM/DD",
+            clearBtn: true,
+            startDate: new Date()
+    });
+
+    $( "#with_date_lte" ).datepicker(
+    {
+            todayHighlight: true,
+            autoclose: true,
+            format: "YYYY/MM/DD",
+            clearBtn: true,
+            startDate: new Date()
+    });
+});
