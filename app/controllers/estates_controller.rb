@@ -35,7 +35,12 @@ class EstatesController < ApplicationController
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
-    @rooms = @estate.rooms.available(params[:id], params[:from], params[:to])
+    from = params[:from]
+    to = params[:to]
+    @rooms = @estate.rooms.available(params[:id], from, to)
+    @rooms.each do |r|
+      r.quantity = Room.quantity_available(r.id, from, to).first != nil ? Room.quantity_available(r.id, from, to).first : 1
+    end
     @facilities = @estate.facilities_estates
     @images = @estate.images
 

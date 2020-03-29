@@ -34,6 +34,7 @@ class Room < ApplicationRecord
     )
   }
 
+  #Room.quantity_available('6','2020-04-01','2020-04-04')
   scope :quantity_available, ->(id, from, to) {
     where(
         "quantity in (select r2.quantity - (select coalesce(sum(bd.quantity), 0)
@@ -46,10 +47,8 @@ class Room < ApplicationRecord
             and ((b.date_end <= ?) or (b.date_start <= ?)))
         from public.rooms as r2
         where r2.id = ?)", id, from, from, to, to, id
-    ).pluck(:quantity)
-    #Room.quantity_available('11','2020-03-15','2020-03-18')
+    ).pluck(:quantity).take(1)
   }
-
 
   def self.room_type_for(id)
     find(id).room_type.text
