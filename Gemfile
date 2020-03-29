@@ -79,5 +79,7 @@ gem "rails_best_practices"
 gem "brakeman"
 gem "rubycritic"
 
+gem 'bootstrap-slider-rails'
+
 gem 'uglifier', '>= 1.3.0'
 
