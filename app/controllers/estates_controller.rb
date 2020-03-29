@@ -35,11 +35,12 @@ class EstatesController < ApplicationController
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
-    from = params[:from]
-    to = params[:to]
-    @rooms = @estate.rooms.available(params[:id], from, to)
-    @rooms.each do |r|
-      r.quantity = Room.quantity_available(r.id, from, to).first != nil ? Room.quantity_available(r.id, from, to).first : 1
+    date_from = params[:from]
+    date_to = params[:to]
+    @rooms = @estate.rooms.available(params[:id], date_from, date_to)
+    @rooms.each do |room|
+      quantity_available = Room.quantity_available(room.id, date_from, date_to).first
+      room.quantity =  quantity_available != nil ? quantity_available : 1
     end
     @facilities = @estate.facilities_estates
     @images = @estate.images
@@ -48,7 +49,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: params[:from], to: params[:to]}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
   end
 
   # GET /estates/new

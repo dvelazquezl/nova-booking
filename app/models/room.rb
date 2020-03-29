@@ -29,8 +29,8 @@ class Room < ApplicationRecord
                   join public.bookings as b1 on b1.id = bd1.booking_id
                   where b1.booking_state != false
                     and r1.id = r.id
-								    and ((b1.date_start >= ?) or (b1.date_end >= ?))
-								    and ((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0))", estate_id, from, from, to, to
+                    and ((b1.date_start >= ?) or (b1.date_end >= ?))
+                    and ((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0))", estate_id, from, from, to, to
     )
   }
 
