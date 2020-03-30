@@ -17,4 +17,16 @@ class Booking < ApplicationRecord
         }
         booking
     end
+
+    def self.set_state(booking)
+        booking.confirmed_at = Time.now()
+        booking.booking_state = true
+        booking.save
+        UserMailer.new_booking(booking).deliver_now
+        UserMailer.new_booking_owner(booking).deliver_now
+    end
+
+    def estate(booking)
+        Estate.find(Room.find(booking.booking_details[0].room_id).estate_id)
+    end
 end

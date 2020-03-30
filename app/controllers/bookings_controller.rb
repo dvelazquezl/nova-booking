@@ -19,16 +19,14 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     respond_to do |format|
       if @booking.save
-        @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+        @estate = Booking.estate(@booking)
         if user_signed_in?
-          set_state(@booking)
+          Booking.set_state(@booking)
           format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.'}
-          format.json { render :show, status: :created, location: @booking }
         else
           format.html { redirect_to root_url, notice: 'Verifique su correo para la confirmación de la reserva..'}
           UserMailer.new_booking_confirmation(@booking).deliver_now
         end
-
       else
         format.html { render :new }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
@@ -59,7 +57,7 @@ class BookingsController < ApplicationController
   def confirmation
     if params[:confirmation_token].present?
       @booking = Booking.find_by_confirmation_token(params[:confirmation_token])
-      set_state(@booking)
+      Booking.set_state(@booking)
       respond_to do |format|
         format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.'}
         format.json { render :show, status: :created, location: @booking}
@@ -68,15 +66,9 @@ class BookingsController < ApplicationController
       format.html { redirect_to bookings_url, error: 'Los sentimos se ha producido un error.' }
     end
   end
+
   private
 
-  def set_state(booking)
-    booking.confirmed_at = Time.now()
-    booking.booking_state = true
-    booking.save
-    UserMailer.new_booking(booking).deliver_now
-    UserMailer.new_booking_owner(booking).deliver_now
-  end
   def set_booking
     @booking = Booking.find(params[:id])
   end
