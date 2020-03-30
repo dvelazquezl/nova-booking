@@ -1,6 +1,6 @@
 class EstatesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_estate, only: %i[show edit update destroy]
+  before_action :authenticate_user! , except: [:show, :room]
 
   # GET /estates
   # GET /estates.json
@@ -35,7 +35,13 @@ class EstatesController < ApplicationController
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
-    @rooms = @estate.rooms
+    date_from = params[:from]
+    date_to = params[:to]
+    @rooms = @estate.rooms.available(params[:id], date_from, date_to)
+    @rooms.each do |room|
+      quantity_available = Room.quantity_available(room.id, date_from, date_to).first
+      room.quantity =  quantity_available != nil ? quantity_available : 1
+    end
     @facilities = @estate.facilities_estates
     @images = @estate.images
 
@@ -43,7 +49,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: params[:from], to: params[:to]}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
   end
 
   # GET /estates/new

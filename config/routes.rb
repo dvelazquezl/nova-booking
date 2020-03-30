@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+  get 'errors/internal_server_error'
   get 'welcome/index'
   get 'welcome/results'
 
@@ -22,7 +24,7 @@ Rails.application.routes.draw do
   get 'estates/:id/show_detail', :to => 'estates#show_detail', :as => 'show_detail_estate'
   resources :users, only: [:index]
   resources :rooms
-  resources :facilities
+  resources :facilities, except: :show
   resources :bookings
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -32,5 +34,9 @@ Rails.application.routes.draw do
 
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'
+
+  # error routes
+  match '/404', :to => 'errors#not_found', :via => :all
+  match '/500', to: 'errors#internal_server_error', :via => :all
 
 end
