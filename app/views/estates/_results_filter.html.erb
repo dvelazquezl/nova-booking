@@ -40,7 +40,8 @@
 
   <!--FILTRO POR FECHA-->
   <h5>Tu presupuesto</h5>
-  <input id="ex" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
+  <input type="text" class="span2 slider" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
+  <input type="text" class="form-control number"/>
   <!--FIN-->
   <hr>
 
@@ -57,5 +58,13 @@
         });
     });
 
-    $("#ex").slider({});
+    $(".number").on("keyup", function(event ) {
+        let input = $(event.target).val();
+        input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input?parseInt(input, 10):0;
+        $(event.target).val(function () {
+            let num = (input === 0)?"":input.toLocaleString("en-US");
+            return num.split(",").join(".");
+        });
+    });
 </script>
