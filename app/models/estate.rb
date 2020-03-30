@@ -20,6 +20,16 @@ class Estate < ApplicationRecord
     where(estate_type: [*estate_types])
   }
 
+  # filters on 'price_max' attribute
+  scope :price_max, ->(price_max) {
+    where("estates.id in
+    (select distinct estate_id
+    from rooms r
+    where
+      ? <= r.price and
+      ? >= r.price)", ref_date, ref_date)
+  }
+
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
@@ -27,6 +37,7 @@ class Estate < ApplicationRecord
                 with_date_lte
                 with_date_gte
                 with_estate_type
+                price_max
               ]
 
   scope :search_query, lambda { |query|

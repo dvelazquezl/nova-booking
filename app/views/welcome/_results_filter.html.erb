@@ -1,7 +1,7 @@
 <div class="col-12 results-filter-block">
   <%= puts filterrific.inspect %>
   <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
-    <div class="form-group col-12">
+    <div class="form-group jumbotron jumbotron-fluid">
       <div class="row has-search d-flex align-items-center results-block">
         <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
                          :class => 'filterrific-periodically-observed form-control' %>
@@ -27,67 +27,41 @@
         <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
       </div>
     </div>
-    <div class="form-group col-12">
-      <div class="row has-search d-flex align-items-center results-block">
-        <%= f.select :with_estate_type, filterrific.select_options[:with_estate_type],
-                     {:include_blank => '- Todos -'},
-                     {:class => 'filterrific-periodically-observed form-control'} %>
+    <div class="jumbotron jumbotron-fluid">
+      <h4>&emsp;&emsp; Filtrar por:</h4>
+      <hr class="text-primary">
+
+      <!--FILTRO POR FECHA-->
+      <h5>Tu presupuesto</h5>
+      <div class="row">
+        <div class="col-6">
+          <%#= f.number_field :price_min, class: "form-control number", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", placeholder:"Mínimo Gs." %>
+        </div>
+        <div class="col-6">
+          <%= f.number_field :price_max, class: "form-control number", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", placeholder:"Máximo Gs." %>
+        </div>
       </div>
+      <div align="right" style="padding-top: 5px">
+        <%= button_tag( :class => 'btn btn-primary btn-sm') do %>
+          <i class="fas fa-search"></i>
+        <% end %>
+      </div>
+      <!--FIN-->
+      <hr>
+
+      <!--FILTRO POR TIPO DE PROPIEDAD-->
+      <h5>Tipo de propiedad</h5>
+      <div class="form-group">
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.select :with_estate_type, filterrific.select_options[:with_estate_type],
+                       {:include_blank => '- Todos -'},
+                       {:class => 'filterrific-periodically-observed form-control'} %>
+        </div>
+      </div>
+      <!--FIN-->
+
     </div>
   <% end %>
-<div class="jumbotron jumbotron-fluid">
-  <div class="col-12 results-filter-block">
-      <%= puts filterrific.inspect %>
-      <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
-      <div class="form-group">
-          <div class="row has-search d-flex align-items-center results-block">
-              <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
-                           :class => 'filterrific-periodically-observed form-control' %>
-          </div>
-          <div class="row has-search d-flex align-items-center results-block">
-              <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
-                           :'data-provide' => 'datepicker',
-                           :'data-date-start-date' => "+0d",
-                           :'id' => 'with_date_gte',
-                           :'data-target' => '#filterrific_with_date_gte',
-                           :'data-toggle' => 'datepicker') %>
-          </div>
-          <div class="row has-search d-flex align-items-center results-block">
-              <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker',
-                           :'data-provide' => 'datepicker',
-                           :'data-date-start-date' => "+0d",
-                           :'id' => 'with_date_lte',
-                           :'data-target' => '#filterrific_with_date_lte',
-                           :'data-toggle' => 'datepicker') %>
-          </div>
-          <div class="row has-search d-flex align-items-center results-block">
-              <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
-          </div>
-      </div>
-      <% end %>
-  </div>
-</div>
-
-<div class="jumbotron jumbotron-fluid">
-  <h4>&emsp;&emsp; Filtrar por:</h4>
-  <hr>
-
-  <!--FILTRO POR FECHA-->
-  <h5>Tu presupuesto</h5>
-  <div class="row">
-    <div class="col-6">
-      <input type="text" class="form-control number" placeholder="Mínimo Gs."/>
-    </div>
-    <div class="col-6">
-      <input type="text" class="form-control number" placeholder="Máximo Gs."/>
-    </div>
-  </div>
-  <div align="right" style="padding-top: 5px">
-    <button type="button" class="btn btn-outline-primary btn-sm">Filtrar</button>
-  </div>
-  <!--FIN-->
-  <hr>
-
 </div>
 
 <script>
