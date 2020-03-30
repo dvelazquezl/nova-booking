@@ -13,7 +13,7 @@ $(function() {
     $('#with_date_gte').datepicker({
     
         weekStart: 1,
-        startDate: startDate,
+        startDate: new Date(),
         endDate: FromEndDate, 
         autoclose: true
     })
