@@ -1,22 +1,11 @@
-//= require jquery3
-//= require bootstrap
-
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 $(function() {
-$( "#with_date_gte" ).datepicker(
-    {
-            todayHighlight: true,
-            autoclose: true,
-            format: "YYYY/MM/DD",
-            clearBtn: true,
-            startDate: new Date()
-    });
-
-    $( "#with_date_lte" ).datepicker(
-    {
-            todayHighlight: true,
-            autoclose: true,
-            format: "YYYY/MM/DD",
-            clearBtn: true,
-            startDate: new Date()
+    $('#sandbox-container .input-daterange').datepicker({
+        todayBtn: true,
+        clearBtn: true,
+        todayHighlight: true
     });
 });

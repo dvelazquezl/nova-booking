@@ -68,6 +68,7 @@ gem 'enumerize'
 gem 'data_migrate'
 
 gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'sass-rails'
 gem 'devise'

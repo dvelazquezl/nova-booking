@@ -7,20 +7,23 @@
                          :class => 'filterrific-periodically-observed form-control' %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
-                         :'data-provide' => 'datepicker',
-                         :'data-date-start-date' => "+0d",
-                         :'id' => 'with_date_gte',
-                         :'data-target' => '#filterrific_with_date_gte',
-                         :'data-toggle' => 'datepicker') %>
+            <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control',
+                        readonly: true,
+                        :'data-provide' => 'datepicker',
+                        id: 'with_date_gte')%>
+        </div>
+        <div class="span5 col-md-5" id="sandbox-container">
+            <div class="input-daterange input-group" id="datepicker">
+                <input type="text" class="input-sm form-control" name="start">
+            <span class="input-group-addon">to</span>
+            <input type="text" class="input-sm form-control" name="end">
+            </div>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker',
-                         :'data-provide' => 'datepicker',
-                         :'data-date-start-date' => "+0d",
-                         :'id' => 'with_date_lte',
-                         :'data-target' => '#filterrific_with_date_lte',
-                         :'data-toggle' => 'datepicker') %>
+            <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'input-sm form-control',
+                        readonly: true,
+                        :'data-provide' => 'datepicker',
+                        id: 'with_date_lte') %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
             <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
