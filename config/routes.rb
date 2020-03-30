@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index]
   resources :rooms
   resources :facilities, except: :show
-  resources :bookings do
+  resources :bookings, except: [:edit, :index] do
     collection do
       get :confirmation
     end
