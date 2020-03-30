@@ -1,5 +1,6 @@
 class Booking < ApplicationRecord
     has_many :booking_details
+    has_secure_token :confirmation_token
     accepts_nested_attributes_for :booking_details, :allow_destroy => true
 
     def self.booking_new(booking,params)
