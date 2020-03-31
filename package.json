@@ -1,6 +1,6 @@
 {
     "name": "nova-booking",
-    "version": "0.1",
+    "version": "0.1.2",
     "description": "Nova Booking",
     "author": "fiuni' student",
     "license": "https://wrapbootstrap.com/help/licenses",
@@ -39,7 +39,6 @@
         "datatables.net-responsive-bs": "2.2.3",
         "dropzone": "5.5.1",
         "easy-pie-chart": "2.1.7",
-        "exif-js": "^2.3.0",
         "fastclick": "1.0.6",
         "flot": "themicon/flot",
         "fullcalendar": "3.9.0",

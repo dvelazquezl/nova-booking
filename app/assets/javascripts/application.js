@@ -13,7 +13,6 @@
 //= require turbolinks
 
 //= require filterrific/filterrific-jquery
-//= require exif-js/exif.js
 //= require croppie/croppie
 //= require components/datepicker
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -50,7 +49,8 @@ $(document).on('change', '#pictureInput', function (event) {
                     boundary: {
                         width: 300,
                         height: 300
-                    }
+                    },
+                    enableOrientation: true
                 });
                 $("#crop_modal").modal('show');
                 canvas.croppie('bind',{
