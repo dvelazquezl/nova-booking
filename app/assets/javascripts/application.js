@@ -17,7 +17,7 @@
 //= require filterrific/filterrific-jquery
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
-
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require bootstrap-slider
 
 // Uncomment to copy all static images under ../images to the output folder and reference

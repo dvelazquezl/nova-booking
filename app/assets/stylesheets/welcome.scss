@@ -59,10 +59,7 @@
     color: #aaa;
   }
 
-table, th, td, tr {
-  border: 2px solid lightgray;
-  background-color: floralwhite;
-}
+
 
   #description-list{
     list-style: none;
@@ -83,7 +80,11 @@ table, th, td, tr {
   }
 
   .results-block {
-    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: white;
   }
 
   .results-background {
@@ -91,7 +92,7 @@ table, th, td, tr {
   }
 
   .results-filter-section .filter-section {
-    width: 200px;
+    width: 270px;
     padding-left: 30px;
     padding-right: 5px;
     padding-bottom: 0px;
@@ -99,7 +100,7 @@ table, th, td, tr {
   }
 
   .results-section {
-    width: 82%;
+    width: 77%;
     padding-left: 30px;
     padding-right: 0px;
     padding-bottom: 0px;

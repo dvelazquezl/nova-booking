@@ -44,7 +44,9 @@ $(function() {
         endDate: FromEndDate, 
         autoclose: true,
         orientation: "bottom auto",
-        format: "yyyy/mm/dd"
+        format: "yyyy/mm/dd",
+        language: 'es',
+        todayHighlight: true
     })
         .on('changeDate', function(selected){
             startDate = new Date(selected.date.valueOf());
@@ -59,7 +61,9 @@ $(function() {
             endDate: ToEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "yyyy/mm/dd"
+            format: "yyyy/mm/dd",
+            language: 'es',
+            todayHighlight: true
         })
         .on('changeDate', function(selected){
             FromEndDate = new Date(selected.date.valueOf());
