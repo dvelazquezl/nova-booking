@@ -15,6 +15,11 @@ class Estate < ApplicationRecord
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
+  # filters on 'estate_type' attribute
+  scope :with_estate_type, ->(estate_types) {
+    where(estate_type: [*estate_types])
+  }
+
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
@@ -23,6 +28,7 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
+                with_estate_type
               ]
 
   scope :search_query, lambda { |query|
@@ -67,8 +73,13 @@ class Estate < ApplicationRecord
     ]
   end
 
+  def self.options_for_select
+    new_arr = []
+    estate_type.values.each_with_index{|e, index| new_arr.push([e, index])}
+  end
+
   extend Enumerize
-  enumerize :estate_type, in: [:one_apartment, :home, :hotel]
+  enumerize :estate_type, in: [:one_apartment, :home, :hotel], scope: true
 
   scope :with_date_gte, ->(ref_date) {
     Estate.only_published.where("estates.id in

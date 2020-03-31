@@ -35,21 +35,25 @@
       <h5>Tu presupuesto (Gs.)</h5>
       <div class="form-row">
           <div class="col-6">
-            <%= f.number_field :price_min, id:"price_min", class: "form-control number", type: "text", placeholder:"Mínimo Gs." %>
+            <%= f.number_field :price_min, id:"price_min", class: "filterrific-periodically-observed form-control number", type: "text", placeholder:"Mínimo Gs." %>
           </div>
           <div class="col-6">
-            <%= f.number_field :price_max, id:"price_max", class: "form-control number validame", type: "text", placeholder:"Máximo Gs." %>
+            <%= f.number_field :price_max, id:"price_max", class: "filterrific-periodically-observed form-control number validame", type: "text", placeholder:"Máximo Gs." %>
           </div>
       </div>
-      <div align="right" style="padding-top: 5px">
-        <%= button_tag( :class => 'btn btn-primary btn-sm guardar') do %>
-          <i class="fas fa-search"></i>
-        <% end %>
-      </div>
+
       <!--FIN-->
       <hr>
 
       <!--FILTRO POR TIPO DE PROPIEDAD-->
+      <h5>Tipo de alojamiento </h5>
+      <div class="form-group col-12">
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.select :with_estate_type, filterrific.select_options[:with_estate_type],
+                       {:include_blank => '- Todos -'},
+                       {:class => 'filterrific-periodically-observed form-control'} %>
+        </div>
+      </div>
       <!--FIN-->
 
     </div>
@@ -76,15 +80,7 @@
         });
     });
 
-    $(".number").on("keyup", function(event ) {
-        let input = $(event.target).val();
-        input = input.replace(/[\D\s\._\-]+/g, "");
-        input = input?parseInt(input, 10):0;
-        $(event.target).val(function () {
-            let num = (input === 0)?"":input.toLocaleString("en-US");
-            return num.split(",").join(".");
-        });
-    });
+
 
     $("#manual_filterrific_form").on("submit", function(evt){
         $(".number").each(function (ind, input) {

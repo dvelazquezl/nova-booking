@@ -25,6 +25,7 @@ class WelcomeController < ApplicationController
         params[:filterrific],
         select_options: {
             sorted_by: Estate.options_for_sorted_by,
+            with_estate_type: Estate.options_for_select
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
