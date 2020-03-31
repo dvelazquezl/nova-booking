@@ -15,28 +15,13 @@ class Estate < ApplicationRecord
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
-  # filters on 'estate_type' attribute
-  scope :with_estate_type, ->(estate_types) {
-    where(estate_type: [*estate_types])
-  }
-
-  # filters on 'price_max' attribute
-  scope :price_max, ->(price_max) {
-    where("estates.id in
-    (select distinct estate_id
-    from rooms r
-    where
-      ? <= r.price and
-      ? >= r.price)", ref_date, ref_date)
-  }
-
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
                 search_query
                 with_date_lte
                 with_date_gte
-                with_estate_type
+                price_min
                 price_max
               ]
 
@@ -82,13 +67,8 @@ class Estate < ApplicationRecord
     ]
   end
 
-  def self.options_for_select
-    new_arr = []
-    estate_type.values.each_with_index{|e, index| new_arr.push([e, index])}
-  end
-
   extend Enumerize
-  enumerize :estate_type, in: [:one_apartment, :home, :hotel], scope: true
+  enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
   scope :with_date_gte, ->(ref_date) {
     Estate.only_published.where("estates.id in
@@ -112,6 +92,23 @@ class Estate < ApplicationRecord
 
   scope :with_date_lte, ->(ref_date) {
     Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0)))", ref_date, ref_date)
+  }
+
+  # filters on 'price' attribute
+  scope :price_min, ->(price_min) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        ? <= r.price
+      )", price_min)
+  }
+
+  scope :price_max, ->(price_max) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        ? >= r.price
+      )", price_max)
   }
 
   def isPublished
