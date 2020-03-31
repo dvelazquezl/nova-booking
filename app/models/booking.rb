@@ -1,5 +1,6 @@
 class Booking < ApplicationRecord
     has_many :booking_details
+    has_secure_token :confirmation_token
     accepts_nested_attributes_for :booking_details, :allow_destroy => true
 
     def self.booking_new(booking,params)
@@ -15,5 +16,17 @@ class Booking < ApplicationRecord
                                            subtotal: value["subtotal"])
         }
         booking
+    end
+
+    def self.set_state(booking)
+        booking.confirmed_at = Time.now()
+        booking.booking_state = true
+        booking.save
+        UserMailer.new_booking(booking).deliver_now
+        UserMailer.new_booking_owner(booking).deliver_now
+    end
+
+    def estate(booking)
+        Estate.find(Room.find(booking.booking_details[0].room_id).estate_id)
     end
 end
