@@ -11,11 +11,13 @@ class Room < ApplicationRecord
   enumerize :room_type, in: [:single, :double, :family]
   enumerize :status, in: [:published, :not_published]
 
-
   def self.room_type_for(id)
     find(id).room_type.text
   end
   def self.room_capacity_for(id)
     find(id).capacity
   end
+
+  scope :booking_details, -> { BookingDetail.joins(:room) }
+
 end
