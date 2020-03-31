@@ -21,7 +21,8 @@ class OwnersController < ApplicationController
 
   def create
     @owner = Owner.new(owner_params)
-
+    @owner.image = { data: params[:image] }
+    logger.debug "Owner image: #{@owner.image.inspect}"
     respond_to do |format|
       if @owner.save
         format.html { redirect_to @owner, notice: 'Propietario fue creado satifactoriamente.' }
@@ -34,6 +35,7 @@ class OwnersController < ApplicationController
   end
 
   def update
+    @owner.image = { data: params[:image] }
     respond_to do |format|
       if @owner.update(owner_params)
         format.html { redirect_to @owner, notice: 'Tu perfil fue actualizado correctamente.' }
@@ -60,6 +62,8 @@ class OwnersController < ApplicationController
   end
 
   def owner_params
-    params.require(:owner).permit(:phone, :address, :about, :name, :email, :image, :user_id)
+    params.require(:owner).permit(:phone, :address, :about, :name,
+                                  :email, :user_id)
   end
+
 end
