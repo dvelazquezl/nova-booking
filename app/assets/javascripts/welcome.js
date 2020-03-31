@@ -35,4 +35,14 @@ $(function() {
             FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
             $('#with_date_gte').datepicker('setEndDate', FromEndDate);
         });
+
+    $(window).on('resize', function() {
+        if($(window).width() < 1060) {
+            $('#results-body').removeClass('results-section');
+            $('#results-body').addClass('results-section2');
+        }else{
+            $('#results-body').addClass('results-section');
+            $('#results-body').removeClass('results-section2');
+        }
+    })
 });

@@ -85,6 +85,30 @@ table, th, td, tr {
     padding: 5px;
   }
 
-  .results-background{
+  .results-background {
     background-color: white;
+  }
+
+  .results-filter-section .filter-section {
+    width: 200px;
+    padding-left: 30px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    padding-top: 30px;
+  }
+
+  .results-section {
+    width: 82%;
+    padding-left: 30px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 30px;
+  }
+
+  .results-section2 {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 30px;
   }

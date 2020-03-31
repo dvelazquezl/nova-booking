@@ -1,7 +1,7 @@
-<div class="col-12 results-filter-block">
+<div class="col results-filter-block">
     <%= puts filterrific.inspect %>
     <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
-    <div class="form-group col-12">
+    <div class="form-group">
         <div class="row has-search d-flex align-items-center results-block">
             <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
                          :class => 'filterrific-periodically-observed form-control' %>
