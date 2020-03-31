@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
       respond_to do |format|
         format.json { head :forbidden }
-        format.html { redirect_to welcome_index_path, :alert => 'Acesso denegado.' }
+        format.html { redirect_to welcome_index_path, :alert => 'Acceso denegado.' }
       end
   end
 end
