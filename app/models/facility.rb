@@ -14,5 +14,5 @@ class Facility < ApplicationRecord
   #def self.options_for_select
   #  order("LOWER(description)").map { |e| [e.description, e.id] }
   #end
-
+  resourcify
 end

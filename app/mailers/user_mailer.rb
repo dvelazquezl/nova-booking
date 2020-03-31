@@ -13,6 +13,16 @@ class UserMailer < ApplicationMailer
     mail(to: user_email, subject: 'NovaBooking!')
   end
 
+
+  def unsuscribe_estate(estate, booked_rooms)
+    @estate = estate
+    @owner = Owner.find(@estate.owner_id)
+
+    @booking = Booking.find(BookingDetail.find_by_room_id(booked_rooms[0].id).booking_id)
+    @user_email = user_email(@booking)
+    mail(to: @booking.client_email, subject: 'NovaBooking! - Cancelacion de reserva')
+  end
+  
   def new_booking_confirmation(booking)
     @booking =booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
@@ -28,5 +38,4 @@ class UserMailer < ApplicationMailer
       user_email = User.find_by_id(user_id).email
       return user_email
     end
-
 end

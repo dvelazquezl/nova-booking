@@ -1,9 +1,7 @@
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
-
 //= require rails-ujs
-
 //--- Angle
 //= require angle/modules/common/wrapper.js
 //= require angle/app.init
@@ -20,6 +18,7 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require bootstrap-slider
 
+//= require croppie/croppie
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -29,31 +28,58 @@
 
 // for image preview for file fields
 // div where image will be added should have id="target"
+
 const HEIGHT = 150;
 const WIDTH = 150;
+let canvas,
+    $result;
 $(document).on('change', '#pictureInput', function (event) {
+    canvas  = $("#canvas");
+    canvas.croppie('destroy');
+    $result = $('#target');
     let files = event.target.files;
-
     Array.from(files).forEach(file => {
         let reader = new FileReader();
         reader.onload = function (file) {
             let img = new Image();
             img.src = file.target.result;
-            img.classList.add("img-thumbnail");
-            img.setAttribute('alt', 'rss fit');
-            img.setAttribute('height', HEIGHT);
-            img.setAttribute('width', WIDTH);
-            $('#target').append(img);
-            $('img').css("display", "inline-block")
+            img.setAttribute('alt', 'Picture');
+            img.onload = function() {
+                let crop = canvas.croppie({
+                    viewport: {
+                        width: WIDTH,
+                        height: HEIGHT
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    },
+                    enableOrientation: true
+                });
+                $("#crop_modal").modal('show');
+                canvas.croppie('bind',{
+                    url: img.src,
+                    orientation: 1
+                }).then(function(){
+                    $('.cr-slider').attr({'min':0.1000, 'max':1.5000});
+                });
+                $('#result-input').click(function() {
+                    // Get a string base 64 data url
+                    canvas.croppie('result', {
+                        type: 'base64',
+                        size: 'viewport'
+                    }).then(function (resp) {
+                        $result.html($('<img>').attr('src', resp));
+                        $("#image").attr('value',resp);
+                    });
+                    $("#crop_modal").modal('hide');
+                });
+            };
         };
+
         reader.readAsDataURL(file);
     });
-
-    if (Array.from(files).length > 0) {
-        $('#target').empty();
-    }
 });
-
 // ****************************************************************************** //
 
 // Fuente: https://gist.github.com/gordonbrander/2230317

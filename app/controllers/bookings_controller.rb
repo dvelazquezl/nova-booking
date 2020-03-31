@@ -1,6 +1,11 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user! , except: [:new, :create, :show]
   before_action :set_booking, only: [:show, :destroy]
+  load_and_authorize_resource
+
+  def index
+    @bookings = Booking.all
+  end
 
   def show
     if !@booking.booking_state.blank?
@@ -63,5 +68,9 @@ class BookingsController < ApplicationController
 
   def booking_params
     params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :booking_state, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
+  end
+
+  def current_ability
+    @current_ability ||= BookingAbility.new(current_user)
   end
 end

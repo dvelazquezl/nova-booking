@@ -58,4 +58,7 @@ class Room < ApplicationRecord
   def self.room_capacity_for(id)
     find(id).capacity
   end
+
+  scope :booking_details, -> { BookingDetail.joins(:room) }
+
 end
