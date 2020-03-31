@@ -69,6 +69,7 @@ gem 'data_migrate'
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+gem 'jquery-validation-rails'
 gem 'sass-rails'
 gem 'devise'
 gem 'filterrific'
@@ -78,6 +79,8 @@ gem 'javascript', '~> 0.1.0'
 gem "rails_best_practices"
 gem "brakeman"
 gem "rubycritic"
+
+gem 'bootstrap-slider-rails'
 
 gem 'uglifier', '>= 1.3.0'
 
