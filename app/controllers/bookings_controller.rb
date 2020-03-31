@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user! , except: [:new, :create, :show]
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :set_booking, only: [:show, :destroy]
 
   def show
     if !@booking.booking_state.blank?
@@ -29,18 +29,6 @@ class BookingsController < ApplicationController
         end
       else
         format.html { render :new }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @booking.update(booking_params)
-        format.html { redirect_to @booking, notice: 'La reserva fue actualizada correctamente.'}
-        format.json { render :show, status: :ok, location: @booking }
-      else
-        format.html { render :edit }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
