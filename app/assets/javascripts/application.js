@@ -10,6 +10,9 @@
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
 
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+
 ////= require jquery3
 ////= require bootstrap
 //= require turbolinks

@@ -69,6 +69,7 @@ gem 'data_migrate'
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+gem 'jquery-validation-rails'
 gem 'sass-rails'
 gem 'devise'
 gem 'filterrific'
