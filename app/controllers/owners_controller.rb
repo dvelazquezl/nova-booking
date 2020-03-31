@@ -22,7 +22,6 @@ class OwnersController < ApplicationController
   def create
     @owner = Owner.new(owner_params)
     @owner.image = { data: params[:image] }
-    logger.debug "Owner image: #{@owner.image.inspect}"
     respond_to do |format|
       if @owner.save
         format.html { redirect_to @owner, notice: 'Propietario fue creado satifactoriamente.' }
@@ -66,4 +65,7 @@ class OwnersController < ApplicationController
                                   :email, :user_id)
   end
 
+  def current_ability
+    @current_ability ||= OwnerAbility.new(current_user)
+  end
 end
