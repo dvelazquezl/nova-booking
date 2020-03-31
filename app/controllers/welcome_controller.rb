@@ -28,7 +28,6 @@ class WelcomeController < ApplicationController
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
-
     respond_to do |format|
       format.html
       format.js

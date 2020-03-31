@@ -1,7 +1,7 @@
 <div class="col results-filter-block">
-    <%= puts filterrific.inspect %>
-    <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
-    <div class="form-group">
+  <%= puts filterrific.inspect %>
+  <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
+    <div class="form-group jumbotron jumbotron-fluid">
         <div class="row has-search d-flex align-items-center results-block">
             <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
                          :class => 'filterrific-periodically-observed form-control' %>
@@ -20,8 +20,35 @@
             <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
         </div>
     </div>
-    <% end %>
+    <div class="jumbotron jumbotron-fluid">
+      <h4>&emsp;&emsp; Filtrar por:</h4>
+      <hr class="text-primary">
+
+      <!--FILTRO POR FECHA-->
+      <h5>Tu presupuesto (Gs.)</h5>
+      <div class="form-row">
+          <div class="col-6">
+            <%= f.number_field :price_min, class: "form-control number", type: "text", placeholder:"Mínimo Gs." %>
+          </div>
+          <div class="col-6">
+            <%= f.number_field :price_max, class: "form-control number", type: "text", placeholder:"Máximo Gs." %>
+          </div>
+      </div>
+      <div align="right" style="padding-top: 5px">
+        <%= button_tag( :class => 'btn btn-primary btn-sm') do %>
+          <i class="fas fa-search"></i>
+        <% end %>
+      </div>
+      <!--FIN-->
+      <hr>
+
+      <!--FILTRO POR TIPO DE PROPIEDAD-->
+      <!--FIN-->
+
+    </div>
+  <% end %>
 </div>
+
 <script>
 $(function() {
     var startDate = new Date();
@@ -45,6 +72,7 @@ $(function() {
             startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
             $('#with_date_lte').datepicker('setStartDate', startDate);
         }); 
+    
     $('#with_date_lte')
         .datepicker({
     
@@ -54,7 +82,7 @@ $(function() {
             autoclose: true,
             orientation: "bottom auto",
             format: "yyyy/mm/dd"
-        })
+    })
         .on('changeDate', function(selected){
             FromEndDate = new Date(selected.date.valueOf());
             FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
@@ -69,6 +97,31 @@ $(function() {
             $('#results-body').addClass('results-section');
             $('#results-body').removeClass('results-section2');
         }
-    })
+    });
+
+    $(".number").each(function (ind, input) {
+        if(typeof input.value === "string"){
+            let n = input.value.replace(/[\D\s\._\-]+/g, "");
+            n = n?parseInt(n, 10):0;
+            let num = (n === 0)?"":n.toLocaleString("en-US");
+            input.value = num.split(",").join(".");
+        }
+    });
+
+    $(".number").on("keyup", function(event ) {
+        let input = $(event.target).val();
+        input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input?parseInt(input, 10):0;
+        $(event.target).val(function () {
+            let num = (input === 0)?"":input.toLocaleString("en-US");
+            return num.split(",").join(".");
+        });
+    });
+
+    $("#manual_filterrific_form").on("submit", function(evt){
+        $(".number").each(function (ind, input) {
+            input.value = input.value.split(".").join("");
+        });
+    });
 });
 </script>

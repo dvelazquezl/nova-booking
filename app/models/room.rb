@@ -11,11 +11,13 @@ class Room < ApplicationRecord
   enumerize :room_type, in: [:single, :double, :family]
   enumerize :status, in: [:published, :not_published]
 
-  scope :available, ->(estate_id, from, to) {
+  scope :available, ->(estate_id, from, to, price_max, price_min) {
     where(
         "rooms.id in (select distinct ro.id
           from public.rooms as ro
           where ro.estate_id = ?
+          and ? <= ro.price
+          and ? >= ro.price
           and ro.id not in
             (select distinct r.id
               from public.rooms as r
@@ -30,7 +32,7 @@ class Room < ApplicationRecord
                   where b1.booking_state != false
                     and r1.id = r.id
                     and ((b1.date_start >= ?) or (b1.date_end >= ?))
-                    and ((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0))", estate_id, from, from, to, to
+                    and ((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0))", estate_id, price_min, price_max,from, from, to, to
     )
   }
 
