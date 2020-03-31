@@ -1,7 +1,7 @@
 class EstatesController < ApplicationController
   before_action :set_estate, only: %i[show edit update destroy]
   before_action :authenticate_user! , except: [:show, :room]
-
+  load_and_authorize_resource
   # GET /estates
   # GET /estates.json
   def index
@@ -165,5 +165,9 @@ class EstatesController < ApplicationController
 
     params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: [], images:[]])
 
+  end
+
+  def current_ability
+    @current_ability ||= EstateAbility.new(current_user)
   end
 end

@@ -82,3 +82,5 @@ gem "rubycritic"
 gem 'uglifier', '>= 1.3.0'
 gem 'has_secure_token'
 
+gem 'cancancan'
+gem 'rolify'
