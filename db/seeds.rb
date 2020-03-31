@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 admin_user = User.new
 admin_user.email = "alexandra.lezcano@fiuni.edu.py"
+admin_user.username = "AlexandraLezcano"
 admin_user.password = "123456"
 admin_user.password_confirmation = "123456"
 admin_user.skip_confirmation!

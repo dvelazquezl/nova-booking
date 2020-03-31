@@ -10,4 +10,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_in, keys: [:login, :password, :password_confirmation])
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email, :password, :password_confirmation, :current_password])
   end
+
+  #Excepcion de acceso denegado.
+  rescue_from CanCan::AccessDenied do |exception|
+      respond_to do |format|
+        format.json { head :forbidden }
+        format.html { redirect_to welcome_index_path, :alert => 'Acesso denegado.' }
+      end
+  end
 end
