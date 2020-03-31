@@ -96,4 +96,5 @@ class Estate < ApplicationRecord
     self.status = self.rooms.any? {|room| room.status == "published"}
   end
 
+  resourcify
 end

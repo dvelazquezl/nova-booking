@@ -12,4 +12,6 @@ class Owner < ApplicationRecord
       errors.add(:Imagen, "de perfil requerida")
     end
   end
+
+  resourcify
 end
