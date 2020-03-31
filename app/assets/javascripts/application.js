@@ -32,6 +32,7 @@ let canvas,
     $result;
 $(document).on('change', '#pictureInput', function (event) {
     canvas  = $("#canvas");
+    canvas.croppie('destroy');
     $result = $('#target');
     let files = event.target.files;
     Array.from(files).forEach(file => {
@@ -56,7 +57,7 @@ $(document).on('change', '#pictureInput', function (event) {
                     url: img.src,
                     orientation: 1
                 }).then(function(){
-                    $('.cr-slider').attr({'min':0.5000, 'max':1.5000});
+                    $('.cr-slider').attr({'min':0.1000, 'max':1.5000});
                 });
                 $('#result-input').click(function() {
                     // Get a string base 64 data url
@@ -67,11 +68,7 @@ $(document).on('change', '#pictureInput', function (event) {
                         $result.html($('<img>').attr('src', resp));
                         $("#image").attr('value',resp);
                     });
-                    canvas.croppie('destroy');
                     $("#crop_modal").modal('hide');
-                });
-                $('#close-modal').click(function() {
-                    canvas.croppie('destroy');
                 });
             };
         };
@@ -79,7 +76,6 @@ $(document).on('change', '#pictureInput', function (event) {
         reader.readAsDataURL(file);
     });
 });
-
 // ****************************************************************************** //
 
 // Fuente: https://gist.github.com/gordonbrander/2230317
