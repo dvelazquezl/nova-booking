@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('#estate_city_id, .component-select').selectize({
-        create: true,
-        sortField: 'text'
+        maxOptions: 5,
+        sortField: 'text',
+        placeholder: 'Seleccione una ciudad'
     });
 });

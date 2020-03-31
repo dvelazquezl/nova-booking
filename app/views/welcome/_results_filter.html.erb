@@ -3,8 +3,10 @@
     <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
     <div class="form-group col-12">
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
-                         :class => 'filterrific-periodically-observed form-control' %>
+          <%= f.select :search_query,
+                       options_from_collection_for_select(City.all, "name", "name", f.object.search_query),
+                       {:include_blank => '- Todos -'},
+                       {:class => 'form-control'} %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
             <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
@@ -29,6 +31,9 @@
     <% end %>
 </div>
 <script>
+
+    <%= render "selects.js" %>
+
     $(function() {
         $('#with_date_gte, #with_date_lte').datepicker({
             todayHighlight: true,

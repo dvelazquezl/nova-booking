@@ -65,7 +65,8 @@
             <label>Ciudad *</label>
             <%= form.select :city_id,
                             options_from_collection_for_select(City.all, "id", "name", form.object.city_id),
-                            {class: 'form-control', required: 'required'}%>
+                            {:include_blank => '- Todos -'},
+                            {:class => '', :required => 'required'}%>
           </div>
           <h5><strong>Comodidades</strong></h5>
           <div class="row scroll_facility">
