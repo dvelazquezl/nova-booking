@@ -145,11 +145,25 @@ class EstatesController < ApplicationController
 
   # dar de baja una propiedad
   def unsuscribe
-    @estate = Estate.find(params[:id])
-    @estate.update_attribute(:status, false)
+    estate = Estate.find(params[:estate])
+    rooms = estate.rooms
+
+    rooms.each do |r|
+      if r.status == 'published'
+        r.update_attribute(:status, 'not_published')
+      end
+    end
+    estate.update_attribute(:status, false)
+
+    # filtra de la lista de habitaciones todas las que no estan reservadas
+    booked_rooms = rooms.select do |room|
+      BookingDetail.find_by_room_id(room.id)
+    end
+
     respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Propiedad dada de baja exitosamente.' }
+      format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
       format.json { head :no_content }
+      UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
     end
   end
 
