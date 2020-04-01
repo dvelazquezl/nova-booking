@@ -69,14 +69,14 @@ gem 'will_paginate-bootstrap4'
 
 gem 'active_storage_base64'
 gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'jquery-validation-rails'
+gem 'sass-rails'
 gem 'devise'
 gem 'filterrific'
 gem 'javascript', '~> 0.1.0'
-gem 'jquery-rails'
 gem 'listen'
-gem 'sass-rails'
 
 gem "brakeman"
 gem "rails_best_practices"
@@ -89,3 +89,6 @@ gem 'has_secure_token'
 
 gem 'cancancan'
 gem 'rolify'
+
+gem 'premailer-rails'
+gem 'bootstrap-email'
