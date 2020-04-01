@@ -26,7 +26,6 @@ class Estate < ApplicationRecord
                 search_query
                 with_date_lte
                 with_date_gte
-                price_max
                 price_min
                 price_max
                 with_estate_type
