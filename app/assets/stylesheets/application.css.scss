@@ -6,7 +6,7 @@
  *
  *= require angle/bootstrap
  *= require angle/app
- *
+ *= require croppie/croppie
  * --- Assets paths redefinition
  *
  *= require fonts
@@ -25,9 +25,10 @@
  *= require animate.css/animate.min
  * ---- Whirl (spinners)
  *= require whirl/dist/whirl
+ *= require bootstrap-slider
  */
+ //= require bootstrap-datepicker3
 @import 'components/_filterrific_filter';
-@import 'components/datepicker';
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap');
 
 .footer-text {

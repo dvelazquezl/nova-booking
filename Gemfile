@@ -62,22 +62,27 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #Turbolinks
 gem 'turbolinks', '~> 5'
 
+gem 'data_migrate'
+gem 'enumerize'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
-gem 'enumerize'
-gem 'data_migrate'
 
+gem 'active_storage_base64'
 gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
+gem 'jquery-validation-rails'
 gem 'sass-rails'
 gem 'devise'
 gem 'filterrific'
-gem 'listen'
 gem 'javascript', '~> 0.1.0'
+gem 'listen'
 
-gem "rails_best_practices"
 gem "brakeman"
+gem "rails_best_practices"
 gem "rubycritic"
+
+gem 'bootstrap-slider-rails'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'has_secure_token'

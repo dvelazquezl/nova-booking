@@ -1,16 +1,14 @@
-<section class="row results-filter-section">
-    <div class="col-2">
-        <%= render(
+<section class="row results-filter-section" >
+    <div class="filter-section">
+            <%= render(
                 partial: "welcome/results_filter",
                 locals: {filterrific: filterrific}
             )%>
     </div>
-    <div class="col-md-10">
-        <div id="results">
+    <div class="results-section" id="results-body">
             <%= render(
                 partial: 'welcome/list',
                 locals: {estates: @estates}
             ) %>
-        </div>
     </div>
 </section>

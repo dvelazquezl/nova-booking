@@ -15,12 +15,14 @@ class Estate < ApplicationRecord
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
-  filterrific :default_filter_params => { :sorted_by => 'name_asc' },
+  filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
                 search_query
                 with_date_lte
                 with_date_gte
+                price_min
+                price_max
               ]
 
   scope :search_query, lambda { |query|
@@ -89,7 +91,24 @@ class Estate < ApplicationRecord
   }
 
   scope :with_date_lte, ->(ref_date) {
-    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) = 0)))", ref_date, ref_date)
+    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date)
+  }
+
+  # filters on 'price' attribute
+  scope :price_min, ->(price_min) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        ? <= r.price
+      )", price_min)
+  }
+
+  scope :price_max, ->(price_max) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        ? >= r.price
+      )", price_max)
   }
 
   def isPublished
