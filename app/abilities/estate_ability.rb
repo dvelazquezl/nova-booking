@@ -18,7 +18,6 @@
           if owner
             can :update, Estate, owner_id: owner.id
             can :delete, Estate, owner_id: owner.id
-            can :room, Estate
           end
         end
       else
