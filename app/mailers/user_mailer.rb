@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
     @booking =booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
     @user_email = user_email(booking)
-    mail(to: booking.client_email, subject: 'NovaBooking!')
+    make_bootstrap_mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
   def new_booking_owner(booking)

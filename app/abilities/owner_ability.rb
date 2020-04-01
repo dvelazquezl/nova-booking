@@ -11,7 +11,7 @@ class OwnerAbility
         can :read, Owner
         can :create, Owner
         if owner
-          can :update, Owner, owner_id: owner.id
+          can :update, Owner, id: owner.id
         end
       end
     else
