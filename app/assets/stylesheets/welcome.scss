@@ -1,13 +1,7 @@
 // Place all the styles related to the Welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-
-// --- Datatables
-//= require datatables.net-bs4/css/dataTables.bootstrap4
-//= require datatables.net-keytable-bs/css/keyTable.bootstrap
-//= require datatables.net-responsive-bs/css/responsive.bootstrap
-@import 'components/_filterrific_filter';
-@import 'components/datepicker';
+//= require bootstrap-datepicker3
 
   .main-section-header{
     padding-left: 80px;
@@ -64,10 +58,7 @@
     color: #aaa;
   }
 
-table, th, td, tr {
-  border: 2px solid lightgray;
-  background-color: floralwhite;
-}
+
 
   #description-list{
     list-style: none;
@@ -88,9 +79,37 @@ table, th, td, tr {
   }
 
   .results-block {
-    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: white;
   }
 
-  .results-background{
+  .results-background {
     background-color: white;
+  }
+
+  .results-filter-section .filter-section {
+    width: 270px;
+    padding-left: 30px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    padding-top: 30px;
+  }
+
+  .results-section {
+    width: 77%;
+    padding-left: 30px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 30px;
+  }
+
+  .results-section2 {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-top: 30px;
   }

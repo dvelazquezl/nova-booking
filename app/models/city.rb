@@ -3,4 +3,5 @@ class City < ApplicationRecord
   has_many :estates
   delegate :name, :to => :departament, :prefix => true
   self.per_page = 5
+  resourcify
 end
