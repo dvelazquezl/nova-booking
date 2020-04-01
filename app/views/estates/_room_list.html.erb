@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-lg-10">
               <b>Fecha de llegada</b>
-              <br/><div class="date from">mar,31 marzo 2020</div>
+              <br/><div><%=@date_from_formatted%></div>
             </div>
           </div>
         </div>
@@ -14,8 +14,8 @@
           <div class="row">
             <div class="col-lg-10">
               <b>Fecha de salida</b>
-              <br/><div class="date to">mié, 01 abr 2020</div>
-              <br/>Estancia de 1 noche</div>
+              <br/><div><%=@date_to_formatted%></div>
+              <br/>Estancia de <span id="diff"><%=@diff%></span> noche<%=@plu %></div>
           </div>
         </div>
         </div>
@@ -96,13 +96,14 @@
   const book = $('#book');
   $(document).ready(function () {
       book.prop('disabled', true);
+
   });
 
   function addValues() {
       let total = 0;
       $('tbody tr').each(function () {
           let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text().split(".").join(""));
-          total = total + sum;
+          total = (total + sum) * $("#diff").text();
       });
       $('#total').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
@@ -111,4 +112,5 @@
   $(function () {
       $('[data-toggle="tooltip"]').tooltip()
   });
+  
 </script>

@@ -35,6 +35,10 @@ class EstatesController < ApplicationController
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
+    @date_from_formatted = Date.parse(params[:from]).strftime("%a, %d %b %Y")
+    @date_to_formatted = Date.parse(params[:to]).strftime("%a, %d %b %Y")
+    @diff = (@date_to_formatted.to_date - @date_from_formatted.to_date).to_i
+    @plu = (@diff > 1)? "s":" "
     date_from = params[:from]
     date_to = params[:to]
     @rooms = @estate.rooms.available(params[:id], date_from, date_to)
@@ -49,7 +53,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: @date_from, to: @date_to}
   end
 
   # GET /estates/new
