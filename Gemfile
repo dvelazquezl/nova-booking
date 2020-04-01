@@ -95,4 +95,5 @@ gem 'selectize-rails'
 
 gem 'premailer-rails'
 gem 'bootstrap-email'
+gem 'paranoia'
 
