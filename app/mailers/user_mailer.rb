@@ -22,7 +22,6 @@ class UserMailer < ApplicationMailer
     @user_email = user_email(@booking)
     mail(to: @booking.client_email, subject: 'NovaBooking! - Cancelacion de reserva')
   end
-  
   def new_booking_confirmation(booking)
     @booking =booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
