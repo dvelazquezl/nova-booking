@@ -21,8 +21,6 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require bootstrap-slider
 
-//= require components/datepicker
-
 //-- Selectize
 //= require selectize
 

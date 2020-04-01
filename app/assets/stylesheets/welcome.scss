@@ -49,6 +49,7 @@
   
   .main-filter-section .form-control-feedback {
     position: absolute;
+    z-index: 100;
     display: block;
     width: 2.375rem;
     height: 2.375rem;
