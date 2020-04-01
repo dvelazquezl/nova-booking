@@ -36,9 +36,7 @@ $(function() {
     var ToEndDate = new Date();
     ToEndDate.setDate(ToEndDate.getDate()+365);
     FromEndDate.setDate(FromEndDate.getDate()+365);
-    
     $('#with_date_gte').datepicker({
-    
         weekStart: 1,
         startDate: new Date(),
         endDate: FromEndDate, 
@@ -55,7 +53,6 @@ $(function() {
         }); 
     $('#with_date_lte')
         .datepicker({
-    
             weekStart: 1,
             startDate: startDate,
             endDate: ToEndDate,
