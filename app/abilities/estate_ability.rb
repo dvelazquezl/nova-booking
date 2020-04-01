@@ -17,7 +17,7 @@
           #Solo un user con perfil de owner
           if owner
             can :update, Estate, owner_id: owner.id
-            can :delete, Estate, owner_id: owner.id
+            can :destroy, Estate, owner_id: owner.id
           end
         end
       else

@@ -10,7 +10,7 @@ class BookingAbility
         #Logueado
         can :create, Booking
         can :read, Booking, client_email: user.email
-        can :delete, Booking, client_email: user.email
+        can :destroy, Booking, client_email: user.email
       end
     else
       #Visitantes
