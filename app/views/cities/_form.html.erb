@@ -23,7 +23,6 @@
               </div>
               <div class="form-group text-left">
                 <label>Departamento </label>
-                <%#= form.collection_select(:departament_id, Departament.all, :id, :name, {:prompt => 'Departamento'}, {required: true}) %>
                 <%= form.select :departament_id,
                                 options_from_collection_for_select(Departament.all, "id", "name", form.object.departament_id),
                                 {:include_blank => '- Todos -'},
