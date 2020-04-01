@@ -177,6 +177,8 @@ GEM
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
+    paranoia (2.4.2)
+      activerecord (>= 4.0, < 6.1)
     parser (2.5.3.0)
       ast (~> 2.4.0)
     path_expander (1.1.0)
@@ -274,6 +276,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    selectize-rails (0.12.6)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -343,6 +346,7 @@ DEPENDENCIES
   jquery-rails
   jquery-validation-rails
   listen
+  paranoia
   pg
   premailer-rails
   puma (~> 3.11)
@@ -352,6 +356,7 @@ DEPENDENCIES
   rubycritic
   sass-rails
   sassc-rails (= 2.0.0)
+  selectize-rails
   selenium-webdriver
   turbolinks (~> 5)
   tzinfo-data
