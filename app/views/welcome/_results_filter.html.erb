@@ -7,17 +7,17 @@
                          :class => 'filterrific-periodically-observed form-control' %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control',
+            <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
                         readonly: true,
                         id: 'with_date_gte')%>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'input-sm form-control',
+            <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control datepicker',
                         readonly: true,
                         id: 'with_date_lte') %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
+            <%= f.submit :Buscar, class: 'form-control btn btn-primary guardar' %>
         </div>
     </div>
     <div class="jumbotron jumbotron-fluid">
@@ -28,14 +28,14 @@
       <h5>Tu presupuesto (Gs.)</h5>
       <div class="form-row">
           <div class="col-6">
-            <%= f.number_field :price_min, class: "form-control number", type: "text", placeholder:"Mínimo Gs." %>
+            <%= f.number_field :price_min, id:"price_min", class: "form-control number", type: "text", placeholder:"Mínimo Gs." %>
           </div>
           <div class="col-6">
-            <%= f.number_field :price_max, class: "form-control number", type: "text", placeholder:"Máximo Gs." %>
+            <%= f.number_field :price_max, id:"price_max", class: "form-control number validame", type: "text", placeholder:"Máximo Gs." %>
           </div>
       </div>
       <div align="right" style="padding-top: 5px">
-        <%= button_tag( :class => 'btn btn-primary btn-sm') do %>
+        <%= button_tag( :class => 'btn btn-primary btn-sm guardar') do %>
           <i class="fas fa-search"></i>
         <% end %>
       </div>
