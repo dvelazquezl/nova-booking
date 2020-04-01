@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 class Estate < ApplicationRecord
+  acts_as_paranoid
   belongs_to :city
   has_many_attached :images
   has_many :facilities_estates
   has_many :facilities, through: :facilities_estates
-  has_many :rooms, dependent: :delete_all
+  has_many :rooms, dependent: :destroy
   accepts_nested_attributes_for :rooms, allow_destroy: true
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
