@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="jumbotron jumbotron-fluid">
-      <h4>&emsp;&emsp; Filtrar por:</h4>
+      <h4>&emsp;Filtrar por:</h4>
       <hr class="text-primary">
       <!--FILTRO POR FECHA-->
       <h5>Tu presupuesto (Gs.)</h5>
@@ -60,7 +60,7 @@ $(function() {
     $('#with_date_gte').datepicker({
         weekStart: 1,
         startDate: new Date(),
-        endDate: FromEndDate,
+        endDate: FromEndDate, 
         autoclose: true,
         orientation: "bottom auto",
         format: "yyyy/mm/dd",
@@ -71,7 +71,7 @@ $(function() {
             startDate = new Date(selected.date.valueOf());
             startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
             $('#with_date_lte').datepicker('setStartDate', startDate);
-        });
+        }); 
     $('#with_date_lte')
         .datepicker({
             weekStart: 1,
@@ -97,7 +97,6 @@ $(function() {
             $('#results-body').removeClass('results-section2');
         }
     });
-
 
     $("#manual_filterrific_form").on("submit", function(evt){
         $(".number").each(function (ind, input) {
