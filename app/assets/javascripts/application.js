@@ -8,6 +8,9 @@
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
 
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+
 ////= require jquery3
 ////= require bootstrap
 //= require turbolinks
@@ -15,6 +18,9 @@
 //= require filterrific/filterrific-jquery
 //= require croppie/croppie
 //= require components/datepicker
+
+//= require bootstrap-slider
+
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.

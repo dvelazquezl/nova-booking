@@ -69,6 +69,8 @@ gem 'will_paginate-bootstrap4'
 
 gem 'active_storage_base64'
 gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
+gem 'jquery-validation-rails'
 gem 'devise'
 gem 'filterrific'
 gem 'javascript', '~> 0.1.0'
@@ -79,6 +81,8 @@ gem 'sass-rails'
 gem "brakeman"
 gem "rails_best_practices"
 gem "rubycritic"
+
+gem 'bootstrap-slider-rails'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'has_secure_token'

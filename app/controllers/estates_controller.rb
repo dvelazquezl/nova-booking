@@ -37,7 +37,9 @@ class EstatesController < ApplicationController
     @estates = @filterrific.find.page(params[:page])
     date_from = params[:from]
     date_to = params[:to]
-    @rooms = @estate.rooms.available(params[:id], date_from, date_to)
+    price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do
+    price_min = ((params[:price_min] != '') && (params[:price_min] != nil)) ? params[:price_min] : 0
+    @rooms = @estate.rooms.available(params[:id], date_from, date_to, price_max, price_min)
     @rooms.each do |room|
       quantity_available = Room.quantity_available(room.id, date_from, date_to).first
       room.quantity =  quantity_available != nil ? quantity_available : 1
