@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="jumbotron jumbotron-fluid">
-      <h4>&emsp;&emsp; Filtrar por:</h4>
+      <h4>&emsp; Filtrar por:</h4>
       <hr class="text-primary">
       <!--FILTRO POR FECHA-->
       <h5>Tu presupuesto (Gs.)</h5>
@@ -46,6 +46,7 @@
         </div>
       </div>
       <!--FIN-->
+      <hr>
     </div>
   <% end %>
 </div>
@@ -95,23 +96,6 @@ $(function() {
             $('#results-body').addClass('results-section');
             $('#results-body').removeClass('results-section2');
         }
-    });
-    $(".number").each(function (ind, input) {
-        if(typeof input.value === "string"){
-            let n = input.value.replace(/[\D\s\._\-]+/g, "");
-            n = n?parseInt(n, 10):0;
-            let num = (n === 0)?"":n.toLocaleString("en-US");
-            input.value = num.split(",").join(".");
-        }
-    });
-    $(".number").on("keyup", function(event ) {
-        let input = $(event.target).val();
-        input = input.replace(/[\D\s\._\-]+/g, "");
-        input = input?parseInt(input, 10):0;
-        $(event.target).val(function () {
-            let num = (input === 0)?"":input.toLocaleString("en-US");
-            return num.split(",").join(".");
-        });
     });
 
     $("#manual_filterrific_form").on("submit", function(evt){
