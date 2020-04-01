@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div class="form-row">
         <div class="col">
             <table class="table table-bordered">
                 <% estates.each do |estate| %>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="media-body d-flex">
                             <div class="btn-group ml-auto" role="group">
-                                <%= link_to estate_path(estate, :city => params["filterrific"]["search_query"], :from => params["filterrific"]["with_date_gte"], :to => params["filterrific"]["with_date_lte"]) do %>
+                                <%= link_to estate_path(estate, :city => params["filterrific"]["search_query"], :from => params["filterrific"]["with_date_gte"], :to => params["filterrific"]["with_date_lte"], :price_max => params["filterrific"]["price_max"], :price_min => params["filterrific"]["price_min"]) do %>
                                 <button class="btn btn-sm btn-primary">Elige Habitación</button>
                                 <% end %>
                             </div>
@@ -32,6 +32,8 @@
                 </tr>
                 <% end %>
             </table>
+
+          <!--PRUEBA TEAMCITY 1 -->
             <div class="card-columns-2 card-body">
                 <div class="row row-flush">
                     <div class="col col-6 align-items-center">

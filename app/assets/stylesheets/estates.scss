@@ -11,7 +11,7 @@
 //= require dropzone/dist/basic
 //= require dropzone/dist/dropzone
 // --- DatetimePicker
-//= require bootstrap-datepicker/dist/css/bootstrap-datepicker
+////= require bootstrap-datepicker/dist/css/bootstrap-datepicker
 // --- ColorPicker
 //= require bootstrap-colorpicker/dist/css/bootstrap-colorpicker
 // --- CropperCss
@@ -30,7 +30,7 @@
   }
 
 #estate-title {
-  font-family: Bookman;
+  font-family: PT Sans Narrow;
 }
 
 .title-section{
@@ -88,7 +88,8 @@
 }
 
 .facilities-title {
-  height: 40px
+  height: 40px;
+  font-family: PT Sans Narrow;
 }
 
 .facilities-list-div {
@@ -106,3 +107,9 @@
   height:300px;
 }
 
+.results-block {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}

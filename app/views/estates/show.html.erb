@@ -1,5 +1,4 @@
-
-  <div class="row results-filter-section">
+<div class="row results-filter-section">
   <div class="col-2">
     <%= render(
             partial: "estates/results_filter",
@@ -48,7 +47,7 @@
       <!-- ESTATE DETAILS -->
       <div class="col-12" id="estate-details">
         <div class="row details">
-          <div class="col-md-7 col-sm-12" id="carousel-div">
+          <div class="col-md-8 col-sm-12" id="carousel-div">
             <%= render partial: "estates/show_images", :locals => {images: @images, h_size: '340px'} %>
           </div>
           <div class="col-md-4 col-sm-12" id="facilities-div">
@@ -72,6 +71,29 @@
     </div>
   </div>
 </div>
-<div>
-  sphdafhaspdofsadp
-</div>
+<script>
+$(document).ready(function(){
+
+  $('#book').click(function(event) {
+      let booking_details = [];
+      const total_amount = $("#total").val().split(" ")[0].split(".").join("");
+      const date_start = $(".date_start").val();
+      const date_end = $(".date_end").val();
+      $('table > #rooms > tr').each(function () {
+          const quantity = parseInt($('option:selected', this).text());
+          if(quantity > 0){
+            const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
+            const price = parseInt($(this).find("#booking_info").find(".price").text());
+            const subtotal = quantity * price;
+            booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
+          }
+        });
+       let pr = escape(JSON.stringify(booking_details))
+       const url = "/bookings/new?date_start="+date_start+"&date_end="+date_end+"&total_amount="+total_amount.toString()
+                    +"&booking_details="+pr;
+       window.location.href = url;
+      });
+});
+
+
+</script>

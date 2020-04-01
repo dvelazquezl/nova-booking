@@ -1,6 +1,8 @@
-<h2>Se ha solicitado la reserva satifactoriamente</h2>
-<h2>Puede contactar con el propietario a través del siguiente correo:</h2>
+<h1>Se ha solicitado la reserva satifactoriamente</h1>
+<h1>Puede contactar con el propietario a través del siguiente correo:</h1>
 <%=@user_email%>
-<h2>Se adjunta la planilla con las especificaciones de su reserva</h2>
-<%= render 'bookings/form_show', booking: @booking %>
+<br>
+<h1>Puede acceder a su reserva a traves del siguiente enlace <%=link_to "mi reserva", root_url + "bookings/" + @booking.id.to_s%></h1>
+<h1>Se adjunta la planilla con las especificaciones de su reserva</h1>
+<%= render 'bookings/form_show', booking: @booking, estate: @estate %>
 

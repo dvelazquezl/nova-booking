@@ -1,3 +1,32 @@
 class Booking < ApplicationRecord
-    has_many :booking_detail
+    has_many :booking_details
+    has_secure_token :confirmation_token
+    accepts_nested_attributes_for :booking_details, :allow_destroy => true
+
+    def self.booking_new(booking,params)
+        booking.client_name = params[:client_name]
+        booking.date_start = params[:date_start]
+        booking.date_end = params[:date_end]
+        booking.total_amount = params[:total_amount]
+        booking.booking_state = true
+        booking_details = JSON.parse(CGI.unescape(params[:booking_details]))
+        booking_details.each {|value|
+            booking.booking_details.build(room_id: value["room_id"],
+                                           quantity: value["quantity"],
+                                           subtotal: value["subtotal"])
+        }
+        booking
+    end
+
+    def self.set_state(booking)
+        booking.confirmed_at = Time.now()
+        booking.booking_state = true
+        booking.save
+        UserMailer.new_booking(booking).deliver_now
+        UserMailer.new_booking_owner(booking).deliver_now
+    end
+
+    def estate(booking)
+        Estate.find(Room.find(booking.booking_details[0].room_id).estate_id)
+    end
 end

@@ -1,7 +1,7 @@
 class EstatesController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_estate, only: %i[show edit update destroy]
-
+  before_action :authenticate_user! , except: [:show, :room]
+  load_and_authorize_resource
   # GET /estates
   # GET /estates.json
   def index
@@ -35,7 +35,15 @@ class EstatesController < ApplicationController
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
-    @rooms = @estate.rooms
+    date_from = params[:from]
+    date_to = params[:to]
+    price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do
+    price_min = ((params[:price_min] != '') && (params[:price_min] != nil)) ? params[:price_min] : 0
+    @rooms = @estate.rooms.available(params[:id], date_from, date_to, price_max, price_min)
+    @rooms.each do |room|
+      quantity_available = Room.quantity_available(room.id, date_from, date_to).first
+      room.quantity =  quantity_available != nil ? quantity_available : 1
+    end
     @facilities = @estate.facilities_estates
     @images = @estate.images
 
@@ -43,7 +51,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: params[:from], to: params[:to]}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
   end
 
   # GET /estates/new
@@ -139,11 +147,25 @@ class EstatesController < ApplicationController
 
   # dar de baja una propiedad
   def unsuscribe
-    @estate = Estate.find(params[:id])
-    @estate.update_attribute(:status, false)
+    estate = Estate.find(params[:estate])
+    rooms = estate.rooms
+
+    rooms.each do |r|
+      if r.status == 'published'
+        r.update_attribute(:status, 'not_published')
+      end
+    end
+    estate.update_attribute(:status, false)
+
+    # filtra de la lista de habitaciones todas las que no estan reservadas
+    booked_rooms = rooms.select do |room|
+      BookingDetail.find_by_room_id(room.id)
+    end
+
     respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Propiedad dada de baja exitosamente.' }
+      format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
       format.json { head :no_content }
+      UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
     end
   end
 
@@ -159,5 +181,9 @@ class EstatesController < ApplicationController
 
     params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: [], images:[]])
 
+  end
+
+  def current_ability
+    @current_ability ||= EstateAbility.new(current_user)
   end
 end

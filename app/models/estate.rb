@@ -15,12 +15,14 @@ class Estate < ApplicationRecord
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
-  filterrific :default_filter_params => { :sorted_by => 'name_asc' },
+  filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
                 search_query
                 with_date_lte
                 with_date_gte
+                price_min
+                price_max
               ]
 
   scope :search_query, lambda { |query|
@@ -69,40 +71,49 @@ class Estate < ApplicationRecord
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
   scope :with_date_gte, ->(ref_date) {
-    where("estates.id in (select distinct ro.estate_id
-    from public.rooms as ro
-    where ro.id not in (
-    Select distinct r.id
-    from public.rooms as r
-    inner join public.booking_details as bd on bd.room_id = r.id
-    inner join public.bookings as b on b.id = bd.booking_id
-    where b.booking_state != false
-    and (ro.quantity - (select coalesce(sum(bd1.quantity),0) from public.rooms as r1
-        inner join public.booking_details as bd1 on bd1.room_id = r1.id
-        inner join public.bookings as b1 on b1.id = bd1.booking_id
-        where b1.booking_state != false
-        and r1.id = ro.id
-        and (b1.date_start <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date)
+    Estate.only_published.where("estates.id in
+    ( select distinct ro.estate_id
+     from public.rooms as ro
+     where ro.id not in
+         ( select distinct r.id
+          from public.rooms as r
+          join public.booking_details as bd on bd.room_id = r.id
+          join public.bookings as b on b.id = bd.booking_id
+          where b.booking_state != false
+            and (r.quantity -
+                   (select coalesce(sum(bd1.quantity),0)
+                    from public.rooms as r1
+                    join public.booking_details as bd1 on bd1.room_id = r1.id
+                    join public.bookings as b1 on b1.id = bd1.booking_id
+                    where b1.booking_state != false
+                      and r1.id = r.id
+                      and ((b1.date_start >= ?) or (b1.date_end >= ?)", ref_date, ref_date)
   }
 
   scope :with_date_lte, ->(ref_date) {
-    where("estates.id in (select distinct ro.estate_id
-    from public.rooms as ro
-    where ro.id not in (
-    Select distinct r.id
-    from public.rooms as r
-    inner join public.booking_details as bd on bd.room_id = r.id
-    inner join public.bookings as b on b.id = bd.booking_id
-    where b.booking_state != false
-    and (ro.quantity - (select coalesce(sum(bd1.quantity),0) from public.rooms as r1
-        inner join public.booking_details as bd1 on bd1.room_id = r1.id
-        inner join public.bookings as b1 on b1.id = bd1.booking_id
-        where b1.booking_state != false
-        and r1.id = ro.id
-        and (b1.date_end <= ? or b1.date_end >= ?))) = 0))", ref_date, ref_date)
+    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date)
+  }
+
+  # filters on 'price' attribute
+  scope :price_min, ->(price_min) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        ? <= r.price
+      )", price_min)
+  }
+
+  scope :price_max, ->(price_max) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        ? >= r.price
+      )", price_max)
   }
 
   def isPublished
     self.status = self.rooms.any? {|room| room.status == "published"}
   end
+
+  resourcify
 end
