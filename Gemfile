@@ -92,3 +92,4 @@ gem 'rolify'
 
 gem 'premailer-rails'
 gem 'bootstrap-email'
+gem 'paranoia'
