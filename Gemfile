@@ -76,9 +76,7 @@ gem 'sass-rails'
 gem 'devise'
 gem 'filterrific'
 gem 'javascript', '~> 0.1.0'
-gem 'jquery-rails'
 gem 'listen'
-gem 'sass-rails'
 
 gem "brakeman"
 gem "rails_best_practices"
