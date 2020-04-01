@@ -1,6 +1,7 @@
 #controller for creating, editing, and deleting facilities
 class FacilitiesController < ApplicationController
   before_action :set_facility, only: [:edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
     @facilities = Facility.page(params[:page])
@@ -43,11 +44,15 @@ class FacilitiesController < ApplicationController
   end
 
   private
-  def set_facility
-    @facility = Facility.find(params[:id])
-  end
+    def set_facility
+      @facility = Facility.find(params[:id])
+    end
 
-  def facility_params
-    params.require(:facility).permit(:description, :facility_type)
+    def facility_params
+      params.require(:facility).permit(:description, :facility_type)
+    end
+
+  def current_ability
+    @current_ability ||= FacilityAbility.new(current_user)
   end
 end
