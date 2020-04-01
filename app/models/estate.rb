@@ -73,13 +73,8 @@ class Estate < ApplicationRecord
     ]
   end
 
-  def self.options_for_select
-    new_arr = []
-    estate_type.values.each_with_index{|e, index| new_arr.push([e, index])}
-  end
-
   extend Enumerize
-  enumerize :estate_type, in: [:one_apartment, :home, :hotel], scope: true
+  enumerize :estate_type, in: [:one_apartment, :home, :hotel]
 
   scope :with_date_gte, ->(ref_date) {
     Estate.only_published.where("estates.id in

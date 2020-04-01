@@ -61,14 +61,7 @@
 </div>
 
 <script>
-    $(".number").each(function (ind, input) {
-        if(typeof input.value === "string"){
-            let n = input.value.replace(/[\D\s\._\-]+/g, "");
-            n = n?parseInt(n, 10):0;
-            let num = (n === 0)?"":n.toLocaleString("en-US");
-            input.value = num.split(",").join(".");
-        }
-    });
+
 
     $(function () {
         $('#with_date_gte, #with_date_lte').datepicker({
