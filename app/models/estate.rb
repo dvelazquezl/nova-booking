@@ -21,8 +21,8 @@ class Estate < ApplicationRecord
                 search_query
                 with_date_lte
                 with_date_gte
-                price_min
                 price_max
+                price_min
               ]
 
   scope :search_query, lambda { |query|
@@ -96,19 +96,14 @@ class Estate < ApplicationRecord
 
   # filters on 'price' attribute
   scope :price_min, ->(price_min) {
-    where("estates.id in (select distinct estate_id
-      from rooms r
-      where
-        ? <= r.price
-      )", price_min)
+    where("(? <= r.price)))", price_min)
   }
 
   scope :price_max, ->(price_max) {
     where("estates.id in (select distinct estate_id
       from rooms r
       where
-        ? >= r.price
-      )", price_max)
+        ((? >= r.price)", price_max)
   }
 
   def isPublished

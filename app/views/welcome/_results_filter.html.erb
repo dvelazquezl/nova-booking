@@ -38,7 +38,7 @@
             <%= f.number_field :price_min, id:"price_min", class: "form-control number", type: "text", placeholder:"Mínimo Gs." %>
           </div>
           <div class="col-6">
-            <%= f.number_field :price_max, id:"price_max", class: "form-control number validame", type: "text", placeholder:"Máximo Gs." %>
+            <%= f.number_field :price_max, id:"price_max", class: "form-control number", type: "text", placeholder:"Máximo Gs." %>
           </div>
       </div>
       <div align="right" style="padding-top: 5px">
@@ -57,6 +57,10 @@
 </div>
 
 <script>
+  if($("#price_max").val() == '1000000000'){
+      $("#price_max").val(0);
+  }
+
     $(".number").each(function (ind, input) {
         if(typeof input.value === "string"){
             let n = input.value.replace(/[\D\s\._\-]+/g, "");
