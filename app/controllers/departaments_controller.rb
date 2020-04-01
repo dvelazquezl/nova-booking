@@ -1,6 +1,6 @@
 class DepartamentsController < ApplicationController
   before_action :set_departament, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /departaments
   # GET /departaments.json
   def index
@@ -72,4 +72,8 @@ class DepartamentsController < ApplicationController
     def departament_params
       params.require(:departament).permit(:name)
     end
+
+  def current_ability
+    @current_ability ||= DepartamentAbility.new(current_user)
+  end
 end
