@@ -23,7 +23,14 @@ ProtectMassAssignmentCheck: { }
 RemoveEmptyHelpersCheck: { }
 #RemoveTabCheck: { }
 RemoveTrailingWhitespaceCheck: { }
-RemoveUnusedMethodsInControllersCheck: { except_methods: [] }
+RemoveUnusedMethodsInControllersCheck: { except_methods:
+    [DepartamentsController#current_ability,
+     FacilitiesController#current_ability,
+     CitiesController#current_ability,
+     EstatesController#current_ability,
+     OwnersController#current_ability,
+     BookingsController#current_ability
+    ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [], ignored_files: 'user.rb' }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }

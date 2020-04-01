@@ -25,7 +25,7 @@
             </li>
           <% end %>
 
-          <% if user_signed_in? && is_owner? %>
+          <% if user_signed_in? && (current_user.has_role? :admin) %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ciudades
               </a>
@@ -35,7 +35,6 @@
               </div>
             </li>
           <%end %>
-          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if user_signed_in? %>

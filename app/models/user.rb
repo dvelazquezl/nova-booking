@@ -1,12 +1,16 @@
 class User < ApplicationRecord
+  rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
   has_one :owner
-
-  validates_length_of :username, minimum: 5, maximum: 20
+  validates :name, presence: :true
+  validates :last_name, presence: :true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
+  validates_length_of :username, minimum: 5, maximum: 20, allow_blank: true
+  validates_length_of :name, minimum: 2, maximum: 50, allow_blank: true
+  validates_length_of :last_name, minimum: 2, maximum: 50, allow_blank: true
   validate :validate_username
   def validate_username
     if User.where(email: username).exists?

@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /cities
   # GET /cities.json
   def index
@@ -72,4 +72,8 @@ class CitiesController < ApplicationController
     def city_params
       params.require(:city).permit(:name, :departament_id)
     end
+
+  def current_ability
+    @current_ability ||= CityAbility.new(current_user)
+  end
 end
