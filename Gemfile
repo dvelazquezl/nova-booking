@@ -89,3 +89,5 @@ gem 'has_secure_token'
 
 gem 'cancancan'
 gem 'rolify'
+
+gem 'paranoia'
