@@ -15,11 +15,6 @@ class Estate < ApplicationRecord
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
-  # filters on 'estate_type' attribute
-  scope :with_estate_type, ->(estate_types) {
-    where(estate_type: [*estate_types])
-  }
-
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
@@ -28,7 +23,6 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
-                with_estate_type
               ]
 
   scope :search_query, lambda { |query|
