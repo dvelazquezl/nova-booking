@@ -1,27 +1,4 @@
-<div class="container">
-  <div class="card">
-    <div class="card-body">
-      <div class="row mb-2">
-        <div class="col-xl-4 col-6 py-2">
-          <div class="row">
-            <div class="col-lg-10">
-              <b>Fecha de llegada</b>
-              <br/><div><%=@date_from_formatted%></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4 col-6 py-2">
-          <div class="row">
-            <div class="col-lg-10">
-              <b>Fecha de salida</b>
-              <br/><div><%=@date_to_formatted%></div>
-              <br/>Estancia de <span id="diff"><%=@diff%></span> noche<%=@plu %></div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <div class="row">
     <div class="col">
       <div class="card card-default">
@@ -76,12 +53,13 @@
         <!-- END table-responsive-->
       </div>
     </div>
-    <div class="col col-lg-2">
+    <div class="col col-lg-3">
         <div class="card card-default mb-4">
           <div class="card-body">
             <div class="card-header">
               <h5><strong>Total</strong></h5>
             </div>
+            <div class="card-header"><h5>Estancia de <span id="diff"><%=diff%></span> noche<%=plu %></h5></div>
             <label for="total"></label><input class="form-control" id="total" type="text" disabled/>
           </div>
           <div class="card-footer">

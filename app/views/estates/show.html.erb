@@ -67,7 +67,7 @@
       <!-- Availability table -->
       <br/>
       <div class="col-12">
-        <%= render 'room_list', rooms: @rooms %>
+        <%= render  partial: 'room_list',   :locals => {rooms: @rooms, diff: @diff, plu: @plu}%>
       </div>
     </div>
   </div>
