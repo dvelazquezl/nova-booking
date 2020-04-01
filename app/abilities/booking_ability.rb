@@ -9,13 +9,13 @@ class BookingAbility
       else
         #Logueado
         can :create, Booking
-        can :read, Booking, client_email: user.email
+        can :show, Booking, client_email: user.email
         can :destroy, Booking, client_email: user.email
       end
     else
       #Visitantes
       can :create, Booking
-      can :read, Booking
+      can :show, Booking
     end
   end
 end
