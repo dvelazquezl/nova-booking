@@ -2,20 +2,17 @@ class BookingsController < ApplicationController
   before_action :authenticate_user! , except: [:new, :create, :show]
   before_action :set_booking, only: [:show, :destroy]
   load_and_authorize_resource
-
-
+  
   def index
     @bookings = Booking.all
   end
 
   def show
-    @booking = Booking.find(params[:id])
-    @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
-    @diff = Booking.diff(@booking)
-    @plu = (@diff > 1)? "s":" "
     if !@booking.booking_state.blank?
       @booking = Booking.find(params[:id])
       @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+      @diff = Booking.diff(@booking)
+      @plu = (@diff > 1)? "s":" "
     else
       format.html { redirect_to root_url, errors: 'Lo sentimos no puede acceder a la reserva' }
     end
