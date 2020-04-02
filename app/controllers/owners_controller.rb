@@ -2,7 +2,7 @@ class OwnersController < ApplicationController
 
   before_action :authenticate_user! , except: :show
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   def index
     @owners = Owner.all
   end
@@ -61,5 +61,9 @@ class OwnersController < ApplicationController
 
   def owner_params
     params.require(:owner).permit(:phone, :address, :about, :name, :email, :image, :user_id)
+  end
+
+  def current_ability
+    @current_ability ||= OwnerAbility.new(current_user)
   end
 end
