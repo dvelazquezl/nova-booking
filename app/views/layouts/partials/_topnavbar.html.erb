@@ -25,7 +25,7 @@
             </li>
           <% end %>
 
-          <% if user_signed_in? && is_owner? %>
+          <% if user_signed_in? && (current_user.has_role? :admin) %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ciudades
               </a>
@@ -35,7 +35,6 @@
               </div>
             </li>
           <%end %>
-          
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if user_signed_in? %>
@@ -45,14 +44,17 @@
               <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <% if user_signed_in? %>
-                <a class="dropdown-item"><%= link_to "Editar Perfil", edit_user_registration_path, :class => "nav-link" %></a>
+              <% if user_signed_in? && is_owner? %>
+                <a class="dropdown-item"><%= link_to 'Editar perfil', edit_user_registration_path, :class => "nav-link" %></a>
+                <a class="dropdown-item"><%= link_to 'Editar Propietario', edit_owner_path(current_owner), :class => 'nav-link' %></a>
+                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link"  %></a>
+              <% elsif user_signed_in? && !is_owner? %>
+                <a class="dropdown-item"><%= link_to 'Editar perfil', edit_user_registration_path, :class => "nav-link" %></a>
                 <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link"  %></a>
               <% else %>
                 <a class="dropdown-item"><%= link_to "Iniciar Sesión", new_user_session_path, :class => "nav-link" %></a>
                 <a class="dropdown-item"><%= link_to "Registrarse", new_user_registration_path, :class => "nav-link" %></a>
               <% end %>
-
             </div>
           </li>
         </ul>

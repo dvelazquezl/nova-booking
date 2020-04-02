@@ -4,7 +4,9 @@
     <div class="card card-default">
       <div class="card-body text-center">
         <div class="py-4 text-center">
+          <% if @owner.image.attached? %>
            <%= image_tag @owner.image, alt: "rss fit", height: "150", width:"150"%>
+          <% end %>
         </div>
         <h3 class="m-0 text-bold"><%= @owner.name %></h3>
         <div class="my-3">
