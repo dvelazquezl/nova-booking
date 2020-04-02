@@ -38,7 +38,7 @@ class EstatesController < ApplicationController
     date_from_formatted = Date.parse(params[:from])
     date_to_formatted = Date.parse(params[:to])
     @diff = (date_to_formatted.to_date - date_from_formatted.to_date).to_i
-    @plu = (@diff > 1)? "s":" "
+    @plural_arg = (@diff > 1)? "s":" "
     date_from = params[:from]
     date_to = params[:to]
     price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do
@@ -55,7 +55,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: @date_from, to: @date_to}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
   end
 
   # GET /estates/new
