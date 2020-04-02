@@ -135,16 +135,6 @@ class EstatesController < ApplicationController
     end
   end
 
-  # dar de alta una propiedad
-  def suscribe
-    @estate = Estate.find(params[:id])
-    @estate.update_attribute(:status, true)
-    respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Propiedad publicada exitosamente.' }
-      format.json { head :no_content }
-    end
-  end
-
   # dar de baja una propiedad
   def unsuscribe_estate
     estate = Estate.find(params[:estate_id])
