@@ -13,12 +13,11 @@ Rails.application.routes.draw do
   resources :estates do
     collection do
       get :new_room
+      post :unsuscribe_estate
     end
   end
 
   get 'rooms/:id', to: 'estates#room', :as => 'room_estate'
-  match 'estates/:id/suscribe', :to => 'estates#suscribe', :as => 'suscribe_estate', :via => :post
-  match 'estates/:id/unsuscribe', :to => 'estates#unsuscribe', :as => 'unsuscribe_estate', :via => :post
   get 'estates/:id/show_detail', :to => 'estates#show_detail', :as => 'show_detail_estate'
   resources :users, only: [:index]
   resources :rooms
