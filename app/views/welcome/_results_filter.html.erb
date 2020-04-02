@@ -58,12 +58,14 @@
         $("#price_min").val('');
     }
   $(function() {
-      var startDate = new Date();
-      var FromEndDate = new Date();
-      var ToEndDate = new Date();
-      ToEndDate.setDate(ToEndDate.getDate()+365);
-      FromEndDate.setDate(FromEndDate.getDate()+365);
-      $('#with_date_gte').datepicker({
+    var fromD;
+    var toD;   
+    var startDate = new Date();
+    var FromEndDate = new Date();
+    var ToEndDate = new Date();
+    ToEndDate.setDate(ToEndDate.getDate()+365);
+    FromEndDate.setDate(FromEndDate.getDate()+365); 
+    $('#with_date_gte').datepicker({
           weekStart: 1,
           startDate: new Date(),
           endDate: FromEndDate,
@@ -72,13 +74,8 @@
           format: "yyyy/mm/dd",
           language: 'es',
           todayHighlight: true
-      })
-          .on('changeDate', function(selected){
-              startDate = new Date(selected.date.valueOf());
-              startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
-              $('#with_date_lte').datepicker('setStartDate', startDate);
-          });
-      $('#with_date_lte')
+    });
+    $('#with_date_lte')
           .datepicker({
               weekStart: 1,
               startDate: startDate,
@@ -88,12 +85,29 @@
               format: "yyyy/mm/dd",
               language: 'es',
               todayHighlight: true
-      })
-          .on('changeDate', function(selected){
+    });
+    if($("#with_date_gte").val() != ''){
+        fromD = $("#with_date_gte").val();
+        startDate = new Date(fromD);
+        startDate.setDate(startDate.getDate(new Date(fromD)));
+        $('#with_date_lte').datepicker('setStartDate', startDate);
+        }
+    if($("#with_date_lte").val() != ''){
+        toD = $("#with_date_lte").val();
+        FromEndDate = new Date(toD);
+        FromEndDate.setDate(FromEndDate.getDate(new Date(toD)));
+        $('#with_date_gte').datepicker('setEndDate', FromEndDate);
+    }
+    $('#with_date_gte').datepicker().on('changeDate', function(selected){
+              startDate = new Date(selected.date.valueOf());
+              startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+              $('#with_date_lte').datepicker('setStartDate', startDate);
+    });
+    $('#with_date_lte').datepicker().on('changeDate', function(selected){
               FromEndDate = new Date(selected.date.valueOf());
               FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
               $('#with_date_gte').datepicker('setEndDate', FromEndDate);
-          });
+    });
       $(window).on('resize', function() {
           if($(window).width() < 1060) {
               $('#results-body').removeClass('results-section');
@@ -103,7 +117,6 @@
               $('#results-body').removeClass('results-section2');
           }
       });
-
       $("#manual_filterrific_form").on("submit", function(evt){
           $(".number").each(function (ind, input) {
               input.value = input.value.split(".").join("");
