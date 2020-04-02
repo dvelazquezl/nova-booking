@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :name, presence: :true
   validates :last_name, presence: :true
   validates :username, presence: :true, uniqueness: { case_sensitive: false }
-  validates_format_of :username, with: /^[a-zA-Z0-9]*$/, message: "solo debe contener letras y numeros", :multiline => true
+  validates_format_of :username, with: /\A[a-zA-Z0-9]+\z/, message: "solo debe contener letras y numeros", :multiline => true
   validates_length_of :username, minimum: 5, maximum: 20, allow_blank: true
   validates_length_of :name, minimum: 2, maximum: 50, allow_blank: true
   validates_length_of :last_name, minimum: 2, maximum: 50, allow_blank: true
