@@ -20,6 +20,8 @@ class WelcomeController < ApplicationController
   end
 
   def results
+    params[:filterrific]["price_min"] = params[:filterrific]["price_min"] == '' ? '0' : params[:filterrific]["price_min"]
+    params[:filterrific]["price_max"] = params[:filterrific]["price_max"] == '' ? '1000000000' : params[:filterrific]["price_max"] #to do
     (@filterrific = initialize_filterrific(
         Estate,
         params[:filterrific],
