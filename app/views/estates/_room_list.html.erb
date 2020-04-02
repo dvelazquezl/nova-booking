@@ -1,5 +1,4 @@
-<div class="container">
-  <div class="row">
+<div class="row">
     <div class="col">
       <div class="card card-default">
         <div class="card-header"><h5><strong>Disponibilidad</strong></h5></div>
@@ -8,7 +7,7 @@
           <table class="table table-bordered table-hover" id="table-ext-1">
             <thead>
             <tr>
-              <th></th>
+              <th hidden="true"></th>
               <th>Tipo de habitacion</th>
               <th>Capacidad</th>
               <th>Precio</th>
@@ -18,16 +17,20 @@
             <tbody id="rooms">
             <% rooms.each do |r| %>
               <tr>
-                <td id="booking_info">
+                <td id="booking_info" hidden="true">
                   <div class="room_id" hidden="true"><%=r.id%></div>
                   <div class="price" hidden="true"><%=r.price%></div>
                 </td>
                 <td class="col-2">
                   <%= link_to r.description, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
                 </td>
-                <td class="col-2">
-                  <% r.capacity.to_i.times do %>
-                    <em class="fa-lg fas fa-user"></em>
+                <td class="col-2" data-toggle="tooltip" data-placement="left" title="Capacidad: <%= r.capacity %>">
+                  <% if r.capacity.to_i >= 5 %>
+                    <em class="fa-lg fas fa-users"> 5 +</em>
+                  <% else %>
+                    <% r.capacity.to_i.times do %>
+                      <em class="fa-lg fas fa-user"></em>
+                    <% end %>
                   <% end %>
                 </td>
                 <td class="col-2 price" id="price"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
@@ -49,12 +52,13 @@
         <!-- END table-responsive-->
       </div>
     </div>
-    <div class="col col-lg-2">
+    <div class="col col-lg-3">
         <div class="card card-default mb-4">
           <div class="card-body">
             <div class="card-header">
               <h5><strong>Total</strong></h5>
             </div>
+            <div class="card-header"><h5>Estancia de <span id="diff"><%=diff%></span> noche<%=plural_arg%></h5></div>
             <label for="total"></label><input class="form-control" id="total" type="text" disabled/>
           </div>
           <div class="card-footer">
@@ -62,23 +66,27 @@
           </div>
         </div>
     </div>
-  </div>
 </div>
 <div id="room-content"></div>
 <script>
   const book = $('#book');
   $(document).ready(function () {
       book.prop('disabled', true);
+
   });
 
   function addValues() {
       let total = 0;
       $('tbody tr').each(function () {
           let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text().split(".").join(""));
-          total = total + sum;
+          total = (total + sum);
       });
+      total = total  * $("#diff").text();
       $('#total').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
 
+  $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+  });
 </script>

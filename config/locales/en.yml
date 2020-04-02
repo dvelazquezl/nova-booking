@@ -275,3 +275,12 @@ en:
         single: "Simple"
         double: "Doble"
         family: "Familiar"
+    facility:
+      facility_type:
+        estate: "Propiedad"
+        room: "Habitacion"
+    estate:
+      estate_type:
+        one_apartment: "Apartamento"
+        home: "Casa"
+        hotel: "Hotel"
