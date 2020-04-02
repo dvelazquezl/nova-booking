@@ -2,6 +2,7 @@ class EstatesController < ApplicationController
   before_action :set_estate, only: %i[show edit update destroy]
   before_action :authenticate_user! , except: [:show, :room]
 
+  include EstatesHelper
   # GET /estates
   # GET /estates.json
   def index
@@ -138,26 +139,41 @@ class EstatesController < ApplicationController
   end
 
   # dar de baja una propiedad
-  def unsuscribe
-    estate = Estate.find(params[:estate])
+  def unsuscribe_estate
+    estate = Estate.find(params[:estate_id])
     rooms = estate.rooms
-
-    rooms.each do |r|
-      if r.status == 'published'
-        r.update_attribute(:status, 'not_published')
-      end
-    end
-    estate.update_attribute(:status, false)
 
     # filtra de la lista de habitaciones todas las que no estan reservadas
     booked_rooms = rooms.select do |room|
       BookingDetail.find_by_room_id(room.id)
     end
 
+    # comprobar si alguna de las habitaciones reservadas esta ocupada
+    free = true
+    booked_rooms.each do |br|
+      if Time.now.between?(date_start(br), date_end(br))
+        free = false
+      end
+    end
+
     respond_to do |format|
-      format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
-      format.json { head :no_content }
-      UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
+      if free
+        # actualizar estado de las habitaciones y de la propiedad
+        rooms.each do |r|
+          if r.status == 'published'
+            r.update_attribute(:status, 'not_published')
+          end
+        end
+        #actualizar el estado de la propiedad
+        estate.update_attribute(:status, false)
+
+        format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
+        format.json { head :no_content }
+        UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
+      else
+        format.html { redirect_to estates_path, alert: 'No se puede dar de baja esta propiedad. Una o mas habitaciones estan ocupadas.' }
+        format.json { head :no_content }
+      end
     end
   end
 
