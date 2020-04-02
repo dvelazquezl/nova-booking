@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   devise_for :users do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
- 
+
   resources :cities
   resources :departaments
   resources :owners
@@ -36,7 +36,8 @@ Rails.application.routes.draw do
   get '/api/i18n/:locale' => 'api#i18n'
 
   # error routes
-  match '/404', :to => 'errors#not_found', :via => :all
-  match '/500', to: 'errors#internal_server_error', :via => :all
+  get '404', to: 'application#page_not_found'
+  get '422', to: 'application#server_error'
+  get '500', to: 'application#server_error'
 
 end
