@@ -29,6 +29,8 @@ class UserMailer < ApplicationMailer
   def new_booking_confirmation(booking)
     @booking =booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+    @diff = Booking.diff(@booking)
+    @plural_arg = (@diff > 1)? "s":" "
     mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 

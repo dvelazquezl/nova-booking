@@ -79,8 +79,9 @@
       let total = 0;
       $('tbody tr').each(function () {
           let sum = parseInt($('option:selected', this).text()) * parseInt($('#price', this).text().split(".").join(""));
-          total = (total + sum) * $("#diff").text();
+          total = (total + sum);
       });
+      total = total  * $("#diff").text();
       $('#total').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
   }
