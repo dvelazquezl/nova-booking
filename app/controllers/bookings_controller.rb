@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user! , except: [:new, :create, :show]
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :set_booking, only: [:show, :edit, :update]
 
   def index
     @bookings = Booking.all
@@ -9,19 +9,24 @@ class BookingsController < ApplicationController
   def show
     @booking = Booking.find(params[:id])
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+    @diff = Booking.diff(@booking)
+    @plu = (@diff > 1)? "s":" "
   end
 
   def new
     @booking = Booking.booking_new(Booking.new, params)
+    @diff = Booking.diff(@booking)
+    @plu = (@diff > 1)? "s":" "
   end
 
   def edit
     @booking = Booking.find(params[:id])
+    @diff = Booking.diff(@booking)
+    @plu = (@diff > 1)? "s":" "
   end
 
   def create
     @booking = Booking.new(booking_params)
-
     respond_to do |format|
       if @booking.save
         @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
@@ -45,14 +50,6 @@ class BookingsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def destroy
-    @booking.destroy
-    respond_to do |format|
-      format.html { redirect_to bookings_url, notice: 'La reserva fue eliminado satifactoriamente.' }
-      format.json { head :no_content }
     end
   end
 

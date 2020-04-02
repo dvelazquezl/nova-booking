@@ -3,12 +3,16 @@ class UserMailer < ApplicationMailer
     @booking =booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
     @user_email = user_email(booking)
+    @diff = Booking.diff(@booking)
+    @plu = (@diff > 1)? "s":" "
     mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
   def new_booking_owner(booking)
     @booking =booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+    @diff = Booking.diff(@booking)
+    @plu = (@diff > 1)? "s":" "
     user_email = user_email(booking)
     mail(to: user_email, subject: 'NovaBooking!')
   end
