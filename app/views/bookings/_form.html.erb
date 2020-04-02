@@ -79,16 +79,8 @@
                   <b><%= number_to_currency( form.object.total_amount / diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
                 </td>
               </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                </td>
-              </tr>
               <tr class="thead-light">
-                <th><b>Total: <b><%=diff%> noche<%=plu %></b></b></th>
+                <th><b>Total: <%=diff%> noche<%=plural_arg%></b></th>
                 <th></th>
                 <th></th>
                 <th></th>
