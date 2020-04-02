@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-  before_action :authenticate_user! , except: [:new, :create, :show]
+  before_action :authenticate_user! , except: [:new, :create, :show, :confirmation]
   before_action :set_booking, only: [:show, :destroy]
   load_and_authorize_resource
 
