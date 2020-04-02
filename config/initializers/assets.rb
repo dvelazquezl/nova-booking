@@ -1,13 +1,10 @@
 # Be sure to restart your server when you modify this file.
-
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
-
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
-
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
@@ -28,7 +25,7 @@ Rails.application.config.assets.precompile += %w( estates.js )
 Rails.application.config.assets.precompile += %w( owners.css )
 Rails.application.config.assets.precompile += %w( owners.js )
 Rails.application.config.assets.precompile += %w( cities.css )
-Rails.application.config.assets.precompile += %w( cities.js ) 
+Rails.application.config.assets.precompile += %w( cities.js )
 Rails.application.config.assets.precompile += %w( departaments.css )
 Rails.application.config.assets.precompile += %w( departaments.js )
 Rails.application.config.assets.precompile += %w( bookings.css )
@@ -37,3 +34,5 @@ Rails.application.config.assets.precompile += %w( errors.css )
 Rails.application.config.assets.precompile += %w( errors.js )
 Rails.application.config.assets.precompile += %w( facilities.css )
 Rails.application.config.assets.precompile += %w( facilities.js )
+Rails.application.config.assets.precompile += %w( application-mailer.scss )
+

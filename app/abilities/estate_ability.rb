@@ -14,16 +14,19 @@
           #User logueado.
           can :read, Estate
           can :create, Estate
+          can :room, Estate
           #Solo un user con perfil de owner
           if owner
             can :update, Estate, owner_id: owner.id
-            can :delete, Estate, owner_id: owner.id
+            can :destroy, Estate, owner_id: owner.id
+            can :show_detail, Estate, owner_id: owner.id
           end
         end
       else
         #Visitantes
-        can :read, Estate
+        can :show, Estate
         can :create, Estate
+        can :room, Estate
       end
     end
  end

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'errors/not_found'
-  get 'errors/internal_server_error'
   get 'welcome/index'
   get 'welcome/results'
 
@@ -24,7 +22,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index]
   resources :rooms
   resources :facilities, except: :show
-  resources :bookings, except: [:edit, :index] do
+  resources :bookings, except: [:edit, :update ,:index, :delete] do
     collection do
       get :confirmation
     end
@@ -39,7 +37,8 @@ Rails.application.routes.draw do
   get '/api/i18n/:locale' => 'api#i18n'
 
   # error routes
-  match '/404', :to => 'errors#not_found', :via => :all
-  match '/500', to: 'errors#internal_server_error', :via => :all
+  get '404', to: 'application#page_not_found'
+  get '422', to: 'application#server_error'
+  get '500', to: 'application#server_error'
 
 end
