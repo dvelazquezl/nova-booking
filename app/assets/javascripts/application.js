@@ -26,7 +26,7 @@
 
 
 //= require croppie/croppie
-
+//= require bootbox/bootbox.all
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -152,12 +152,28 @@ $(document).on('change', '.picture .pictureInput2', function(event) {
 
 $(document).on('click', '.remove_fields', function (e) {
     //elimina el partial que tiene estos enlaces
+    let fieldParent = $(this).closest('fieldset'),
+        deleteField = fieldParent ? fieldParent.find('input[type="hidden"]') : null;
     e.preventDefault();
-    let fieldParent = $(this).closest('fieldset');
-    let deleteField = fieldParent ? fieldParent.find('input[type="hidden"]') : null;
-    if (deleteField) {
-        deleteField.val('1');
-        fieldParent.css({ display: "none" });
+    if (deleteField.val != null) {
+        bootbox.confirm({
+            title: "Eliminar Habitación?",
+            message: "Estas seguro de querer eliminarlo",
+            locale: 'es',
+            callback: function (result) {
+                if (result) {
+                    if (deleteField) {
+                        deleteField.val('1');
+                        fieldParent.css({display: "none"});
+                    }
+                }
+            }
+        });
+    } else {
+        if (deleteField) {
+            deleteField.val('1');
+            fieldParent.css({display: "none"});
+        }
     }
 });
 
