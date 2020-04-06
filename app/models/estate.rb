@@ -3,6 +3,7 @@ class Estate < ApplicationRecord
   acts_as_paranoid
   belongs_to :city
   has_many_attached :images
+  has_many :comments
   has_many :facilities_estates
   has_many :facilities, through: :facilities_estates
   has_many :rooms, dependent: :destroy
