@@ -155,26 +155,26 @@ $(document).on('click', '.remove_fields', function (e) {
     let fieldParent = $(this).closest('fieldset'),
         deleteField = fieldParent ? fieldParent.find('input[type="hidden"]') : null;
     e.preventDefault();
-    if (deleteField.val != null) {
-        bootbox.confirm({
-            title: "Eliminar Habitación?",
-            message: "Estas seguro de querer eliminarlo",
-            locale: 'es',
-            callback: function (result) {
-                if (result) {
-                    if (deleteField) {
-                        deleteField.val('1');
-                        fieldParent.css({display: "none"});
-                    }
+    bootbox.confirm({
+        title: "Eliminar Habitación?",
+        message: "Estas seguro de querer eliminarlo",
+        locale: 'es',
+        callback: function (result) {
+            if (result) {
+                if (deleteField) {
+                    deleteField.val('1');
+                    $("input").attr("required", false);
+                    fieldParent.css({display: "none"});
                 }
             }
-        });
-    } else {
-        if (deleteField) {
-            deleteField.val('1');
-            fieldParent.css({display: "none"});
         }
-    }
+    });
+});
+
+$(document).on('click', '.remove_fields2', function (e) {
+    //elimina el partial que tiene estos enlaces
+    $(this).closest('fieldset').detach();
+    e.preventDefault()
 });
 
 $(document).on('click', '.show_fields', function (e) {
