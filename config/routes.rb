@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   devise_for :users do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
+  devise_scope :user do
+    get '/users', to: 'devise/registrations#new'
+    get '/users/password', to: 'devise/passwords#new'
+  end
 
   resources :cities
   resources :departaments
