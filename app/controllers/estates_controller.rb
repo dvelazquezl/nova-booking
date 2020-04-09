@@ -14,7 +14,6 @@ class EstatesController < ApplicationController
         params[:filterrific]
       )) || return
       @estates = @filterrific.find.page(params[:page])
-
       respond_to do |format|
         format.html
         format.js
@@ -24,6 +23,20 @@ class EstatesController < ApplicationController
     end
 
     render :index, locals: { estates: @estates }
+  end
+
+  def estates_visited
+    (@filterrific = initialize_filterrific(
+        Estate.estates_by_client("pamela.tamay@fiuni.edu.py"),
+        params[:filterrific]
+    )) || return
+    @estates = @filterrific.find.page(params[:page])
+    render :estates_visited, locals: { estates: @estates }
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /estates/1

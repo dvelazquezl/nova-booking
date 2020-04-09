@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # defaults to dashboard
+  root :to => redirect('/welcome/index')
+
   get 'welcome/index'
   get 'welcome/results'
 
@@ -12,6 +15,7 @@ Rails.application.routes.draw do
   resources :owners
   resources :estates do
     collection do
+      get 'estates_visited', :to => 'estates#estates_visited', :as => 'visited'
       get :new_room
       post :unsuscribe_estate
     end
@@ -29,9 +33,6 @@ Rails.application.routes.draw do
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  # defaults to dashboard
-  root :to => redirect('/welcome/index')
 
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'
