@@ -34,6 +34,10 @@ class UserMailer < ApplicationMailer
     mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
+  def email_prueba
+    mail(to: 'ricardo.gonzalez@fiuni.edu.py', subject: 'Prueba Cron')
+  end
+
   private
     #se obtiene el email del propietario
     def user_email(booking)
