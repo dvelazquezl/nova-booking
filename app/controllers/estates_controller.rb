@@ -26,8 +26,9 @@ class EstatesController < ApplicationController
   end
 
   def estates_visited
+    email = current_user.email
     (@filterrific = initialize_filterrific(
-        Estate.estates_by_client("pamela.tamay@fiuni.edu.py"),
+        Estate.estates_by_client(email),
         params[:filterrific]
     )) || return
     @estates = @filterrific.find.page(params[:page])
