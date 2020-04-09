@@ -77,10 +77,16 @@
   }
 
   .results-block {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
+  }
+
+  .filter-section{
+    width:250px;
+    height:100%;
+    white-space:nowrap;
   }
 
   .results-background {
