@@ -34,8 +34,8 @@ class UserMailer < ApplicationMailer
     mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
-  def email_prueba
-    mail(to: 'ricardo.gonzalez@fiuni.edu.py', subject: 'Prueba Cron')
+  def email_request_assess(booking)
+    mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
   private

@@ -3,7 +3,7 @@
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 env :PATH, ENV['PATH']
-set :environment, "development"
+#set :environment, "development"
 set :output, {:error => "log/cron_error.log", :standard => "log/cron_log.log"}
 
 #set :output, '/log/cron_error.log'
@@ -40,3 +40,4 @@ set :output, {:error => "log/cron_error.log", :standard => "log/cron_log.log"}
 every 1.day, at: '08:00 am' do
  rake "email_booking:request_assess"
 end
+
