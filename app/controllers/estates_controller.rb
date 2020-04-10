@@ -14,7 +14,6 @@ class EstatesController < ApplicationController
         params[:filterrific]
       )) || return
       @estates = @filterrific.find.page(params[:page])
-
       respond_to do |format|
         format.html
         format.js
@@ -24,6 +23,21 @@ class EstatesController < ApplicationController
     end
 
     render :index, locals: { estates: @estates }
+  end
+
+  def estates_visited
+    email = current_user.email
+    (@filterrific = initialize_filterrific(
+        Estate.estates_by_client(email),
+        params[:filterrific]
+    )) || return
+    @estates = @filterrific.find.page(params[:page])
+    render :estates_visited, locals: { estates: @estates }
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /estates/1
@@ -143,6 +157,15 @@ class EstatesController < ApplicationController
     render :show_detail, locals: { estate: @estate}
   end
 
+  # GET /estates/1/show_visited
+  def show_visited
+    @estate = Estate.find(params[:id])
+    @rooms = @estate.rooms.where(status: 'published')
+    @facilities = @estate.facilities_estates
+    @images = @estate.images
+    render :show_detail, locals: { estate: @estate}
+  end
+
   def room
     @room = Room.find(params[:id])
     respond_to do |format|
@@ -198,7 +221,7 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: [], images:[]])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images:[]])
   end
 
   def current_ability
