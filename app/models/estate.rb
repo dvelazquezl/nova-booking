@@ -129,5 +129,9 @@ class Estate < ApplicationRecord
     self.status = self.rooms.any? {|room| room.status == "published"}
   end
 
+  def commentsEstate
+    Comment.where(estate_id: self.id)
+  end
+
   resourcify
 end
