@@ -5,15 +5,15 @@
       <div class="card-header"><h4>&emsp; Comentarios:</h4></div>
 
       <div class="card-body scroll_comment_detail">
-        <% @comments.each do |c| %>
+        <% comments.each do |c| %>
           <div class="media">
             <div class="media-body">
               <div class="row">
                 <div class="col"><b class="text-primary"><%= c.client_name %></b></div>
                 <div class="col-3">
-                  <%if c.rating < 5 %>
+                  <%if c.isRatingDanger %>
                     <div class="text-right badge badge-pill badge-danger"> <%= c.rating %> </div>
-                  <%elsif c.rating > 4 && c.rating < 8 %>
+                  <%elsif c.isRatingWarning %>
                     <div class="text-right badge badge-pill badge-warning"> <%= c.rating %> </div>
                   <%else %>
                     <div class="text-right badge badge-pill badge-success"> <%= c.rating %> </div>
@@ -68,7 +68,7 @@
       <div class="col-12" id="estate-details">
         <div class="row details">
           <div class="col-md-8 col-sm-12" id="carousel-div">
-            <%= render partial: "estates/show_images", :locals => { images: @images, h_size: '340px'} %>
+            <%= render partial: "estates/show_images", :locals => { images: @estate.images, h_size: '340px'} %>
           </div>
           <div class="col-md-4 col-sm-12" id="facilities-div">
             <div class="row">
@@ -76,7 +76,7 @@
                 <h3>Comodidades</h3>
               </div>
               <div class="col-12 overflow-auto facilities-list-div">
-                <%= render partial: "estates/facilities_list", :locals => { facilities: @facilities } %>
+                <%= render partial: "estates/facilities_list", :locals => { facilities: @estate.facilities_estates } %>
               </div>
             </div>
           </div>
