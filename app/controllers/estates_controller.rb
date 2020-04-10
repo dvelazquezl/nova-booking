@@ -72,7 +72,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to, comments: @comments}
   end
 
   # GET /estates/new
@@ -153,20 +153,16 @@ class EstatesController < ApplicationController
   def show_detail
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    @comments = Comment.where(estate_id: @estate.id)
-    render :show_detail, locals: { estate: @estate}
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
   end
 
   # GET /estates/1/show_visited
   def show_visited
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms.where(status: 'published')
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    @comments = Comment.where(estate_id: @estate.id)
-    render :show_detail, locals: { estate: @estate}
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
   end
 
   def room
