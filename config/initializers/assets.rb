@@ -33,4 +33,5 @@ Rails.application.config.assets.precompile += %w( bookings.js )
 Rails.application.config.assets.precompile += %w( facilities.css )
 Rails.application.config.assets.precompile += %w( facilities.js )
 Rails.application.config.assets.precompile += %w( application-mailer.scss )
-
+Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'html')
+Rails.application.config.assets.register_mime_type('text/html', '.html')
