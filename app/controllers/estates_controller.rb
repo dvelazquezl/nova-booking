@@ -66,6 +66,7 @@ class EstatesController < ApplicationController
     end
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    @comments = Comment.where(estate_id: @estate.id)
 
     respond_to do |format|
       format.html
@@ -154,6 +155,7 @@ class EstatesController < ApplicationController
     @rooms = @estate.rooms
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    @comments = Comment.where(estate_id: @estate.id)
     render :show_detail, locals: { estate: @estate}
   end
 
@@ -163,6 +165,7 @@ class EstatesController < ApplicationController
     @rooms = @estate.rooms.where(status: 'published')
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    @comments = Comment.where(estate_id: @estate.id)
     render :show_detail, locals: { estate: @estate}
   end
 
