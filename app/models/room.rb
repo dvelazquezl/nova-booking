@@ -17,6 +17,7 @@ class Room < ApplicationRecord
         "rooms.id in (select distinct ro.id
           from public.rooms as ro
           where ro.estate_id = ?
+          and ro.status = 'published'
           and ? <= ro.price
           and ? >= ro.price
           and ro.id not in
