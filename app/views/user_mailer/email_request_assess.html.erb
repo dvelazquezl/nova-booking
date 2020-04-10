@@ -1,0 +1,8 @@
+Como te has quedado en
+<br><h4><%=@estates.name%></h4>
+Estancia de <%=@diff%> noche<%=@plural_arg%>
+<br><%=@booking.date_start%>, <%=@booking.date_end%>
+<br>
+¿Cómo estuvo tu estancia en <%=@estates.name%>?
+
+dejanos tu opinión en el siguiente enlace <%=link_to "booking", estate_path +"/"+ @estate.id %>
