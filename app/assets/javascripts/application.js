@@ -14,7 +14,6 @@
 ////= require jquery3
 ////= require bootstrap
 //= require turbolinks
-
 //= require filterrific/filterrific-jquery
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core

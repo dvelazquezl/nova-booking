@@ -77,6 +77,8 @@ gem 'devise'
 gem 'filterrific'
 gem 'javascript', '~> 0.1.0'
 gem 'listen'
+gem 'cloudinary'
+
 
 gem "brakeman"
 gem "rails_best_practices"
