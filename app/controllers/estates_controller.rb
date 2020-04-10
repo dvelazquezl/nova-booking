@@ -66,6 +66,7 @@ class EstatesController < ApplicationController
     end
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    @comments = Comment.where(estate_id: @estate.id)
 
     respond_to do |format|
       format.html

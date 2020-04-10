@@ -35,42 +35,26 @@
   <div class="card-header"><h4>&emsp; Comentarios:</h4></div>
 
   <div class="card-body scroll_comment">
+    <% @comments.each do |c| %>
       <div class="media">
         <div class="media-body">
           <div class="row">
-            <div class="col"><b class="text-primary">Pamela Tamay</b></div>
+            <div class="col"><b class="text-primary"><%= c.client_name %></b></div>
             <div class="col-3">
-              <div class="text-right badge badge-pill badge-danger"> 5,0 </div>
+              <%if c.rating < 5 %>
+                <div class="text-right badge badge-pill badge-danger"> <%= c.rating %> </div>
+              <%elsif c.rating > 4 && c.rating < 8 %>
+                <div class="text-right badge badge-pill badge-warning"> <%= c.rating %> </div>
+              <%else %>
+                <div class="text-right badge badge-pill badge-success"> <%= c.rating %> </div>
+              <%end %>
             </div>
           </div>
-          <p>Este hotel no tenia los servicio necesarios, le faltaba .....</p>
+          <p><%= c.description %></p>
         </div>
       </div>
       <hr>
-      <div class="media">
-        <div class="media-body">
-          <div class="row">
-            <div class="col"><b class="text-primary">Junior Rojas</b></div>
-            <div class="col-3">
-              <div class="text-right badge badge-pill badge-success"> 9,5 </div>
-            </div>
-          </div>
-          <p>Me parecio que tenia un servicio muy atento, además de cumplir con todo lo que dice en la pagina, lo recomiendo.</p>
-        </div>
-      </div>
-      <hr>
-      <div class="media">
-        <div class="media-body">
-          <div class="row">
-            <div class="col"><b class="text-primary">Federico Velazquez</b></div>
-            <div class="col-3">
-              <div class="text-right badge badge-pill badge-warning"> 7,6 </div>
-            </div>
-          </div>
-          <p>Me gusto mucho el hotel y creo que el servicio es adecuado pero tuve un inconveniente al llegar y resgistrarme ya que no figuraba correctamente.</p>
-        </div>
-      </div>
-      <hr>
+    <% end %>
   </div>
 </div>
 <script>
