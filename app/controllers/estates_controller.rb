@@ -157,6 +157,15 @@ class EstatesController < ApplicationController
     render :show_detail, locals: { estate: @estate}
   end
 
+  # GET /estates/1/show_visited
+  def show_visited
+    @estate = Estate.find(params[:id])
+    @rooms = @estate.rooms.where(status: 'published')
+    @facilities = @estate.facilities_estates
+    @images = @estate.images
+    render :show_detail, locals: { estate: @estate}
+  end
+
   def room
     @room = Room.find(params[:id])
     respond_to do |format|

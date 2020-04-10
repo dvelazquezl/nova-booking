@@ -13,7 +13,7 @@
                   <div class="">
                     <h4 class="m-0" style="font-size:25px"><%= estate.name %></h4>
                     <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
-                    <p><%= estate.address %></p>
+                    <p><%= estate.description %></p>
                   </div>
                   <div class="ml-auto">
                     <span>5.0</span>
@@ -23,7 +23,7 @@
               </div>
               <div class="media-body d-flex">
                 <div class="btn-group ml-auto" role="group">
-                  <%= link_to show_detail_estate_path(estate.id) do %>
+                  <%= link_to show_visited_estate_path(estate.id) do %>
                     <button class="btn btn-sm btn-primary">Detalles</button>
                   <% end %>
                 </div>

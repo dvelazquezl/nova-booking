@@ -16,6 +16,7 @@
           can :create, Estate
           can :room, Estate
           can :estates_visited, Estate
+          can :show_visited, Estate
           #Solo un user con perfil de owner
           if owner
             can :update, Estate, owner_id: owner.id
