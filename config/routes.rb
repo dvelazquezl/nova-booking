@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get 'estates_visited', :to => 'estates#estates_visited', :as => 'visited'
       get :new_room
       post :unsuscribe_estate
+      post :save_comment
     end
   end
 
