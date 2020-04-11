@@ -12,6 +12,6 @@ set :output, {:error => "log/cron_error.log", :standard => "log/cron_log.log"}
 #rake "email_booking:request_assess"
 #end
 
-every 5.minutes do
+every 1.minutes do
  rake "email_booking:request_assess"
 end
