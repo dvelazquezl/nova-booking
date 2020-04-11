@@ -46,6 +46,19 @@
         </div>
       </div>
       <!--FIN-->
+      <hr class="text-primary">
+      <!--FILTRO POR PUNTUACION-->
+      <h5>Puntuación </h5>
+      <div class="form-row">
+        <div class="col-6">
+          <%= f.number_field :score_min, id:"score_min", class: "filterrific-periodically-observed form-control number", type: "text", placeholder:"Mínimo" , min: "1", max: "10" %>
+        </div>
+        <div class="col-6">
+          <%= f.number_field :score_max, id:"score_max", class: "form-control number", type: "text", placeholder:"Máximo.", min: "1", max: "10", step: "1" %>
+        </div>
+      </div>
+
+      <!--FIN-->
       <hr>
     </div>
   <%end %>
