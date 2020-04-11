@@ -1,6 +1,8 @@
 class EstatesController < ApplicationController
   before_action :set_estate, only: %i[show edit update destroy]
   before_action :authenticate_user! , except: [:show, :room]
+
+  include EstatesHelper
   load_and_authorize_resource
   # GET /estates
   # GET /estates.json
@@ -12,7 +14,6 @@ class EstatesController < ApplicationController
         params[:filterrific]
       )) || return
       @estates = @filterrific.find.page(params[:page])
-
       respond_to do |format|
         format.html
         format.js
@@ -22,6 +23,21 @@ class EstatesController < ApplicationController
     end
 
     render :index, locals: { estates: @estates }
+  end
+
+  def estates_visited
+    email = current_user.email
+    (@filterrific = initialize_filterrific(
+        Estate.estates_by_client(email),
+        params[:filterrific]
+    )) || return
+    @estates = @filterrific.find.page(params[:page])
+    render :estates_visited, locals: { estates: @estates }
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /estates/1
@@ -50,12 +66,13 @@ class EstatesController < ApplicationController
     end
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    @comments = Comment.where(estate_id: @estate.id)
 
     respond_to do |format|
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to, comments: @comments}
   end
 
   # GET /estates/new
@@ -79,7 +96,16 @@ class EstatesController < ApplicationController
   end
 
   # GET /estates/1/edit
+  # room_facilities: @room_facilities, estate_facilities: estate_facilities
   def edit
+    owner = Owner.find_by_user_id(current_user.id)
+    if owner
+      @rooms = Room.where(:estate_id => params[:id])
+      @room_facilities = Facility.where(facility_type: :room)
+      @estate_facilities = Facility.where(facility_type: :estate)
+    else
+      redirect_to estates_path
+    end
   end
 
   # POST /estates
@@ -104,7 +130,7 @@ class EstatesController < ApplicationController
   def update
     respond_to do |format|
       if @estate.update(estate_params)
-        format.html { redirect_to @estate, notice: 'Propiedad actualizada exitosamente.' }
+        format.html { redirect_to show_detail_estate_path, notice: 'Propiedad actualizada exitosamente.' }
         format.json { render :show, status: :ok, location: @estate }
       else
         format.html { render :edit }
@@ -127,9 +153,16 @@ class EstatesController < ApplicationController
   def show_detail
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    render :show_detail, locals: { estate: @estate}
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
+  end
+
+  # GET /estates/1/show_visited
+  def show_visited
+    @estate = Estate.find(params[:id])
+    @rooms = @estate.rooms.where(status: 'published')
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
   end
 
   def room
@@ -139,37 +172,42 @@ class EstatesController < ApplicationController
     end
   end
 
-  # dar de alta una propiedad
-  def suscribe
-    @estate = Estate.find(params[:id])
-    @estate.update_attribute(:status, true)
-    respond_to do |format|
-      format.html { redirect_to estates_url, notice: 'Propiedad publicada exitosamente.' }
-      format.json { head :no_content }
-    end
-  end
-
   # dar de baja una propiedad
-  def unsuscribe
-    estate = Estate.find(params[:estate])
+  def unsuscribe_estate
+    estate = Estate.find(params[:estate_id])
     rooms = estate.rooms
-
-    rooms.each do |r|
-      if r.status == 'published'
-        r.update_attribute(:status, 'not_published')
-      end
-    end
-    estate.update_attribute(:status, false)
 
     # filtra de la lista de habitaciones todas las que no estan reservadas
     booked_rooms = rooms.select do |room|
       BookingDetail.find_by_room_id(room.id)
     end
 
+    # comprobar si alguna de las habitaciones reservadas esta ocupada
+    free = true
+    booked_rooms.each do |br|
+      if Time.now.between?(date_start(br), date_end(br))
+        free = false
+      end
+    end
+
     respond_to do |format|
-      format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
-      format.json { head :no_content }
-      UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
+      if free
+        # actualizar estado de las habitaciones y de la propiedad
+        rooms.each do |r|
+          if r.status == 'published'
+            r.update_attribute(:status, 'not_published')
+          end
+        end
+        #actualizar el estado de la propiedad
+        estate.update_attribute(:status, false)
+
+        format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
+        format.json { head :no_content }
+        UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
+      else
+        format.html { redirect_to estates_path, alert: 'No se puede dar de baja esta propiedad. Una o mas habitaciones estan ocupadas.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -182,9 +220,7 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, facility_ids: [], images:[]])
-
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description,facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images:[]])
   end
 
   def current_ability
