@@ -4,7 +4,7 @@ namespace :email_booking do
     bookings = Booking.request_assess
     bookings.each do |booking|
       UserMailer.email_request_assess(booking).deliver_now
-      booking.notified = TRUE
+      booking.notified = true
       booking.save
     end
   end

@@ -1,6 +1,6 @@
 class EstatesController < ApplicationController
   before_action :set_estate, only: %i[show edit update destroy]
-  before_action :authenticate_user! , except: [:show, :room]
+  before_action :authenticate_user! , except: [:show, :room, :show_visited]
 
   include EstatesHelper
   load_and_authorize_resource
@@ -31,7 +31,7 @@ class EstatesController < ApplicationController
         Estate.estates_by_client(email),
         params[:filterrific]
     )) || return
-    @estates = @filterrific.find.page(params[:page])
+    @estates = @filterrific.find.page(params[:page]).with_deleted
     render :estates_visited, locals: { estates: @estates }
 
     respond_to do |format|
@@ -72,7 +72,7 @@ class EstatesController < ApplicationController
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to, comments: @comments}
   end
 
   # GET /estates/new
@@ -153,20 +153,16 @@ class EstatesController < ApplicationController
   def show_detail
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    @comments = Comment.where(estate_id: @estate.id)
-    render :show_detail, locals: { estate: @estate}
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
   end
 
   # GET /estates/1/show_visited
   def show_visited
-    @estate = Estate.find(params[:id])
-    @rooms = @estate.rooms.where(status: 'published')
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    @comments = Comment.where(estate_id: @estate.id)
-    render :show_detail, locals: { estate: @estate}
+    @estate = Estate.with_deleted.find(params[:id])
+    @rooms = @estate.rooms.with_deleted.where(status: 'published')
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
   end
 
   def room
