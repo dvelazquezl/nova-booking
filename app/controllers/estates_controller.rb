@@ -176,16 +176,6 @@ class EstatesController < ApplicationController
     end
   end
 
-  def save_comment
-    comments = Comment.new
-    comments.description = params[:description]
-    comments.client_email = params[:client_email]
-    comments.client_name = params[:client_name]
-    comments.rating = params[:rating]
-    comments.estate_id = params[:estate_id]
-    comments.save!
-  end
-
   # dar de baja una propiedad
   def unsuscribe_estate
     estate = Estate.find(params[:estate_id])
