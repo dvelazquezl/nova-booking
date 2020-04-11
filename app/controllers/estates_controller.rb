@@ -1,9 +1,9 @@
 class EstatesController < ApplicationController
+  authorize_resource
   before_action :set_estate, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: [:show, :room, :show_visited]
 
   include EstatesHelper
-  load_and_authorize_resource
   # GET /estates
   # GET /estates.json
   def index
@@ -170,7 +170,7 @@ class EstatesController < ApplicationController
   end
 
   def room
-    @room = Room.find(params[:id])
+    @room = Room.with_deleted.find(params[:id])
     respond_to do |format|
       format.js {}
     end
