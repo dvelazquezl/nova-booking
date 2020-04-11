@@ -1,6 +1,6 @@
 class EstatesController < ApplicationController
   before_action :set_estate, only: %i[show edit update destroy]
-  before_action :authenticate_user! , except: [:show, :room]
+  before_action :authenticate_user! , except: [:show, :room, :show_visited]
 
   include EstatesHelper
   load_and_authorize_resource
@@ -14,7 +14,6 @@ class EstatesController < ApplicationController
         params[:filterrific]
       )) || return
       @estates = @filterrific.find.page(params[:page])
-
       respond_to do |format|
         format.html
         format.js
@@ -24,6 +23,21 @@ class EstatesController < ApplicationController
     end
 
     render :index, locals: { estates: @estates }
+  end
+
+  def estates_visited
+    email = current_user.email
+    (@filterrific = initialize_filterrific(
+        Estate.estates_by_client(email),
+        params[:filterrific]
+    )) || return
+    @estates = @filterrific.find.page(params[:page]).with_deleted
+    render :estates_visited, locals: { estates: @estates }
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /estates/1
@@ -52,12 +66,13 @@ class EstatesController < ApplicationController
     end
     @facilities = @estate.facilities_estates
     @images = @estate.images
+    @comments = Comment.where(estate_id: @estate.id)
 
     respond_to do |format|
       format.html
       format.js
     end
-    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to}
+    render :show, locals: {filterrific: @filterrific, city: params[:city], from: date_from, to: date_to, comments: @comments}
   end
 
   # GET /estates/new
@@ -138,9 +153,16 @@ class EstatesController < ApplicationController
   def show_detail
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
-    render :show_detail, locals: { estate: @estate}
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
+  end
+
+  # GET /estates/1/show_visited
+  def show_visited
+    @estate = Estate.with_deleted.find(params[:id])
+    @rooms = @estate.rooms.with_deleted.where(status: 'published')
+    comments = @estate.commentsEstate
+    render :show_detail, locals: { estate: @estate, comments: comments}
   end
 
   def room
