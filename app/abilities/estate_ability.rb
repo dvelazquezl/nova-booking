@@ -29,6 +29,7 @@
         can :show, Estate
         can :create, Estate
         can :room, Estate
+        can :show_visited, Estate
       end
     end
  end
