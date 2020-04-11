@@ -117,7 +117,7 @@ class Estate < ApplicationRecord
 
   # filters on 'score' attribute
   scope :score_min, ->(score_min) {
-    where("(? <= score)))", score_min)
+    where("? <= score", score_min)
   }
 
   scope :score_max, ->(score_max) {
