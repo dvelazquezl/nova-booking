@@ -162,8 +162,8 @@ class EstatesController < ApplicationController
   # GET /estates/1/show_visited
   def show_visited
     email = get_user_email(params)
-    can_comment = User.can_comment?(email, params[:id])
     @estate = Estate.with_deleted.find(params[:id])
+    can_comment = @estate.deleted? ? false : User.can_comment?(email, params[:id])
     @rooms = @estate.rooms.with_deleted.where(status: 'published')
     comments = @estate.commentsEstate
     render :show_detail, locals: {estate: @estate, comments: comments, can_comment: can_comment}
