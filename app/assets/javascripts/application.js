@@ -19,7 +19,7 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require bootstrap-slider
-
+//= require activestorage
 //-- Selectize
 //= require selectize
 
