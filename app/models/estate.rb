@@ -144,5 +144,17 @@ class Estate < ApplicationRecord
     Comment.where(estate_id: self.id)
   end
 
+  def update_score(rating)
+    cant_comments = self.comments_quant
+    comments_rating_total = self.comments_rating_total + rating
+    new_score = comments_rating_total / cant_comments
+    self.comments_rating_total = comments_rating_total
+    self.score = new_score
+  end
+
+  def inc_comments
+    self.comments_quant += 1
+  end
+
   resourcify
 end
