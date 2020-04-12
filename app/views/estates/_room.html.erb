@@ -5,17 +5,10 @@
   <button style="float: right;" type="button" title="Minimizar" class="hide_fields btn btn-link text-primary">
     <i class="fas fa-chevron-circle-up"></i>
   </button>
-  <%= f.hidden_field :_destroy %>
   <%= link_to "Eliminar" do %>
-    <% if f.object.persisted? %>
-      <div style="float: right;" class=" remove_fields btn btn-link text-danger" title="Eliminar">
-        <i class="fas fa-trash-alt"></i>
-      </div>
-    <% else %>
-      <div style="float: right;" class=" remove_fields2 btn btn-link text-danger" title="Eliminar">
-        <i class="fas fa-trash-alt"></i>
-      </div>
-    <% end %>
+    <div style="float: right;" class=" remove_fields btn btn-link text-danger" title="Eliminar">
+      <i class="fas fa-trash-alt"></i>
+    </div>
   <% end %>
   <br>
   <br>
@@ -43,7 +36,7 @@
               <div class="form-group">
                 <br>
                 <br>
-                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: (f.object.status == Room.status.published)}, Room.status.published, Room.status.not_published %><span class="fa fa-bullhorn "></span> Publicado</label>
+                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: true}, "published", "not_published" %><span class="fa fa-bullhorn "></span> Publicado</label>
               </div>
               </div>
             </div>
@@ -52,16 +45,14 @@
             <div class="card-body col-4">
               <div class="form-group">
                 <label title="Numero de habitaciones (de este tipo)">Cantidad *</label>
-                <%= f.number_field :quantity, class: "form-control validame", required: "required", maxlength:"3", oninvalid:"this.setCustomValidity(message)",
-                                   onchange:"this.setCustomValidity('')"%>
+                <%= f.text_field :quantity, class: "form-control", required: "required", maxlength:"3", type: "number"%>
               </div>
             </div>
 
             <div class="card-body col-4">
               <div class="form-group">
                 <label title="¿Cuántos invitados pueden quedarse en esta habitación?">Capacidad *</label>
-                <%= f.number_field :capacity, class: "form-control validame", required: "required", maxlength:"3", oninvalid:"this.setCustomValidity(message)",
-                                   onchange:"this.setCustomValidity('')"%>
+                <%= f.text_field :capacity, class: "form-control", required: "required", maxlength:"3", type: "number"%>
               </div>
             </div>
 

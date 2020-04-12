@@ -29,7 +29,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
             </div>
-            <%= f.email_field :email, class: "form-control", readonly: true %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Correo", class: "form-control" %>
           </div> <!-- input-group.// -->
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div>Esperando confirmacion de cuenta para: <%= resource.unconfirmed_email %></div>

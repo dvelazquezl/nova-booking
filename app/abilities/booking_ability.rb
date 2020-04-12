@@ -16,7 +16,6 @@ class BookingAbility
       #Visitantes
       can :create, Booking
       can :show, Booking
-      can :confirmation, Booking
     end
   end
 end

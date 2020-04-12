@@ -17,9 +17,9 @@
             <%= link_to edit_facility_path(facility) do %>
               <button class="btn btn-link text-primary" title="Editar"><i class="fas fa-edit"></i></button>
             <% end %>
-            <%#= link_to facility, method: :delete, data: {confirm: 'Estás seguro?'} do %>
-              <!--button class="btn btn-link text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button-->
-            <%# end %>
+            <%= link_to facility, method: :delete, data: {confirm: 'Estás seguro?'} do %>
+              <button class="btn btn-link text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+            <% end %>
           </div>
         </td>
       </tr>

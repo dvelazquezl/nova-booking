@@ -28,10 +28,4 @@ class User < ApplicationRecord
     login = conditions.delete(:login)
     where(conditions).where(["username = :value OR lower(email) = lower(:value)", { :value => login }]).first
   end
-
-  def self.can_comment?(user_email, estate_id)
-    cond_1 = Booking.exists?(client_email: user_email,  notified: true)
-    cond_2 = !Comment.exists?(client_email: user_email, estate_id: estate_id)
-    cond_1 && cond_2
-  end
 end
