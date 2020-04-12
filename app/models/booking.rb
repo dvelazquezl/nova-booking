@@ -33,4 +33,8 @@ class Booking < ApplicationRecord
     def self.diff(booking)
         return diff = (booking.date_end.to_date -  booking.date_start.to_date).to_i
     end
+
+    scope :finished, -> {
+        where("date_end <= ?  AND booking_state = true", DateTime.now.to_date)
+    }
 end
