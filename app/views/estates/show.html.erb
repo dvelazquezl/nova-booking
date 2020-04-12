@@ -4,6 +4,8 @@
             partial: "estates/results_filter",
             locals: {filterrific: filterrific, comments: comments, can_comment: can_comment}
         ) %>
+    <!--COMENTARIOS-->
+    <%= render partial: "estates/comments", :locals => { comments: comments} %>
   </div>
   <!-- TITLES -->
   <div class="col-10">
@@ -27,6 +29,7 @@
                 <span>
                   <%= @estate.address %>
                 </span>
+                <input id="estate-attr" type="hidden" value=<%= @estate.id %>>
               </div>
             </div>
           </div>
