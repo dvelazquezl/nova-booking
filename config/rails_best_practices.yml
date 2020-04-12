@@ -29,8 +29,7 @@ RemoveUnusedMethodsInControllersCheck: { except_methods:
      CitiesController#current_ability,
      EstatesController#current_ability,
      OwnersController#current_ability,
-     BookingsController#current_ability,
-     ErrorsController#not_found_error
+     BookingsController#current_ability
     ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [], ignored_files: 'user.rb' }

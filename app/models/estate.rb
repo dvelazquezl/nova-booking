@@ -3,28 +3,16 @@ class Estate < ApplicationRecord
   acts_as_paranoid
   belongs_to :city
   has_many_attached :images
-  has_many :comments
   has_many :facilities_estates
   has_many :facilities, through: :facilities_estates
   has_many :rooms, dependent: :destroy
-  accepts_nested_attributes_for :rooms, allow_destroy: true,
-                                reject_if: :all_blank
+  accepts_nested_attributes_for :rooms, allow_destroy: true
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
   # default for will_paginate
   self.per_page = 5
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
-  scope :estates_by_client, -> (client_email) {
-    where("estates.id in (
-            select distinct r.estate_id from rooms as r where r.id in(
-              select distinct bd.room_id
-              from bookings as b
-              inner join booking_details as bd on b.id = bd.booking_id
-              where b.client_email = ?
-            )
-           )", client_email)
-  }
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
@@ -138,10 +126,6 @@ class Estate < ApplicationRecord
 
   def isPublished
     self.status = self.rooms.any? {|room| room.status == "published"}
-  end
-
-  def commentsEstate
-    Comment.where(estate_id: self.id)
   end
 
   resourcify

@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
-  authorize_resource
-  before_action :authenticate_user! , except: [:new, :create, :show, :confirmation]
+  before_action :authenticate_user! , except: [:new, :create, :show]
   before_action :set_booking, only: [:show, :destroy]
+  load_and_authorize_resource
 
   def index
     @bookings = Booking.all
@@ -10,8 +10,7 @@ class BookingsController < ApplicationController
   def show
     @booking = Booking.find(params[:id])
     if !@booking.booking_state.blank?
-      room = Room.with_deleted.find(@booking.booking_details[0].room_id)
-      @estate = Estate.with_deleted.find(room.estate_id)
+      @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
       @diff = Booking.diff(@booking)
       @plural_arg = (@diff > 1)? "s":" "
     else
