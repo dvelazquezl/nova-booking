@@ -56,10 +56,6 @@ $(document).on('change', '#pictureInput', function (event) {
         };
         reader.readAsDataURL(file);
     });
-
-    if (Array.from(files).length > 0) {
-        $('#target').empty();
-    }
 });
 let canvas,
     $result;
