@@ -1,7 +1,7 @@
 <div class="row results-filter-section">
   <!--COMENTARIOS-->
   <div class="col-2">
-    <%= render partial: "estates/comments", :locals => { comments: comments} %>
+    <%= render partial: "estates/comments", :locals => { comments: comments, can_comment: can_comment} %>
   </div>
   <!-- TITLES -->
   <div class="col-10">
@@ -21,6 +21,7 @@
                 </em>
                 <span>
                   <%= @estate.address %>
+                  <input id="estate-attr" type="hidden" value=<%= @estate.id %>>
                 </span>
               </div>
             </div>
@@ -64,7 +65,7 @@
         <div class="content-heading">Habitaciones</div>
         <%= render 'room_detail_list', rooms: @rooms, estate: @estate %>
       </div>
-      <% if is_owner? && (estate.owner_id == current_owner.id) %>
+      <% if user_signed_in? && is_owner? && (estate.owner_id == current_owner.id) %>
         <%= link_to 'Volver Atras', estates_path, class: "btn btn-secondary" %>
       <%else %>
         <%= link_to 'Volver Atras', visited_estates_path, class: "btn btn-secondary" %>
