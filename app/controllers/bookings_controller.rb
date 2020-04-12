@@ -27,6 +27,7 @@ class BookingsController < ApplicationController
 
   def create
     @booking = Booking.new(booking_params)
+    @booking.notified = false
     respond_to do |format|
       if @booking.save
         @estate = Booking.estate(@booking)
