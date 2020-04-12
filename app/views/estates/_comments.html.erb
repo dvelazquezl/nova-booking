@@ -8,13 +8,7 @@
           <div class="row">
             <div class="col"><b class="text-primary"><%= c.client_name %></b></div>
             <div class="col-3">
-              <% if c.isRatingDanger %>
-                <div class="text-right badge badge-pill badge-danger"> <%= c.rating %> </div>
-              <% elsif c.isRatingWarning %>
-                <div class="text-right badge badge-pill badge-warning"> <%= c.rating %> </div>
-              <% else %>
-                <div class="text-right badge badge-pill badge-success"> <%= c.rating %> </div>
-              <% end %>
+              <div class="text-right badge badge-pill badge-<%= get_score_color(c.rating.to_i) %>"> <%= c.rating %> </div>
             </div>
           </div>
           <p><%= c.description %></p>
@@ -23,52 +17,43 @@
       <hr>
     <% end %>
   </div>
-  <div class="card-footer align-items-center">
-    <button type="button" id="btnComment" class="btn btn-primary" data-toggle="modal" data-target="#save-comment">Comentar</button>
-  </div>
-
-  <div class="modal fade" id="save-comment" tabindex="-1" role="dialog" aria-labelledby="save-commentLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+  <% if can_comment %>
+    <div class="card-footer align-items-center">
+      <button type="button" id="btnComment" class="btn btn-block btn-primary" data-toggle="modal" data-target="#save-comment">
+        <i class="fa fa-comment"></i>&nbsp;&nbsp;Comentar
+      </button>
+    </div>
+  <% end %>
+</div>
+<div class="modal fade" id="save-comment" tabindex="-1" role="dialog" aria-labelledby="save-commentLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <%= form_tag(save_comments_path, remote: true, method: :post) do %>
         <div class="modal-header">
-          <h4 class="modal-title">Agrega un comentario</h4>
+          <h4 class="modal-title"><%= name %>, puntúa y agrega un comentario al alojamiento</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <%= form_tag(save_comments_path, remote: true, method: :post) do %>
-            <div class="form-group">
-              <label class="col-form-label">Nombre:</label>
-              <% if user_signed_in? %>
-                <input name="client_name" type="text" class="form-control" autocomplete ="off" value=<%= current_user.name %> readonly>
-              <% else %>
-                <input name="client_name" type="text" class="form-control" autocomplete ="off">
-              <% end %>
 
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Email:</label>
-              <% if user_signed_in? %>
-                <input name="client_email" type="text" class="form-control" autocomplete ="off" value=<%= current_user.email %> readonly>
-              <% else %>
-                <input name="client_email" type="text" class="form-control" autocomplete ="off">
-              <% end %>
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Puntuación:</label>
-              <input name="rating" type="text" class="form-control" type="number" autocomplete ="off">
-            </div>
-            <input id="estate_id" name="estate_id" class="form-control" type="hidden" autocomplete ="off">
-            <div class="form-group">
-              <label class="col-form-label">Comentario:</label>
-              <textarea name="description" class="form-control" id="message-text" autocomplete ="off"></textarea>
-            </div>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <%= submit_tag "Guardar", id: 'save-comments', name: 'nil', class: "btn btn-success" %>
-          <% end %>
+          <input name="client_name" type="hidden" class="form-control" autocomplete="off" required value=<%= name %>>
+          <input name="client_email" type="hidden" class="form-control" autocomplete="off" required value=<%= email %>>
+          <input id="rating" name="rating" type="hidden" class="form-control" autocomplete="off" required>
+          <input id="estate_id" name="estate_id" class="form-control" type="hidden" autocomplete="off">
+
+          <div class="form-group">
+            <label class="col-form-label">Puntuación:&nbsp;</label>
+            <span id="rating-icon"></span>
+            <div id="lbl-rating" class="text-right badge badge-pill badge-info"></div>
+            <div id="lbl-rating-des" class="text-right badge badge-pill"></div>
+            <div><label class="col-form-label">Comentario:</label></div>
+            <textarea name="description" class="form-control" id="message-text" autocomplete="off" required></textarea>
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <%= submit_tag "Guardar", id: 'save-comments', name: 'nil', class: "btn btn-primary" %>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
@@ -77,6 +62,138 @@
         $("#btnComment").click(function () {
             $('#estate_id').val($('#estate-attr').val());
         });
+    });
+    var slice = [].slice;
+
+    (function ($, window) {
+        var Starrr;
+        window.Starrr = Starrr = (function () {
+            Starrr.prototype.defaults = {
+                rating: 10,
+                max: 10,
+                readOnly: false,
+                emptyClass: 'far fa-square',
+                fullClass: 'fa fa-square',
+                change: function (e, value) {
+                }
+            };
+
+            function Starrr($el, options) {
+                this.options = $.extend({}, this.defaults, options);
+                this.$el = $el;
+                this.createStars();
+                this.syncRating();
+                if (this.options.readOnly) {
+                    return;
+                }
+                this.$el.on('mouseover.starrr', 'a', (function (_this) {
+                    return function (e) {
+                        return _this.syncRating(_this.getStars().index(e.currentTarget) + 1);
+                    };
+                })(this));
+                this.$el.on('mouseout.starrr', (function (_this) {
+                    return function () {
+                        return _this.syncRating();
+                    };
+                })(this));
+                this.$el.on('click.starrr', 'a', (function (_this) {
+                    return function (e) {
+                        e.preventDefault();
+                        return _this.setRating(_this.getStars().index(e.currentTarget) + 1);
+                    };
+                })(this));
+                this.$el.on('starrr:change', this.options.change);
+            }
+
+            Starrr.prototype.getStars = function () {
+                return this.$el.find('a');
+            };
+
+            Starrr.prototype.createStars = function () {
+                var j, ref, results;
+                results = [];
+                for (j = 1, ref = this.options.max; 1 <= ref ? j <= ref : j >= ref; 1 <= ref ? j++ : j--) {
+                    results.push(this.$el.append("<a href='#' />"));
+                }
+                return results;
+            };
+
+            Starrr.prototype.setRating = function (rating) {
+                if (this.options.rating === rating) {
+                    rating = void 0;
+                }
+                this.options.rating = rating;
+                this.syncRating();
+                return this.$el.trigger('starrr:change', rating);
+            };
+
+            Starrr.prototype.getRating = function () {
+                return this.options.rating;
+            };
+
+            Starrr.prototype.syncRating = function (rating) {
+                var $stars, i, j, ref, results;
+                rating || (rating = this.options.rating);
+                $stars = this.getStars();
+                results = [];
+                for (i = j = 1, ref = this.options.max; 1 <= ref ? j <= ref : j >= ref; i = 1 <= ref ? ++j : --j) {
+                    results.push($stars.eq(i - 1).removeClass(rating >= i ? this.options.emptyClass : this.options.fullClass).addClass(rating >= i ? this.options.fullClass : this.options.emptyClass));
+                }
+                return results;
+            };
+
+            return Starrr;
+
+        })();
+        return $.fn.extend({
+            starrr: function () {
+                var args, option;
+                option = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+                return this.each(function () {
+                    var data;
+                    data = $(this).data('starrr');
+                    if (!data) {
+                        $(this).data('starrr', (data = new Starrr($(this), option)));
+                    }
+                    if (typeof option === 'string') {
+                        return data[option].apply(data, args);
+                    }
+                });
+            }
+        });
+    })(window.jQuery, window);
+    $('#rating-icon').starrr({
+        rating: 0,
+        change: function (e, valor) {
+            $('#rating').val(valor);
+            let arr = ["", "Pésimo", "Malo", "Mediocre", "Regular", "Aceptable", "Cómodo", "Bueno", "Muy bueno", "Excelente", "Excepcional"]
+            if (valor > 0 && valor < 4) {
+                $('#lbl-rating-des').removeClass("badge-warning");
+                $('#lbl-rating-des').addClass("badge-danger");
+                $('#lbl-rating-des').removeClass("badge-success");
+                $('#lbl-rating-des').text(arr[valor]);
+                $('#lbl-rating').text(valor);
+            } else if (valor > 3 && valor < 9) {
+                $('#lbl-rating-des').addClass("badge-warning");
+                $('#lbl-rating-des').removeClass("badge-danger");
+                $('#lbl-rating-des').removeClass("badge-success");
+                $('#lbl-rating-des').text(arr[valor]);
+                $('#lbl-rating').text(valor);
+            } else if (valor > 8) {
+                $('#lbl-rating-des').removeClass("badge-warning");
+                $('#lbl-rating-des').removeClass("badge-danger");
+                $('#lbl-rating-des').addClass("badge-success");
+                $('#lbl-rating-des').text(arr[valor]);
+                $('#lbl-rating').text(valor);
+            } else {
+                $('#lbl-rating-des').removeClass("badge-warning");
+                $('#lbl-rating-des').removeClass("badge-danger");
+                $('#lbl-rating-des').removeClass("badge-success");
+                $('#lbl-rating-des').text("");
+                $('#lbl-rating').text("");
+            }
+        }
+
     });
 
 </script>
