@@ -41,6 +41,8 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
+                score_min
+                score_max
                 with_estate_type
               ]
 
@@ -123,6 +125,14 @@ class Estate < ApplicationRecord
       from rooms r
       where
         ((? >= r.price)", price_max)
+  }
+  # filters on 'score' attribute
+  scope :score_min, ->(score_min) {
+    where("? <= score", score_min)
+  }
+
+  scope :score_max, ->(score_max) {
+    where("? >= score", score_max)
   }
 
   def isPublished
