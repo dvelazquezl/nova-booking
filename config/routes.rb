@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'comments/save'
   # defaults to dashboard
   root :to => redirect('/welcome/index')
 
@@ -34,6 +35,11 @@ Rails.application.routes.draw do
   resources :bookings, except: [:edit, :update ,:index, :delete] do
     collection do
       get :confirmation
+    end
+  end
+  resources :comments, only: [] do
+    collection do
+      post :save
     end
   end
 
