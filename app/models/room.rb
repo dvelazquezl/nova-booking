@@ -55,10 +55,10 @@ class Room < ApplicationRecord
   }
 
   def self.room_type_for(id)
-    find(id).room_type.text
+    self.with_deleted.find(id).room_type.text
   end
   def self.room_capacity_for(id)
-    find(id).capacity
+    self.with_deleted.find(id).capacity
   end
 
   scope :booking_details, -> { BookingDetail.joins(:room) }
