@@ -50,15 +50,15 @@
       <!--FIN-->
       <hr>
       <!--FILTRO POR PUNTUACION-->
-      <h5>Puntuación (1 - 10)</h5>
-      <div class="form-row">
-        <div class="col-6">
-          <%= f.number_field :score_min, id:"score_min", class: "filterrific-periodically-observed form-control number validame", type: "text", placeholder:"Mínimo" , min: "1", max: "10", value: "1" %>
-        </div>
-        <div class="col-6">
-          <%= f.number_field :score_max, id:"score_max", class: "filterrific-periodically-observed form-control number validame", type: "text", placeholder:"Máximo.", min: "1", max: "10", step: "1" , value: "10"%>
-        </div>
-      </div>
+          <%= f.hidden_field :score_min, id:"score_min" %>
+          <%= f.hidden_field :score_max, id:"score_max"%>
+      <p>
+        <label for="amount">Rango de Puntuación:</label>
+        <input type="text" id="amount" readonly >
+        <span class="fas fa-info-circle score_inf " data-toggle="tooltip" data-placement="right" title="0 sin puntuación"></span>
+      </p>
+
+      <div id="slider-range" class= "filterrific-periodically-observed"></div>
       <!--FIN-->
       <hr>
     </div>
@@ -72,6 +72,20 @@
         $("#price_min").val('');
     }
   $(function() {
+      $( "#slider-range" ).slider({
+          range: true,
+          min: 0,
+          max: 10,
+
+      });
+      $( "#slider-range" ).change(function () {
+          $( "#amount" ).val( "(" + $( "#slider-range" ).val()[0]+
+              " - " + $( "#slider-range" ).val()[1]+")" );
+          $("#score_min").val($( "#slider-range" ).val()[0]);
+          $("#score_max").val($( "#slider-range" ).val()[1]);
+      })
+      $( "#amount" ).val( "(" + $( "#slider-range" ).val()[0]+
+          " - " + $( "#slider-range" ).val()[1]+")" );
     var fromD;
     var toD;
     var startDate = new Date();
@@ -122,5 +136,7 @@
               input.value = input.value.split(".").join("");
           });
       });
+
   });
+
 </script>
