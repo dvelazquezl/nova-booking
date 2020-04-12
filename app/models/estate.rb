@@ -126,7 +126,6 @@ class Estate < ApplicationRecord
       where
         ((? >= r.price)", price_max)
   }
-
   # filters on 'score' attribute
   scope :score_min, ->(score_min) {
     where("? <= score", score_min)
