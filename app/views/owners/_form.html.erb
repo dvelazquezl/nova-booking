@@ -21,7 +21,7 @@
 
             <%if owner.image.attached? %>
               <div class="py-4 text-center" id="target">
-                <%= image_tag owner.image, alt: "rss fit", height: "150", width:"150"%>
+                <%= image_tag url_for(owner.image), alt: "rss fit", height: "150", width:"150"%>
               </div>
             <%else %>
               <div id="target">
