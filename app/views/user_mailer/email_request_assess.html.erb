@@ -5,4 +5,4 @@ Estancia de <%=@diff%> noche<%=@plural_arg%>
 <br>
 ¿Cómo estuvo tu estancia en <%=@estate.name%>?
 
-dejanos tu opinión en el siguiente enlace <%=link_to "booking", root_url + "estates/" + @estate.id.to_s + "/show_visited"%>
+dejanos tu opinión en el siguiente enlace <%=link_to "booking", root_url + "estates/" + @estate.id.to_s + "/show_visited/?confirmation_token=" + @booking.confirmation_token%>
