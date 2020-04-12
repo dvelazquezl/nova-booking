@@ -1,32 +1,7 @@
 <div class="row results-filter-section">
   <!--COMENTARIOS-->
   <div class="col-2">
-    <div class="card">
-      <div class="card-header"><h4>&emsp; Comentarios:</h4></div>
-
-      <div class="card-body scroll_comment_detail">
-        <% comments.each do |c| %>
-          <div class="media">
-            <div class="media-body">
-              <div class="row">
-                <div class="col"><b class="text-primary"><%= c.client_name %></b></div>
-                <div class="col-3">
-                  <%if c.isRatingDanger %>
-                    <div class="text-right badge badge-pill badge-danger"> <%= c.rating %> </div>
-                  <%elsif c.isRatingWarning %>
-                    <div class="text-right badge badge-pill badge-warning"> <%= c.rating %> </div>
-                  <%else %>
-                    <div class="text-right badge badge-pill badge-success"> <%= c.rating %> </div>
-                  <%end %>
-                </div>
-              </div>
-              <p><%= c.description %></p>
-            </div>
-          </div>
-          <hr>
-        <% end %>
-      </div>
-    </div>
+    <%= render partial: "estates/comments", :locals => { comments: comments, can_comment: can_comment} %>
   </div>
   <!-- TITLES -->
   <div class="col-10">
@@ -46,6 +21,7 @@
                 </em>
                 <span>
                   <%= @estate.address %>
+                  <input id="estate-attr" type="hidden" value=<%= @estate.id %>>
                 </span>
               </div>
             </div>
@@ -89,7 +65,7 @@
         <div class="content-heading">Habitaciones</div>
         <%= render 'room_detail_list', rooms: @rooms, estate: @estate %>
       </div>
-      <% if is_owner? && (estate.owner_id == current_owner.id) %>
+      <% if user_signed_in? && is_owner? && (estate.owner_id == current_owner.id) %>
         <%= link_to 'Volver Atras', estates_path, class: "btn btn-secondary" %>
       <%else %>
         <%= link_to 'Volver Atras', visited_estates_path, class: "btn btn-secondary" %>

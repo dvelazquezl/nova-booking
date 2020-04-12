@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'comments/save'
   # defaults to dashboard
   root :to => redirect('/welcome/index')
 
@@ -36,6 +37,11 @@ Rails.application.routes.draw do
       get :confirmation
     end
   end
+  resources :comments, only: [] do
+    collection do
+      post :save
+    end
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -43,8 +49,8 @@ Rails.application.routes.draw do
   get '/api/i18n/:locale' => 'api#i18n'
 
   # error routes
-  get '404', to: 'application#page_not_found'
-  get '422', to: 'application#server_error'
-  get '500', to: 'application#server_error'
+  get '404', to: 'errors#page_not_found'
+  get '422', to: 'errors#server_error'
+  get '500', to: 'errors#server_error'
 
 end

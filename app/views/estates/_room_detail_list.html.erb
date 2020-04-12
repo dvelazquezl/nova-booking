@@ -12,9 +12,9 @@
               <th class="text-center">Capacidad</th>
               <th class="text-center">Precio</th>
               <th class="text-center">Cantidad</th>
-              <% if is_owner? && (estate.owner_id == current_owner.id) %>
-                <th class="text-center">Estado</th>
-              <%end %>
+                <% if user_signed_in? && is_owner? && (estate.owner_id == current_owner.id) %>
+                  <th class="text-center">Estado</th>
+                <%end %>
               <th class="text-center">Ver Más</th>
             </tr>
             </thead>
@@ -34,19 +34,18 @@
                   </td>
                   <td class="text-center"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
                   <td class="text-center"><%= r.quantity %></td>
-                  <% #byebug%>
-                  <%if is_owner? && (estate.owner_id == current_owner.id) %>
-                    <td class="text-center">
-                      <% if r.status.published? %>
-                        <span class="badge badge-green float-center">
-                          <%= "Publicado" %>
-                        </span>
-                      <% else %>
-                        <span class="badge badge-warning float-center">
-                          <%= "No publicado" %>
-                        </span>
-                      <% end %>
-                    </td>
+                    <%if user_signed_in? &&  is_owner? && (estate.owner_id == current_owner.id) %>
+                      <td class="text-center">
+                        <% if r.status.published? %>
+                          <span class="badge badge-green float-center">
+                            <%= "Publicado" %>
+                          </span>
+                        <% else %>
+                          <span class="badge badge-warning float-center">
+                            <%= "No publicado" %>
+                          </span>
+                        <% end %>
+                      </td>
                   <%end %>
                   <td class="text-center">
                     <%= link_to room_estate_path(r.id), class: 'btn btn-link', remote: true do %>

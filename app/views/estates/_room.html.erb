@@ -43,7 +43,7 @@
               <div class="form-group">
                 <br>
                 <br>
-                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: true}, "published", "not_published" %><span class="fa fa-bullhorn "></span> Publicado</label>
+                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: (f.object.status == Room.status.published)}, Room.status.published, Room.status.not_published %><span class="fa fa-bullhorn "></span> Publicado</label>
               </div>
               </div>
             </div>
