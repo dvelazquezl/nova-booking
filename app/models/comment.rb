@@ -1,18 +1,10 @@
 class Comment < ApplicationRecord
   belongs_to :estate
 
-  def isRatingDanger
-    self.rating < 5
-  end
-
-  def isRatingWarning
-    self.rating > 4 && self.rating < 8
-  end
-
-  def save_comment_with(params)
+  def save_comment_with(params, email, name)
       self.description = params[:description]
-      self.client_email = params[:client_email]
-      self.client_name = params[:client_name]
+      self.client_email = (email)? email : params[:client_email]
+      self.client_name = (name)? name : params[:client_name]
       self.rating = params[:rating]
       self.estate_id = params[:estate_id]
       update_state(self.estate_id, self.rating) if self.save!
