@@ -17,13 +17,13 @@
       <hr>
     <% end %>
   </div>
-  <% if can_comment %>
+
     <div class="card-footer align-items-center">
       <button type="button" id="btnComment" class="btn btn-block btn-primary" data-toggle="modal" data-target="#save-comment">
         <i class="fa fa-comment"></i>&nbsp;&nbsp;Comentar
       </button>
     </div>
-  <% end %>
+
 </div>
 <div class="modal fade" id="save-comment" tabindex="-1" role="dialog" aria-labelledby="save-commentLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,7 +60,8 @@
 <script>
     $(document).ready(function () {
         $("#btnComment").click(function () {
-            $('#estate_id').val($('#estate-attr').val());
+            const estate_attr = $('#estate-attr').val();
+            $('#estate_id').val(estate_attr);
         });
     });
     var slice = [].slice;
@@ -166,31 +167,36 @@
         rating: 0,
         change: function (e, valor) {
             $('#rating').val(valor);
-            let arr = ["", "Pésimo", "Malo", "Mediocre", "Regular", "Aceptable", "Cómodo", "Bueno", "Muy bueno", "Excelente", "Excepcional"]
+            let arr = ["Pésimo", "Malo", "Mediocre", "Regular", "Aceptable", "Cómodo", "Bueno", "Muy bueno", "Excelente", "Excepcional"]
+            const lbl_rating_des = $('#lbl-rating-des');
+            const lbl_rating = $('#lbl-rating');
+            const red = "badge-danger";
+            const yellow = "badge-warning";
+            const green = "badge-success";
             if (valor > 0 && valor < 4) {
-                $('#lbl-rating-des').removeClass("badge-warning");
-                $('#lbl-rating-des').addClass("badge-danger");
-                $('#lbl-rating-des').removeClass("badge-success");
-                $('#lbl-rating-des').text(arr[valor]);
-                $('#lbl-rating').text(valor);
+                lbl_rating_des.removeClass(yellow);
+                lbl_rating_des.addClass(red);
+                lbl_rating_des.removeClass(green);
+                lbl_rating_des.text(arr[valor - 1]);
+                lbl_rating.text(valor);
             } else if (valor > 3 && valor < 9) {
-                $('#lbl-rating-des').addClass("badge-warning");
-                $('#lbl-rating-des').removeClass("badge-danger");
-                $('#lbl-rating-des').removeClass("badge-success");
-                $('#lbl-rating-des').text(arr[valor]);
-                $('#lbl-rating').text(valor);
+                lbl_rating_des.addClass(yellow);
+                lbl_rating_des.removeClass(red);
+                lbl_rating_des.removeClass(green);
+                lbl_rating_des.text(arr[valor - 1]);
+                lbl_rating.text(valor);
             } else if (valor > 8) {
-                $('#lbl-rating-des').removeClass("badge-warning");
-                $('#lbl-rating-des').removeClass("badge-danger");
-                $('#lbl-rating-des').addClass("badge-success");
-                $('#lbl-rating-des').text(arr[valor]);
-                $('#lbl-rating').text(valor);
+                lbl_rating_des.removeClass(yellow);
+                lbl_rating_des.removeClass(red);
+                lbl_rating_des.addClass(green);
+                lbl_rating_des.text(arr[valor - 1]);
+                lbl_rating.text(valor);
             } else {
-                $('#lbl-rating-des').removeClass("badge-warning");
-                $('#lbl-rating-des').removeClass("badge-danger");
-                $('#lbl-rating-des').removeClass("badge-success");
-                $('#lbl-rating-des').text("");
-                $('#lbl-rating').text("");
+                lbl_rating_des.removeClass(red);
+                lbl_rating_des.removeClass(yellow);
+                lbl_rating_des.removeClass(green);
+                lbl_rating_des.text("");
+                lbl_rating.text("");
             }
         }
 
