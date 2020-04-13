@@ -13,20 +13,18 @@
                   <div class="">
                     <h4 class="m-0" style="font-size:25px"><%= estate.name %></h4>
                     <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
-                    <p><%= estate.address %></p>
+                    <p><%= estate.description %></p>
                   </div>
                   <div class="ml-auto">
-                    <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>">
-                      <span><%= estate.score %></span>
-                    </div>
+                    <span>5.0</span>
                     <em class="fa-1x mr-2 fas fa-star"></em>
                   </div>
                 </div>
               </div>
               <div class="media-body d-flex">
                 <div class="btn-group ml-auto" role="group">
-                  <%= link_to estate_path(estate, :city => params["filterrific"]["search_query"], :from => params["filterrific"]["with_date_gte"], :to => params["filterrific"]["with_date_lte"], :price_max => params["filterrific"]["price_max"], :price_min => params["filterrific"]["price_min"]) do %>
-                    <button class="btn btn-sm btn-primary">Elige Habitación</button>
+                  <%= link_to show_visited_estate_path(estate.id) do %>
+                    <button class="btn btn-sm btn-primary">Detalles</button>
                   <% end %>
                 </div>
               </div>
