@@ -17,13 +17,13 @@
       <hr>
     <% end %>
   </div>
-
+  <% if can_comment %>
     <div class="card-footer align-items-center">
       <button type="button" id="btnComment" class="btn btn-block btn-primary" data-toggle="modal" data-target="#save-comment">
         <i class="fa fa-comment"></i>&nbsp;&nbsp;Comentar
       </button>
     </div>
-
+  <% end %>
 </div>
 <div class="modal fade" id="save-comment" tabindex="-1" role="dialog" aria-labelledby="save-commentLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
