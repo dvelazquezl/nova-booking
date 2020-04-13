@@ -153,10 +153,11 @@ class EstatesController < ApplicationController
 
   # GET /estates/1/show_detail
   def show_detail
+    email, name = get_user_email_name(params)
     @estate = Estate.find(params[:id])
     @rooms = @estate.rooms
     comments = @estate.commentsEstate
-    render :show_detail, locals: {estate: @estate, comments: comments, can_comment: false}
+    render :show_detail, locals: {estate: @estate, comments: comments, can_comment: false, email: email, name: name}
   end
 
   # GET /estates/1/show_visited
