@@ -45,7 +45,7 @@
             <div class="card-body col-4">
               <div class="form-group">
                 <label title="Numero de habitaciones (de este tipo)">Cantidad *</label>
-                <%= f.number_field :quantity, class: "form-control validame", required: "required", maxlength:"3", oninvalid:"this.setCustomValidity(message)",
+                <%= f.text_field :quantity, class: "form-control validame", required: "required", maxlength:"3", oninvalid:"this.setCustomValidity(message)",
                                    onchange:"this.setCustomValidity('')"%>
               </div>
             </div>
@@ -53,7 +53,7 @@
             <div class="card-body col-4">
               <div class="form-group">
                 <label title="¿Cuántos invitados pueden quedarse en esta habitación?">Capacidad *</label>
-                <%= f.number_field :capacity, class: "form-control validame", required: "required", maxlength:"3", oninvalid:"this.setCustomValidity(message)",
+                <%= f.text_field :capacity, class: "form-control validame", required: "required", maxlength:"3", oninvalid:"this.setCustomValidity(message)",
                                    onchange:"this.setCustomValidity('')"%>
               </div>
             </div>
