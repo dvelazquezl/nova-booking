@@ -49,6 +49,18 @@
       </div>
       <!--FIN-->
       <hr>
+      <!--FILTRO POR PUNTUACION-->
+          <%= f.hidden_field :score_min, id:"score_min" %>
+          <%= f.hidden_field :score_max, id:"score_max"%>
+      <p>
+        <label for="amount">Rango de Puntuación:</label>
+        <input type="text" id="amount" readonly >
+        <span class="fas fa-info-circle score_inf " data-toggle="tooltip" data-placement="right" title="0 sin puntuación"></span>
+      </p>
+
+      <div id="slider-range" class= "filterrific-periodically-observed"></div>
+      <!--FIN-->
+      <hr>
     </div>
   <%end %>
 </div>
@@ -60,6 +72,21 @@
         $("#price_min").val('');
     }
   $(function() {
+      $( "#slider-range" ).slider({
+          range: true,
+          min: 0,
+          max: 10,
+
+      });
+      let new_min =  $( "#slider-range" ).val()[0];
+      let new_max = $( "#slider-range" ).val()[1];
+      $( "#slider-range" ).change(function () {
+          $( "#amount" ).val( "(" + new_min+ " - " + new_max+")" );
+          $("#score_min").val(new_min);
+          $("#score_max").val(new_max);
+      })
+      $( "#amount" ).val( "(" + $( "#slider-range" ).val()[0]+
+          " - " + $( "#slider-range" ).val()[1]+")" );
     var fromD;
     var toD;
     var startDate = new Date();
@@ -110,5 +137,7 @@
               input.value = input.value.split(".").join("");
           });
       });
+
   });
+
 </script>
