@@ -17,6 +17,7 @@ class Room < ApplicationRecord
         "rooms.id in (select distinct ro.id
           from public.rooms as ro
           where ro.estate_id = ?
+          and ro.status = 'published'
           and ? <= ro.price
           and ? >= ro.price
           and ro.id not in
@@ -54,10 +55,10 @@ class Room < ApplicationRecord
   }
 
   def self.room_type_for(id)
-    find(id).room_type.text
+    self.with_deleted.find(id).room_type.text
   end
   def self.room_capacity_for(id)
-    find(id).capacity
+    self.with_deleted.find(id).capacity
   end
 
   scope :booking_details, -> { BookingDetail.joins(:room) }
