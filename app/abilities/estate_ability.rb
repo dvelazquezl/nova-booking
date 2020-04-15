@@ -20,6 +20,7 @@
             can :update, Estate, owner_id: owner.id
             can :destroy, Estate, owner_id: owner.id
             can :show_detail, Estate, owner_id: owner.id
+            can :remove_image, Estate, owner_id: owner.id
           end
         end
       else

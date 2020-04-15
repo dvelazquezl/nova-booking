@@ -66,7 +66,7 @@
             <%= form.select :city_id,
                             options_from_collection_for_select(City.all, "id", "name", form.object.city_id),
                             {:include_blank => '- Todos -'},
-                            {:class => '', :required => 'required'}%>
+                            {:class => '', :required => 'required'} %>
           </div>
           <h5><strong>Comodidades</strong></h5>
           <div class="row scroll_facility">
@@ -104,7 +104,13 @@
               <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
                 <% if estate.images.attached? %>
                   <% estate.images.each do |img| %>
-                    <%= image_tag img, class: "img-thumbnail", width: 150, height: 150 %>
+                    <div>
+                      <%= image_tag img, class: "img-thumbnail", width: 150, height: 150 %>
+                      <%= link_to remove_image_path(img.id), :remote => true, :class => "remove-image",
+                                  data: {confirm: '¿Estás seguro?'} do %>
+                        <button class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
+                      <% end %>
+                    </div>
                   <% end %>
                 <% end %>
               </div>
@@ -150,5 +156,10 @@
             input.value = input.value.split(".").join("");
         });
     });
+
+    $('.delete_image').on('ajax:success', function () {
+        $(this).closest('div').fadeOut();
+    });
+
 </script>
 

@@ -93,6 +93,15 @@ class EstatesController < ApplicationController
     end
   end
 
+  def remove_image
+    image = ActiveStorage::Blob.find(params[:id])
+    image.purge
+    respond_to do |format|
+      format.html { redirect_to edit_estate_path }
+      format.js { render :layout => false }
+    end
+  end
+
   # POST /estates
   # POST /estates.json
   def create
