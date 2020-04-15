@@ -1,10 +1,12 @@
 class Booking < ApplicationRecord
     has_many :booking_details
+    belongs_to :estate
     has_secure_token :confirmation_token
     accepts_nested_attributes_for :booking_details, :allow_destroy => true
     scope :request_assess, -> {where(cancelled_at: nil, booking_state: false, notified: false).where.not(confirmed_at: nil)}
 
     def self.booking_new(booking,params)
+        booking.estate_id = params[:estate_id]
         booking.client_name = params[:client_name]
         booking.date_start = params[:date_start]
         booking.date_end = params[:date_end]
