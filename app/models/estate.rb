@@ -58,11 +58,12 @@ class Estate < ApplicationRecord
     # configure number of OR conditions for provision
     # of interpolation arguments. Adjust this if you
     # change the number of OR conditions.
-    num_or_conditions = 1
+    num_or_conditions = 2
     where(
       terms.map do
         or_clauses = [
-          'LOWER(cities.name) LIKE ?'
+          'LOWER(cities.name) LIKE ?',
+          'LOWER(estates.name) LIKE ?'
         ].join(' OR ')
         "(#{or_clauses})"
       end.join(' AND '),
