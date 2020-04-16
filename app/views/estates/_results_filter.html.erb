@@ -4,7 +4,7 @@
     <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
       <div class="form-group">
         <div class="row has-search d-flex align-items-center results-block">
-          <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
+          <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
                            :class => 'filterrific-periodically-observed form-control',
                            :value => params[:city] %>
         </div>
@@ -27,8 +27,6 @@
     <% end %>
   </div>
 </div>
-
-
 <script>
     $(function () {
         var fromD;
@@ -38,29 +36,31 @@
         var ToEndDate = new Date();
         ToEndDate.setDate(ToEndDate.getDate() + 365);
         FromEndDate.setDate(FromEndDate.getDate() + 365);
-        if ($('#with_date_gte').val() != '') {
-            fromD = $('#with_date_gte').val();
+        if ($("#with_date_gte").val() != '') {
+            fromD = $("#with_date_gte").val();
             startDate = new Date(fromD);
-            startDate.setDate(startDate.getDate(new Date(fromD)));
+            startDate.setDate(startDate.getDate() + 1);
         }
-        if ($('#with_date_lte').val() != '') {
-            toD = $('#with_date_lte').val();
+        if ($("#with_date_lte").val() != '') {
+            toD = $("#with_date_lte").val();
             FromEndDate = new Date(toD);
-            FromEndDate.setDate(FromEndDate.getDate(new Date(toD)));
+            FromEndDate.setDate(FromEndDate.getDate() - 1);
         }
         $('#with_date_gte').datepicker({
             weekStart: 1,
-            startDate: startDate,
+            startDate: new Date(),
             endDate: FromEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "dd MM yyyy",
+            format: "yyyy/mm/dd",
             language: 'es',
             todayHighlight: true
         }).on('changeDate', function (selected) {
             startDate = new Date(selected.date.valueOf());
             startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
-            $('#with_date_lte').datepicker('setStartDate', startDate);
+            let date = new Date();
+            date.setDate(startDate.getDate() + 1);
+            $('#with_date_lte').datepicker('setStartDate', date);
         });
         $('#with_date_lte').datepicker({
             weekStart: 1,
@@ -68,13 +68,15 @@
             endDate: ToEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "dd MM yyyy",
+            format: "yyyy/mm/dd",
             language: 'es',
             todayHighlight: true
         }).on('changeDate', function (selected) {
             FromEndDate = new Date(selected.date.valueOf());
             FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
-            $('#with_date_gte').datepicker('setEndDate', FromEndDate);
+            let date = new Date();
+            date.setDate(FromEndDate.getDate() - 1);
+            $('#with_date_gte').datepicker('setEndDate', date);
         });
         $(".number").on("keyup", function (event) {
             let input = $(event.target).val();
