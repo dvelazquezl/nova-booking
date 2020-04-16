@@ -4,7 +4,7 @@
     <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
       <div class="form-group">
         <div class="row has-search d-flex align-items-center results-block">
-          <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
+          <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
                            :class => 'filterrific-periodically-observed form-control',
                            :value => params[:city]%>
         </div>
@@ -27,8 +27,6 @@
     <% end %>
   </div>
 </div>
-
-
 <script>
     $(function () {
         var fromD;

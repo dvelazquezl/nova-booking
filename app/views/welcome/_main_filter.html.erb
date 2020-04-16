@@ -4,14 +4,14 @@
   <%= puts filterrific.inspect %>
   <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
     <div class="form-group col-12">
-      <div class="row has-search d-flex align-items-center">
-        <span class="fas fa-globe form-control-feedback"></span>
-        <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?", class: 'form-control' %>
-      </div>
-      <div class="row">
-        <div class="col-md-5 col-sm-12 has-search d-flex align-items-center">
-          <span class="fa fa-calendar form-control-feedback"></span>
-          <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control',
+        <div class="row has-search d-flex align-items-center">
+            <span class="fas fa-globe form-control-feedback"></span>
+            <%= f.text_field :search_query, placeholder: "¿A dónde vas?", class: 'form-control' %>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-sm-12 has-search d-flex align-items-center" >
+                <span class="fa fa-calendar form-control-feedback"></span>
+                <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control',
                            readonly: true,
                            :'id' => 'with_date_gte') %>
         </div>
