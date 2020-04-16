@@ -6,13 +6,13 @@
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
                            :class => 'filterrific-periodically-observed form-control',
-                           :value => params[:city] %>
+                           :value => params[:city]%>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control date_start',
-                           :'id' => 'with_date_gte',
-                           :'value' => params[:from],
-                           readonly: true) %>
+                         :'id' => 'with_date_gte',
+                         :'value' => params[:from],
+                         readonly: true )%>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'input-sm form-control date_end',
@@ -28,8 +28,7 @@
   </div>
 </div>
 
-<!--COMENTARIOS-->
-<%= render partial: "estates/comments", :locals => {comments: comments} %>
+
 <script>
     $(function () {
         var fromD;

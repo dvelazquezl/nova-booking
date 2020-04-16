@@ -3,6 +3,7 @@ class Estate < ApplicationRecord
   acts_as_paranoid
   belongs_to :city
   has_many_attached :images
+  has_many :bookings
   has_many :comments
   has_many :facilities_estates
   has_many :facilities, through: :facilities_estates
@@ -41,6 +42,8 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
+                score_min
+                score_max
                 with_estate_type
               ]
 
@@ -124,6 +127,14 @@ class Estate < ApplicationRecord
       where
         ((? >= r.price)", price_max)
   }
+  # filters on 'score' attribute
+  scope :score_min, ->(score_min) {
+    where("? <= score", score_min)
+  }
+
+  scope :score_max, ->(score_max) {
+    where("? >= score", score_max)
+  }
 
   def isPublished
     self.status = self.rooms.any? {|room| room.status == "published"}
@@ -131,6 +142,18 @@ class Estate < ApplicationRecord
 
   def commentsEstate
     Comment.where(estate_id: self.id)
+  end
+
+  def update_score(rating)
+    cant_comments = self.comments_quant
+    comments_rating_total = self.comments_rating_total + rating
+    new_score = comments_rating_total / cant_comments
+    self.comments_rating_total = comments_rating_total
+    self.score = new_score
+  end
+
+  def inc_comments
+    self.comments_quant += 1
   end
 
   resourcify
