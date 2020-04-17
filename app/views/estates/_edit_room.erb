@@ -1,0 +1,149 @@
+<fieldset style="margin: 0; border: 0; padding: 0;" class="card-body detail">
+  <button style="float: right;" type="button" title="Mazimizar" class="show_fields btn btn-link text-primary">
+    <i class="fas fa-chevron-circle-down"></i>
+  </button>
+  <button style="float: right;" type="button" title="Minimizar" class="hide_fields btn btn-link text-primary">
+    <i class="fas fa-chevron-circle-up"></i>
+  </button>
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "Eliminar" do %>
+    <% if f.object.persisted? %>
+      <div style="float: right;" class=" remove_fields btn btn-link text-danger" title="Eliminar">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+    <% else %>
+      <div style="float: right;" class=" remove_fields2 btn btn-link text-danger" title="Eliminar">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
+  <br>
+  <div class="row ocultar">
+    <div class="col-md-6">
+      <div class="card card-default">
+        <div class="card-body">
+          <div class="row">
+            <div class="card-body col-6">
+              <div class="form-group">
+                <label>Nombre de la habitacion *</label>
+                <%= f.text_field :description, class: "form-control room_name", required: "required" %>
+              </div>
+            </div>
+
+            <div class="card-body col-4">
+              <div class="form-group">
+                <label>Tipo de habitacion *</label>
+                <br>
+                <%= f.select :room_type, Room.room_type.options, {prompt: "Seleccionar"}, {required: 'true', class: 'form-control'} %>
+              </div>
+            </div>
+
+            <div class="card-body col-2">
+              <div class="form-group">
+                <br>
+                <br>
+                <label class="checkbox c-checkbox"> <%= f.check_box :status, {checked: true}, "published", "not_published" %><span class="fa fa-bullhorn "></span> Publicado</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="card-body col-4">
+              <div class="form-group">
+                <label title="Numero de habitaciones (de este tipo)">Cantidad *</label>
+                <%= f.text_field :quantity, class: "form-control", required: "required", maxlength:"3", type: "number"%>
+              </div>
+            </div>
+
+            <div class="card-body col-4">
+              <div class="form-group">
+                <label title="¿Cuántos invitados pueden quedarse en esta habitación?">Capacidad *</label>
+                <%= f.text_field :capacity, class: "form-control", required: "required", maxlength:"3", type: "number"%>
+              </div>
+            </div>
+
+            <div class="card-body col-4">
+              <div class="form-group">
+                <label>Precio *</label>
+                <div class="input-group">
+                  <%= f.number_field :price, class: "form-control number", required: "required", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", size:"2"%>
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Gs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h5><strong>Comodidades</strong></h5>
+          <div class="row scroll_facility">
+            <%= f.collection_check_boxes :facility_ids, room_facilities, :id, :description do |m| %>
+              <div class="col-4">
+                <div class="form-check form-check-inline">
+                  <label class="checkbox c-checkbox c-checkbox-rounded"> <%= m.check_box %><span class="fa fa-check"></span><%= m.label %></label>
+                </div>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+        <br>
+        <br>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <!-- START card-->
+      <div class="card card-default">
+        <div class="card-header">
+          <h5><strong>Fotos</strong></h5>
+        </div>
+        <div class="card-body">
+          <div>
+            <fieldset class="picture">
+              <div class="field">
+                <%= f.label "Agrega mas fotos a tu habitacion: " %>
+                <%= f.file_field :images, multiple: true, class: "pictureInputEdit", accept: "image/*" %>
+              </div>
+              <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
+                <% if rooms[id].images.attached? %>
+                  <% rooms[id].images.each do |img| %>
+                    <div class="card">
+                      <%= image_tag img, class: "img-thumbnail", width: 150, height: 150 %>
+                      <%= link_to remove_image_estate_url(img.signed_id), :remote => true, method: :delete,
+                                  :class => "delete-image card-img-overlay justify-content-end align-items-end",
+                                  data: { confirm: "Estas seguro?" } do %>
+                        <span class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <!-- END card-->
+
+    </div>
+
+  </div>
+
+  <div class="description card-body"></div>
+
+  <hr style="border: 1px solid #48a7f4">
+</fieldset>
+
+<script>
+    $(".number").on("keyup", function(event ) {
+        let input = $(event.target).val();
+        input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input?parseInt(input, 10):0;
+        $(event.target).val(function () {
+            let num = (input === 0)?"":input.toLocaleString("en-US");
+            return num.split(",").join(".");
+        });
+    });
+</script>

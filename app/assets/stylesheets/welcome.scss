@@ -77,36 +77,28 @@
   }
 
   .results-block {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
+  }
+
+  .filter-section{
+    width:280px;
+    height:100%;
+    white-space:nowrap;
   }
 
   .results-background {
     background-color: white;
   }
 
-  .results-filter-section .filter-section {
-    width: 270px;
-    padding-left: 30px;
-    padding-right: 5px;
-    padding-bottom: 0px;
-    padding-top: 30px;
+  #amount{
+    border:0;
+    font-weight:bold;
+    width:70px;
   }
-
-  .results-section {
-    width: 77%;
-    padding-left: 30px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    padding-top: 30px;
-  }
-
-  .results-section2 {
-    width: 100%;
-    padding-left: 30px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    padding-top: 30px;
+  .score_inf{
+    color:#5d9cec;
+    border:0;
   }

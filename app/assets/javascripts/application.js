@@ -14,19 +14,18 @@
 ////= require jquery3
 ////= require bootstrap
 //= require turbolinks
-
 //= require filterrific/filterrific-jquery
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require bootstrap-slider
-
+//= require activestorage
 //-- Selectize
 //= require selectize
 
 
 //= require croppie/croppie
-
+//= require bootbox/bootbox.all
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -39,9 +38,27 @@
 
 const HEIGHT = 150;
 const WIDTH = 150;
+$(document).on('change', '#pictureInput', function (event) {
+    let files = event.target.files;
+
+    Array.from(files).forEach(file => {
+        let reader = new FileReader();
+        reader.onload = function (file) {
+            let img = new Image();
+            img.src = file.target.result;
+            img.classList.add("img-thumbnail");
+            img.setAttribute('alt', 'rss fit');
+            img.setAttribute('height', HEIGHT);
+            img.setAttribute('width', WIDTH);
+            $('#target').append(img);
+            $('img').css("display", "inline-block")
+        };
+        reader.readAsDataURL(file);
+    });
+});
 let canvas,
     $result;
-$(document).on('change', '#pictureInput', function (event) {
+$(document).on('change', '#pictureInput1', function (event) {
     canvas  = $("#canvas");
     canvas.croppie('destroy');
     $result = $('#target');
@@ -128,7 +145,50 @@ $(document).on('change', '.picture .pictureInput2', function(event) {
 
 });
 
+$(document).on('change', '.picture .pictureInputEdit', function(event) {
+    let files = event.target.files;
+
+    $(this).closest('div').next().attr('id', ID());
+    let targetId = $(this).closest('div').next().attr('id');
+
+    Array.from(files).forEach(file => {
+        let reader = new FileReader();
+        reader.onload = function (file) {
+            let img = new Image();
+            img.src = file.target.result;
+            img.classList.add("img-thumbnail");
+            img.setAttribute('alt', 'rss fit');
+            img.setAttribute('height', HEIGHT);
+            img.setAttribute('width', WIDTH);
+            $('#'+targetId).append(img);
+            $('img').css("display", "inline-block")
+        };
+        reader.readAsDataURL(file);
+    });
+});
+
 $(document).on('click', '.remove_fields', function (e) {
+    //elimina el partial que tiene estos enlaces
+    let fieldParent = $(this).closest('fieldset'),
+        deleteField = fieldParent ? fieldParent.find('input[type="hidden"]') : null;
+    e.preventDefault();
+    bootbox.confirm({
+        title: "Eliminar Habitación?",
+        message: "Estas seguro de querer eliminarlo",
+        locale: 'es',
+        callback: function (result) {
+            if (result) {
+                if (deleteField) {
+                    deleteField.val('1');
+                    $("input").attr("required", false);
+                    fieldParent.css({display: "none"});
+                }
+            }
+        }
+    });
+});
+
+$(document).on('click', '.remove_fields2', function (e) {
     //elimina el partial que tiene estos enlaces
     $(this).closest('fieldset').detach();
     e.preventDefault()
@@ -160,3 +220,15 @@ $(document).on('click', '.add_fields', function (e) {
     $(this).before($(this).data('fields').replace(regexp, time))
     e.preventDefault()
 });
+
+$(document).on('keyup', '.validame', function (e){
+    let num = $(e.target).val();
+    num = num.replace(/[\D\s\._\-]+/g, "");
+    num = num?parseInt(num, 10):0;
+    $(e.target).val(function () {
+        let aux = (num === 0) ? "" : num;
+        return aux;
+    });
+});
+
+let message = "Debe ser un número positivo"
