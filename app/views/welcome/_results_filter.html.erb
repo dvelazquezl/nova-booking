@@ -1,4 +1,3 @@
-
 <div class="col results-filter-block">
   <%= puts filterrific.inspect %>
   <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
@@ -11,15 +10,11 @@
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control',
                            readonly: true,
-                           :'data-target' => '#filterrific_with_date_gte',
-                           :'data-toggle' => 'datepicker',
                            id: 'with_date_gte') %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'form-control',
                            readonly: true,
-                           :'data-target' => '#filterrific_with_date_gte',
-                           :'data-toggle' => 'datepicker',
                            id: 'with_date_lte') %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
@@ -92,27 +87,18 @@
         })
         $("#amount").val("(" + $("#slider-range").val()[0] +
             " - " + $("#slider-range").val()[1] + ")");
-
-
-        let fromD = new Date($("#with_date_gte").val());
-        let toD = new Date($("#with_date_lte").val());
+        let fromD = new Date(new Date($("#with_date_gte").val()).toDateString());
+        let toD = new Date(new Date($("#with_date_lte").val()).toDateString());
+        let ToEndDate = new Date();
+        let newEndDate = new Date();
+        let newStartDate = new Date();
         toD.setDate(toD.getDate() + 1);
         fromD.setDate(fromD.getDate() + 1);
-        let ToEndDate = new Date();
         ToEndDate.setDate(ToEndDate.getDate() + 365);
-        let newEndDate = new Date();
         newEndDate.setDate(toD.getDate() - 1);
+        newStartDate.setDate(fromD.getDate() + 1);
         let dayOne = newEndDate.getDay();
         let dayTwo = fromD.getDay();
-        let newStartDate = new Date();
-        newStartDate.setDate(fromD.getDate() + 1);
-        if(dayOne == dayTwo){
-            console.log('somos iguals');
-            console.log(fromD);
-            console.log(toD);
-            console.log(newStartDate);
-            console.log(newEndDate);
-        }
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
@@ -121,8 +107,9 @@
             orientation: "bottom auto",
             format: "dd MM yyyy",
             language: 'es',
-            todayHighlight: true
-        }).datepicker('setDate', fromD).on('changeDate', function (selected) {
+            todayHighlight: true,
+            forceParse: 0
+        }).datepicker('setDate', fromD).datepicker('update').on('changeDate', function (selected) {
             console.log(fromD);
             console.log(toD);
             fromD = new Date(selected.date.valueOf());
@@ -141,8 +128,9 @@
             orientation: "bottom auto",
             format: "dd MM yyyy",
             language: 'es',
-            todayHighlight: true
-        }).datepicker('setDate', toD).on('changeDate', function (selected) {
+            todayHighlight: true,
+            forceParse: 0
+        }).datepicker('setDate', newStartDate).datepicker('update').on('changeDate', function (selected) {
             console.log(fromD);
             console.log(toD);
             toD = new Date(selected.date.valueOf());
@@ -157,6 +145,7 @@
             $(".number").each(function (ind, input) {
                 input.value = input.value.split(".").join("");
             });
+            console.log($('#with_date_gte').val());
         });
 
     });
