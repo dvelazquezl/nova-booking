@@ -59,7 +59,7 @@ class EstatesController < ApplicationController
     date_to = params[:to]
     price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do
     price_min = ((params[:price_min] != '') && (params[:price_min] != nil)) ? params[:price_min] : 0
-    @rooms = @estate.rooms.without_deleted.available(params[:id], date_from, date_to, price_max, price_min)
+    @rooms = @estate.rooms.available(params[:id], date_from, date_to, price_max, price_min)
     @rooms.each do |room|
       quantity_available = Room.quantity_available(room.id, date_from, date_to).first
       room.quantity = quantity_available != nil ? quantity_available : 1
@@ -102,7 +102,7 @@ class EstatesController < ApplicationController
   def edit
     owner = Owner.find_by_user_id(current_user.id)
     if owner
-      @rooms = Room.without_deleted.where(:estate_id => params[:id])
+      @rooms = Room.where(:estate_id => params[:id])
       @room_facilities = Facility.where(facility_type: :room)
       @estate_facilities = Facility.where(facility_type: :estate)
     else
@@ -164,7 +164,7 @@ class EstatesController < ApplicationController
   def show_detail
     email, name = get_user_email_name(params)
     @estate = Estate.find(params[:id])
-    @rooms = @estate.rooms.without_deleted
+    @rooms = @estate.rooms
     comments = @estate.commentsEstate
     render :show_detail, locals: {estate: @estate, comments: comments, can_comment: false, email: email, name: name}
   end
@@ -174,7 +174,7 @@ class EstatesController < ApplicationController
     email, name = get_user_email_name(params)
     @estate = Estate.with_deleted.find(params[:id])
     can_comment = @estate.deleted? ? false : User.can_comment?(email, params[:id])
-    @rooms = @estate.rooms.without_deleted.where(status: 'published')
+    @rooms = @estate.rooms.with_deleted.where(status: 'published')
     comments = @estate.commentsEstate
     render :show_detail, locals: {estate: @estate, comments: comments, can_comment: can_comment, email: email, name: name}
   end

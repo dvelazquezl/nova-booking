@@ -1,5 +1,5 @@
 class Room < ApplicationRecord
-  acts_as_paranoid without_default_scope: true
+  acts_as_paranoid
   belongs_to :estate
 
   has_many :facilities_rooms
