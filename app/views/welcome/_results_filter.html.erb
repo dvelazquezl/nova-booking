@@ -96,12 +96,21 @@
         let toD = new Date($("#with_date_lte").val());
         toD.setDate(toD.getDate() + 1);
         fromD.setDate(fromD.getDate() + 1);
+        console.log(fromD);
+        console.log(toD);
         let ToEndDate = new Date();
         ToEndDate.setDate(ToEndDate.getDate() + 365);
         let newEndDate = new Date();
         newEndDate.setDate(toD.getDate() - 1);
+        let dayOne = newEndDate.getDay();
+        let dayTwo = fromD.getDay();
+        if(dayOne == dayTwo){
+            newEndDate.setDate(toD.getDate());
+        }
         let newStartDate = new Date();
         newStartDate.setDate(fromD.getDate() + 1);
+        console.log(newStartDate);
+        console.log(newEndDate);
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
@@ -111,12 +120,16 @@
             format: "dd MM yyyy",
             language: 'es',
             todayHighlight: true
-        }).datepicker('update', fromD).on('changeDate', function (selected) {
+        }).datepicker('setDate', fromD).on('changeDate', function (selected) {
+            console.log(fromD);
+            console.log(toD);
             fromD = new Date(selected.date.valueOf());
             //fromD.setDate(fromD.getDate(new Date(selected.date.valueOf())));
             let date = new Date();
             date.setDate(fromD.getDate() + 1);
             $('#with_date_lte').datepicker('setStartDate', date);
+            console.log(fromD);
+            console.log(toD);
         });
         $('#with_date_lte').datepicker({
             weekStart: 1,
@@ -127,12 +140,16 @@
             format: "dd MM yyyy",
             language: 'es',
             todayHighlight: true
-        }).datepicker('update', toD).on('changeDate', function (selected) {
+        }).datepicker('setDate', toD).on('changeDate', function (selected) {
+            console.log(fromD);
+            console.log(toD);
             toD = new Date(selected.date.valueOf());
             //toD.setDate(toD.getDate(new Date(selected.date.valueOf())));
             let date = new Date();
             date.setDate(toD.getDate() - 1);
             $('#with_date_gte').datepicker('setEndDate', date);
+            console.log(fromD);
+            console.log(toD);
         });
         $("#manual_filterrific_form").on("submit", function (evt) {
             $(".number").each(function (ind, input) {
