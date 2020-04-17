@@ -32,7 +32,6 @@ Rails.application.routes.draw do
   get 'rooms/:id', to: 'estates#room', :as => 'room_estate'
   get 'estates/:id/show_detail', :to => 'estates#show_detail', :as => 'show_detail_estate'
   get 'estates/:id/show_visited', :to => 'estates#show_visited', :as => 'show_visited_estate'
-  # get 'remove_image/:id', :to => 'estates#remove_image', :as => 'remove_image'
 
   resources :users, only: [:index]
   resources :rooms
