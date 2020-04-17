@@ -72,21 +72,17 @@
         $("#price_min").val('');
     }
     $(function () {
-        $("#slider-range").slider({
-            range: true,
-            min: 0,
-            max: 10,
-
-        });
-        let new_min = $("#slider-range").val()[0];
-        let new_max = $("#slider-range").val()[1];
-        $("#slider-range").change(function () {
-            $("#amount").val("(" + new_min + " - " + new_max + ")");
-            $("#score_min").val(new_min);
-            $("#score_max").val(new_max);
+        let new_min =  $( "#slider-range" ).val()[0];
+        let new_max = $( "#slider-range" ).val()[1];
+        $( "#slider-range" ).change(function () {
+          let new_min =  $( "#slider-range" ).val()[0];
+          let new_max = $( "#slider-range" ).val()[1];
+          $( "#amount" ).val( "(" + new_min+ " - " + new_max+")" );
+          $("#score_min").val(new_min);
+          $("#score_max").val(new_max);
         })
-        $("#amount").val("(" + $("#slider-range").val()[0] +
-            " - " + $("#slider-range").val()[1] + ")");
+        $( "#amount" ).val( "(" + $( "#slider-range" ).val()[0]+
+          " - " + $( "#slider-range" ).val()[1]+")" );
         let fromD = new Date(new Date($("#with_date_gte").val()).toDateString());
         let toD = new Date(new Date($("#with_date_lte").val()).toDateString());
         let ToEndDate = new Date();
@@ -129,12 +125,11 @@
             date.setDate(toD.getDate() - 1);
             $('#with_date_gte').datepicker('setEndDate', date);
         });
-        $("#manual_filterrific_form").on("submit", function (evt) {
-            $(".number").each(function (ind, input) {
-                input.value = input.value.split(".").join("");
-            });
-            console.log($('#with_date_gte').val());
-        });
+      $("#manual_filterrific_form").on("submit", function(evt){
+          $(".number").each(function (ind, input) {
+              input.value = input.value.split(".").join("");
+          });
+      });
 
     });
     $(document).ready(function () {
