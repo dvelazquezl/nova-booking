@@ -14,13 +14,12 @@
 ////= require jquery3
 ////= require bootstrap
 //= require turbolinks
-
 //= require filterrific/filterrific-jquery
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
 //= require bootstrap-slider
-
+//= require activestorage
 //-- Selectize
 //= require selectize
 
