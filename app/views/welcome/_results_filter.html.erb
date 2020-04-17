@@ -137,5 +137,16 @@
       });
 
   });
-
+  $(document).ready(function() {
+    $(".choose").click(function(e) {
+      if( !($("#with_date_gte").val()) ) {
+        e.preventDefault();
+        $("#with_date_gte").datepicker("show");
+      }
+      else if ( !($("#with_date_lte").val()) ) {
+        e.preventDefault();
+        $("#with_date_lte").datepicker("show");
+      }
+    });
+  });
 </script>
