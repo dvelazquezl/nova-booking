@@ -104,7 +104,7 @@
         newStartDate.setDate(fromD.getDate() + 1);
         $('#with_date_gte').datepicker({
             weekStart: 1,
-            startDate: fromD,
+            startDate: new Date(),
             endDate: newEndDate,
             autoclose: true,
             orientation: "bottom auto",
