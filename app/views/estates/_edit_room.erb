@@ -105,12 +105,19 @@
             <fieldset class="picture">
               <div class="field">
                 <%= f.label "Agrega mas fotos a tu habitacion: " %>
-                <%= f.file_field :images, multiple: true, class: "pictureInput2", accept: "image/*" %>
+                <%= f.file_field :images, multiple: true, class: "pictureInputEdit", accept: "image/*" %>
               </div>
-              <div class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
-                <% if @rooms[id].images.attached? %>
-                  <% @rooms[id].images.each do |img| %>
-                    <%= image_tag img, class: "img-thumbnail", width: 150, height: 150 %>
+              <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
+                <% if rooms[id].images.attached? %>
+                  <% rooms[id].images.each do |img| %>
+                    <div class="card">
+                      <%= image_tag img, class: "img-thumbnail", width: 150, height: 150 %>
+                      <%= link_to remove_image_estate_url(img.signed_id), :remote => true, method: :delete,
+                                  :class => "delete-image card-img-overlay justify-content-end align-items-end",
+                                  data: { confirm: "Estas seguro?" } do %>
+                        <span class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></span>
+                      <% end %>
+                    </div>
                   <% end %>
                 <% end %>
               </div>
