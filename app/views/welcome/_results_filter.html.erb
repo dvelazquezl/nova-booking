@@ -81,6 +81,8 @@
       let new_min =  $( "#slider-range" ).val()[0];
       let new_max = $( "#slider-range" ).val()[1];
       $( "#slider-range" ).change(function () {
+          let new_min =  $( "#slider-range" ).val()[0];
+          let new_max = $( "#slider-range" ).val()[1];
           $( "#amount" ).val( "(" + new_min+ " - " + new_max+")" );
           $("#score_min").val(new_min);
           $("#score_max").val(new_max);
