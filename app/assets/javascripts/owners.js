@@ -1,3 +1,5 @@
+//= require jquery3
+//= require bootstrap
 // direct_uploads.js
 
 addEventListener("direct-upload:initialize", event => {
