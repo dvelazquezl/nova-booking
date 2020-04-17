@@ -1,3 +1,4 @@
+
 <div class="col results-filter-block">
   <%= puts filterrific.inspect %>
   <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
@@ -92,25 +93,26 @@
         $("#amount").val("(" + $("#slider-range").val()[0] +
             " - " + $("#slider-range").val()[1] + ")");
 
+
         let fromD = new Date($("#with_date_gte").val());
         let toD = new Date($("#with_date_lte").val());
         toD.setDate(toD.getDate() + 1);
         fromD.setDate(fromD.getDate() + 1);
-        console.log(fromD);
-        console.log(toD);
         let ToEndDate = new Date();
         ToEndDate.setDate(ToEndDate.getDate() + 365);
         let newEndDate = new Date();
         newEndDate.setDate(toD.getDate() - 1);
         let dayOne = newEndDate.getDay();
         let dayTwo = fromD.getDay();
-        if(dayOne == dayTwo){
-            newEndDate.setDate(toD.getDate());
-        }
         let newStartDate = new Date();
         newStartDate.setDate(fromD.getDate() + 1);
-        console.log(newStartDate);
-        console.log(newEndDate);
+        if(dayOne == dayTwo){
+            console.log('somos iguals');
+            console.log(fromD);
+            console.log(toD);
+            console.log(newStartDate);
+            console.log(newEndDate);
+        }
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
