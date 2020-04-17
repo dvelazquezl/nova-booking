@@ -97,8 +97,6 @@
         ToEndDate.setDate(ToEndDate.getDate() + 365);
         newEndDate.setDate(toD.getDate() - 1);
         newStartDate.setDate(fromD.getDate() + 1);
-        let dayOne = newEndDate.getDay();
-        let dayTwo = fromD.getDay();
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
@@ -110,15 +108,10 @@
             todayHighlight: true,
             forceParse: 0
         }).datepicker('setDate', fromD).datepicker('update').on('changeDate', function (selected) {
-            console.log(fromD);
-            console.log(toD);
             fromD = new Date(selected.date.valueOf());
-            //fromD.setDate(fromD.getDate(new Date(selected.date.valueOf())));
             let date = new Date();
             date.setDate(fromD.getDate() + 1);
             $('#with_date_lte').datepicker('setStartDate', date);
-            console.log(fromD);
-            console.log(toD);
         });
         $('#with_date_lte').datepicker({
             weekStart: 1,
@@ -131,15 +124,10 @@
             todayHighlight: true,
             forceParse: 0
         }).datepicker('setDate', newStartDate).datepicker('update').on('changeDate', function (selected) {
-            console.log(fromD);
-            console.log(toD);
             toD = new Date(selected.date.valueOf());
-            //toD.setDate(toD.getDate(new Date(selected.date.valueOf())));
             let date = new Date();
             date.setDate(toD.getDate() - 1);
             $('#with_date_gte').datepicker('setEndDate', date);
-            console.log(fromD);
-            console.log(toD);
         });
         $("#manual_filterrific_form").on("submit", function (evt) {
             $(".number").each(function (ind, input) {
