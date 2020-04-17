@@ -6,13 +6,13 @@
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
                            :class => 'filterrific-periodically-observed form-control',
-                           :value => params[:city]%>
+                           :value => params[:city] %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control date_start',
-                         :'id' => 'with_date_gte',
-                         :'value' => params[:from],
-                         readonly: true )%>
+                           :'id' => 'with_date_gte',
+                           :'value' => params[:from],
+                           readonly: true) %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'input-sm form-control date_end',
@@ -29,53 +29,46 @@
 </div>
 <script>
     $(function () {
-        var fromD;
-        var toD;
-        var startDate = new Date();
-        var FromEndDate = new Date();
-        var ToEndDate = new Date();
+        let fromD = new Date(new Date($("#with_date_gte").val()).toDateString());
+        let toD = new Date(new Date($("#with_date_lte").val()).toDateString());
+        let ToEndDate = new Date();
+        let newEndDate = new Date();
+        let newStartDate = new Date();
+        toD.setDate(toD.getDate() + 1);
+        fromD.setDate(fromD.getDate() + 1);
         ToEndDate.setDate(ToEndDate.getDate() + 365);
-        FromEndDate.setDate(FromEndDate.getDate() + 365);
-        if ($("#with_date_gte").val() != '') {
-            fromD = $("#with_date_gte").val();
-            startDate = new Date(fromD);
-            startDate.setDate(startDate.getDate() + 1);
-        }
-        if ($("#with_date_lte").val() != '') {
-            toD = $("#with_date_lte").val();
-            FromEndDate = new Date(toD);
-            FromEndDate.setDate(FromEndDate.getDate() - 1);
-        }
+        newEndDate.setDate(toD.getDate() - 1);
+        newStartDate.setDate(fromD.getDate() + 1);
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
-            endDate: FromEndDate,
+            endDate: newEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "yyyy/mm/dd",
+            format: "dd MM yyyy",
             language: 'es',
-            todayHighlight: true
-        }).on('changeDate', function (selected) {
-            startDate = new Date(selected.date.valueOf());
-            startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+            todayHighlight: true,
+            forceParse: 0
+        }).datepicker('setDate', fromD).datepicker('update').on('changeDate', function (selected) {
+            fromD = new Date(selected.date.valueOf());
             let date = new Date();
-            date.setDate(startDate.getDate() + 1);
+            date.setDate(fromD.getDate() + 1);
             $('#with_date_lte').datepicker('setStartDate', date);
         });
         $('#with_date_lte').datepicker({
             weekStart: 1,
-            startDate: startDate,
+            startDate: newStartDate,
             endDate: ToEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "yyyy/mm/dd",
+            format: "dd MM yyyy",
             language: 'es',
-            todayHighlight: true
-        }).on('changeDate', function (selected) {
-            FromEndDate = new Date(selected.date.valueOf());
-            FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
+            todayHighlight: true,
+            forceParse: 0
+        }).datepicker('setDate', newStartDate).datepicker('update').on('changeDate', function (selected) {
+            toD = new Date(selected.date.valueOf());
             let date = new Date();
-            date.setDate(FromEndDate.getDate() - 1);
+            date.setDate(toD.getDate() - 1);
             $('#with_date_gte').datepicker('setEndDate', date);
         });
         $(".number").on("keyup", function (event) {
