@@ -231,4 +231,8 @@ $(document).on('keyup', '.validame', function (e){
     });
 });
 
-let message = "Debe ser un número positivo"
+let message = "Debe ser un número positivo";
+
+$(document).on('turbolinks:load', function() {
+    $('.dropdown-toggle').dropdown()
+})
