@@ -39,10 +39,10 @@
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
-            endDate: newEndDate,
+            endDate: FromEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "dd MM yyyy",
+            format: "yyyy/mm/dd",
             language: 'es',
             todayHighlight: true
         }).datepicker('setDate', startDate).on('changeDate', function (selected) {
@@ -52,11 +52,11 @@
         });
         $('#with_date_lte').datepicker({
             weekStart: 1,
-            startDate: newStartDate,
+            startDate: startDate,
             endDate: ToEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "dd MM yyyy",
+            format: "yyyy/mm/dd",
             language: 'es',
             todayHighlight: true
         }).datepicker('setDate', endDate).on('changeDate', function (selected) {
