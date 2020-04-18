@@ -29,20 +29,13 @@
 </div>
 <script>
     $(function () {
-        console.log('arrive value start: ' + $("#with_date_gte").val());
-        console.log('arrive value end: ' + $("#with_date_lte").val());
-        
         let fromD = $("#with_date_gte").val();
         let toD = $("#with_date_lte").val();
-        
-        let startDate = stringToDate(fromD,"yyyy-mm-dd","-");
-        let endDate = stringToDate(toD,"yyyy-mm-dd","-");
-
+        let startDate = stringToDate(fromD, "yyyy-mm-dd", "-");
+        let endDate = stringToDate(toD, "yyyy-mm-dd", "-");
         let newStartDate = dateManipulation(startDate, 1, 0, 0, "+");
         let newEndDate = dateManipulation(endDate, 1, 0, 0, "-");
         let ToEndDate = dateManipulation(new Date(), 365, 0, 0, "+");
-        console.log('converted value start: ' + newStartDate);
-        console.log('converted value start: ' + newEndDate);
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
@@ -71,44 +64,42 @@
             let date = dateManipulation(newEndDate, 1, 0, 0, "-");
             $('#with_date_gte').datepicker('setEndDate', date);
         });
-      $("#manual_filterrific_form").on("submit", function(evt){
-          $(".number").each(function (ind, input) {
-              input.value = input.value.split(".").join("");
-          });
-      });
-    });
-        function stringToDate(_date,_format,_delimiter)
-{
-        var formatLowerCase=_format.toLowerCase();
-        var formatItems=formatLowerCase.split(_delimiter);
-        var dateItems=_date.split(_delimiter);
-        var monthIndex=formatItems.indexOf("mm");
-        var dayIndex=formatItems.indexOf("dd");
-        var yearIndex=formatItems.indexOf("yyyy");
-        var month=parseInt(dateItems[monthIndex]);
-        month-=1;
-        var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
-        return formatedDate;
-}
-function dateManipulation(date, days, hrs, mins, operator) {
-    date = new Date(date);
-    if (operator == "-") {
-       var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
-       var newDate = new Date(date.getTime() - durationInMs);
-    } else {
-       var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
-       var newDate = new Date(date.getTime() + durationInMs);
-    }
-   return newDate;
-}
-        $(".number").on("keyup", function (event) {
-            let input = $(event.target).val();
-            input = input.replace(/[\D\s\._\-]+/g, "");
-            input = input ? parseInt(input, 10) : 0;
-            $(event.target).val(function () {
-                let num = (input === 0) ? "" : input.toLocaleString("en-US");
-                return num.split(",").join(".");
+        $("#manual_filterrific_form").on("submit", function (evt) {
+            $(".number").each(function (ind, input) {
+                input.value = input.value.split(".").join("");
             });
+        });
+    });
+    function stringToDate(_date, _format, _delimiter) {
+        var formatLowerCase = _format.toLowerCase();
+        var formatItems = formatLowerCase.split(_delimiter);
+        var dateItems = _date.split(_delimiter);
+        var monthIndex = formatItems.indexOf("mm");
+        var dayIndex = formatItems.indexOf("dd");
+        var yearIndex = formatItems.indexOf("yyyy");
+        var month = parseInt(dateItems[monthIndex]);
+        month -= 1;
+        var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+        return formatedDate;
+    }
+    function dateManipulation(date, days, hrs, mins, operator) {
+        date = new Date(date);
+        if (operator == "-") {
+            var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+            var newDate = new Date(date.getTime() - durationInMs);
+        } else {
+            var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+            var newDate = new Date(date.getTime() + durationInMs);
+        }
+        return newDate;
+    }
+    $(".number").on("keyup", function (event) {
+        let input = $(event.target).val();
+        input = input.replace(/[\D\s\._\-]+/g, "");
+        input = input ? parseInt(input, 10) : 0;
+        $(event.target).val(function () {
+            let num = (input === 0) ? "" : input.toLocaleString("en-US");
+            return num.split(",").join(".");
         });
     });
 </script>
