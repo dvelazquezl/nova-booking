@@ -93,8 +93,6 @@
         ToEndDate.setDate(ToEndDate.getDate() + 365);
         newEndDate.setDate(toD.getDate() - 1);
         newStartDate.setDate(fromD.getDate() + 1);
-        console.log(newEndDate);
-        console.log(newStartDate);
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
@@ -121,7 +119,7 @@
             language: 'es',
             todayHighlight: true,
             forceParse: 0
-        }).datepicker('setDate', toD).datepicker('update').on('changeDate', function (selected) {
+        }).datepicker('setDate', newStartDate).datepicker('update').on('changeDate', function (selected) {
             toD = new Date(selected.date.valueOf());
             let date = new Date();
             date.setDate(toD.getDate() - 1);
