@@ -72,8 +72,12 @@
         $("#price_min").val('');
     }
     $(function () {
-        let new_min =  $( "#slider-range" ).val()[0];
-        let new_max = $( "#slider-range" ).val()[1];
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 10,
+            value: 0
+        });
         $( "#slider-range" ).change(function () {
           let new_min =  $( "#slider-range" ).val()[0];
           let new_max = $( "#slider-range" ).val()[1];
