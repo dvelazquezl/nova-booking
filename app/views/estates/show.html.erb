@@ -74,14 +74,16 @@
     </div>
   </div>
 </div>
+<input type="hidden" id="d_start" value="<%=@date_from_formatted%>">
+<input type="hidden" id="d_end" value="<%=@date_to_formatted%>">
 <script>
 $(document).ready(function(){
 
   $('#book').click(function(event) {
       let booking_details = [];
       const total_amount = $("#total").val().split(" ")[0].split(".").join("");
-      const date_start = $(".date_start").val();
-      const date_end = $(".date_end").val();
+      const date_start = $("#d_start").val();
+      const date_end = $("#d_end").val();
       const estate_id = $('#estate-attr').val();
       $('table > #rooms > tr').each(function () {
           const quantity = parseInt($('option:selected', this).text());
