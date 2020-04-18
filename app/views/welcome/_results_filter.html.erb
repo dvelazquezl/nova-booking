@@ -135,7 +135,6 @@
           let date = new Date();
           date.setDate(FromEndDate.getDate() - 1);
           $('#with_date_gte').datepicker('setEndDate', date);
-          $('#manual_filterrific_form').submit();
       });
       $("#manual_filterrific_form").on("submit", function(evt){
           $(".number").each(function (ind, input) {
