@@ -29,55 +29,69 @@
 </div>
 <script>
     $(function () {
-        var fromD;
-        var toD;
-        var startDate = new Date();
-        var FromEndDate = new Date();
-        var ToEndDate = new Date();
-        ToEndDate.setDate(ToEndDate.getDate() + 365);
-        FromEndDate.setDate(FromEndDate.getDate() + 365);
-        if ($("#with_date_gte").val() != '') {
-            fromD = $("#with_date_gte").val();
-            startDate = new Date(fromD);
-            startDate.setDate(startDate.getDate() + 1);
-        }
-        if ($("#with_date_lte").val() != '') {
-            toD = $("#with_date_lte").val();
-            FromEndDate = new Date(toD);
-            FromEndDate.setDate(FromEndDate.getDate() - 1);
-        }
+        let fromD = $("#with_date_gte").val();
+        let toD = $("#with_date_lte").val();
+        let startDate = stringToDate(fromD, "yyyy-mm-dd", "-");
+        let endDate = stringToDate(toD, "yyyy-mm-dd", "-");
+        let newStartDate = dateManipulation(startDate, 1, 0, 0, "+");
+        let newEndDate = dateManipulation(endDate, 1, 0, 0, "-");
+        let ToEndDate = dateManipulation(new Date(), 365, 0, 0, "+");
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
-            endDate: FromEndDate,
+            endDate: newEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "yyyy/mm/dd",
+            format: "dd MM yyyy",
             language: 'es',
             todayHighlight: true
-        }).on('changeDate', function (selected) {
-            startDate = new Date(selected.date.valueOf());
-            startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
-            let date = new Date();
-            date.setDate(startDate.getDate() + 1);
+        }).datepicker('setDate', startDate).on('changeDate', function (selected) {
+            newStartDate = new Date(selected.date.valueOf());
+            let date = dateManipulation(newStartDate, 1, 0, 0, "+");
             $('#with_date_lte').datepicker('setStartDate', date);
         });
         $('#with_date_lte').datepicker({
             weekStart: 1,
-            startDate: startDate,
+            startDate: newStartDate,
             endDate: ToEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "yyyy/mm/dd",
+            format: "dd MM yyyy",
             language: 'es',
             todayHighlight: true
-        }).on('changeDate', function (selected) {
-            FromEndDate = new Date(selected.date.valueOf());
-            FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
-            let date = new Date();
-            date.setDate(FromEndDate.getDate() - 1);
+        }).datepicker('setDate', endDate).on('changeDate', function (selected) {
+            newEndDate = new Date(selected.date.valueOf());
+            let date = dateManipulation(newEndDate, 1, 0, 0, "-");
             $('#with_date_gte').datepicker('setEndDate', date);
         });
+        $("#manual_filterrific_form").on("submit", function (evt) {
+            $(".number").each(function (ind, input) {
+                input.value = input.value.split(".").join("");
+            });
+        });
+        function stringToDate(_date, _format, _delimiter) {
+            var formatLowerCase = _format.toLowerCase();
+            var formatItems = formatLowerCase.split(_delimiter);
+            var dateItems = _date.split(_delimiter);
+            var monthIndex = formatItems.indexOf("mm");
+            var dayIndex = formatItems.indexOf("dd");
+            var yearIndex = formatItems.indexOf("yyyy");
+            var month = parseInt(dateItems[monthIndex]);
+            month -= 1;
+            var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+            return formatedDate;
+        }
+        function dateManipulation(date, days, hrs, mins, operator) {
+            date = new Date(date);
+            if (operator == "-") {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() - durationInMs);
+            } else {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() + durationInMs);
+            }
+            return newDate;
+        }
         $(".number").on("keyup", function (event) {
             let input = $(event.target).val();
             input = input.replace(/[\D\s\._\-]+/g, "");
