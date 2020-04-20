@@ -111,8 +111,10 @@ class EstatesController < ApplicationController
   end
 
   def remove_image
-    ActiveStorage::Blob.find_signed(params[:id]).attachments.first.purge_later
+    image = ActiveStorage::Blob.find(params[:id])
+    image.purge
     respond_to do |format|
+      format.html { redirect_to edit_estate_path }
       format.js { render :layout => false }
     end
   end
