@@ -51,9 +51,9 @@ class EstatesController < ApplicationController
         },
     )) || return
     @estates = @filterrific.find.page(params[:page])
-    date_from_formatted = Date.parse(params[:from])
-    date_to_formatted = Date.parse(params[:to])
-    @diff = (date_to_formatted.to_date - date_from_formatted.to_date).to_i
+    @date_from_formatted = Date.parse(params[:from])
+    @date_to_formatted = Date.parse(params[:to])
+    @diff = (@date_to_formatted.to_date - @date_from_formatted.to_date).to_i
     @plural_arg = (@diff > 1) ? "s" : " "
     date_from = params[:from]
     date_to = params[:to]
