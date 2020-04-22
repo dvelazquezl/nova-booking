@@ -16,6 +16,12 @@ class Estate < ApplicationRecord
   self.per_page = 5
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
+  scope :best_estates, -> () {
+    where("estates.id in (select e.id
+            from estates as e
+            order by score desc, (select count(id) from bookings where estate_id = e.id) desc)")
+    order("estates.score desc, (select count(id) from bookings where estate_id = estates.id) desc")
+  }
   scope :estates_by_client, -> (client_email) {
     where("estates.id in (
             select distinct r.estate_id from rooms as r where r.id in(
