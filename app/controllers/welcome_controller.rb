@@ -10,7 +10,6 @@ class WelcomeController < ApplicationController
         },
         )) || return
     estates = Estate.best_estates().take(15)
-
     respond_to do |format|
       format.html
       format.js

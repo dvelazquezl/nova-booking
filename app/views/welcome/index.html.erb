@@ -25,18 +25,19 @@
 </section>
 
 <section>
-  <div class="container-fluid bg-gray-light">
+  <div class="container-fluid">
     <br>
     <div class="row">
-      <div class="col-2"></div>
-      <div class="col">
-        <h2>Mejores hoteles</h2>
+      <div class="col-1"></div>
+      <div class="col-10">
+        <h2 class="text-info" id="carousel-title">Hoteles con mejor calificación</h2>
+        <hr>
       </div>
     </div>
     <div id="ofertas" class="carousel slide" data-ride="carousel">
 
       <!-- Indicators -->
-      <ul class="carousel-indicators">
+      <ul class="carousel-indicators text-primary">
         <li data-target="#ofertas" data-slide-to="0" class="active"></li>
         <li data-target="#ofertas" data-slide-to="1"></li>
         <li data-target="#ofertas" data-slide-to="2"></li>
@@ -44,204 +45,47 @@
 
       <!-- The slideshow -->
       <div class="carousel-inner">
+        <% i = 0 %>
+        <% estates.each do |estate| %>
+          <% if ((i%5)==0) %>
+            <div class="carousel-item <% if (i==0) %>active<%end %>">
+              <div class="d-flex justify-content-around">
+                  <div class="col-md-1"></div>
+          <%end %>
+          <%i = i+1 %>
+                <div class="col-md-2">
+                  <div class="card">
+                    <%= image_tag estate.images.first, class:"card-img-top", height: 180, width: 180, alt:"Card image cap" %>
+                    <div class="card-body">
+                      <h4 class="card-title">
+                        <div class="row">
+                          <div class="col"><%= estate.name %></div>
+                          <div class="col-3"><div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>"> <%= estate.score %> </div></div>
+                        </div>
+                      </h4>
+                      <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
+                      <p><%= estate.address %></p>
+                      <!--a class="btn btn-primary waves-effect waves-light">Button</a-->
+                    </div>
+                  </div>
+                </div>
+          <% if (i%5)==0 || estates.length() == i %>
+                <div class="col-md"></div>
+              </div>
+            </div>
+          <%end %>
 
-        <div class="carousel-item active">			<!-- First Slide -->
-          <div class="d-flex justify-content-around">			<!-- Flex Slide Box -->
-            <div class="col-md-1"></div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                  <!--a class="btn btn-primary waves-effect waves-light">Button</a-->
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card mb-2">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
+        <% end %>
         </div>
-
-        <div class="carousel-item">			<!-- Second Slide -->
-          <div class="d-flex justify-content-around">			<!-- Flex Slide Box -->
-            <div class="col-md-1"></div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(60).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text text-danger">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(47).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-        </div>
-
-
-        <div class="carousel-item">			<!-- Second Slide -->
-          <div class="d-flex justify-content-around">			<!-- Flex Slide Box -->
-            <div class="col-md-1"></div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(47).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card">
-                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h4 class="card-title">Card title</h4>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
-        </div>
-
+        <br>
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#ofertas" data-slide="prev">
+          <span class="fas fa-chevron-circle-left fa-3x text-info"></span>
+        </a>
+        <a class="carousel-control-next" href="#ofertas" data-slide="next">
+          <span class="fas fa-chevron-circle-right fa-3x text-info"></span>
+        </a>
       </div>
-      <br>
-      <!-- Left and right controls -->
-      <a class="carousel-control-prev" href="#ofertas" data-slide="prev">
-        <span class="fas fa-chevron-circle-left fa-3x text-primary"></span>
-      </a>
-      <a class="carousel-control-next" href="#ofertas" data-slide="next">
-        <span class="fas fa-chevron-circle-right fa-3x text-primary"></span>
-      </a>
-    </div>
   </div>
+  <br>
 </section>
