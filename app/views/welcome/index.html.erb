@@ -1,36 +1,36 @@
 
-<section class="container">
-  <header class="main-section-header">
-    <h1 class="main-title">
-      Busca ofertas de hotel
-    </h1>
-    <h6 class="main-subtitle">
-      La forma más fácil de encontrar hotel
-    </h6>
-  </header>
-  <section class="row main-filter-section">
-    <!--  Filtro principal  -->
-    <div class="col-md-6 col-sm-12 d-flex align-items-center main-filter">
+<section class="bg-white" style="border-radius: 15px;">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col">
+        <h1 class="text-info font-title">&emsp;Busca ofertas de hotel</h1>
+        <h4 class="font-title">&emsp;La forma más fácil de encontrar hotel</h4>
+      </div>
+    </div>
+  <div class="row main-filter-section">
+    <div class="col-2"></div>
+    <div class="col-8 align-items-center">
       <%= render(
               partial: "welcome/main_filter",
               locals: {filterrific: filterrific}
           )%>
     </div>
 
-    <!--  Descripciones de la página  -->
-    <div class="col-md-6 col-sm-12 d-flex align-items-center" id="description-section">
-      <%= render partial: "welcome/descriptions" %>
-    </div>
-  </section>
+        <!--  Descripciones de la página  -->
+        <!--div class="col-4 d-flex align-items-center">
+          <%#= render partial: "welcome/descriptions" %>
+        </div-->
+  </div>
+  <br>
 </section>
-
-<section>
+<br>
+<section class="bg-section-best-estates" style="border-radius: 15px;">
   <div class="container-fluid">
     <br>
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10">
-        <h2 class="text-info" id="carousel-title">Hoteles con mejor calificación</h2>
+        <h2 class="text-info font-title">Hoteles con mejor calificación</h2>
         <hr>
       </div>
     </div>
@@ -58,14 +58,11 @@
                     <%= image_tag estate.images.first, class:"card-img-top", height: 180, width: 180, alt:"Card image cap" %>
                     <div class="card-body">
                       <h4 class="card-title">
-                        <div class="row">
-                          <div class="col"><%= estate.name %></div>
-                          <div class="col-3"><div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>"> <%= estate.score %> </div></div>
-                        </div>
                       </h4>
                       <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                       <p><%= estate.address %></p>
-                      <!--a class="btn btn-primary waves-effect waves-light">Button</a-->
+                      <hr>
+                      <p class="font-title"><div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;"> <%= estate.score %> </div>&emsp;Excelente</p>
                     </div>
                   </div>
                 </div>
