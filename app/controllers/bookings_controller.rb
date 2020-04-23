@@ -4,7 +4,8 @@ class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :destroy]
 
   def index
-    @bookings = Booking.all
+    @bookings = Booking.page(params[:page])
+    render :index, locals: {bookings: @bookings }
   end
 
   def show

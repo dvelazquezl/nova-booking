@@ -39,4 +39,7 @@ class Booking < ApplicationRecord
     scope :finished, -> {
         where("date_end <= ?  AND booking_state = true", DateTime.now.to_date)
     }
+
+    self.per_page = 5
+    resourcify
 end

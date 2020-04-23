@@ -1,0 +1,10 @@
+<div class="content-heading">
+  <div> Reservas</div>
+</div>
+
+<div id="results">
+  <%= render(
+          partial: 'bookings/list',
+          locals: {bookings: bookings}
+      ) %>
+</div>
