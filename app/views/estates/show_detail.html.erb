@@ -34,26 +34,27 @@
       <div class="col-12">
         <div class="container">
           <p class="col-12" id="description-text">
-            &emsp;&emsp;<%= + @estate.description %>
+            &emsp;&emsp;<%= @estate.description %>
+          </p>
+          <p class="col-12" id="description-text">
+            <% if @estate.booking_cancelable? %>
+              &emsp;&emsp;<span class="badge badge-green float-center">Se permite la cancelación de reservas</span>
+            <% else %>
+              &emsp;&emsp;<span class="badge badge-warning float-center">No se permite la cancelación de reservas</span>
+            <% end %>
           </p>
         </div>
       </div>
+
       <!-- END -->
 
       <!-- ESTATE DETAILS -->
       <div class="col-12" id="estate-details">
         <div class="row details">
           <div class="col-md-8 col-sm-12" id="carousel-div">
+
             <%= render partial: "estates/show_images", :locals => { images: @estate.images, h_size: '340px'} %>
-              <% if @estate.booking_cancelable? %>
-                          <h3><span class="badge badge-green float-center">
-                            <%= "Se permite la cancelación de reservas" %>
-                          </span></h3>
-              <% else %>
-                          <h3><span class="badge badge-warning float-center">
-                            <%= "No se permite la cancelación de reservas" %>
-                          </span></h3>
-              <% end %>
+
           </div>
           <div class="col-md-4 col-sm-12" id="facilities-div">
             <div class="row">
