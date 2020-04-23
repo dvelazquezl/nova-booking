@@ -6,7 +6,9 @@
         <div class="row has-search d-flex align-items-center results-block">
             <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
                          :class => 'filterrific-periodically-observed form-control' %>
+            <input id="example-mail"/>
         </div>
+        
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
                            readonly: true,
@@ -71,7 +73,22 @@
     if ($("#price_min").val() == '0') {
         $("#price_min").val('');
     }
+    var options = {
+    url: "/resources.json",
+
+    getValue: "name",
+
+    list: {
+        match: {
+            enabled: true
+        }
+    },
+
+    theme: "plate-dark"
+    };
+
     $(function () {
+        $("#example-mail").easyAutocomplete(options);
         $("#slider-range").slider({
             range: true,
             min: 0,
