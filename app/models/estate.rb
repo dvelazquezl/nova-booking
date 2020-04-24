@@ -115,7 +115,7 @@ class Estate < ApplicationRecord
   }
 
   scope :with_date_lte, ->(ref_date) {
-    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date)
+    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date).order(score: :desc)
   }
 
   # filters on 'price' attribute
