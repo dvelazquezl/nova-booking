@@ -4,9 +4,7 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="form-group col-12">
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
-                         :class => 'filterrific-periodically-observed form-control' %>
-            <input id="example-mail"/>
+            <%= f.text_field :search_query, placeholder: "¿A dónde vas?", id: 'with_search' %>
         </div>
         
         <div class="row has-search d-flex align-items-center results-block">
@@ -73,22 +71,22 @@
     if ($("#price_min").val() == '0') {
         $("#price_min").val('');
     }
-    var options = {
-    url: "",
+var options = {
+	
+  data: ["Encarnación", "Asunción", "Ciudad del Este", "Coronel Bogado", "Coronel Oviedo", "Fram"],
+  
+  list: {
+    match: {
+      enabled: true
+    }
+  },
 
-    getValue: "name",
+  theme: "blue-light"
+};
 
-    list: {
-        match: {
-            enabled: true
-        }
-    },
-
-    theme: "square"
-    };
+$("#with_search").easyAutocomplete(options);
 
     $(function () {
-        $("#example-mail").easyAutocomplete(options);
         $("#slider-range").slider({
             range: true,
             min: 0,
