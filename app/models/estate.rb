@@ -4,7 +4,6 @@ class Estate < ApplicationRecord
   belongs_to :city
   has_many_attached :images
   has_many :bookings
-  has_many :offers
   has_many :comments
   has_many :facilities_estates
   has_many :facilities, through: :facilities_estates
