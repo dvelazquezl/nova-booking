@@ -1,3 +1,11 @@
+<% provide :head_tags do %>
+  <meta name='turbolinks-visit-control' content='reload'>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      initMap(<%=@estate.latitude%>, <%=@estate.longitude%>)
+    });
+  </script>
+<% end %>
 <div class="row results-filter-section">
   <div class="col-2">
     <%= render(
@@ -74,6 +82,9 @@
     </div>
   </div>
 </div>
+  <p>
+    <div id="map"></div>
+  </p>
 <input type="hidden" id="d_start" value="<%=@date_from_formatted%>">
 <input type="hidden" id="d_end" value="<%=@date_to_formatted%>">
 <script>
