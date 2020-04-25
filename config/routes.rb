@@ -24,11 +24,9 @@ Rails.application.routes.draw do
       get :new_room
       post :unsuscribe_estate
     end
-    member do
-      delete :remove_image
-    end
   end
 
+  delete 'estates/:id/remove_image', to: 'estates#remove_image', :as => 'remove_image_estate'
   get 'rooms/:id', to: 'estates#room', :as => 'room_estate'
   get 'estates/:id/show_detail', :to => 'estates#show_detail', :as => 'show_detail_estate'
   get 'estates/:id/show_visited', :to => 'estates#show_visited', :as => 'show_visited_estate'

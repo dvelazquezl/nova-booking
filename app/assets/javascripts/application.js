@@ -145,7 +145,7 @@ $(document).on('change', '.picture .pictureInput2', function(event) {
 
 });
 
-$(document).on('change', '.picture .pictureInputEdit', (event) => {
+$(document).on('change', '.picture .pictureInputEdit', function(event) {
     let files = event.target.files;
 
     $(this).closest('div').next().attr('id', ID());
