@@ -20,9 +20,11 @@ class WelcomeController < ApplicationController
   end
 
   def resources
-    @cities = City.all
+    cities = City.all
+    estates = Estate.all
+    array_of_json = cities + estates
     respond_to do |format|
-      format.json { render json: @cities.to_json( :only => [:name] )  }
+      format.json { render json: array_of_json.to_json( :only => [:name])  }
     end
   end
 
