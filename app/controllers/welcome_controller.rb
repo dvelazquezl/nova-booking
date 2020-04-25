@@ -2,6 +2,7 @@
 
 class WelcomeController < ApplicationController
   def index
+    quantity_hotels = 15
     (@filterrific = initialize_filterrific(
         Estate,
         params[:filterrific],
@@ -9,14 +10,13 @@ class WelcomeController < ApplicationController
             sorted_by: Estate.options_for_sorted_by,
         },
         )) || return
-    @estates = @filterrific.find.page(params[:page])
-
+    estates = Estate.best_estates().take(quantity_hotels)
     respond_to do |format|
       format.html
       format.js
     end
 
-    render :index, locals: { filterrific: @filterrific }
+    render :index, locals: { filterrific: @filterrific, estates: estates }
   end
 
   def resources

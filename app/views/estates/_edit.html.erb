@@ -81,6 +81,15 @@
             <% end %>
 
           </div>
+          <br>
+          <div class="form-group">
+            <h5><strong>Habilitar la cancelación de reservas </strong></h5>
+            <div class="form-check form-check-inline">
+              <label class="checkbox c-checkbox c-checkbox-rounded"> <%= form.check_box :booking_cancelable, checked: estate.booking_cancelable %>
+                <span class="fa fa-check"></span>Habilitar</label>
+            </div>
+          </div>
+
         </div>
       </div>
       <!-- END card-->
