@@ -4,7 +4,7 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="form-group col-12">
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field :search_query, placeholder: "¿A dónde vas?", id: 'with_search',
+            <%= f.text_field :search_query, placeholder: "¿A dónde vas?", id: 'with_search_results',
             class: "filterrific-periodically-observed" %>
         </div>
         
@@ -72,23 +72,6 @@
     if ($("#price_min").val() == '0') {
         $("#price_min").val('');
     }
-let options = {
-
-        url: "/welcome/resources.json",
-
-        getValue: "name",
-  
-  list: {
-    match: {
-      enabled: true
-    }
-  },
-
-  theme: "blue-light"
-};
-
-$("#with_search").easyAutocomplete(options);
-
     $(function () {
         $("#slider-range").slider({
             range: true,
