@@ -22,13 +22,10 @@ class Estate < ApplicationRecord
   }
   scope :estates_by_client, -> (client_email) {
     where("estates.id in (
-            select distinct r.estate_id from rooms as r where r.id in(
-              select distinct bd.room_id
-              from bookings as b
-              inner join booking_details as bd on b.id = bd.booking_id
-              where b.client_email = ?
-            )
-           )", client_email)
+            select distinct b.estate_id
+		        from bookings as b
+		        where b.client_email = ?
+          )", client_email)
   }
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
