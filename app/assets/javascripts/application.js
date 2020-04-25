@@ -145,7 +145,7 @@ $(document).on('change', '.picture .pictureInput2', function(event) {
 
 });
 
-$(document).on('change', '.picture .pictureInputEdit', function(event) {
+$(document).on('change', '.picture .pictureInputEdit', (event) => {
     let files = event.target.files;
 
     $(this).closest('div').next().attr('id', ID());
@@ -231,4 +231,8 @@ $(document).on('keyup', '.validame', function (e){
     });
 });
 
-let message = "Debe ser un número positivo"
+let message = "Debe ser un número positivo";
+
+$(document).on('turbolinks:load', function() {
+    $('.dropdown-toggle').dropdown()
+})

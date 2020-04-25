@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :cities
   resources :departaments
   resources :owners
+  resources :offers
   resources :estates do
     collection do
       get 'estates_visited', :to => 'estates#estates_visited', :as => 'visited'
