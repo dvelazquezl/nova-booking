@@ -111,10 +111,8 @@ class EstatesController < ApplicationController
   end
 
   def remove_image
-    image = ActiveStorage::Blob.find(params[:id])
-    image.purge
+    ActiveStorage::Blob.find_signed(params[:id]).attachments.first.purge_later
     respond_to do |format|
-      format.html { redirect_to edit_estate_path }
       format.js { render :layout => false }
     end
   end
@@ -234,7 +232,7 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :booking_cancelable, :description, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
   end
 
   def current_ability
