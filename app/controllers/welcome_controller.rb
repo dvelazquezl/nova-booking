@@ -19,6 +19,13 @@ class WelcomeController < ApplicationController
     render :index, locals: { filterrific: @filterrific }
   end
 
+  def resources
+    @cities = City.all
+    respond_to do |format|
+      format.json { render json: @cities.to_json( :only => [:name] )  }
+    end
+  end
+
   def results
     params[:filterrific]["price_min"] = params[:filterrific]["price_min"] == '' ? '0' : params[:filterrific]["price_min"]
     params[:filterrific]["price_max"] = params[:filterrific]["price_max"] == '' ? '1000000000' : params[:filterrific]["price_max"] #to do

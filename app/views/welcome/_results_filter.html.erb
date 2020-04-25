@@ -71,9 +71,11 @@
     if ($("#price_min").val() == '0') {
         $("#price_min").val('');
     }
-var options = {
-	
-  data: ["Encarnación", "Asunción", "Ciudad del Este", "Coronel Bogado", "Coronel Oviedo", "Fram"],
+let options = {
+
+        url: "/welcome/resources.json",
+
+        getValue: "name",
   
   list: {
     match: {
