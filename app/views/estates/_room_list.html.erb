@@ -33,7 +33,25 @@
                     <% end %>
                   <% end %>
                 </td>
-                <td class="col-2 price" id="price"><%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+                <td class="col-2 price" id="price">
+                  <%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %>
+                  <br>
+                  <% description = '' %>
+                  <% contains = false %>
+                  <% price = r.price %>
+                  <% offers.each do |offer| %>
+                    <% offer.offer_details.each do |detail| %>
+                      <% if detail.room.id == r.id %>
+                        <% description+= offer.description.to_s + " " + detail.discount.to_s + "%\n" %>
+                        <% price -= (r.price * detail.discount) / 100 %>
+                        <% contains = true %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <% if contains %>
+                    <span class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="bottom" title="<%= description %>">Oferta</span>
+                  <% end %>
+                </td>
                 <td class="col-2">
                   <label>
                     <select class="custom-select custom-select-sm quantity" id="quantity" onchange="addValues()">
