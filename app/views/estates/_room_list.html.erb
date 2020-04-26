@@ -17,10 +17,6 @@
             <tbody id="rooms">
             <% rooms.each do |r| %>
               <tr>
-                <td id="booking_info" hidden="true">
-                  <div class="room_id" hidden="true"><%=r.id%></div>
-                  <div class="price" hidden="true"><%=r.price%></div>
-                </td>
                 <td class="col-2">
                   <%= link_to r.description, room_estate_path(r.id), class: 'btn btn-link', remote: true %>
                 </td>
@@ -34,6 +30,7 @@
                   <% end %>
                 </td>
                 <% total = 0 %>
+                <% price_real = 0 %>
                 <td class="col-2 price" id="price">
                   <%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %>
                   <br>
@@ -55,11 +52,14 @@
                         <% end %>
                       <% end %>
                     <% end %>
+                    <% if n==1 %>
+                      <% price_real= price %>
+                    <% end %>
                     <% total+= price %>
                     <% day+= n %>
                   <% end %>
                   <% if contains %>
-                    <span class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="bottom" title="<%= description %>">Oferta</span>
+                    <span class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="left" title="<%= description %>">Oferta</span>
                   <% end %>
                 </td>
                 <td id="price_total" hidden="true"><%=total%></td>
@@ -73,6 +73,10 @@
                     </select>
                   </label>
                 </td>
+                <td id="booking_info" hidden="true">
+                  <div class="room_id" hidden="true"><%=r.id%></div>
+                  <div class="price" hidden="true"><%=price_real%></div>
+                </td>
               </tr>
             <% end %>
             </tbody>
@@ -84,12 +88,10 @@
     <div class="col col-lg-3">
         <div class="card card-default mb-4">
           <div class="card-body">
-            <div class="card-header">
-              <h5><strong>Total</strong></h5>
-            </div>
-            <div class="card-header"><h5>Estancia de <span id="diff"><%=diff%></span> noche<%=plural_arg%></h5></div>
+            <h5><strong>Total</strong></h5>
+            <h5>Estancia de <span id="diff"><%=diff%></span> noche<%=plural_arg%></h5>
             <label id="price_normal_label" hidden="true" for="price_normal">Precio Normal</label><input id="price_normal" class="form-control" type="text" hidden="true" disabled/>
-            <br>
+            <br id="br" hidden="true">
             <label id="total_label" hidden="true" for="total">Precio con Oferta</label><input class="form-control" id="total" type="text" disabled/>
           </div>
           <div class="card-footer">
@@ -124,8 +126,10 @@
           $('#price_normal').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
           $('#price_normal').css("text-decoration", "line-through");
           $('#price_normal').css("color", "gray");
+          $('#br').attr('hidden', false);
       }
       else {
+          $('#br').attr('hidden', true);
           $('#price_normal').attr('hidden', true);
           $('#price_normal_label').attr('hidden', true);
           $('#total_label').attr('hidden', true);
