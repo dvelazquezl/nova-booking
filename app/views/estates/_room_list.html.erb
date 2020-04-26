@@ -34,18 +34,19 @@
                 <td class="col-2 price" id="price">
                   <%=number_to_currency(r.price, :unit => "Gs", :separator => ".", :precision => 0) %>
                   <br>
+                  <% descriptions = [] %>
                   <% description = '' %>
                   <% contains = false %>
                   <% day = Date.parse(from) %>
+                  <% day_offers= [] %>
                   <% (1..diff).each do |n| %>
                     <% price = r.price %>
-                    <% offers.each do |offer| %>
-                      <% offer.offer_details.each do |detail| %>
-                        <% if (offer.date_start .. offer.date_end).cover?(day) %>
+                    <% offers.each_with_index do |offer, i| %>
+                      <% if (offer.date_start .. offer.date_end).cover?(day) %>
+                        <% day_offers[i].nil? ? day_offers[i] = 1 : day_offers[i] += 1 %>
+                        <% offer.offer_details.each_with_index do |detail, index| %>
                           <% if detail.room.id == r.id %>
-                            <% if n==1 %>
-                              <% description+= offer.description.to_s + " " + detail.discount.to_s + "% de descuento\n" %>
-                            <% end %>
+                            <% n == 1? descriptions.push(offer.description.to_s + " " + detail.discount.to_s + "% de descuento") : nil%>
                             <% price -= (r.price * detail.discount) / 100 %>
                             <% contains = true %>
                           <% end %>
@@ -59,6 +60,10 @@
                     <% day+= n %>
                   <% end %>
                   <% if contains %>
+                    <% day_offers.compact %>
+                    <% descriptions.each_with_index do |d, i| %>
+                      <% description+= d + ' ('+day_offers[i].to_s + (day_offers[i]>1? ' días' : ' día').to_s + ' de oferta).'+"\n" %>
+                    <% end %>
                     <span class="badge badge-pill badge-success" data-toggle="tooltip" data-placement="left" title="<%= description %>">Oferta</span>
                   <% end %>
                 </td>
@@ -75,7 +80,7 @@
                 </td>
                 <td id="booking_info" hidden="true">
                   <div class="room_id" hidden="true"><%=r.id%></div>
-                  <div class="price" hidden="true"><%=price_real%></div>
+                  <div class="price" hidden="true"><%=r.price%></div>
                 </td>
               </tr>
             <% end %>
