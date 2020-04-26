@@ -17,8 +17,16 @@ class OffersController < ApplicationController
   # GET /offers/new
   def new
     @offer = Offer.new
-    @offer_details = @offer.offer_details.build
-    render :new, locals: {offer_details: @offer_details}
+    owner = helpers.current_owner
+    estates = Estate.estates_by_owner(owner.id)
+    estate_name, offer_details = nil
+    if params[:tag_estate_id].present? then
+      estate_name = Estate.find_by(id: params[:tag_estate_id]).name
+      @offer.estate_id = params[:tag_estate_id]
+      offer_details = @offer.offer_details.build
+    end
+    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name}
+
   end
 
   # GET /offers/1/edit
@@ -32,7 +40,7 @@ class OffersController < ApplicationController
     @offer.date_creation = Time.now
     respond_to do |format|
       if @offer.save
-        format.html { redirect_to @offer, notice: 'La oferta fue creada satifactoriamente.' }
+        format.html { redirect_to @offer, notice: 'La oferta fue creada satisfactoriamente.' }
         format.json { render :show, status: :created, location: @offer }
       else
         format.html { render :new }
