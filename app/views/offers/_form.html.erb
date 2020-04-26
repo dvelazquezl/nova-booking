@@ -1,0 +1,63 @@
+<%= form_with(model: offer, local: true) do |form| %>
+  <% if offer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(offer.errors.count, "error") %> prohibited this offer from being saved:</h2>
+
+      <ul>
+        <% offer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="content-heading">Oferta</div>
+  <div align="center">
+    <div class="card card-default col-7">
+      <div class="card-body">
+        <div class="row" align="left">
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="form-group col-10">
+                <label>Propiedad *</label>
+                <%= form.text_field :estate_id, class: "form-control", required: "required" %>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group col-10">
+                <label>Descripción *</label>
+                <%= form.text_field :description, class: "form-control", required: "required" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-body">
+              <div class="form-group  ">
+                <label>Desde</label>
+                <%= form.date_field :date_start, min: Date.today, class: "form-control", required: "required" %>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Hasta </label>
+                <%= form.date_field :date_end, min: Date.today, class: "form-control", required: "required"%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div align="center">
+    <div class="col-7">
+      <fieldset>
+        <div class="form-group row">
+            <%#= link_to 'Atras', estates_path, class: "btn btn-secondary" %>
+            <%= form.submit 'Guardar', class: "btn btn-primary" %>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+<% end %>
