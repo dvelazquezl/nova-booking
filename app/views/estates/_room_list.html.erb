@@ -96,6 +96,7 @@
             <h5><strong>Total</strong></h5>
             <h5>Estancia de <span id="diff"><%=diff%></span> noche<%=plural_arg%></h5>
             <label id="price_normal_label" hidden="true" for="price_normal">Precio Normal</label><input id="price_normal" class="form-control" type="text" hidden="true" disabled/>
+
             <br id="br" hidden="true">
             <label id="total_label" hidden="true" for="total">Precio con Oferta</label><input class="form-control" id="total" type="text" disabled/>
           </div>
@@ -123,12 +124,12 @@
       });
       total = total  * $("#diff").text();
       $('#total').val(total2.toLocaleString("en-US").split(",").join(".") + " Gs");
+      $('#price_normal').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
       total === 0 ? book.prop('disabled', true) : book.prop('disabled', false);
       if(total > total2) {
           $('#price_normal').attr('hidden', false);
           $('#price_normal_label').attr('hidden', false);
           $('#total_label').attr('hidden', false);
-          $('#price_normal').val(total.toLocaleString("en-US").split(",").join(".") + " Gs");
           $('#price_normal').css("text-decoration", "line-through");
           $('#price_normal').css("color", "gray");
           $('#br').attr('hidden', false);
