@@ -3,4 +3,5 @@ class Offer < ApplicationRecord
   has_many :offer_details, dependent: :destroy
   accepts_nested_attributes_for :offer_details, allow_destroy: true,
                                 reject_if: :all_blank
+  self.per_page = 5
 end

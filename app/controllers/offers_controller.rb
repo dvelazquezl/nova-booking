@@ -6,7 +6,8 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
-    @offers = Offer.all
+    offers = Offer.page(params[:page])
+    render :index, locals: {offers: offers}
   end
 
   # GET /offers/1
