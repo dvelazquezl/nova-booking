@@ -30,6 +30,7 @@ RemoveUnusedMethodsInControllersCheck: { except_methods:
      EstatesController#current_ability,
      OwnersController#current_ability,
      BookingsController#current_ability,
+     OffersController#current_ability,
      ErrorsController#not_found_error
     ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
