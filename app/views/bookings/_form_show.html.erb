@@ -116,7 +116,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                  <%= number_to_currency(booking.discount/@diff, :unit => "Gs", :separator => ".", :precision => 0) %>
+                  <%= number_to_currency(booking.discount/diff, :unit => "Gs", :separator => ".", :precision => 0) %>
                 </td>
               </tr>
             <% end %>
@@ -126,7 +126,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                  <b><%= number_to_currency( subtotal - booking.discount/@diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+                  <b><%= number_to_currency( subtotal - booking.discount/diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
                 </td>
               </tr>
               <tr class="thead-light">
@@ -137,6 +137,7 @@
                 <th>
                   <b> <%= number_to_currency( booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
                 </th>
+                <th></th>
               </tr>
             </tbody>
           </table>
