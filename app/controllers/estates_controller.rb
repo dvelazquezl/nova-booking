@@ -2,6 +2,7 @@ class EstatesController < ApplicationController
   authorize_resource
   before_action :set_estate, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: [:show, :room, :show_visited]
+  after_action :update_status, only: %i[edit update]
 
   include EstatesHelper
   # GET /estates
@@ -251,4 +252,9 @@ class EstatesController < ApplicationController
     end
     return email, name
   end
+
+  def update_status
+    @estate.isPublished ? @estate.update_attribute(:status, true) : @estate.update_attribute(:status, false)
+  end
+
 end
