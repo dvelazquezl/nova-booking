@@ -1,5 +1,7 @@
 class OffersController < ApplicationController
+  authorize_resource
   before_action :set_offer, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:show]
 
   # GET /offers
   # GET /offers.json
@@ -69,6 +71,10 @@ class OffersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def offer_params
-      params.fetch(:offer, {})
+      params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, :estate_id, offer_details_attributes: [:id, :room_id, :discount])
     end
+
+  def current_ability
+    @current_ability ||= OfferAbility.new(current_user)
+  end
 end
