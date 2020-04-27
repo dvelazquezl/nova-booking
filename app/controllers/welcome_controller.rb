@@ -10,7 +10,7 @@ class WelcomeController < ApplicationController
             sorted_by: Estate.options_for_sorted_by,
         },
         )) || return
-    estates = Estate.best_estates().take(quantity_hotels)
+    estates = Estate.only_published.best_estates.take(quantity_hotels)
     respond_to do |format|
       format.html
       format.js
