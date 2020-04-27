@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :comments, only: [] do
     collection do
       post :save
+      get :index
     end
   end
 
