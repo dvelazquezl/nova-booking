@@ -1,3 +1,11 @@
+<% provide :head_tags do %>
+  <meta name='turbolinks-visit-control' content='reload'>
+  <script>
+      document.addEventListener("DOMContentLoaded", function(){
+          initMap(<%=@estate.latitude%>, <%=@estate.longitude%>)
+      });
+  </script>
+<% end %>
 <div class="row results-filter-section">
   <!--COMENTARIOS-->
   <div class="col-2">
@@ -17,8 +25,26 @@
                 </h1>
               </div>
               <div class="col-12 d-flex align-items-center">
-                <em class="mr-1 fa-1x fas fa-map-marker-alt">
-                </em>
+                <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
+                  <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"></h4>
+                      </div>
+                      <div class="form-group">
+                        <p>
+                        <div id="map" ></div>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <span>
                   <%= @estate.address %>
                   <input id="estate-attr" type="hidden" value=<%= @estate.id %>>
@@ -34,17 +60,27 @@
       <div class="col-12">
         <div class="container">
           <p class="col-12" id="description-text">
-            &emsp;&emsp;<%= + @estate.description %>
+            &emsp;&emsp;<%= @estate.description %>
+          </p>
+          <p class="col-12" id="description-text">
+            <% if @estate.booking_cancelable? %>
+              &emsp;&emsp;<span class="badge badge-green float-center">Se permite la cancelación de reservas</span>
+            <% else %>
+              &emsp;&emsp;<span class="badge badge-warning float-center">No se permite la cancelación de reservas</span>
+            <% end %>
           </p>
         </div>
       </div>
+
       <!-- END -->
 
       <!-- ESTATE DETAILS -->
       <div class="col-12" id="estate-details">
         <div class="row details">
           <div class="col-md-8 col-sm-12" id="carousel-div">
+
             <%= render partial: "estates/show_images", :locals => { images: @estate.images, h_size: '340px'} %>
+
           </div>
           <div class="col-md-4 col-sm-12" id="facilities-div">
             <div class="row">
