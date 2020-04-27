@@ -42,7 +42,12 @@ class Booking < ApplicationRecord
   }
 
   scope :bookings_by_client, -> (current_client_email) { where(client_email: current_client_email) }
-
+  scope :bookings_by_owner_id, -> (owner_id) {
+    where("bookings.estate_id in(
+      select e.id from estates as e
+        inner join owners as o on e.owner_id = ?
+      )", owner_id)
+  }
 
   self.per_page = 5
   resourcify

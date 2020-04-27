@@ -31,12 +31,16 @@ Rails.application.routes.draw do
   get 'estates/:id/show_visited', :to => 'estates#show_visited', :as => 'show_visited_estate'
   get 'remove_image/:id', :to => 'estates#remove_image', :as => 'remove_image'
 
+  get 'bookings/show_detail/:id', :to => 'bookings#show_detail', :as => 'show_detail_booking'
+
   resources :users, only: [:index]
   resources :rooms
   resources :facilities, except: :show
   resources :bookings, except: [:edit, :update, :delete] do
     collection do
       get :confirmation
+      get :index_owner
+      get :index_user
     end
   end
   resources :comments, only: [] do
