@@ -18,6 +18,16 @@ class OffersController < ApplicationController
   # GET /offers/new
   def new
     @offer = Offer.new
+    owner = helpers.current_owner
+    estates = Estate.estates_by_owner(owner.id)
+    estate_name, offer_details = nil
+    if params[:tag_estate_id].present? then
+      estate_name = Estate.find_by(id: params[:tag_estate_id]).name
+      @offer.estate_id = params[:tag_estate_id]
+      offer_details = @offer.offer_details.build
+    end
+    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name}
+
   end
 
   # GET /offers/1/edit
@@ -28,10 +38,10 @@ class OffersController < ApplicationController
   # POST /offers.json
   def create
     @offer = Offer.new(offer_params)
-
+    @offer.date_creation = Time.now
     respond_to do |format|
       if @offer.save
-        format.html { redirect_to @offer, notice: 'Offer was successfully created.' }
+        format.html { redirect_to @offer, notice: 'La oferta fue creada satisfactoriamente.' }
         format.json { render :show, status: :created, location: @offer }
       else
         format.html { render :new }
@@ -65,15 +75,16 @@ class OffersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_offer
-      @offer = Offer.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def offer_params
-      params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, :estate_id, offer_details_attributes: [:id, :room_id, :discount])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_offer
+    @offer = Offer.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def offer_params
+    params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, :estate_id, offer_details_attributes: [:id, :offer_id, :room_id, :discount])
+  end
 
   def current_ability
     @current_ability ||= OfferAbility.new(current_user)
