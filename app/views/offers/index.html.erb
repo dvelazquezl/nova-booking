@@ -22,7 +22,7 @@
             <td class="results-background">
               <div class="media align-items-center">
                 <a class="mr-4" href="#">
-                  <%= image_tag Estate.find(offer.estate_id).images.first, alt: "rss feed", height: 150, width: 150 %>
+                  <%= image_tag offer.estate_images.first, alt: "rss feed", height: 150, width: 150 %>
                 </a>
                 <div class="media-body d-flex">
                   <div class="">
@@ -36,7 +36,7 @@
                     </h4>
                     <br>
                     <p>
-                      <b>Propiedad: </b><%= Estate.find(offer.estate_id).name %> <br>
+                      <b>Propiedad: </b><%= offer.estate_name %> <br>
                       <b>Desde: </b><%= offer.date_start.strftime("%d/%m/%Y") %> &nbsp;&nbsp;&nbsp;<b>Hasta: </b><%= offer.date_end.strftime("%d/%m/%Y") %>
                     </p>
                   </div>
