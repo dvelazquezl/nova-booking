@@ -12,7 +12,7 @@ class OfferAbility
         owner ||= Owner.find_by user_id: user.id
 
         #User logueado.
-        can :read, Offer
+
         #Solo un user con perfil de owner
         if owner
           can :read, Offer
