@@ -24,7 +24,7 @@ class OffersController < ApplicationController
   def new
     @offer = Offer.new
     owner = helpers.current_owner
-    estates = Estate.estates_by_owner(owner.id)
+    estates = Estate.only_published.estates_by_owner(owner.id)
     offer_details = @offer.offer_details.build
     estate_name = nil
     if params[:tag_estate_id].present? then
