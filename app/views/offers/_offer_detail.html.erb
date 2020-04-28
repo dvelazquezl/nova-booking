@@ -1,0 +1,28 @@
+<fieldset style="margin: 0; border: 0; padding: 0;">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td class="col-4">
+          <%= f.select :room_id,
+                       options_from_collection_for_select(@offer.estate.rooms, "id", "description", f.object.room_id), {prompt: "Seleccionar"},
+                       {class: 'form-control', required: 'true'}%>
+        </td>
+        <td class="col-6">
+          <div class="input-group">
+            <%= f.number_field :discount, class: "form-control number", required: "required", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", size:"2"%>
+            <div class="input-group-prepend">
+              <div class="input-group-text">%</div>
+            </div>
+          </div>
+        </td>
+        <td class="col-2">
+          <%= link_to "Eliminar" do %>
+            <div class=" remove_fields2 btn btn-link text-danger">
+              <i class="fas fa-trash-alt"></i>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
