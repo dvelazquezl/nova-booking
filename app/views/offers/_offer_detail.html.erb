@@ -1,17 +1,17 @@
 <fieldset style="margin: 0; border: 0; padding: 0;">
-  <table class="table table-bordered">
+  <table class="table">
     <tbody>
-      <tr>
-        <td class="col-4">
+      <tr class="row">
+        <td class="col-7">
           <%= f.select :room_id,
                        options_from_collection_for_select(@offer.estate.rooms, "id", "description", f.object.room_id), {prompt: "Seleccionar"},
                        {class: 'form-control', required: 'true'}%>
         </td>
-        <td class="col-6">
+        <td class="col-3">
           <div class="input-group">
-            <%= f.number_field :discount, class: "form-control number", required: "required", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", size:"2"%>
+            <%= f.number_field :discount, class: "form-control number", required: "required", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", size:"3"%>
             <div class="input-group-prepend">
-              <div class="input-group-text">%</div>
+              <div class="percent_input">%</div>
             </div>
           </div>
         </td>
