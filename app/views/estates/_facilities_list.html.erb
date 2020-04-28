@@ -2,7 +2,7 @@
   <% facilities.each do |facility| %>
       <li class="facility">
         <i class="fas fa-check-circle text-info mr-2"></i>
-        <%=Facility.find_by(id: facility.facility_id).description %>
+        <%=facility(facility) %>
       </li>
   <%end %>
 </ul>

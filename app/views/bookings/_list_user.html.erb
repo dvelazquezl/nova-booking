@@ -3,7 +3,7 @@
     <thead class="thead-light">
     <tr>
       <th class="text-center">Alojamiento</th>
-      <th class="text-center">Fecha de entrada/salida</th>
+      <th class="text-center">Fecha de entrada / salida</th>
       <th class="text-center">Estado</th>
       <th class="text-center">Total Gs.</th>
       <th class="text-center">Acciones</th>
@@ -12,10 +12,11 @@
     <tbody>
     <% bookings.each do |booking| %>
       <tr>
-        <td class="text-center"></td>
+        <td class="text-center"><%=estate_by_booking(booking).name %></td>
         <td class="text-center"><%= booking.date_start.strftime("%d-%m-%Y") %> / <%= booking.date_end.strftime("%d-%m-%Y") %></td>
-        <td class="text-center"><%= booking.booking_state %></td>
-        <td class="text-center"><%= booking.total_amount %></td>
+        <%status_booking = get_status(booking) %>
+        <td class="text-center"><label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></label></td>
+        <td class="text-center"><%= number_to_currency( booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></td>
         <td class="text-center">
           <div class="btn-group" role="group">
             <%= link_to booking_path(booking.id) do %>

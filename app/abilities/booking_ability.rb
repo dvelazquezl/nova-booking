@@ -19,7 +19,7 @@ class BookingAbility
         #Solo un user con perfil de owner
         if owner
           can :index_owner, Booking
-          can :show_detail, Booking, client_email: user.email
+          can :show_detail, Booking
         end
       end
     else

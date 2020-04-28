@@ -268,6 +268,11 @@ en:
         one:   propiedad
         few:   propiedades
         other: propiedades
+      booking:
+        zero:  reservas
+        one:   reserva
+        few:   reservas
+        other: reservas
 
   enumerize:
     room:
