@@ -1,16 +1,19 @@
 class BookingsController < ApplicationController
-  before_action :authenticate_user! , except: [:new, :create, :show]
+  authorize_resource
+  before_action :authenticate_user! , except: [:new, :create, :show, :confirmation]
   before_action :set_booking, only: [:show, :destroy]
-  load_and_authorize_resource
 
   def index
     @bookings = Booking.all
   end
 
   def show
+    @booking = Booking.find(params[:id])
     if !@booking.booking_state.blank?
-      @booking = Booking.find(params[:id])
-      @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+      room = Room.with_deleted.find(@booking.booking_details[0].room_id)
+      @estate = Estate.with_deleted.find(room.estate_id)
+      @diff = Booking.diff(@booking)
+      @plural_arg = (@diff > 1)? "s":" "
     else
       format.html { redirect_to root_url, errors: 'Lo sentimos no puede acceder a la reserva' }
     end
@@ -18,10 +21,13 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.booking_new(Booking.new, params)
+    @diff = Booking.diff(@booking)
+    @plural_arg = (@diff > 1)? "s":" "
   end
 
   def create
     @booking = Booking.new(booking_params)
+    @booking.notified = false
     respond_to do |format|
       if @booking.save
         @estate = Booking.estate(@booking)
@@ -67,7 +73,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :booking_state, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
+    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :booking_state, :estate_id, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
   end
 
   def current_ability

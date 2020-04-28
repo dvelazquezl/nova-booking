@@ -11,7 +11,7 @@
                 <div class="form-group col-10">
                   <label>Nombre y Apellido *</label>
                   <% if user_signed_in?%>
-                    <%= form.text_field :client_name, class: "form-control", required: "required" %>
+                    <%= form.text_field :client_name, class: "form-control",value: current_user.name + " "+current_user.last_name, required: "required" %>
                   <%else %>
                     <%= form.text_field :client_name, class: "form-control", required: "required" %>
                   <%end %>
@@ -23,7 +23,7 @@
                   <% if user_signed_in?%>
                     <%= form.text_field :client_email, class: "form-control", required: "required", value: current_user.email,:readonly => true %>
                   <%else %>
-                    <%= form.text_field :client_email, class: "form-control", required: "required" %>
+                    <%= form.email_field :client_email, class: "form-control", required: "required" %>
                   <%end %>
                 </div>
               </div>
@@ -44,11 +44,8 @@
               </div>
             </div>
           </div>
-
           <br>
-
           <div class="col-11">
-
             <table class="table">
               <thead class="table-primary">
               <tr>
@@ -74,25 +71,34 @@
                 </tr>
               <%end%>
               <tr>
-                <td><b>Total:</b></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
-                  <b><%= number_to_currency( form.object.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+                  <b><%= number_to_currency( form.object.total_amount / diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+                </td>
+              </tr>
+              <tr class="thead-light">
+                <th><b>Total: <%=diff%> noche<%=plural_arg%></b></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                  <b> <%= number_to_currency( form.object.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
                   <%= form.hidden_field :total_amount %>
                   <%= form.hidden_field :date_creation %>
-                </td>
+                </th>
               </tr>
               </tbody>
             </table>
           </div>
         </fieldset>
-
-
         <fieldset>
+          <br/>
           <div align="right">
             <div class="col-md-4">
+              <%= form.hidden_field :estate_id %>
               <%= form.submit 'Reservar', class: "btn btn-primary" %>
             </div>
           </div>

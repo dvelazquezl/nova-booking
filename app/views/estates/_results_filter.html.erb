@@ -4,21 +4,21 @@
     <%= form_for_filterrific(filterrific, url: welcome_results_path, html: {id: :manual_filterrific_form}) do |f| %>
       <div class="form-group">
         <div class="row has-search d-flex align-items-center results-block">
-          <%= f.text_field :search_query, placeholder: "¿Qué ciudad búscas?",
+          <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
                            :class => 'filterrific-periodically-observed form-control',
-                           :value => params[:city]%>
+                           :value => params[:city] %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control date_start',
-                         :'id' => 'with_date_gte',
-                         :'value' => params[:from],
-                         readonly: true )%>
+                           :'id' => 'with_date_gte',
+                           :'value' => params[:from],
+                           readonly: true) %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_lte, placeholder: "Fecha de salida", class: 'input-sm form-control date_end',
-                         :'id' => 'with_date_lte',
-                         :'value'=> params[:to],
-                         readonly: true )%>
+                           :'id' => 'with_date_lte',
+                           :'value' => params[:to],
+                           readonly: true) %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.submit :Buscar, class: 'form-control btn btn-primary' %>
@@ -28,51 +28,78 @@
   </div>
 </div>
 <script>
-$(function() {
-    var startDate = new Date();
-    var FromEndDate = new Date();
-    var ToEndDate = new Date();
-    ToEndDate.setDate(ToEndDate.getDate()+365);
-    FromEndDate.setDate(FromEndDate.getDate()+365);
-    $('#with_date_gte').datepicker({
-        weekStart: 1,
-        startDate: new Date(),
-        endDate: FromEndDate,
-        autoclose: true,
-        orientation: "bottom auto",
-        format: "yyyy/mm/dd",
-        language: 'es',
-        todayHighlight: true
-    })
-        .on('changeDate', function(selected){
-            startDate = new Date(selected.date.valueOf());
-            startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
-            $('#with_date_lte').datepicker('setStartDate', startDate);
-        });
-    $('#with_date_lte')
-        .datepicker({
+    $(function () {
+        let fromD = $("#with_date_gte").val();
+        let toD = $("#with_date_lte").val();
+        let startDate = stringToDate(fromD, "yyyy-mm-dd", "-");
+        let endDate = stringToDate(toD, "yyyy-mm-dd", "-");
+        let newStartDate = dateManipulation(startDate, 1, 0, 0, "+");
+        let newEndDate = dateManipulation(endDate, 1, 0, 0, "-");
+        let ToEndDate = dateManipulation(new Date(), 365, 0, 0, "+");
+        $('#with_date_gte').datepicker({
             weekStart: 1,
-            startDate: startDate,
+            startDate: new Date(),
+            endDate: newEndDate,
+            autoclose: true,
+            orientation: "bottom auto",
+            format: "dd MM yyyy",
+            language: 'es',
+            todayHighlight: true
+        }).datepicker('setDate', startDate).on('changeDate', function (selected) {
+            newStartDate = new Date(selected.date.valueOf());
+            let date = dateManipulation(newStartDate, 1, 0, 0, "+");
+            $('#with_date_lte').datepicker('setStartDate', date);
+        });
+        $('#with_date_lte').datepicker({
+            weekStart: 1,
+            startDate: newStartDate,
             endDate: ToEndDate,
             autoclose: true,
             orientation: "bottom auto",
-            format: "yyyy/mm/dd",
+            format: "dd MM yyyy",
             language: 'es',
             todayHighlight: true
-        })
-        .on('changeDate', function(selected){
-            FromEndDate = new Date(selected.date.valueOf());
-            FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
-            $('#with_date_gte').datepicker('setEndDate', FromEndDate);
+        }).datepicker('setDate', endDate).on('changeDate', function (selected) {
+            newEndDate = new Date(selected.date.valueOf());
+            let date = dateManipulation(newEndDate, 1, 0, 0, "-");
+            $('#with_date_gte').datepicker('setEndDate', date);
         });
-    $(".number").on("keyup", function(event ) {
-        let input = $(event.target).val();
-        input = input.replace(/[\D\s\._\-]+/g, "");
-        input = input?parseInt(input, 10):0;
-        $(event.target).val(function () {
-            let num = (input === 0)?"":input.toLocaleString("en-US");
-            return num.split(",").join(".");
+        $("#manual_filterrific_form").on("submit", function (evt) {
+            $(".number").each(function (ind, input) {
+                input.value = input.value.split(".").join("");
+            });
+        });
+        function stringToDate(_date, _format, _delimiter) {
+            var formatLowerCase = _format.toLowerCase();
+            var formatItems = formatLowerCase.split(_delimiter);
+            var dateItems = _date.split(_delimiter);
+            var monthIndex = formatItems.indexOf("mm");
+            var dayIndex = formatItems.indexOf("dd");
+            var yearIndex = formatItems.indexOf("yyyy");
+            var month = parseInt(dateItems[monthIndex]);
+            month -= 1;
+            var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+            return formatedDate;
+        }
+        function dateManipulation(date, days, hrs, mins, operator) {
+            date = new Date(date);
+            if (operator == "-") {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() - durationInMs);
+            } else {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() + durationInMs);
+            }
+            return newDate;
+        }
+        $(".number").on("keyup", function (event) {
+            let input = $(event.target).val();
+            input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt(input, 10) : 0;
+            $(event.target).val(function () {
+                let num = (input === 0) ? "" : input.toLocaleString("en-US");
+                return num.split(",").join(".");
+            });
         });
     });
-  });
 </script>

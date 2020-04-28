@@ -20,10 +20,6 @@
     font-family: Bookman;
   }
 
-  .main-filter-section{
-    height: 300px;
-  }
-
   .main-filter-section .filter-block{
     padding: 0px;
   }
@@ -39,7 +35,6 @@
     padding-bottom: 2px;
     padding-top: 2px;
   }
-
   
   .main-filter-section .form-control{
     padding-left: 2.375rem;
@@ -58,8 +53,6 @@
     pointer-events: none;
     color: #aaa;
   }
-
-
 
   #description-list{
     list-style: none;
@@ -80,37 +73,50 @@
   }
 
   .results-block {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-bottom: 5px;
     padding-top: 5px;
-    background-color: white;
+  }
+
+  .filter-section{
+    width:280px;
+    height:100%;
+    white-space:nowrap;
   }
 
   .results-background {
     background-color: white;
   }
 
-  .results-filter-section .filter-section {
-    width: 270px;
-    padding-left: 30px;
-    padding-right: 5px;
-    padding-bottom: 0px;
-    padding-top: 30px;
+  #amount{
+    border:0;
+    font-weight:bold;
+    width:70px;
+  }
+  .score_inf{
+    color:#5d9cec;
+    border:0;
   }
 
-  .results-section {
-    width: 77%;
-    padding-left: 30px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    padding-top: 30px;
+  #with_search_home{
+    width:245px;
   }
 
-  .results-section2 {
-    width: 100%;
-    padding-left: 30px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    padding-top: 30px;
+  #with_search_results{
+    width:205px;
   }
+
+  .index-block .form-control{
+    width:230px;
+  }
+
+  .font-title {
+    font-family: PT Sans Narrow;
+  }
+
+  .hr {
+    color: blue;
+    height: 15px;
+  }
+  
