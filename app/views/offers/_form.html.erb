@@ -59,16 +59,16 @@
             <div class="col-8">
               <table class="table">
                 <thead class="table-primary">
-                  <tr class="row table-primary">
-                    <th class="col-7">Habitacion</th>
-                    <th class="col-3">Descuento</th>
-                    <th class="col-2">Accion</th>
-                  </tr>
+                <tr class="row table-primary">
+                  <th class="col-7">Habitacion</th>
+                  <th class="col-3">Descuento</th>
+                  <th class="col-2">Accion</th>
+                </tr>
                 </thead>
                 <tbody id="invoices-items-table">
-                  <%= form.fields_for :offer_details, offer_details do |f| %>
-                    <%= render 'offer_detail', f: f %>
-                  <% end %>
+                <%= form.fields_for :offer_details, offer_details do |f| %>
+                  <%= render 'offer_detail', f: f %>
+                <% end %>
                 </tbody>
               </table>
               <%= link_to_add_fields "Agregar habitacion", form, :offer_details, nil %>
