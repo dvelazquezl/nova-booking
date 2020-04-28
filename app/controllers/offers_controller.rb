@@ -13,7 +13,7 @@ class OffersController < ApplicationController
           Offer.offers_by_owner(owner),
           params[:filterrific],
           select_options: {
-              search_status: Offer.options_for_status,
+              search_status: Offer.offer_status.options,
           },
           )) || return
       offers = @filterrific.find.page(params[:page])
