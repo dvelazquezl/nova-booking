@@ -1,2 +1,74 @@
-<%= link_to 'Edit', edit_offer_path(@offer) %> |
-<%= link_to 'Back', offers_path %>
+<div class="content-heading">Ofertas de <%=Estate.find_by(id: @offer.estate_id).name %></div>
+
+<div align="center">
+  <div class="col-7">
+    <div class="card card-default">
+      <div class="card-body">
+      <p class="lead bb">Datos de la oferta</p>
+      <div class="form-group row">
+        <div class="col-3">
+          <strong>Fecha de inicio</strong>
+        </div>
+        <div class="col-3">
+          <strong>Fecha de finalización</strong>
+        </div>
+        <div class="col-3">
+          <strong>Fecha de creación</strong>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <%= @offer.date_start.strftime("%d/%m/%Y") %>
+        </div>
+        <div class="col-3">
+          <%= @offer.date_end.strftime("%d/%m/%Y") %>
+        </div>
+        <div class="col-3">
+          <%= @offer.date_creation.strftime("%d/%m/%Y") %>
+        </div>
+      </div>
+      </div>
+    </div>
+    <fieldset>
+      <div class="form-group row">
+
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+
+<div class="card card-default">
+  <div class="card-body">
+    <p class="lead bb">Datos de la oferta</p>
+    <form class="form-horizontal">
+      
+      <div class="form-group row">
+        <div class="col-1">
+          <strong>Propiedad</strong>
+        </div>
+        <div class="col-2">
+
+        </div>
+        <div class="col-2">
+          <strong>Fecha de inicio</strong>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-2">
+          <strong>Fecha de finalización</strong>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-2">
+          <strong>Fecha de creación</strong>
+        </div>
+        <div class="col-1">
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
