@@ -49,6 +49,35 @@
     </div>
   </div>
 
+  <% if @offer.estate_id != nil %>
+    <div align="center">
+      <div class="card card-default col-10">
+        <div class="card-body">
+          <p class="lead bb">DETALLES</p>
+          <div class="row">
+            <div class="col-10">
+              <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="col-4">Habitacion</th>
+                    <th class="col-6">Descuento</th>
+                    <th class="col-2">Accion</th>
+                  </tr>
+                </thead>
+                <tbody id="invoices-items-table">
+                  <%= form.fields_for :offer_details, offer_details do |f| %>
+                    <%= render 'offer_detail', f: f %>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= link_to_add_fields "Agregar habitacion", form, :offer_details, nil %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div align="center">
     <div class="col-10">
       <fieldset>
