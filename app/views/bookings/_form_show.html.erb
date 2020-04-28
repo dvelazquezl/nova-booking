@@ -138,7 +138,7 @@
         </div>
         <% if status_booking == "Futura" && is_cancellable?(estate) %>
           <div class="col-11" id="can_cancel">
-          <%= link_to booking, method: :delete, data: { confirm: 'Estás seguro?' } do %>
+          <%= link_to cancel_booking_user_url(booking), method: :cancel_booking_user, data: { confirm: 'Estás seguro?' } do %>
             <button class="btn btn-outline-danger btn-sm">Cancelar Reserva</button>
           <% end %>
         <% else %>
