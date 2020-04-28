@@ -10,4 +10,10 @@ class Offer < ApplicationRecord
   scope :offers_by_owner, -> (current_owner_id) {
     joins(:estate).where('estates.owner_id = ?',current_owner_id)
   }
+
+  scope :offers_of_the_day, lambda { |from, to|
+    where('((offers.date_end >= ?) and (offers.date_start <= ?)) or
+          ((offers.date_end >= ?) and (offers.date_start <= ?))',
+          to, to, from, from)
+  }
 end
