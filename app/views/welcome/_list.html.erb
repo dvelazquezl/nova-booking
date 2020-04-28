@@ -14,8 +14,12 @@
                     <h4 class="m-0" style="font-size:25px"><%= estate.name %></h4>
                     <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                     <p><%= estate.address %></p>
+                    <% if has_breakfast?(estate) %>
+                      <span class="badge badge-success">Desayuno incluido</span>
+                    <% end %>
                   </div>
                   <div class="ml-auto">
+                    <label class="label-score"><%=label_score(estate.score) %></label>
                     <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>">
                       <span><%= estate.score %></span>
                     </div>

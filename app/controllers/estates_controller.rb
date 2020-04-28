@@ -2,6 +2,7 @@ class EstatesController < ApplicationController
   authorize_resource
   before_action :set_estate, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: [:show, :room, :show_visited]
+  after_action :update_status, only: %i[edit update]
 
   include EstatesHelper
   # GET /estates
@@ -111,10 +112,8 @@ class EstatesController < ApplicationController
   end
 
   def remove_image
-    image = ActiveStorage::Blob.find(params[:id])
-    image.purge
+    ActiveStorage::Blob.find_signed(params[:id]).attachments.first.purge_later
     respond_to do |format|
-      format.html { redirect_to edit_estate_path }
       format.js { render :layout => false }
     end
   end
@@ -234,7 +233,7 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, :booking_cancelable, :longitude, :latitude, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
   end
 
   def current_ability
@@ -253,4 +252,9 @@ class EstatesController < ApplicationController
     end
     return email, name
   end
+
+  def update_status
+    @estate.isPublished ? @estate.update_attribute(:status, true) : @estate.update_attribute(:status, false)
+  end
+
 end
