@@ -6,7 +6,13 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
-    @offers = Offer.all
+    owner = helpers.current_owner
+    if owner
+      offers = Offer.offers_by_owner(owner).page(params[:page])
+    else
+      offers = []
+    end
+    render :index, locals: {offers: offers}
   end
 
   # GET /offers/1
