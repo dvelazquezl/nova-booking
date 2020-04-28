@@ -15,10 +15,10 @@
                     <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                     <p><%= estate.address %></p>
                     <% if has_breakfast?(estate) %>
-                      <span class="badge badge-secondary">Desayuno incluido</span>
+                      <span class="badge bg-primary-light">Desayuno incluido</span>
                     <% end %>
                     <% estate.available_offer_for(start_date, end_date).each do |offer| %>
-                      </br><span class="badge badge-success" data-toggle="tooltip" data-placement="bottom" title="<%= offer.description %>">Oferta Incluida</span>
+                      </br><span class="badge bg-success" data-toggle="tooltip" data-placement="bottom" title="<%= offer.description %>">Oferta Incluida</span>
                     <% end %>
                   </div>
                   <div class="ml-auto">
