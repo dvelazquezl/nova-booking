@@ -96,6 +96,21 @@ class BookingsController < ApplicationController
     end
   end
 
+  def cancel_booking_owner
+    booking = Booking.find(params[:id])
+    respond_to do |format|
+      if booking.update_attribute(:booking_state, 'false')
+        format.html { redirect_to index_owner_bookings_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+        format.json { head :no_content }
+        UserMailer.booking_canceled_by_owner_to_owner(booking).deliver_now
+        UserMailer.booking_canceled_by_owner_to_client(booking).deliver_now
+      else
+        format.html { redirect_to index_owner_bookings_url, alert: 'No se pudo cancelar.' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   private
 
   def set_booking

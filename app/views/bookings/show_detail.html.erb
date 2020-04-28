@@ -89,7 +89,9 @@
         </div>
         <% if status_booking == "Futura" %>
         <div class="col-11" id="can_cancel">
+          <%= link_to cancel_booking_url(booking), method: :cancel_booking_owner, data: { confirm: 'Estas seguro?' } do %>
             <button class="btn btn-outline-danger">Cancelar Reserva</button>
+          <% end %>
         </div>
         <% else %>
         <div class="col-11" id="cant_cancel">

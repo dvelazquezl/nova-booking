@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   get 'remove_image/:id', :to => 'estates#remove_image', :as => 'remove_image'
 
   get 'bookings/show_detail/:id', :to => 'bookings#show_detail', :as => 'show_detail_booking'
+  post 'bookings/cancel_booking/:id', :to => 'bookings#cancel_booking_owner', :as => 'cancel_booking'
 
   resources :users, only: [:index]
   resources :rooms
