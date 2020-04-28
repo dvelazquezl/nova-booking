@@ -136,6 +136,19 @@
             </tbody>
           </table>
         </div>
+        <% if status_booking == "Futura" && is_cancellable?(estate) %>
+          <div class="col-11" id="can_cancel">
+          <%= link_to booking, method: :delete, data: { confirm: 'Estás seguro?' } do %>
+            <button class="btn btn-outline-danger btn-sm">Cancelar Reserva</button>
+          <% end %>
+        <% else %>
+          <div class="col-11" id="cant_cancel">
+            <span>
+              <b>Esta propiedad no permite la cancelacion por parte de usuarios ni reservas vigentes.
+              Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
+            </span>
+          </div>
+        <% end %>
       </fieldset>
     </div>
     <% if user_signed_in? %>

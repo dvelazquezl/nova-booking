@@ -39,4 +39,8 @@ module BookingsHelper
       colors.fourth
     end
   end
+
+  def is_cancellable?(estate)
+		estate.booking_cancelable
+	end
 end
