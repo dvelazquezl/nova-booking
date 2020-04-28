@@ -107,3 +107,13 @@
   height:300px;
 }
 
+#can_cancel, #cant_cancel {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#can_cancel {
+  text-align: right;
+}
+#cant_cancel {
+  color: red;
+}
