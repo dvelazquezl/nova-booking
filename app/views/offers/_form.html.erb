@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <% if @offer.estate_id != nil %>
+  <% if offer.estate_id != nil %>
     <div align="center">
       <div class="card card-default col-10">
         <div class="card-body">
@@ -67,11 +67,11 @@
                 </thead>
                 <tbody id="invoices-items-table">
                 <%= form.fields_for :offer_details, offer_details do |f| %>
-                  <%= render 'offer_detail', f: f %>
+                  <%= render 'offer_detail', f: f, partial_param: offer %>
                 <% end %>
                 </tbody>
               </table>
-              <%= link_to_add_fields "Agregar habitacion", form, :offer_details, nil %>
+              <%= link_to_add_fields "Agregar habitacion", form, :offer_details, offer %>
             </div>
             <div class="col-2"></div>
           </div>
