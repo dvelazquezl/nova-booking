@@ -98,3 +98,4 @@ gem 'bootstrap-email'
 gem 'paranoia'
 gem 'premailer-rails'
 
+gem 'non-stupid-digest-assets'
