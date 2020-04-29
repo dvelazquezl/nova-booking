@@ -1,7 +1,8 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es
-let options = {
+//= require jquery.easy-autocomplete
+let options_easy = {
 
     url: "/welcome/resources.json",
   
@@ -16,6 +17,6 @@ let options = {
     theme: "blue-light"
   };
   $(function () {
-      $("#with_search_home").easyAutocomplete(options);
-      $("#with_search_results").easyAutocomplete(options);
+      $("#with_search_home").easyAutocomplete(options_easy);
+      $("#with_search_results").easyAutocomplete(options_easy);
   });
