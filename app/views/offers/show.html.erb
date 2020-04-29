@@ -1,74 +1,57 @@
-<div class="content-heading">Ofertas de <%=Estate.find_by(id: @offer.estate_id).name %></div>
+<div class="content-heading">Ofertas</div>
 
 <div align="center">
-  <div class="col-7">
+  <div class="col-5">
     <div class="card card-default">
       <div class="card-body">
-      <p class="lead bb">Datos de la oferta</p>
-      <div class="form-group row">
-        <div class="col-3">
-          <strong>Fecha de inicio</strong>
+        <h1 class="text-info" id="offer-title">Ofertas de <%= Estate.find_by(id: @offer.estate_id).name %></h1>
+        <p class="lead bb">Descripción</p>
+        <div class="form-group row" >
+          <div class="col text-left">
+            <%= @offer.description %>
+          </div>
         </div>
-        <div class="col-3">
-          <strong>Fecha de finalización</strong>
+        <p class="lead bb">Fechas</p>
+        <div class="form-group" align="left">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <b>Creacion: </b><%= @offer.date_creation.strftime("%d/%m/%Y") %>
+            </li>
+            <li class="list-group-item">
+              <b>Desde: </b><%= @offer.date_start.strftime("%d/%m/%Y") %>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <b>Hasta: </b><%= @offer.date_end.strftime("%d/%m/%Y") %>
+            </li>
+          </ul>
         </div>
-        <div class="col-3">
-          <strong>Fecha de creación</strong>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-3">
-          <%= @offer.date_start.strftime("%d/%m/%Y") %>
-        </div>
-        <div class="col-3">
-          <%= @offer.date_end.strftime("%d/%m/%Y") %>
-        </div>
-        <div class="col-3">
-          <%= @offer.date_creation.strftime("%d/%m/%Y") %>
-        </div>
-      </div>
+        <p class="lead bb">Lista de habitaciones</p>
+        <table class="table">
+          <thead class="table-primary">
+          <tr>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Precio normal</th>
+            <th class="text-center">Descuento</th>
+            <th class="text-center">Precio con descuento</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @offer.offer_details.each do |m| %>
+            <tr>
+              <td class="text-center"><%= m.room.description %></td>
+              <td class="text-center"><%= m.room.price %></td>
+              <td class="text-center"><%= m.discount %>%</td>
+              <td class="text-center"><%= m.room.price %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
     <fieldset>
-      <div class="form-group row">
-
+      <div class="btn-group row">
+        <%= link_to 'Atras', offers_path, class: "btn btn-dark" %>
+        <%= link_to 'Editar', edit_offer_path(@offer), class: "btn btn-primary" %>
       </div>
     </fieldset>
-  </div>
-</div>
-
-
-<div class="card card-default">
-  <div class="card-body">
-    <p class="lead bb">Datos de la oferta</p>
-    <form class="form-horizontal">
-      
-      <div class="form-group row">
-        <div class="col-1">
-          <strong>Propiedad</strong>
-        </div>
-        <div class="col-2">
-
-        </div>
-        <div class="col-2">
-          <strong>Fecha de inicio</strong>
-        </div>
-        <div class="col-1">
-
-        </div>
-        <div class="col-2">
-          <strong>Fecha de finalización</strong>
-        </div>
-        <div class="col-1">
-
-        </div>
-        <div class="col-2">
-          <strong>Fecha de creación</strong>
-        </div>
-        <div class="col-1">
-
-        </div>
-      </div>
-    </form>
   </div>
 </div>
