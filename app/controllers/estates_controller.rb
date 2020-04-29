@@ -69,7 +69,7 @@ class EstatesController < ApplicationController
     @facilities = estate.facilities_estates
     @images = estate.images
     @comments = Comment.where(estate_id: @estate.id)
-    @offers = estate.offers.offers_of_the_day(date_from, date_to)
+    @offers = estate.offers
     email, name = get_user_email_name(params)
     can_comment = User.can_comment?(email, params[:id])
     respond_to do |format|
