@@ -21,8 +21,8 @@ class OffersController < ApplicationController
         format.html
         format.js
       end
-      render :index, locals: {offers: offers, filterrific: @filterrific}
     end
+    render :index, locals: {offers: offers, filterrific: @filterrific}
   end
 
   # GET /offers/1
