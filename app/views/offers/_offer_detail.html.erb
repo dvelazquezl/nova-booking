@@ -4,7 +4,7 @@
       <tr class="row">
         <td class="col-7">
           <%= f.select :room_id,
-                       options_from_collection_for_select(partial_param.estate.rooms, "id", "description", f.object.room_id), {prompt: "Seleccionar"},
+                       options_from_collection_for_select(Room.rooms_published_by_estate(partial_param.estate_id), "id", "description", f.object.room_id), {prompt: "Seleccionar"},
                        {class: 'form-control', required: 'true'}%>
         </td>
         <td class="col-3">
