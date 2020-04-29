@@ -9,7 +9,7 @@
         </td>
         <td class="col-3">
           <div class="input-group">
-            <%= f.number_field :discount, class: "form-control number", required: "required", type: "text", onkeypress:"event.charCode >= 48 && event.charCode <= 57", size:"3"%>
+            <%= f.number_field :discount, class: "form-control number", required: "required", type: "text", onkeypress:"return (event.charCode >= 48 && event.charCode <= 57)", size:"3"%>
             <div class="input-group-prepend">
               <div class="percent_input">%</div>
             </div>
@@ -26,3 +26,15 @@
     </tbody>
   </table>
 </fieldset>
+
+<script>
+    $(".number").on("keypress", function(event ) {
+        let input = $(event.target).val()+(event.charCode-48);
+        if(input >= 1 && input <= 100) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+</script>
