@@ -13,8 +13,8 @@ class Offer < ApplicationRecord
 
   filterrific(
       available_filters: [
-          :search_status,
-      ],
+          :search_status
+      ]
       )
 
   scope :search_status, -> (option) {
