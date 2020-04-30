@@ -5,13 +5,13 @@
     <div class="card card-default">
       <div class="card-body">
         <h1 class="text-info" id="offer-title">Ofertas de <%= Estate.find_by(id: @offer.estate_id).name %></h1>
-        <p class="lead bb">Descripción</p>
+        <p class="lead bb text-left">Descripción</p>
         <div class="form-group row" >
           <div class="col text-left">
             <%= @offer.description %>
           </div>
         </div>
-        <p class="lead bb">Fechas</p>
+        <p class="lead bb text-left">Fechas</p>
         <div class="form-group" align="left">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -24,7 +24,7 @@
             </li>
           </ul>
         </div>
-        <p class="lead bb">Lista de habitaciones</p>
+        <p class="lead bb text-left">Lista de habitaciones</p>
         <table class="table">
           <thead class="table-primary">
           <tr>
