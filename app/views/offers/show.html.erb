@@ -1,7 +1,7 @@
 <div class="content-heading">Ofertas</div>
 
 <div align="center">
-  <div class="col-5">
+  <div class="col-6">
     <div class="card card-default">
       <div class="card-body">
         <h1 class="text-info" id="offer-title">Ofertas de <%= Estate.find_by(id: @offer.estate_id).name %></h1>
@@ -29,6 +29,7 @@
           <thead class="table-primary">
           <tr>
             <th class="text-center">Nombre</th>
+            <th class="text-center">Tipo</th>
             <th class="text-center">Precio normal</th>
             <th class="text-center">Descuento</th>
             <th class="text-center">Precio con descuento</th>
@@ -38,6 +39,7 @@
           <% @offer.offer_details.each do |m| %>
             <tr>
               <td class="text-center"><%= m.room.description %></td>
+              <td class="text-center"><%= m.room.room_type.text %></td>
               <td class="text-center"><%= m.room.price %></td>
               <td class="text-center"><%= m.discount %>%</td>
               <td class="text-center"><%= m.room.price %></td>
