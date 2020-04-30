@@ -40,9 +40,9 @@
             <tr>
               <td class="text-center"><%= m.room.description %></td>
               <td class="text-center"><%= m.room.room_type.text %></td>
-              <td class="text-center"><%= m.room.price %></td>
+              <td class="text-center"><%= number_to_currency(m.room.price, :unit => "Gs", :separator => ".", :precision => 0) %></td>
               <td class="text-center"><%= m.discount %>%</td>
-              <td class="text-center"><%= m.room.price %></td>
+              <td class="text-center"><%= number_to_currency(m.price_with_discount(m.room.price), :unit => "Gs", :separator => ".", :precision => 0) %></td>
             </tr>
           <% end %>
           </tbody>
