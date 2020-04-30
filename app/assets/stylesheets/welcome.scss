@@ -1,8 +1,11 @@
 // Place all the styles related to the Welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-//= require bootstrap-datepicker3
-
+/*
+*= require bootstrap-datepicker3
+*= require easy-autocomplete
+*= require easy-autocomplete.themes
+*/
   .main-section-header{
     padding-left: 80px;
   }
@@ -99,16 +102,8 @@
     border:0;
   }
 
-  #with_search_home{
-    width:240px;
-  }
-
   #with_search_results{
     width:205px;
-  }
-
-  .index-block .form-control{
-    width:225px;
   }
 
   .font-title {
