@@ -268,6 +268,11 @@ en:
         one:   propiedad
         few:   propiedades
         other: propiedades
+      offer:
+        zero:  ofertas
+        one:   oferta
+        few:   ofertas
+        other: ofertas
 
   enumerize:
     room:
@@ -284,3 +289,7 @@ en:
         one_apartment: "Apartamento"
         home: "Casa"
         hotel: "Hotel"
+    offer:
+      offer_status:
+        in_progress: "En curso"
+        finished: "Vencidas"

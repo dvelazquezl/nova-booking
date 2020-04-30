@@ -143,7 +143,7 @@
     <div class="card-body">
       <% rooms.each.with_index do |room, index| %>
         <%= form.fields_for :rooms, room do |f| %>
-          <%= render 'edit_room', f: f, room_facilities: room_facilities, rooms: rooms, id: index %>
+          <%= render 'edit_room', f: f, partial_param: room_facilities, rooms: rooms, id: index %>
         <% end %>
       <% end %>
       <%= link_to_add_fields "Agregar habitacion", form, :rooms, room_facilities %>

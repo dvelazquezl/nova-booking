@@ -42,7 +42,6 @@ class EstatesController < ApplicationController
   end
 
   # GET /estates/1
-  # GET /estates/1.json
   def show
     (@filterrific = initialize_filterrific(
         Estate.with_rooms,
@@ -58,16 +57,18 @@ class EstatesController < ApplicationController
     @plural_arg = (@diff > 1) ? "s" : " "
     date_from = params[:from]
     date_to = params[:to]
-    price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do
+    price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do metodo y pasar los parametros
     price_min = ((params[:price_min] != '') && (params[:price_min] != nil)) ? params[:price_min] : 0
     @rooms = @estate.rooms.without_deleted.available(params[:id], date_from, date_to, price_max, price_min)
     @rooms.each do |room|
       quantity_available = Room.quantity_available(room.id, date_from, date_to).first
       room.quantity = quantity_available != nil ? quantity_available : 1
     end
-    @facilities = @estate.facilities_estates
-    @images = @estate.images
+    estate = @estate
+    @facilities = estate.facilities_estates
+    @images = estate.images
     @comments = Comment.where(estate_id: @estate.id)
+    @offers = estate.offers
     email, name = get_user_email_name(params)
     can_comment = User.can_comment?(email, params[:id])
     respond_to do |format|
@@ -233,7 +234,7 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :booking_cancelable, :description, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, :booking_cancelable, :longitude, :latitude, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
   end
 
   def current_ability

@@ -1,25 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Offers</h1>
+<div class="content-heading">
+  <div>Ofertas de mis propiedades</div>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @offers.each do |offer| %>
-      <tr>
-        <td><%= link_to 'Show', offer %></td>
-        <td><%= link_to 'Edit', edit_offer_path(offer) %></td>
-        <td><%= link_to 'Destroy', offer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <div class="ml-auto">
+    <%= link_to new_offer_path do %>
+      <button class="btn btn btn-info" title="Nueva oferta">
+        <i class="fas fa-plus text-light fa-1x"></i>
+      </button>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
-<br>
-
-<%= link_to 'New Offer', new_offer_path %>
+<section class="container">
+  <div class="row">
+    <div class="filter-section">
+      <%= render partial: "offers/filter", :locals => {filterrific: filterrific} %>
+    </div>
+    <div class="col" id="filterrific_results">
+      <%= render partial: "offers/list", :locals => {offers: offers} %>
+    </div>
+  </div>
+</section>

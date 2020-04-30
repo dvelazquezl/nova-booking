@@ -1,0 +1,37 @@
+// Place all the styles related to the Offer controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+//= require bootstrap-datepicker3
+
+.font-size-filter{
+  font-size: 15px;
+}
+
+.filter-section{
+  width:280px;
+  height:100%;
+  white-space:nowrap;
+}
+
+.font-bookman{
+  font-family: Bookman;
+}
+
+.percent_input{
+  display: -webkit-box;
+  display: flex;
+  padding-left: 5px;
+  padding-right: 5px;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.528571429;
+  color: #495057;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #dde6e9;
+  border-radius: 0.25rem;
+}
