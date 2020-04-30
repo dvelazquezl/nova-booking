@@ -1,4 +1,4 @@
-<div class="content-heading">Oferta</div>
+<div class="content-heading">Nueva Oferta</div>
 
 <div class="row">
   <div class="col-md-3">
@@ -11,16 +11,12 @@
             <%= button_tag(type: "submit", class: "btn btn-primary") do %>
               <i class="fas fa-search"></i>
             <% end %>
-        </span>
+          </span>
         </div>
       <% end %>
     </div>
   </div>
   <div id="offer_form" class="col-md-9">
-    <%= render 'form', offer: @offer, estates: estates, estate_name: estate_name %>
+    <%= render 'form', offer: @offer, estates: estates, estate_name: estate_name, offer_details: offer_details %>
   </div>
 </div>
-
-
-
-<%#= link_to 'Back', offers_path %>
