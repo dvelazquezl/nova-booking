@@ -6,13 +6,23 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
+    offers=[]
     owner = helpers.current_owner
     if owner
-      offers = Offer.offers_by_owner(owner).page(params[:page])
-    else
-      offers = []
+      (@filterrific = initialize_filterrific(
+          Offer.offers_by_owner(owner),
+          params[:filterrific],
+          select_options: {
+              search_status: Offer.offer_status.options,
+          },
+          )) || return
+      offers = @filterrific.find.page(params[:page])
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
-    render :index, locals: {offers: offers}
+    render :index, locals: {offers: offers, filterrific: @filterrific}
   end
 
   # GET /offers/1
