@@ -34,12 +34,12 @@ class OffersController < ApplicationController
   def new
     @offer = Offer.new
     owner = helpers.current_owner
-    estates = Estate.estates_by_owner(owner.id)
-    estate_name, offer_details = nil
+    estates = Estate.only_published.estates_by_owner(owner.id)
+    offer_details = @offer.offer_details.build
+    estate_name = nil
     if params[:tag_estate_id].present? then
       estate_name = Estate.find_by(id: params[:tag_estate_id]).name
       @offer.estate_id = params[:tag_estate_id]
-      offer_details = @offer.offer_details.build
     end
     render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name}
 
