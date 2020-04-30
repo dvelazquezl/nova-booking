@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   get 'bookings/show_detail/:id', :to => 'bookings#show_detail', :as => 'show_detail_booking'
   post 'bookings/cancel_booking/:id', :to => 'bookings#cancel_booking_owner', :as => 'cancel_booking'
-  post 'bookings/cancel_booking_user/:id', :to => 'bookings#cancel_booking_user', :as => 'cancel_booking_user'
+  #post 'bookings/cancel_booking_user/:id', :to => 'bookings#cancel_booking_user', :as => 'cancel_booking_user'
 
   resources :users, only: [:index]
   resources :rooms
@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get :confirmation
       get :index_owner
       get :index_user
+      post :cancel_my_booking
     end
   end
   resources :comments, only: [] do
