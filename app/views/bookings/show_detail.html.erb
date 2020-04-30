@@ -88,16 +88,21 @@
           </table>
         </div>
         <% if status_booking == "Futura" %>
-        <div class="col-11" id="can_cancel">
-          <%= link_to cancel_booking_url(booking), method: :cancel_booking_owner, data: { confirm: 'Estas seguro?' } do %>
+        <!--div class="col-11" id="can_cancel">
+          <%#= link_to cancel_booking_url(booking), remote: true do %>
             <button class="btn btn-outline-danger">Cancelar Reserva</button>
           <% end %>
-        </div>
+        </div-->
+          <div class="col-11">
+            <%= form_tag cancel_booking_path, remote: true do |f| %>
+            <%= submit_tag 'Cancelar Reserva', class: "btn btn-primary btn-lg btn-block" %>
+            <% end %>
+          </div>
         <% else %>
         <div class="col-11" id="cant_cancel">
           <strong>Solamente se pueden cancelar reservas futuras</strong>
         </div>
-        <% end %>
+        <%# end %>
       </fieldset>
     </div>
     <div align="left">
@@ -106,3 +111,4 @@
   </div>
 </div>
 
+<div id="cancellation_motive-content"></div>

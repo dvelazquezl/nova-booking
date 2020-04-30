@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index]
   resources :rooms
   resources :facilities, except: :show
-  resources :bookings, except: [:edit, :update, :delete] do
+  resources :bookings, except: [:edit, :delete] do
     collection do
       get :confirmation
       get :index_owner
@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       post :save
     end
   end
+
+  resources :cancellation_motives
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

@@ -1,0 +1,23 @@
+<div class="modal fade" id="room-modal" tabindex="-1" role="dialog" aria-labelledby="showRoom" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cancelacion de Reserva</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_tag cancel_booking_path, remote: true do |f| %>
+      <div class="modal-body">
+        <div class="col-12">
+          <div class="row">
+            <div class="modal-footer">
+              <%= f.submit class: "btn btn-primary btn-lg btn-block" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

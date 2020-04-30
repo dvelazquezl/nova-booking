@@ -5,26 +5,32 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-admin_user = User.new
-admin_user.email = "alexandra.lezcano@fiuni.edu.py"
-admin_user.username = "AlexandraAdmin"
-admin_user.name = "Alexandra"
-admin_user.last_name = "Lezcano"
-admin_user.password = "123456"
-admin_user.password_confirmation = "123456"
-admin_user.skip_confirmation!
-admin_user.save!
+#admin_user = User.new
+#admin_user.email = "alexandra.lezcano@fiuni.edu.py"
+#admin_user.username = "AlexandraAdmin"
+#admin_user.name = "Alexandra"
+#admin_user.last_name = "Lezcano"
+#admin_user.password = "123456"
+#admin_user.password_confirmation = "123456"
+#admin_user.skip_confirmation!
+#admin_user.save!
 #Add role
-admin_user.add_role "admin"
+#admin_user.add_role "admin"
 
-admin_user = User.new
-admin_user.email = "alan.bresani@fiuni.edu.py"
-admin_user.username = "AlanAdmin"
-admin_user.name = "Alan"
-admin_user.last_name = "Bresani"
-admin_user.password = "123456"
-admin_user.password_confirmation = "123456"
-admin_user.skip_confirmation!
-admin_user.save!
+#admin_user = User.new
+#admin_user.email = "alan.bresani@fiuni.edu.py"
+#admin_user.username = "AlanAdmin"
+#admin_user.name = "Alan"
+#admin_user.last_name = "Bresani"
+#admin_user.password = "123456"
+#admin_user.password_confirmation = "123456"
+#admin_user.skip_confirmation!
+#admin_user.save!
 #Add role
-admin_user.add_role "admin"
+#admin_user.add_role "admin"
+
+cancellation_motives = CancellationMotive.create([{description: 'Cambio de fechas o destino'},
+                                                  {description: 'Motivos personales/el viaje ha sido cancelado'},
+                                                  {description: 'Mas de una reserva en la misma fecha y deseo cancelar las que no necesito'},
+                                                  {description: 'He econtrado una mejor opcion'},
+                                                  {description: 'Ninguna de las anteriores'}])

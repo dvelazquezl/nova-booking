@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
   has_many :booking_details
   belongs_to :estate
+  belongs_to :cancellation_motive
   has_secure_token :confirmation_token
   accepts_nested_attributes_for :booking_details, :allow_destroy => true
   scope :request_assess, -> { where(cancelled_at: nil, booking_state: false, notified: false).where.not(confirmed_at: nil) }
