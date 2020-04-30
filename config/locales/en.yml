@@ -289,3 +289,7 @@ en:
         one_apartment: "Apartamento"
         home: "Casa"
         hotel: "Hotel"
+    offer:
+      offer_status:
+        in_progress: "En curso"
+        finished: "Vencidas"
