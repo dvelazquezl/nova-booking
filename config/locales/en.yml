@@ -273,6 +273,11 @@ en:
         one:   comentario
         few:   comentarios
         other: comentarios
+      offer:
+        zero:  ofertas
+        one:   oferta
+        few:   ofertas
+        other: ofertas
 
   enumerize:
     room:

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
   get 'welcome/results'
+  get 'welcome/resources'
 
   devise_for :users do
     get '/users/sign_out' => 'devise/sessions#destroy'
@@ -51,10 +52,5 @@ Rails.application.routes.draw do
 
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'
-
-  # error routes
-  get '404', to: 'errors#page_not_found'
-  get '422', to: 'errors#server_error'
-  get '500', to: 'errors#server_error'
 
 end
