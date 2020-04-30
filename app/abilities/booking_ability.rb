@@ -7,10 +7,20 @@ class BookingAbility
       #Usuario admin.
       can :manage, :all
       else
+        #owner existe si user tiene asociado un perfil de propietario
+        owner ||= Owner.find_by user_id: user.id
+
         #Logueado
         can :create, Booking
+        can :index_user, Booking
         can :show, Booking, client_email: user.email
         can :destroy, Booking, client_email: user.email
+
+        #Solo un user con perfil de owner
+        if owner
+          can :index_owner, Booking
+          can :show_detail, Booking
+        end
       end
     else
       #Visitantes
