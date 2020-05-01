@@ -41,7 +41,9 @@ class OffersController < ApplicationController
       estate_name = Estate.find_by(id: params[:tag_estate_id]).name
       @offer.estate_id = params[:tag_estate_id]
     end
-    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name}
+    from_estates = params[:from_estates].present? ? true : false
+
+    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name, from_estates: from_estates}
 
   end
 

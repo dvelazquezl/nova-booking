@@ -84,7 +84,12 @@
     <div class="col-10">
       <fieldset>
         <div class="form-group row">
-          <%= link_to 'Atras', estates_path, class: "btn btn-secondary" %>
+          <% if from_estates %>
+            <%= link_to 'Atras', estates_path, class: "btn btn-secondary" %>
+          <% else %>
+            <%= link_to 'Atras', offers_path, class: "btn btn-secondary" %>
+          <% end %>
+
           <%= form.submit 'Guardar', class: "btn btn-primary" %>
         </div>
       </fieldset>
