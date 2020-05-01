@@ -59,10 +59,10 @@ class OffersController < ApplicationController
     respond_to do |format|
       if @offer.save
         format.html { redirect_to @offer, notice: 'La oferta fue creada satisfactoriamente.' }
-        format.json { render :show, status: :created, location: @offer }
       else
-        format.html { render :new }
-        format.json { render json: @offer.errors, status: :unprocessable_entity }
+        owner = helpers.current_owner
+        estates = Estate.only_published.estates_by_owner(owner.id)
+        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}, notice: 'No se pudo crear la oferta.' }
       end
     end
   end
