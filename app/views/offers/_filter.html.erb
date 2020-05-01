@@ -1,21 +1,19 @@
-<div class="col results-filter-block">
-  <%= puts filterrific.inspect %>
-  <%= form_for_filterrific filterrific do |f| %>
-    <div class="jumbotron jumbotron-fluid">
-      <h4>&emsp; Filtrar por:</h4>
-      <hr>
-      <!--FILTRO POR TIPO DE PROPIEDAD-->
-      <h5>Estado </h5>
-      <div class="form-group col-12">
-        <div class="row d-flex align-items-center results-block">
-          <%= f.select(:search_status, filterrific.select_options[:search_status],
-                  { include_blank: '- Todos -'},
-                  {:class => 'filterrific-periodically-observed form-control'}
-              ) %>
+<%= puts filterrific.inspect %>
+<%= form_for_filterrific filterrific do |f| %>
+  <div>
+    <div class="card">
+      <div class="card-body row">
+        <div class="col-3 row">
+          <div class="col-5 font-size-filter">Filtro por estado: </div>
+          <div class="col">
+            <%= f.select(:search_status, filterrific.select_options[:search_status],
+                         { include_blank: '- Todos -'},
+                         {:class => 'filterrific-periodically-observed form-control'}
+                ) %>
+          </div>
         </div>
       </div>
-      <!--FIN-->
-      <hr>
     </div>
-  <% end %>
-</div>
+  </div>
+
+<%end %>
