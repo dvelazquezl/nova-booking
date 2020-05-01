@@ -2,30 +2,31 @@
   <div class="form-row">
     <div class="col">
       <table class="table table-bordered">
-        <% estates.each do |estate| %>
+        <% bookings.each do |booking| %>
           <tr>
             <td class="results-background">
               <div class="media align-items-center">
                 <a class="mr-4" href="#">
-                  <%= image_tag estate.images.first, alt: "rss feed", height: 150, width: 150 %>
+                  <%= image_tag booking.estate_images.first, alt: "rss feed", height: 100, width: 100 %>
                 </a>
                 <div class="media-body d-flex">
                   <div class="">
-                    <h4 class="m-0" style="font-size:25px"><%= estate.name %></h4>
-                    <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
-                    <p><%= estate.description %></p>
+                    <h4 class="m-0" style="font-size:25px"><%= booking.estate_name %></h4>
+                    <small class="text-muted"><%= booking.date_start.strftime("%d/%m/%Y") %>
+                      - <%= booking.date_end.strftime("%d/%m/%Y") %></small>
+                    <% status_booking = get_status(booking) %>
+                    <p>
+                      <label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></label>
+                    </p>
                   </div>
                   <div class="ml-auto">
-                    <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>">
-                      <span><%= estate.score %></span>
-                    </div>
-                    <em class="fa-1x mr-2 fas fa-star"></em>
+                    <span><h4 class="m-0" style="font-size:16px">Total: <%= number_to_currency(booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></h4></span>
                   </div>
                 </div>
               </div>
               <div class="media-body d-flex">
                 <div class="btn-group ml-auto" role="group">
-                  <%= link_to show_visited_estate_path(estate.id) do %>
+                  <%= link_to booking_path(booking.id) do %>
                     <button class="btn btn-sm btn-primary">Detalles</button>
                   <% end %>
                 </div>
@@ -39,10 +40,10 @@
       <div class="card-columns-2 card-body">
         <div class="row row-flush">
           <div class="col col-6 align-items-center">
-            <%= will_paginate estates, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+            <%= will_paginate bookings, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
           </div>
           <div class="col col-9">
-            <%= page_entries_info estates, :model => 'estate', :class => 'align-middle' %>
+            <%= page_entries_info bookings, :model => 'booking', :class => 'align-middle' %>
           </div>
         </div>
       </div>

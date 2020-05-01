@@ -3,8 +3,22 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 //= require bootstrap-datepicker3
 
+.font-size-filter{
+  font-size: 15px;
+}
+
+.filter-section{
+  width:280px;
+  height:100%;
+  white-space:nowrap;
+}
+
 .font-bookman{
   font-family: Bookman;
+}
+
+#offer-title {
+  font-family: PT Sans Narrow;
 }
 
 .percent_input{
