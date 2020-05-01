@@ -188,7 +188,13 @@
               <tr>
                 <td class="content-cell">
                   <h1>Cancelación de reserva</h1>
-                  <p>El usuario <b><%= @client_name %></b> ha cancelado su reserva en la propiedad <b><%= @estate.name %></b>.</p>
+                  <p>El usuario <b><%= @client_name %></b>
+                  ha cancelado su reserva en la propiedad <b><%= @estate.name %></b>
+                  </p>
+                  <% if @cancellation_motive != "Ninguna de las anteriores" %>
+                    <p>Motivo:</p>
+                    <b><%= @cancellation_motive %></b>
+                  <% end %>
                   <p>Ponte en contacto si desea mas informacion:</p>
                   <p><b>Correo:</b> <%= @client_email %> </p>
                 </td>

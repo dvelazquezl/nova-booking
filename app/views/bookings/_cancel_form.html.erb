@@ -1,7 +1,0 @@
-<%= form_for :bookingurl, url: {action: "cancel_my_booking", params: {id: booking.id, cancellation_motive_id: cm.id}} do |f| %>
-  <% CancellationMotive.all.each do |cm| %>
-    <%= f.radio_button :cm, cm.id %>
-    <label for="<%= cm.id %>"><%= cm.description %></label>
-  <% end %>
-  <%= f.submit 'Guardar', class: "btn btn-primary btn-lg btn-block" %>
-<% end %>

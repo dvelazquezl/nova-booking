@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <div id="title">
+    <h3 class="modal-title">Cancela tu Reserva</h3>
+  </div>
+  <div id="close">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+<div class="modal-body">
+  <h4>Cuentanos por que quieres cancelar</h4>
+  <%= form_for booking_url, url: {action: "cancel_my_booking", params: {id: booking.id}} do |f| %>
+    <% CancellationMotive.all.each do |cm| %>
+      <%= radio_button_tag 'motive', cm.id %>&nbsp;&nbsp;
+      <label for="<%= cm.id %>"><%= cm.description %></label><br>
+    <% end %>
+</div>
+<div class="modal-footer">
+    <%= f.submit 'Cancelar Reserva', class: "btn btn-outline-danger btn-sm" %>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#motive_1").prop("checked", true);
+  })
+</script>

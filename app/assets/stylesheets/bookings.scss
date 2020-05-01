@@ -108,7 +108,7 @@
 }
 
 #can_cancel, #cant_cancel {
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 #can_cancel {
@@ -116,5 +116,12 @@
 }
 #cant_cancel {
   text-align: justify;
-  color: red;
+}
+#modal-window {
+  .modal-content {
+    height: 370px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 550px;
+  }
 }

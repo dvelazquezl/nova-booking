@@ -22,7 +22,6 @@ class BookingsController < ApplicationController
   end
 
   def show
-    @cancellation_motives = CancellationMotive.all
     @booking = Booking.find(params[:id])
     if !@booking.booking_state.blank?
       room = Room.with_deleted.find(@booking.booking_details[0].room_id)
@@ -32,7 +31,6 @@ class BookingsController < ApplicationController
     else
       format.html { redirect_to root_url, errors: 'Lo sentimos no puede acceder a la reserva' }
     end
-    render :show, locals: { cancellation_motives: @cancellation_motives }
   end
 
   # GET /bookings/show_detail/1
@@ -98,13 +96,10 @@ class BookingsController < ApplicationController
     end
   end
 
-  def set_cancellation_motives
-  end
-
   def cancel_booking_owner
     booking = Booking.find(params[:id])
     respond_to do |format|
-      if cancel(booking)
+      if cancel_booking(booking)
         format.html { redirect_to index_owner_bookings_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.json { head :no_content }
         UserMailer.booking_canceled_by_owner_to_owner(booking).deliver_now
@@ -117,25 +112,33 @@ class BookingsController < ApplicationController
   end
   def cancel_my_booking
     booking = Booking.find(params[:id])
-    print booking.id
-    #print booking.cancellation_motive_id
-    #respond_to do |format|
-    #  if cancel(booking)
-    #    format.html { redirect_to index_user_bookings_url, notice: 'La reserva fue cancelada satifactoriamente.' }
-    #    format.json { head :no_content }
-    #    UserMailer.booking_canceled_by_user_to_user(booking).deliver_now
-    #    UserMailer.booking_canceled_by_user_to_owner(booking).deliver_now
-    #  else
-    #    format.html { redirect_to index_user_bookings_url, alert: 'No se pudo cancelar.' }
-    #    format.json { head :no_content }
-    #  end
-    #end
+    cancellation_motive_id = CancellationMotive.find(params[:motive]).id
+
+    respond_to do |format|
+      if cancel_booking(booking, cancellation_motive_id)
+        format.html { redirect_to index_user_bookings_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+        format.js
+        UserMailer.booking_canceled_by_user_to_user(booking).deliver_now
+        UserMailer.booking_canceled_by_user_to_owner(booking).deliver_now
+      else
+        format.html { redirect_to index_user_bookings_url, alert: 'No se pudo cancelar.' }
+        format.js
+      end
+    end
   end
 
-  def cancel(booking)
+  def cancel_booking(booking, cm_id)
+    booking.update_attribute(:cancellation_motive_id, cm_id)
     booking.update_attribute(:booking_state, 'false')
   end
 
+  def cancel
+    @booking = Booking.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
   private
 
   def set_booking

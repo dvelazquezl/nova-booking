@@ -16,6 +16,7 @@ class BookingAbility
         can :show, Booking, client_email: user.email
         can :destroy, Booking, client_email: user.email
         can :cancel_my_booking, Booking
+        can :cancel, Booking
 
         #Solo un user con perfil de owner
         if owner
@@ -29,7 +30,6 @@ class BookingAbility
       can :create, Booking
       can :show, Booking
       can :confirmation, Booking
-      can :cancel_booking_user, Booking
     end
   end
 end
