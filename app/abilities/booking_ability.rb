@@ -15,11 +15,14 @@ class BookingAbility
         can :index_user, Booking
         can :show, Booking, client_email: user.email
         can :destroy, Booking, client_email: user.email
+        can :cancel_my_booking, Booking
+        can :cancel, Booking
 
         #Solo un user con perfil de owner
         if owner
           can :index_owner, Booking
           can :show_detail, Booking
+          can :cancel_booking_owner, Booking
         end
       end
     else
