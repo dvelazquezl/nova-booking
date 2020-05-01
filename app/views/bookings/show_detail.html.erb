@@ -1,0 +1,97 @@
+<% status_booking = get_status(booking) %>
+<div align="center">
+  <div class="col-7">
+    <div class="content-heading row align-items-start">
+      <div class="col-2 ">Reserva</div>
+      <div class="col-2 align-items-center text-center">
+        <label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></div>
+    </div>
+  </div>
+</div>
+<div align="center">
+  <div class="col-7">
+    <div class="card card-default">
+      <fieldset style="margin: 0; border: 0; padding: 0;" class="card-body">
+        <div class="row ocultar" align="left">
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="form-group col-10">
+                <label>Nombre y Apellido *</label>
+                <input type="text" class="form-control" value=<%= booking.client_name %> readonly>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group col-10">
+                <label>Correo *</label>
+                <input type="text" class="form-control" value=<%= booking.client_email %> readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="card-body">
+              <div class="form-group  ">
+                <label>Desde</label>
+                <input type="text" class="form-control" value=<%= booking.date_start.strftime("%d-%m-%Y") %> readonly>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Hasta </label>
+                <input type="text" class="form-control" value=<%= booking.date_end.strftime("%d-%m-%Y") %> readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="col-11">
+          <table class="table">
+            <thead class="table-primary">
+            <tr>
+              <th>Tipo de habitación</th>
+              <th>Capacidad</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% booking.booking_details.each do |f| %>
+              <tr>
+                <td>
+                  <%= Room.room_type_for(f.room_id) %>
+                </td>
+                <td class="text-center"><%= Room.room_capacity_for(f.room_id) %></td>
+                <td class="text-center"><%= f.quantity %></td>
+                <td class="text-right"><%= number_to_currency(f.subtotal / f.quantity, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+                <td class="text-right"><%= number_to_currency(f.subtotal, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+            <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <b><%= number_to_currency(booking.total_amount / diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+              </td>
+            </tr>
+            <tr class="thead-light">
+              <th><b>Total: <%= diff %> noche<%= plural_arg %></b></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>
+                <b> <%= number_to_currency(booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+              </th>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+    </div>
+    <div align="left">
+      <%= link_to 'Volver Atras', index_owner_bookings_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>
+
