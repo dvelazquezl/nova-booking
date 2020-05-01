@@ -62,7 +62,8 @@ class OffersController < ApplicationController
       else
         owner = helpers.current_owner
         estates = Estate.only_published.estates_by_owner(owner.id)
-        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}, notice: 'No se pudo crear la oferta.' }
+        flash[:alert] = "No se pudo crear la oferta. Seleccione una propiedad."
+        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}}
       end
     end
   end
