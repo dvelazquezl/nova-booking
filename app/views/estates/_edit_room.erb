@@ -78,7 +78,7 @@
 
           <h5><strong>Comodidades</strong></h5>
           <div class="row scroll_facility">
-            <%= f.collection_check_boxes :facility_ids, room_facilities, :id, :description do |m| %>
+            <%= f.collection_check_boxes :facility_ids, partial_param, :id, :description do |m| %>
               <div class="col-4">
                 <div class="form-check form-check-inline">
                   <label class="checkbox c-checkbox c-checkbox-rounded"> <%= m.check_box %><span class="fa fa-check"></span><%= m.label %></label>
