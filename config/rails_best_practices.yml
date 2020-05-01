@@ -18,7 +18,7 @@ NeedlessDeepNestingCheck: { nested_count: 2 }
 NotRescueExceptionCheck: { }
 NotUseDefaultRouteCheck: { }
 NotUseTimeAgoInWordsCheck: { }
-OveruseRouteCustomizationsCheck: { customize_count: 3 }
+OveruseRouteCustomizationsCheck: { customize_count: 4 }
 ProtectMassAssignmentCheck: { }
 RemoveEmptyHelpersCheck: { }
 #RemoveTabCheck: { }
@@ -31,7 +31,9 @@ RemoveUnusedMethodsInControllersCheck: { except_methods:
      OwnersController#current_ability,
      BookingsController#current_ability,
      OffersController#current_ability,
-     ErrorsController#not_found_error
+     ErrorsController#not_found_error,
+     ErrorsController#server_error,
+     CancellationMotivesController#current_ability
     ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [
