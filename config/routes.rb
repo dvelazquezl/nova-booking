@@ -37,12 +37,12 @@ Rails.application.routes.draw do
   resources :users, only: [:index]
   resources :rooms
   resources :facilities, except: :show
-  resources :bookings, except: [:edit, :delete] do
+  resources :bookings, except: [:edit, :update, :delete, :index] do
     collection do
       get :confirmation
       get :index_owner
       get :index_user
-      post :cancel_my_booking
+      post :cancel_my_booking, only: [:cancel_my_booking]
     end
   end
   resources :comments, only: [] do

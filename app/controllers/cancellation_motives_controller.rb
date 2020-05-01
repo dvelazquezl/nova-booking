@@ -62,6 +62,6 @@ class CancellationMotivesController < ApplicationController
   end
 
   def current_ability
-    @current_ability ||= DepartamentAbility.new(current_user)
+    @current_ability ||= CancellationMotiveAbility.new(current_user)
   end
 end
