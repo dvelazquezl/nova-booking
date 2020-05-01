@@ -59,7 +59,7 @@ class BookingsController < ApplicationController
       Booking.set_state(@booking)
       respond_to do |format|
         format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.'}
-        format.json { render :show, status: :created, location: @booking}
+
       end
     else
       format.html { redirect_to bookings_url, error: 'Los sentimos se ha producido un error.' }

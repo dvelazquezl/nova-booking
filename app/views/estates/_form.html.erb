@@ -2,7 +2,6 @@
   <% if estate.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(estate.errors.count, "error") %> prohibited this estate from being saved:</h2>
-
       <ul>
         <% estate.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -68,26 +67,9 @@
               </button>
             </span>
           </div>
-          <!-- Modal -->
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"></h4>
-                </div>
-                <div class="form-group">
-                  <%= form.hidden_field :latitude , id: "latitude"%>
-                  <%= form.hidden_field :longitude, id: "longitude" %>
-                  <p>
-                  <div id="map2" ></div>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= render partial: "estates/modal_map", :locals => { map: "map2"}%>
+          <%= form.hidden_field :latitude , id: "latitude", required: "required"%>
+          <%= form.hidden_field :longitude, id: "longitude", required: "required" %>
           <div class="form-group">
             <label>Ciudad *</label>
             <%= form.select :city_id,
