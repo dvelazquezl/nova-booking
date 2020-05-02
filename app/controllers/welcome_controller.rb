@@ -38,7 +38,8 @@ class WelcomeController < ApplicationController
         params[:filterrific],
         select_options: {
             sorted_by: Estate.options_for_sorted_by,
-            with_estate_type: Estate.estate_type.options
+            with_estate_type: Estate.estate_type.options,
+            search_booking_cancelable: Estate.booking_cancelable.options
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])
