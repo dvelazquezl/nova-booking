@@ -1,8 +1,9 @@
 class BookingsController < ApplicationController
   authorize_resource
+  
   before_action :authenticate_user!, except: [:new, :create, :show, :confirmation]
   before_action :set_booking, only: [:show, :destroy]
-
+  
   def index_owner
     owner = helpers.current_owner
     if owner
@@ -96,6 +97,49 @@ class BookingsController < ApplicationController
       redirect_to booking_url(@booking, confirmation_token: @booking.confirmation_token), notice: 'La reserva fue creada satifactoriamente.'
     else
       format.html { redirect_to bookings_url, error: 'Los sentimos se ha producido un error.' }
+    end
+  end
+
+  def cancel_booking
+    booking = Booking.find(params[:id])
+    respond_to do |format|
+      if booking.update_attribute(:booking_state, 'false')
+        format.html { redirect_to index_owner_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+        format.json { head :no_content }
+        UserMailer.booking_cancelled_by_owner_to_owner(booking).deliver_now
+        UserMailer.booking_cancelled_by_owner_to_client(booking).deliver_now
+      else
+        format.html { redirect_to index_owner_url, alert: 'No se pudo cancelar.' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def cancel_my_booking
+    booking = Booking.find(params[:id])
+    cancellation_motive_id = CancellationMotive.find(params[:motive]).id
+
+    respond_to do |format|
+      if cancel_booking(booking, cancellation_motive_id)
+        format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+        format.js
+      else
+        format.html { redirect_to index_user_url, alert: 'No se pudo cancelar.' }
+        format.js
+      end
+    end
+  end
+
+  def cancel_booking(booking, cm_id)
+    booking.update_attribute(:cancellation_motive_id, cm_id)
+    booking.update_attribute(:booking_state, 'false')
+  end
+
+  def cancel
+    @booking = Booking.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
