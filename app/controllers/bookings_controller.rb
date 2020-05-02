@@ -104,12 +104,12 @@ class BookingsController < ApplicationController
     booking = Booking.find(params[:id])
     respond_to do |format|
       if booking.update_attribute(:booking_state, 'false')
-        format.html { redirect_to index_owner_bookings_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+        format.html { redirect_to index_owner_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.json { head :no_content }
         UserMailer.booking_cancelled_by_owner_to_owner(booking).deliver_now
         UserMailer.booking_cancelled_by_owner_to_client(booking).deliver_now
       else
-        format.html { redirect_to index_owner_bookings_url, alert: 'No se pudo cancelar.' }
+        format.html { redirect_to index_owner_url, alert: 'No se pudo cancelar.' }
         format.json { head :no_content }
       end
     end
@@ -121,12 +121,12 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if cancel_booking(booking, cancellation_motive_id)
-        format.html { redirect_to index_user_bookings_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+        format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.js
         UserMailer.booking_cancelled_by_user_to_user(booking).deliver_now
         UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
       else
-        format.html { redirect_to index_user_bookings_url, alert: 'No se pudo cancelar.' }
+        format.html { redirect_to index_user_url, alert: 'No se pudo cancelar.' }
         format.js
       end
     end
