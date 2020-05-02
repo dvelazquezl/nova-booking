@@ -29,7 +29,9 @@
   end
   def label_score(score)
     label = " "
-    if score > 0 && score <= 1
+    if score == 0
+      label = "Sin puntuación"
+    elsif score > 0 && score <= 1
       label = "Pésimo"
     elsif score > 1 && score <= 2
       label = "Malo"
@@ -49,7 +51,7 @@
       label = "Excelente"
     elsif score > 9 && score <= 10
       label = "Excepcional "
-      return label
     end
+    return label
   end
 end
