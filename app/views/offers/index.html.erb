@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <div class="content-heading">
   <div>Ofertas de mis propiedades</div>
 
@@ -12,13 +10,7 @@
   </div>
 </div>
 
-<section class="container">
-  <div class="row">
-    <div class="filter-section">
-      <%= render partial: "offers/filter", :locals => {filterrific: filterrific} %>
-    </div>
-    <div class="col" id="filterrific_results">
-      <%= render partial: "offers/list", :locals => {offers: offers} %>
-    </div>
-  </div>
-</section>
+<%= render partial: "offers/filter", :locals => {filterrific: filterrific} %>
+<div id="filterrific_results">
+  <%= render partial: "offers/list", :locals => {offers: offers} %>
+</div>

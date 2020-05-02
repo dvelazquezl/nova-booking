@@ -21,7 +21,7 @@ class WelcomeController < ApplicationController
 
   def resources
     cities = City.all
-    estates = Estate.all
+    estates = Estate.only_published
     array_of_json = cities + estates
     respond_to do |format|
       format.json { render json: array_of_json.to_json( :only => [:name])  }

@@ -39,7 +39,7 @@
               <% end %>
 
               <% if estate.status %>
-                <%= link_to new_offer_path(:tag_estate_id => estate.id) do %>
+                <%= link_to new_offer_path(:tag_estate_id => estate.id, :from_estates => true) do %>
                   <button class="btn btn-link text-warning" title="Oferta"><i class="fas fa-tags"></i></button>
                 <% end %>
               <% else %>
