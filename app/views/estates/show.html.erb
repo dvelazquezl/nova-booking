@@ -36,7 +36,7 @@
                 <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
                   <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
                 </button>
-                 <%= render partial: "estates/modal_map", :locals => { map: "map"}%>
+                 <%= render partial: "layouts/partials/modal",:locals => { id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"}%>
                 <span>
                   <%= @estate.address %>
                 </span>

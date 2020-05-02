@@ -24,8 +24,10 @@
                   </h1>
                 </div>
                 <div class="col-12 d-flex align-items-center">
-                  <em class="mr-1 fa-1x fas fa-map-marker-alt">
-                  </em>
+                <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
+                  <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
+                </button>
+                <%= render partial: "layouts/partials/modal",:locals => { id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"}%>
                   <span>
                     <%= estate.address %>
                   </span>
@@ -162,3 +164,12 @@
 </div>
 
 <div id="room-content"></div>
+
+<% provide :head_tags do %>
+  <meta name='turbolinks-visit-control' content='reload'>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      initMap(<%=estate.latitude%>, <%=estate.longitude%>)
+    });
+  </script>
+<% end %>

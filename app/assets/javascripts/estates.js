@@ -60,23 +60,6 @@ addEventListener("direct-upload:end", event => {
     element.classList.add("direct-upload--complete")
 })
 
-
-function initMap(lat, lng) {
-    let myCoords = new google.maps.LatLng(lat, lng);
-    let mapOptions = {
-        center: myCoords,
-        zoom: 14
-    };
-
-    let map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    let marker = new google.maps.Marker({
-        position: myCoords,
-        map: map
-    });
-
-}
-
 function initMap2() {
     let lat = document.getElementById('latitude').value;
     let lng = document.getElementById('longitude').value;
