@@ -49,22 +49,21 @@ $(document).on('change', '#pictureInput', function (event) {
         reader.onload = function (file) {
             let img = new Image();
             img.src = file.target.result;
-            img.classList.add("img-thumbnail");
-            //img.setAttribute('alt', 'rss fit');
-            //img.setAttribute('height', HEIGHT);
-            //img.setAttribute('width', WIDTH);
             const attributes = {
                 'alt': 'rss fit',
                 'height': HEIGHT,
                 'width': WIDTH
             };
-            img.onload = () => cropper(canvas, img, "#target", $result, false, attributes);
-            //$('#target').append(img);
+            const classes = ["img-thumbnail"];
+            img.onload = () => cropper(canvas, img, "#target", $result, false, attributes, classes);
             $('img').css("display", "inline-block")
         };
         reader.readAsDataURL(file);
-        $(this).val("")
     });
+});
+
+$(document).on('click', '#pictureInput', function () {
+    $(this).val('');
 });
 
 $(document).on('change', '#pictureInput1', function (event) {
@@ -85,7 +84,16 @@ $(document).on('change', '#pictureInput1', function (event) {
     });
 });
 
-function cropper(canvas, img, elem_id, result, replace, attributes) {
+/**
+ *
+ * @param canvas: del modal
+ * @param img: img a ser recortada
+ * @param elem_id: en caso de tener un campo (hidden) para almacenar la imagen, para enviar al server
+ * @param result: html donde se mostrara la imagen cortada en UI
+ * @param replace: si se debe reemplazar el contenido del tag HTML con la imagen
+ * @param attributes: para css
+ */
+function cropper(canvas, img, elem_id, result, replace, attributes, classes) {
     let crop = canvas.croppie({
         viewport: {
             width: WIDTH,
@@ -104,7 +112,7 @@ function cropper(canvas, img, elem_id, result, replace, attributes) {
     }).then(function () {
         $('.cr-slider').attr({'min': 0.1000, 'max': 1.5000});
     });
-    $('#result-input').click(function () {
+    $('#result-input').one("click", function () {
         // Get a string base 64 data url
         canvas.croppie('result', {
             type: 'base64',
@@ -119,6 +127,8 @@ function cropper(canvas, img, elem_id, result, replace, attributes) {
                     crop_img.attr(key, value.toString());
                 });
             }
+            if (classes) crop_img.addClass(classes);
+
             if (replace) {
                 result.html(crop_img);
                 $(elem_id).attr('value', resp);
@@ -126,6 +136,7 @@ function cropper(canvas, img, elem_id, result, replace, attributes) {
                 $(elem_id).append(crop_img);
             }
         });
+        $(this).val('');
         $("#crop_modal").modal('hide');
     });
 }
