@@ -54,6 +54,13 @@
           <p class="col-12" id="description-text">
             &emsp;&emsp;<%= @estate.description %>
           </p>
+          <p class="col-12" id="description-text">
+            <% if @estate.booking_cancelable? %>
+              &emsp;&emsp;<span class="badge badge-green float-center">Se permite la cancelación de reservas</span>
+            <% else %>
+              &emsp;&emsp;<span class="badge badge-warning float-center">No se permite la cancelación de reservas</span>
+            <% end %>
+          </p>
         </div>
       </div>
       <!-- END -->
