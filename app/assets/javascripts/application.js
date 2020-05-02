@@ -44,6 +44,7 @@ $(document).on('change', '#pictureInput', function (event) {
     canvas.croppie('destroy');
     let $result = $('#target');
     let files = event.target.files;
+    console.log(files)
     Array.from(files).forEach(file => {
         let reader = new FileReader();
         reader.onload = function (file) {
@@ -62,9 +63,6 @@ $(document).on('change', '#pictureInput', function (event) {
     });
 });
 
-$(document).on('click', '#pictureInput', function () {
-    $(this).val('');
-});
 
 $(document).on('change', '#pictureInput1', function (event) {
     let canvas = $("#canvas");
@@ -133,7 +131,12 @@ function cropper(canvas, img, elem_id, result, replace, attributes, classes) {
                 result.html(crop_img);
                 $(elem_id).attr('value', resp);
             } else {
+                let hidden = $('<input>');
+                hidden.attr('type', 'hidden');
+                hidden.attr('name', 'images[]');
+                hidden.attr('value', resp);
                 $(elem_id).append(crop_img);
+                $(elem_id).append(hidden);
             }
         });
         $(this).val('');
