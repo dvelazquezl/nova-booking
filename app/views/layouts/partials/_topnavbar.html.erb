@@ -57,6 +57,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <% if user_signed_in? && is_owner? %>
+                <a class="dropdown-item"><%= link_to 'Panel de Control', owner_path(current_owner), :class => "nav-link" %></a>
                 <a class="dropdown-item"><%= link_to 'Editar perfil', edit_user_registration_path, :class => "nav-link" %></a>
                 <a class="dropdown-item"><%= link_to 'Editar Propietario', edit_owner_path(current_owner), :class => 'nav-link' %></a>
                 <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link"  %></a>
