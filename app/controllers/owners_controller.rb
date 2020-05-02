@@ -87,13 +87,5 @@ class OwnersController < ApplicationController
   def current_ability
     @current_ability ||= OwnerAbility.new(current_user)
   end
-
-  def handle_string_io_as_file(io, filename)
-    return io unless io.class == StringIO
-
-    file = Tempfile.new([filename,".png"], encoding: 'ascii-8bit')
-    file.binmode
-    file.write io.read
-    file.open
-  end
+  
 end
