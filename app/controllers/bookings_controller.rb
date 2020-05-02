@@ -123,8 +123,6 @@ class BookingsController < ApplicationController
       if cancel_booking(booking, cancellation_motive_id)
         format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.js
-        UserMailer.booking_cancelled_by_user_to_user(booking).deliver_now
-        UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
       else
         format.html { redirect_to index_user_url, alert: 'No se pudo cancelar.' }
         format.js
