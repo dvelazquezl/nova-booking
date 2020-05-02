@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   authorize_resource
-  before_action :authenticate_user! , except: [:new, :create, :show, :confirmation]
+  before_action :authenticate_user!, except: [:new, :create, :show, :confirmation]
   before_action :set_booking, only: [:show, :destroy]
 
   def index_owner
@@ -24,13 +24,16 @@ class BookingsController < ApplicationController
   def show
     @booking = Booking.find(params[:id])
     free = @booking.booking_state.blank?
-    if !free
+
+    if !free && can_access_to_show?(params, @booking)
       room = Room.with_deleted.find(@booking.booking_details[0].room_id)
       @estate = Estate.with_deleted.find(room.estate_id)
       @diff = Booking.diff(@booking)
-      @plural_arg = (@diff > 1)? "s":" "
+      @plural_arg = (@diff > 1) ? "s" : " "
     else
-      format.html { redirect_to root_url, errors: 'Lo sentimos no puede acceder a la reserva' }
+      respond_to do |format|
+        format.html { redirect_to root_url, alert: "Lo sentimos no puede acceder a la reserva"}
+      end
     end
   end
 
@@ -55,7 +58,7 @@ class BookingsController < ApplicationController
   def new
     @booking = Booking.booking_new(Booking.new, params)
     @diff = Booking.diff(@booking)
-    @plural_arg = (@diff > 1)? "s":" "
+    @plural_arg = (@diff > 1) ? "s" : " "
   end
 
   def create
@@ -66,9 +69,9 @@ class BookingsController < ApplicationController
         @estate = Booking.estate(@booking)
         if user_signed_in?
           Booking.set_state(@booking)
-          format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.'}
+          format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.' }
         else
-          format.html { redirect_to root_url, notice: 'Verifique su correo para la confirmación de la reserva..'}
+          format.html { redirect_to root_url, notice: 'Verifique su correo para la confirmación de la reserva..' }
           UserMailer.new_booking_confirmation(@booking).deliver_now
         end
       else
@@ -90,16 +93,23 @@ class BookingsController < ApplicationController
     if params[:confirmation_token].present?
       @booking = Booking.find_by_confirmation_token(params[:confirmation_token])
       Booking.set_state(@booking)
-      respond_to do |format|
-        format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.'}
-        format.json { render :show, status: :created, location: @booking}
-      end
+      redirect_to booking_url(@booking, confirmation_token: @booking.confirmation_token), notice: 'La reserva fue creada satifactoriamente.'
     else
       format.html { redirect_to bookings_url, error: 'Los sentimos se ha producido un error.' }
     end
   end
 
   private
+
+  def can_access_to_show? (params, booking)
+    if params[:confirmation_token].present?
+      booking_token = Booking.find_by_confirmation_token(params[:confirmation_token])
+      return !booking_token.nil? && (booking_token.id == params[:id].to_i) ? true : false
+    elsif user_signed_in?
+      return (current_user.email == booking.client_email) ? true : false
+    end
+    return false
+  end
 
   def set_booking
     @booking = Booking.find(params[:id])
