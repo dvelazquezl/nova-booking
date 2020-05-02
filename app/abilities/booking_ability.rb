@@ -22,7 +22,8 @@ class BookingAbility
         if owner
           can :index_owner, Booking
           can :show_detail, Booking
-          can :cancel_booking_owner, Booking
+          can :cancel_booking, Booking
+          can :cancel, Booking
         end
       end
     else
