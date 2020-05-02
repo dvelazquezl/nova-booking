@@ -41,6 +41,20 @@ class UserMailer < ApplicationMailer
     mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
+  def booking_cancelled_by_owner_to_owner(booking)
+    @booking = booking
+    @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+    user_email = user_email(booking)
+    mail(to: user_email, subject: 'NovaBooking! - Cancelacion de reserva')
+  end
+  def booking_cancelled_by_owner_to_client(booking)
+    @booking = booking
+    @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
+    @owner = Owner.find(@estate.owner_id)
+    @user_email = user_email(booking)
+    mail(to: booking.client_email, subject: 'NovaBooking! - Cancelacion de reserva')
+  end
+
   private
     #se obtiene el email del propietario
     def user_email(booking)

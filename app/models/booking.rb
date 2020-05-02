@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
     has_many :booking_details
     belongs_to :estate
+    belongs_to :cancellation_motive
     has_secure_token :confirmation_token
     accepts_nested_attributes_for :booking_details, :allow_destroy => true
 
