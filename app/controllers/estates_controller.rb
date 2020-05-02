@@ -42,7 +42,6 @@ class EstatesController < ApplicationController
   end
 
   # GET /estates/1
-  # GET /estates/1.json
   def show
     (@filterrific = initialize_filterrific(
         Estate.with_rooms,
@@ -58,7 +57,7 @@ class EstatesController < ApplicationController
     @plural_arg = (@diff > 1) ? "s" : " "
     date_from = params[:from]
     date_to = params[:to]
-    price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do
+    price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do metodo y pasar los parametros
     price_min = ((params[:price_min] != '') && (params[:price_min] != nil)) ? params[:price_min] : 0
     @rooms = @estate.rooms.without_deleted.available(params[:id], date_from, date_to, price_max, price_min)
     @rooms.each do |room|
@@ -69,7 +68,7 @@ class EstatesController < ApplicationController
     @facilities = estate.facilities_estates
     @images = estate.images
     @comments = Comment.where(estate_id: @estate.id)
-    @offers = estate.offers.offers_of_the_day(date_from, date_to)
+    @offers = estate.offers
     email, name = get_user_email_name(params)
     can_comment = User.can_comment?(email, params[:id])
     respond_to do |format|
