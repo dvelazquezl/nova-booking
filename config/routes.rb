@@ -44,7 +44,8 @@ Rails.application.routes.draw do
       get :confirmation
       get :index_owner
       get :index_user
-      post :cancel_my_booking
+      post :cancel_my_booking  # for users
+      post :cancel_booking     # for owners
     end
   end
   resources :comments, only: [] do
