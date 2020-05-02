@@ -158,12 +158,6 @@
 <script>
     <%= render "selects.js" %>
     $("#form-estate").on("submit", function (evt) {
-        let lat = $("#latitude").val();
-        let lng = $("#longitude").val();
-        if(lat === "" || lng === ""){
-            $("#ex1").show();
-            return false;
-        }
         $(".number").each(function (ind, input) {
             input.value = input.value.split(".").join("");
         });
