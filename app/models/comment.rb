@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :estate
+  delegate :name, :images, :to => :estate, :prefix => true
   validates :rating, presence: true
 
   def save_comment_with(params, email, name)
