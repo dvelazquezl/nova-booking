@@ -1,3 +1,22 @@
-<%= render 'form', offer: @offer %>
+<div class="content-heading">Nueva Oferta</div>
 
-<%#= link_to 'Back', offers_path %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="jumbotron jumbotron-fluid">
+      <%= form_tag(new_offer_path, method: :get, remote: true) do %>
+        <label>Buscar una propiedad</label>
+        <div class="input-group">
+          <%= select_tag :tag_estate_id, options_from_collection_for_select(estates, "id", "name"), class: "form-control", prompt: "Seleccionar" %>
+          <span class="input-group-btn">
+            <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+              <i class="fas fa-search"></i>
+            <% end %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div id="offer_form" class="col-md-9">
+    <%= render 'form', offer: @offer, estates: estates, estate_name: estate_name, offer_details: offer_details, from_estates: from_estates %>
+  </div>
+</div>
