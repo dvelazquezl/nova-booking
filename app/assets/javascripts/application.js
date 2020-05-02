@@ -25,6 +25,8 @@
 //= require jquery.easy-autocomplete
 //= require welcome
 
+//= require offers
+
 //= require croppie/croppie
 //= require bootbox/bootbox.all
 // Uncomment to copy all static images under ../images to the output folder and reference
