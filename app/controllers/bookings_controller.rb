@@ -31,9 +31,8 @@ class BookingsController < ApplicationController
       @diff = Booking.diff(@booking)
       @plural_arg = (@diff > 1) ? "s" : " "
     else
-      flash[:alert] = "Lo sentimos no puede acceder a la reserva"
       respond_to do |format|
-        format.html { redirect_to root_url}
+        format.html { redirect_to root_url, alert: "Lo sentimos no puede acceder a la reserva"}
       end
     end
   end
