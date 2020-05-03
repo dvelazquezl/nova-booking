@@ -64,8 +64,10 @@
             <span class="input-group-btn">
               <button id = "btn-location" onclick="initMap2()" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
                 <em id="location-icon" class="fas fa-map-marker-alt"></em> Agregar Ubicación
-                <%= form.text_field :latitude , id: "latitude", class: "location", required: "required"%>
+                <%= form.text_field :latitude , id: "latitude", class: "location"%>
                 <%= form.text_field :longitude, id: "longitude", class: "location"%>
+                <input type="hidden" id="tem_latitude">
+                <input type="hidden" id="tem_longitude">
               </button>
 
             </span>
