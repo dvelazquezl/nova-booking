@@ -87,5 +87,4 @@ class OwnersController < ApplicationController
   def current_ability
     @current_ability ||= OwnerAbility.new(current_user)
   end
-  
 end
