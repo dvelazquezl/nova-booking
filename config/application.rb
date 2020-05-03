@@ -9,6 +9,8 @@ Bundler.require(*Rails.groups)
 module Angle
   class Application < Rails::Application
 
+    config.exceptions_app = self.routes
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
     config.assets.initialize_on_precompile = false

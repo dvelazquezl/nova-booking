@@ -21,7 +21,7 @@ class WelcomeController < ApplicationController
 
   def resources
     cities = City.all
-    estates = Estate.only_published
+    estates = Estate.all
     array_of_json = cities + estates
     respond_to do |format|
       format.json { render json: array_of_json.to_json( :only => [:name])  }
@@ -38,8 +38,7 @@ class WelcomeController < ApplicationController
         params[:filterrific],
         select_options: {
             sorted_by: Estate.options_for_sorted_by,
-            with_estate_type: Estate.estate_type.options,
-            search_booking_cancelable: Estate.booking_cancelable.options
+            with_estate_type: Estate.estate_type.options
         },
         )) || return
     @estates = @filterrific.find.page(params[:page])

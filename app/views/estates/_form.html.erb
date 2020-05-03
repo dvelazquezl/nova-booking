@@ -156,7 +156,7 @@
   <div class="card card-default">
     <div class="card-body">
       <%= form.fields_for :rooms, rooms do |f| %>
-        <%= render 'room', f: f, partial_param: room_facilities %>
+        <%= render 'room', f: f, room_facilities: room_facilities %>
       <% end %>
       <%= link_to_add_fields "Agregar habitacion", form, :rooms, room_facilities %>
     </div>

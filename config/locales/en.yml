@@ -268,11 +268,6 @@ en:
         one:   propiedad
         few:   propiedades
         other: propiedades
-      booking:
-        zero:  reservas
-        one:   reserva
-        few:   reservas
-        other: reservas
       offer:
         zero:  ofertas
         one:   oferta
@@ -294,10 +289,3 @@ en:
         one_apartment: "Apartamento"
         home: "Casa"
         hotel: "Hotel"
-      booking_cancelable:
-        cancelable: "Cancelable"
-        non_cancelable: "No cancelable"
-    offer:
-      offer_status:
-        in_progress: "En curso"
-        finished: "Vencidas"

@@ -39,26 +39,28 @@
                   <% contains = false %>
                   <% day = Date.parse(from) %>
                   <% day_offers= [] %>
-                  <% (1..diff).each do |_| %>
+                  <% (1..diff).each do |n| %>
                     <% price = r.price %>
                     <% offers.each_with_index do |offer, i| %>
                       <% if (offer.date_start .. offer.date_end).cover?(day) %>
                         <% day_offers[i].nil? ? day_offers[i] = 1 : day_offers[i] += 1 %>
-                        <% offer.offer_details.each do |detail| %>
+                        <% offer.offer_details.each_with_index do |detail, index| %>
                           <% if detail.room.id == r.id %>
-                            <%descriptions.push(offer.description.to_s + " " + detail.discount.to_s + "% de descuento")%>
+                            <% n == 1? descriptions.push(offer.description.to_s + " " + detail.discount.to_s + "% de descuento") : nil%>
                             <% price -= (r.price * detail.discount) / 100 %>
                             <% contains = true %>
                           <% end %>
                         <% end %>
                       <% end %>
                     <% end %>
+                    <% if n==1 %>
+                      <% price_real= price %>
+                    <% end %>
                     <% total+= price %>
-                    <% day+= 1.day %>
+                    <% day+= n %>
                   <% end %>
                   <% if contains %>
                     <% day_offers.compact %>
-                    <% descriptions = descriptions.uniq %>
                     <% descriptions.each_with_index do |d, i| %>
                       <% description+= d + ' ('+day_offers[i].to_s + (day_offers[i]>1? ' días' : ' día').to_s + ' de oferta).'+"\n" %>
                     <% end %>

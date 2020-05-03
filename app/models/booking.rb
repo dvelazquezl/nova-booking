@@ -1,11 +1,9 @@
 class Booking < ApplicationRecord
     has_many :booking_details
     belongs_to :estate
-    belongs_to :cancellation_motive
     has_secure_token :confirmation_token
     accepts_nested_attributes_for :booking_details, :allow_destroy => true
-
-    delegate :name, :images, :to => :estate, :prefix => true
+    scope :request_assess, -> {where(cancelled_at: nil, booking_state: false, notified: false).where.not(confirmed_at: nil)}
 
     def self.booking_new(booking,params)
         booking.estate_id = params[:estate_id]
@@ -39,15 +37,7 @@ class Booking < ApplicationRecord
         return diff = (booking.date_end.to_date -  booking.date_start.to_date).to_i
     end
 
-    scope :request_assess, -> {where(cancelled_at: nil, booking_state: false, notified: false).where.not(confirmed_at: nil)}
     scope :finished, -> {
         where("date_end <= ?  AND booking_state = true", DateTime.now.to_date)
     }
-    scope :bookings_by_client, -> (current_client_email) { where(client_email: current_client_email) }
-    scope :bookings_by_owner, -> (current_owner_id) {
-        joins(:estate).where('estates.owner_id = ?',current_owner_id)
-    }
-
-    self.per_page = 5
-    resourcify
 end
