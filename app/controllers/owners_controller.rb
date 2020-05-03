@@ -51,7 +51,7 @@ class OwnersController < ApplicationController
         content_type: 'image/png'
     )
     respond_to do |format|
-      if @owner.update(owner_params) or update_resource(@user, user_params)
+      if @owner.update(owner_params)
         format.html { redirect_to @owner, notice: 'Tu perfil fue actualizado correctamente.' }
       else
         format.html { render :edit }
@@ -74,10 +74,6 @@ class OwnersController < ApplicationController
 
   def owner_params
     params.require(:owner).permit(:phone, :address, :about, :name, :email, :user_id)
-  end
-
-  def user_params
-    params.require(:user).permit(:username)
   end
 
   def current_ability
