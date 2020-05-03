@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def convert_base64_to_file(estate, images)
+    return if images.nil?
     images.each do |image|
       decoded_data = Base64.decode64(image.split(',')[1])
       image_io = StringIO.new(decoded_data)
