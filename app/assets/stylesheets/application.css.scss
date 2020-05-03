@@ -33,6 +33,7 @@
  *= require easy-autocomplete
  *= require easy-autocomplete.themes
  *= require bootstrap-datepicker3
+ *= require welcome
  */
 @import 'components/_filterrific_filter';
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap');
@@ -50,4 +51,21 @@
 .label-score{
   color: #23b7e5;
   font-size: large;
+}
+
+.input-transparent{
+  width:1px;
+  height: 1px;
+  background: transparent;
+  border: none;
+}
+
+#map {
+  width: 495px;
+  height: 400px;
+}
+
+#map2 {
+  width: 495px;
+  height: 400px;
 }

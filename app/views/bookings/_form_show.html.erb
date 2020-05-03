@@ -1,5 +1,21 @@
-<div class="content-heading">Reserva</div>
-
+<% provide :head_tags do %>
+  <meta name='turbolinks-visit-control' content='reload'>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      initMap(<%=estate.latitude%>, <%=estate.longitude%>)
+    });
+  </script>
+<% end %>
+<% status_booking = get_status(booking) %>
+<div align="center">
+  <div class="col-7">
+    <div class="content-heading row align-items-start">
+      <div class="col-2 ">Reserva</div>
+      <div class="col-2 align-items-center text-center">
+        <label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></div>
+    </div>
+  </div>
+</div>
 <div align="center">
   <div class="col-7">
     <div class="card card-default">
@@ -16,8 +32,10 @@
                   </h1>
                 </div>
                 <div class="col-12 d-flex align-items-center">
-                  <em class="mr-1 fa-1x fas fa-map-marker-alt">
-                  </em>
+                <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
+                  <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
+                </button>
+                <%= render partial: "layouts/partials/modal",:locals => { id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"}%>
                   <span>
                     <%= estate.address %>
                   </span>
@@ -142,9 +160,33 @@
             </tbody>
           </table>
         </div>
+        <% if status_booking == "Futura" && is_cancellable?(estate) %>
+          <div class="col-11" id="can_cancel">
+            <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
+            <%#= render 'cancel' %>
+          </div>
+        <% else %>
+          <div class="col-11" id="cant_cancel">
+            <p>
+              <b>Esta propiedad no permite la cancelacion por parte de usuarios ni reservas vigentes.
+              Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
+            </p>
+          </div>
+        <% end %>
       </fieldset>
     </div>
+    <% if user_signed_in? %>
+      <div align="left">
+        <%= link_to 'Volver Atras', index_user_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
   </div>
 </div>
 
 <div id="room-content"></div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
