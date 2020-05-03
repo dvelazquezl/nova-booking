@@ -12,6 +12,8 @@ class Room < ApplicationRecord
   enumerize :room_type, in: [:single, :double, :family]
   enumerize :status, in: [:published, :not_published]
 
+  scope :rooms_published_by_estate, -> (estate_id) { where("status = 'published' and estate_id = ?",estate_id)}
+
   scope :available, ->(estate_id, from, to, price_max, price_min) {
     where(
         "rooms.id in (select distinct ro.id

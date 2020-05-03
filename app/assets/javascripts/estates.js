@@ -2,6 +2,25 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/core
+//= require jquery.easy-autocomplete
+
+$(function () {
+    let options_easy = {
+
+      url: "/welcome/resources.json",
+    
+      getValue: "name",
+      
+      list: {
+        match: {
+          enabled: true
+        }
+      },
+    
+      theme: "blue-light"
+    };
+      $("#with_search_results").easyAutocomplete(options_easy);
+  });
 
 addEventListener("direct-upload:initialize", event => {
     const { target, detail } = event

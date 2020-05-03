@@ -1,0 +1,19 @@
+<%= puts filterrific.inspect %>
+<%= form_for_filterrific filterrific do |f| %>
+  <div>
+    <div class="card">
+      <div class="card-body row">
+        <div class="col-3 row">
+          <div class="col-5 font-size-filter">Filtro por estado: </div>
+          <div class="col">
+            <%= f.select(:search_status, filterrific.select_options[:search_status],
+                         { include_blank: '- Todos -'},
+                         {:class => 'filterrific-periodically-observed form-control'}
+                ) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%end %>
