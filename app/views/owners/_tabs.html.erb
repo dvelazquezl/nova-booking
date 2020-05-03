@@ -1,0 +1,37 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <% if is_owner? %>
+      <%= link_to 'Resumen', owner_path(current_owner), :class => "nav-link", :id => "resume" %>
+    <% else %>
+      <%= link_to 'Resumen', user_path(current_user.id), :class => "nav-link", :id => "resume" %>
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " id="bookings">Mis Reservas</a>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Lugares Visitados', visited_estates_path, :class=> "nav-link", :id => "visited_places" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Reseñas', '/comments/', :class => "nav-link", :id => "reviews" %>
+  </li>
+  <% if is_owner? %>
+    <li class="nav-item">
+      <%= link_to 'Configuraciones', edit_user_path(current_user.id), :class => "nav-link", :id => "settings" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Mis Propiedades', estates_path, :class => "nav-link", :id => "estates"%>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Ofertas', offers_path, :class => "nav-link", :id => "offers" %>
+    </li>
+  <% else %>
+    <li class="nav-item">
+      <%= link_to 'Configuraciones', edit_user_registration_path, :class => "nav-link", :id => "settings" %>
+    </li>
+  <% end %>
+</ul>
+<br>
+<script>
+  $(() => {$('#' + (<%= id %>).id).toggleClass('active');});
+</script>
