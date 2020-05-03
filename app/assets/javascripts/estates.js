@@ -119,3 +119,14 @@ function initMap2() {
         });
     }
 }
+window.onload=function(){
+    document.getElementById('btn-modal').addEventListener("click", save_location);
+    function save_location() {
+        let newlat= document.getElementById('tem_latitude').value;
+        let newlng = document.getElementById('tem_longitude').value;
+        alert(newlat);
+        document.getElementById('latitude').value = newlat;
+        document.getElementById('longitude').value = newlng;
+    }
+}
+
