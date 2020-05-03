@@ -6,13 +6,23 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
+    offers=[]
     owner = helpers.current_owner
     if owner
-      offers = Offer.offers_by_owner(owner).page(params[:page])
-    else
-      offers = []
+      (@filterrific = initialize_filterrific(
+          Offer.offers_by_owner(owner),
+          params[:filterrific],
+          select_options: {
+              search_status: Offer.offer_status.options,
+          },
+          )) || return
+      offers = @filterrific.find.page(params[:page])
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
-    render :index, locals: {offers: offers}
+    render :index, locals: {offers: offers, filterrific: @filterrific}
   end
 
   # GET /offers/1
@@ -24,14 +34,16 @@ class OffersController < ApplicationController
   def new
     @offer = Offer.new
     owner = helpers.current_owner
-    estates = Estate.estates_by_owner(owner.id)
-    estate_name, offer_details = nil
+    estates = Estate.only_published.estates_by_owner(owner.id)
+    offer_details = @offer.offer_details.build
+    estate_name = nil
     if params[:tag_estate_id].present? then
       estate_name = Estate.find_by(id: params[:tag_estate_id]).name
       @offer.estate_id = params[:tag_estate_id]
-      offer_details = @offer.offer_details.build
     end
-    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name}
+    from_estates = params[:from_estates].present? ? true : false
+
+    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name, from_estates: from_estates}
 
   end
 
@@ -47,10 +59,11 @@ class OffersController < ApplicationController
     respond_to do |format|
       if @offer.save
         format.html { redirect_to @offer, notice: 'La oferta fue creada satisfactoriamente.' }
-        format.json { render :show, status: :created, location: @offer }
       else
-        format.html { render :new }
-        format.json { render json: @offer.errors, status: :unprocessable_entity }
+        owner = helpers.current_owner
+        estates = Estate.only_published.estates_by_owner(owner.id)
+        flash[:alert] = "No se pudo crear la oferta. Seleccione una propiedad."
+        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}}
       end
     end
   end

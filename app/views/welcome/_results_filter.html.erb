@@ -7,7 +7,6 @@
             <%= f.text_field :search_query, placeholder: "¿A dónde vas?", id: 'with_search_results',
             class: "filterrific-periodically-observed" %>
         </div>
-        
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
                            readonly: true,
@@ -36,7 +35,6 @@
           <%= f.number_field :price_max, id: "price_max", class: "filterrific-periodically-observed form-control number", type: "text", placeholder: "Máximo Gs." %>
         </div>
       </div>
-
       <!--FIN-->
       <hr>
       <!--FILTRO POR TIPO DE PROPIEDAD-->
@@ -58,8 +56,18 @@
         <input type="text" id="amount" readonly >
         <span class="fas fa-info-circle score_inf " data-toggle="tooltip" data-placement="right" title="0 sin puntuación"></span>
       </p>
-
       <div id="slider-range" class= "filterrific-periodically-observed"></div>
+      <!--FIN-->
+      <hr>
+      <!--FILTRO POR CANCELABLE O NO-->
+      <h5>Cancelación de reserva</h5>
+      <div class="form-group col-12">
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.select :search_booking_cancelable, filterrific.select_options[:search_booking_cancelable],
+                       {:include_blank => '- Todos -'},
+                       {:class => 'filterrific-periodically-observed form-control'} %>
+        </div>
+      </div>
       <!--FIN-->
       <hr>
     </div>
