@@ -277,3 +277,19 @@ let message = "Debe ser un número positivo";
 $(document).on('turbolinks:load', function () {
     $('.dropdown-toggle').dropdown()
 })
+
+function initMap(lat, lng) {
+    let myCoords = new google.maps.LatLng(lat, lng);
+    let mapOptions = {
+        center: myCoords,
+        zoom: 14
+    };
+
+    let map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    let marker = new google.maps.Marker({
+        position: myCoords,
+        map: map
+    });
+
+}
