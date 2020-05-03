@@ -19,11 +19,10 @@ class EstatesController < ApplicationController
         format.html
         format.js
       end
+      render :index, locals: {estates: @estates}
     else
-      @estates = []
+      redirect_to new_owner_path, alert: "Para acceder a esta sección debe registrarse como propietario"
     end
-
-    render :index, locals: {estates: @estates}
   end
 
   def estates_visited
@@ -90,7 +89,7 @@ class EstatesController < ApplicationController
       @estate_facilities = Facility.where(facility_type: :estate)
       render :new, locals: {rooms: @rooms, estate_facilities: @estate_facilities}
     else
-      redirect_to new_owner_path
+      redirect_to new_owner_path, alert: "Para acceder a esta sección debe registrarse como propietario"
     end
   end
 
@@ -108,7 +107,7 @@ class EstatesController < ApplicationController
       @room_facilities = Facility.where(facility_type: :room)
       @estate_facilities = Facility.where(facility_type: :estate)
     else
-      redirect_to estates_path
+      redirect_to estates_path, alert: "Para acceder a esta sección debe registrarse como propietario"
     end
   end
 
