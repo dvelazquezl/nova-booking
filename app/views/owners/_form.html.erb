@@ -34,15 +34,15 @@
                 <label for="pictureInput1" class="btn btn-secondary">
                   <em class="fas fa-camera mr-2"></em> Cambiar Foto
                 </label>
-                <%= file_field_tag "picture", multiple: false, id: "pictureInput1", required: "required", accept: "image/*", direct_upload: true %>
-                <%= hidden_field_tag 'image' ,id: 'image'%>
+                <%= file_field_tag "picture", multiple: false, id: "pictureInput1", required: "required", accept: "image/*", direct_upload: true,class: "input-transparent" %>
+                <%= hidden_field_tag 'image'%>
               </div>
             </div>
           </div>
           <div class="my-3">
             <div class="col-xl-12 col-md-12 col-12">
               <label class="text-bold  text-right">Acerca de mi</label>
-              <%= form.text_area :about, class: "form-control" %>
+              <%= form.text_area :about, class: "form-control" , required: "required"%>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@
                 <div class="form-group row">
                   <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right" >Nombre</label>
                   <div class="col-xl-10 col-md-9 col-8">
-                    <%= form.text_field :name, class: "form-control" %>
+                    <%= form.text_field :name, class: "form-control", required: "required" %>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -77,13 +77,13 @@
                 <div class="form-group row">
                   <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right ">Teléfono</label>
                   <div class="col-xl-10 col-md-9 col-8">
-                    <%= form.text_field :phone, class: "form-control" %>
+                    <%= form.text_field :phone, class: "form-control", required: "required" %>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right" >Dirección</label>
                   <div class="col-xl-10 col-md-9 col-8">
-                    <%= form.text_area :address, class: "form-control" %>
+                    <%= form.text_area :address, class: "form-control", required: "required" %>
                   </div>
                 </div>
                 <%= form.hidden_field :user_id, value: current_user.id %>
@@ -110,23 +110,4 @@
   </div>
 <% end %>
 
-<!-- Modal -->
-<div class="modal fade" id="crop_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><h4>Recortar imagen</h4></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="canvas"></div>
-      </div>
-      <div class="modal-footer">
-        <button id="close-input" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button id="result-input" type="button" class="btn btn-primary">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render "cropper/cropper_modal" %>

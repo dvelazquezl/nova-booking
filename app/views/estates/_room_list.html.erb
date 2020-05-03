@@ -57,7 +57,7 @@
                     <% day+= 1.day %>
                   <% end %>
                   <% if contains %>
-                    <% day_offers.compact %>
+                    <% day_offers = day_offers.compact %>
                     <% descriptions = descriptions.uniq %>
                     <% descriptions.each_with_index do |d, i| %>
                       <% description+= d + ' ('+day_offers[i].to_s + (day_offers[i]>1? ' días' : ' día').to_s + ' de oferta).'+"\n" %>

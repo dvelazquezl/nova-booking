@@ -124,12 +124,16 @@ class EstatesController < ApplicationController
     @estate = Estate.new(estate_params)
     @estate.isPublished
 
+    convert_base64_to_file(@estate, params[:images])
     respond_to do |format|
       if @estate.save
         format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
         format.json { render :show, status: :created, location: @estate }
       else
-        format.html { render :new }
+        @rooms = @estate.rooms.build
+        @room_facilities = Facility.where(facility_type: :room)
+        @estate_facilities = Facility.where(facility_type: :estate)
+        format.html { render :new , locals: {rooms: @rooms, estate_facilities: @estate_facilities}}
         format.json { render json: @estate.errors, status: :unprocessable_entity }
       end
     end
@@ -138,6 +142,7 @@ class EstatesController < ApplicationController
   # PATCH/PUT /estates/1
   # PATCH/PUT /estates/1.json
   def update
+    convert_base64_to_file(@estate, params[:images])
     respond_to do |format|
       if @estate.update(estate_params)
         format.html { redirect_to show_detail_estate_path, notice: 'Propiedad actualizada exitosamente.' }
@@ -233,7 +238,7 @@ class EstatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def estate_params
-    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, :booking_cancelable, :longitude, :latitude, facility_ids: [], images: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
+    params.require(:estate).permit(:name, :address, :city_id, :owner_id, :estate_type, :description, :booking_cancelable, :longitude, :latitude, facility_ids: [], rooms_attributes: [:id, :estate_id, :description, :capacity, :quantity, :price, :status, :room_type, :_destroy, facility_ids: [], images: []])
   end
 
   def current_ability
