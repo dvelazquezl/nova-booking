@@ -130,7 +130,10 @@ class EstatesController < ApplicationController
         format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
         format.json { render :show, status: :created, location: @estate }
       else
-        format.html { render :new }
+        @rooms = @estate.rooms.build
+        @room_facilities = Facility.where(facility_type: :room)
+        @estate_facilities = Facility.where(facility_type: :estate)
+        format.html { render :new , locals: {rooms: @rooms, estate_facilities: @estate_facilities}}
         format.json { render json: @estate.errors, status: :unprocessable_entity }
       end
     end
