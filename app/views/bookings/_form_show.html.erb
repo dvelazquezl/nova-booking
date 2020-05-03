@@ -150,11 +150,24 @@
             </tbody>
           </table>
         </div>
+        <% if status_booking == "Futura" && is_cancellable?(estate) %>
+          <div class="col-11" id="can_cancel">
+            <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
+            <%#= render 'cancel' %>
+          </div>
+        <% else %>
+          <div class="col-11" id="cant_cancel">
+            <p>
+              <b>Esta propiedad no permite la cancelacion por parte de usuarios ni reservas vigentes.
+              Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
+            </p>
+          </div>
+        <% end %>
       </fieldset>
     </div>
     <% if user_signed_in? %>
       <div align="left">
-        <%= link_to 'Volver Atras', index_user_bookings_path, class: "btn btn-secondary" %>
+        <%= link_to 'Volver Atras', index_user_path, class: "btn btn-secondary" %>
       </div>
     <% end %>
   </div>
@@ -162,3 +175,8 @@
 </div>
 
 <div id="room-content"></div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
