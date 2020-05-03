@@ -134,7 +134,7 @@
             <fieldset>
               <div id="" class="field">
                 <%= form.label "Sube la foto de tu propiedad: " %>
-                <%= form.file_field :images, multiple: true, id: "pictureInput", required: "required", accept: "image/*", direct_upload: true %>
+                <%= form.file_field 'picture', multiple: false, id: "pictureInput", required: "required", accept: "image/*", direct_upload: true %>
               </div>
               <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
               </div>
@@ -169,6 +169,8 @@
       </div>
     </div>
   </fieldset>
+
+  <%= render "cropper/cropper_modal" %>
 <% end %>
 <script>
     <%= render "selects.js" %>
