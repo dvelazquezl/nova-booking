@@ -107,7 +107,7 @@ class EstatesController < ApplicationController
       @room_facilities = Facility.where(facility_type: :room)
       @estate_facilities = Facility.where(facility_type: :estate)
     else
-      redirect_to estates_path, alert: "Para acceder a esta sección debe registrarse como propietario"
+      redirect_to new_owner_path, alert: "Para acceder a esta sección debe registrarse como propietario"
     end
   end
 
