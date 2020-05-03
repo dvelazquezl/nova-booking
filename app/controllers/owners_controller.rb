@@ -1,7 +1,7 @@
 class OwnersController < ApplicationController
 
   before_action :authenticate_user! , except: :show
-  before_action :set_owner, only: [:show, :edit, :update, :destroy]
+  before_action :set_owner, only: [:show, :update, :destroy]
   load_and_authorize_resource
   require 'base64'
   def index
@@ -17,7 +17,6 @@ class OwnersController < ApplicationController
   end
 
   def edit
-    @user = User.find(@owner.user_id)
   end
 
   def create
