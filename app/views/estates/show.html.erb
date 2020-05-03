@@ -1,3 +1,11 @@
+<% provide :head_tags do %>
+  <meta name='turbolinks-visit-control' content='reload'>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      initMap(<%=@estate.latitude%>, <%=@estate.longitude%>)
+    });
+  </script>
+<% end %>
 <div class="row results-filter-section">
   <div class="col-2">
     <%= render(
@@ -25,7 +33,26 @@
                 <% end %>
               </div>
               <div class="col-12 d-flex align-items-center">
-                <em class="mr-1 fa-1x fas fa-map-marker-alt"></em>
+              <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
+                <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="form-group">
+                      <p>
+                      <div id="map" ></div>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 <span>
                   <%= @estate.address %>
                 </span>
@@ -42,6 +69,13 @@
         <div class="container">
           <p class="col-12" id="description-text">
             &emsp;&emsp;<%= @estate.description %>
+          </p>
+          <p class="col-12" id="description-text">
+            <% if @estate.booking_cancelable? %>
+              &emsp;&emsp;<span class="badge badge-green float-center">Se permite la cancelación de reservas</span>
+            <% else %>
+              &emsp;&emsp;<span class="badge badge-warning float-center">No se permite la cancelación de reservas</span>
+            <% end %>
           </p>
         </div>
       </div>
@@ -69,7 +103,7 @@
       <!-- Availability table -->
       <br/>
       <div class="col-12">
-        <%= render 'room_list', rooms: @rooms, diff: @diff, plural_arg: @plural_arg%>
+        <%= render 'room_list', rooms: @rooms, offers: @offers, from: from, diff: @diff, plural_arg: @plural_arg %>
       </div>
     </div>
   </div>
@@ -85,6 +119,7 @@ $(document).ready(function(){
       const date_start = $("#d_start").val();
       const date_end = $("#d_end").val();
       const estate_id = $('#estate-attr').val();
+      const discount = $("#price_normal").val().split(" ")[0].split(".").join("") - total_amount;
       $('table > #rooms > tr').each(function () {
           const quantity = parseInt($('option:selected', this).text());
           if(quantity > 0){
@@ -96,10 +131,8 @@ $(document).ready(function(){
         });
        let pr = escape(JSON.stringify(booking_details))
        const url = "/bookings/new?date_start="+date_start+"&estate_id="+estate_id+"&date_end="+date_end+"&total_amount="+total_amount.toString()
-                    +"&booking_details="+pr;
+                    +"&discount="+discount.toString()+"&booking_details="+pr;
        window.location.href = url;
       });
 });
-
-
 </script>

@@ -1,5 +1,13 @@
-<div class="content-heading">Reserva</div>
-
+<% status_booking = get_status(booking) %>
+<div align="center">
+  <div class="col-7">
+    <div class="content-heading row align-items-start">
+      <div class="col-2 ">Reserva</div>
+      <div class="col-2 align-items-center text-center">
+        <label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></div>
+    </div>
+  </div>
+</div>
 <div align="center">
   <div class="col-7">
     <div class="card card-default">
@@ -91,6 +99,7 @@
             </tr>
             </thead>
             <tbody>
+            <% subtotal = 0 %>
             <% booking.booking_details.each do |f| %>
               <tr>
                 <td>
@@ -100,6 +109,7 @@
                 <td class="text-center"><%=f.quantity %></td>
                 <td class="text-right"><%= number_to_currency(f.subtotal / f.quantity, :unit => "Gs", :separator => ".", :precision => 0)%></td>
                 <td class="text-right"><%= number_to_currency(f.subtotal, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+                <% subtotal+= f.subtotal %>
                 <td class="text-center">
                   <%= link_to room_estate_url(f.room_id), class: 'btn btn-link', remote: true do %>
                     <button class="btn btn-link text-primary" title="Ver"><i class="fas fa-eye"></i></button>
@@ -107,13 +117,24 @@
                 </td>
               </tr>
             <%end%>
+            <% if booking.discount > 0 %>
+              <tr>
+                <td>Descuento</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <%= number_to_currency(booking.discount/diff, :unit => "Gs", :separator => ".", :precision => 0) %>
+                </td>
+              </tr>
+            <% end %>
               <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
-                  <b><%= number_to_currency( booking.total_amount / diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+                  <b><%= number_to_currency( subtotal - booking.discount/diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
                 </td>
               </tr>
               <tr class="thead-light">
@@ -124,13 +145,38 @@
                 <th>
                   <b> <%= number_to_currency( booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
                 </th>
+                <th></th>
               </tr>
             </tbody>
           </table>
         </div>
+        <% if status_booking == "Futura" && is_cancellable?(estate) %>
+          <div class="col-11" id="can_cancel">
+            <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
+            <%#= render 'cancel' %>
+          </div>
+        <% else %>
+          <div class="col-11" id="cant_cancel">
+            <p>
+              <b>Esta propiedad no permite la cancelacion por parte de usuarios ni reservas vigentes.
+              Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
+            </p>
+          </div>
+        <% end %>
       </fieldset>
     </div>
+    <% if user_signed_in? %>
+      <div align="left">
+        <%= link_to 'Volver Atras', index_user_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
   </div>
 </div>
 
 <div id="room-content"></div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
