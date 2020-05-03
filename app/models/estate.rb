@@ -103,7 +103,7 @@ class Estate < ApplicationRecord
 
   extend Enumerize
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
-  enumerize :booking_cancelable, in: [:cancelable, :non_cancelable]
+  enumerize :booking_cancelable_status, in: [:cancelable, :non_cancelable]
 
   scope :with_date_gte, ->(ref_date) {
     Estate.only_published.where("estates.id in
