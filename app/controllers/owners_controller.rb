@@ -1,4 +1,4 @@
-#controlador de owner (propietario)
+# Owner controller (propietario)
 class OwnersController < ApplicationController
 
   before_action :authenticate_user! , except: :show
