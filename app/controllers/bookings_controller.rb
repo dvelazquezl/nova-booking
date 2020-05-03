@@ -131,7 +131,7 @@ class BookingsController < ApplicationController
   end
 
   def cancel_booking(booking, cm_id)
-    booking.update_attribute(:cancellation_motive_id, cm_id)
+    booking.update_attribute(:cancellation_motive, cm_id)
     booking.update_attribute(:booking_state, 'false')
   end
 

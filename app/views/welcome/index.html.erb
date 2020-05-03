@@ -63,7 +63,7 @@
                       <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                       <p><%= estate.address %></p>
                       <hr>
-                      <p class="font-title"><div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;"> <%= estate.score %> </div>&emsp;Excelente</p>
+                      <p class="font-title"><div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;"> <%= estate.score %> </div><label class="label-score">&nbsp<%=label_score(estate.score) %></label></p>
                     </div>
                   </div>
                 </div>
