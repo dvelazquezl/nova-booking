@@ -294,6 +294,9 @@ en:
         one_apartment: "Apartamento"
         home: "Casa"
         hotel: "Hotel"
+      booking_cancelable_status:
+        cancelable: "Cancelable"
+        non_cancelable: "No cancelable"
     offer:
       offer_status:
         in_progress: "En curso"

@@ -59,6 +59,17 @@
       <div id="slider-range" class= "filterrific-periodically-observed"></div>
       <!--FIN-->
       <hr>
+      <!--FILTRO POR CANCELABLE O NO-->
+      <h5>Cancelación de reserva</h5>
+      <div class="form-group col-12">
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.select :search_booking_cancelable, filterrific.select_options[:search_booking_cancelable],
+                       {:include_blank => '- Todos -'},
+                       {:class => 'filterrific-periodically-observed form-control'} %>
+        </div>
+      </div>
+      <!--FIN-->
+      <hr>
     </div>
   <% end %>
 </div>
