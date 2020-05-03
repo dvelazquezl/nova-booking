@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   get 'bookings/index_owner', :to => 'bookings#index_owner', :as => 'index_owner'
   get 'bookings/cancel/:id', :to => 'bookings#cancel', :as => 'cancel'
 
-  resources :users, only: [:index]
+  resources :users, only: [:index, :show, :edit, :update]
   resources :rooms
   resources :facilities, except: :show
   resources :bookings, except: [:edit, :update, :delete, :index] do
@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :comments, only: [] do
     collection do
       post :save
+      get :index
     end
   end
 
