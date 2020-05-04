@@ -1,0 +1,37 @@
+<%= render 'owners/tabs', id: 'resume' %>
+<div class="col-lg-8">
+  <div class="card card-default">
+    <div class="card-header d-flex align-items-center">
+      <div class="d-flex justify-content-center col">
+        <div class="h4 m-0 text-center">Informaci&oacute;n de Perfil</div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <div class="row py-4 justify-content-center">
+        <div class="col-12 col-sm-10">
+          <form class="form-horizontal">
+            <div class="form-group row">
+              <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right">Nombre: </label>
+              <div class="col-xl-10 col-md-9 col-8">
+                <label class=" col-form-label text-right"><%= @user.name %> <%= @user.last_name %></label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right">Usuario: </label>
+              <div class="col-xl-10 col-md-9 col-8">
+                <label class=" col-form-label text-right"><%= @user.username %></label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right">Email: </label>
+              <div class="col-xl-10 col-md-9 col-8">
+                <label class=" col-form-label text-right"><%= @user.email %></label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
