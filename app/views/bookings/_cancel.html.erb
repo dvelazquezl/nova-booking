@@ -1,4 +1,4 @@
-<% if is_owner? %>
+<% if user_signed_in? && is_owner? %>
 <div class="modal-header">
   <h3 class="modal-title">Cancelar Reserva</h3>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
