@@ -1,10 +1,11 @@
 # Owner controller (propietario)
 class OwnersController < ApplicationController
 
-  before_action :authenticate_user! , except: :show
+  before_action :authenticate_user!, except: :show
   before_action :set_owner, only: [:show, :update, :destroy]
   load_and_authorize_resource
   require 'base64'
+
   def index
     @owners = Owner.all
   end
@@ -23,13 +24,13 @@ class OwnersController < ApplicationController
   def create
     @owner = Owner.new(owner_params)
     user = User.find(@owner.user_id)
-    @owner.name = user.name + user.last_name
+    @owner.name = user.name + ' ' + user.last_name
     decoded_data = Base64.decode64(params[:image].split(',')[1])
     image_io = StringIO.new(decoded_data)
     image_io = handle_string_io_as_file(image_io, 'image.png')
     @owner.image.attach(
         io: image_io,
-        filename: 'image-'+current_user.id.to_s+'-'+Time.current.to_s+'.png',
+        filename: 'image-' + current_user.id.to_s + '-' + Time.current.to_s + '.png',
         content_type: 'image/png'
     )
     respond_to do |format|
@@ -47,7 +48,7 @@ class OwnersController < ApplicationController
     image_io = handle_string_io_as_file(image_io, 'image.png')
     @owner.image.attach(
         io: image_io,
-        filename: 'image-'+current_user.id.to_s+'-'+Time.current.to_s+'.png',
+        filename: 'image-' + current_user.id.to_s + '-' + Time.current.to_s + '.png',
         content_type: 'image/png'
     )
     respond_to do |format|
