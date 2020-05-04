@@ -36,6 +36,13 @@
               <%= link_to edit_estate_path(estate) do %>
                 <button class="btn btn-link text-primary" title="Editar"><i class="fas fa-edit"></i></button>
               <% end %>
+              <% if estate.status %>
+                <%= link_to new_offer_path(:tag_estate_id => estate.id, :from_estates => true) do %>
+                  <button class="btn btn-link text-warning" title="Oferta"><i class="fas fa-tags"></i></button>
+                <% end %>
+              <% else %>
+                <button class="btn btn-link text-gray-dark" title="Oferta" disabled><i class="fas fa-tags"></i></button>
+              <% end %>
               <%= link_to estate, method: :delete, data: {confirm: 'Estás seguro?'} do %>
                 <button class="btn btn-link text-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
               <% end %>
