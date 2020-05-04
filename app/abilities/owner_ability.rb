@@ -10,6 +10,7 @@ class OwnerAbility
         owner = Owner.find_by user_id: user.id
         can :read, Owner
         can :create, Owner
+        can :change_profile_picture, Owner
         if owner
           can :update, Owner, id: owner.id
         end
