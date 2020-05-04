@@ -15,6 +15,7 @@ class OwnersController < ApplicationController
   end
 
   def contact
+    @user = User.find(@owner.user_id)
     respond_to do |format|
       format.js {}
     end

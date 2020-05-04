@@ -1,5 +1,5 @@
 <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><h4>Informacion de Contacto</h4></h5>
@@ -8,19 +8,50 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="col-lg-4">
-          <div class="card card-default">
-            <div class="card-body text-center">
-              <div class="py-4 text-center">
-                <% if owner.image.attached? %>
-                  <%= image_tag owner.image, alt: "rss fit", height: "150", width: "150",
-                                class: "img-fluid rounded-circle img-thumbnail thumb96" %>
-                <% end %>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card card-default">
+              <div class="card-body text-center">
+                <div class="py-4 text-center">
+                  <% if owner.image.attached? %>
+                    <%= image_tag owner.image, alt: "rss fit", height: "150", width: "150",
+                                  class: "img-fluid rounded-circle img-thumbnail thumb96" %>
+                  <% end %>
+                </div>
+                <h3 class="m-0 text-bold"><%= owner.name %></h3>
               </div>
-              <h3 class="m-0 text-bold"><%= owner.name %></h3>
-              <div class="my-3">
-                <div class="col-xl-12 col-md-8 col-8">
-                  <%= owner.about %>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card card-default">
+              <div class="card-body">
+                <div class="row py-4 justify-content-center">
+                  <div class="col-12 col-sm-10">
+                    <div class="form-group row">
+                      <label class="col-md-4 text-bold text-left">Email: </label>
+                      <div class="col-auto">
+                        <label class="text-left"><%= user.email %></label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 text-bold text-left">Tel&eacute;fono: </label>
+                      <div class="col-auto">
+                        <label class="text-left"><%= owner.phone %></label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 text-bold text-left">Direcci&oacute;n: </label>
+                      <div class="col-auto">
+                        <label class="text-left"><%= owner.address %></label>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 text-bold text-left">Acerca de mi: </label>
+                      <div class="col-auto">
+                        <label class="text-left"><%= owner.about %></label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
