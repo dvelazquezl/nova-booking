@@ -153,12 +153,29 @@
         <% if status_booking == "Futura" && is_cancellable?(estate) %>
           <div class="col-11" id="can_cancel">
             <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
-            <%#= render 'cancel' %>
+          </div>
+        <% elsif status_booking == "Cancelada" %>
+          <div class="col-11" id="cant_cancel">
+            <p>
+              <b>Esta reserva ya ha sido cancelada.</b>
+            </p>
+          </div>
+        <% elsif status_booking == "Vigente"%>
+          <div class="col-11" id="cant_cancel">
+            <p>
+              <b>No se pueden cancelar reservas vigentes.</b>
+            </p>
+          </div>
+        <% elsif status_booking == "Pasada" %>
+          <div class="col-11" id="cant_cancel">
+            <p>
+              <b>No se pueden cancelar reservas pasadas.</b>
+            </p>
           </div>
         <% else %>
           <div class="col-11" id="cant_cancel">
             <p>
-              <b>Esta propiedad no permite la cancelacion por parte de usuarios ni reservas vigentes.
+              <b>Esta propiedad no permite la cancelacion de reserva por parte de usuarios.
               Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
             </p>
           </div>
