@@ -7,11 +7,7 @@
     <% end %>
   </li>
   <li class="nav-item">
-    <% if is_owner? %>
-      <%= link_to 'Mis Reservas', '/bookings/index_owner', :class => "nav-link", :id => "bookings" %>
-    <% else %>
-      <%= link_to 'Mis Reservas', '/bookings/index_user', :class => "nav-link", :id => "bookings" %>
-    <% end %>
+    <%= link_to 'Mis Reservas', '/bookings/index_user', :class => "nav-link", :id => "bookings" %>
   </li>
   <li class="nav-item">
     <%= link_to 'Lugares Visitados', visited_estates_path, :class=> "nav-link", :id => "visited_places" %>
@@ -28,6 +24,9 @@
     </li>
     <li class="nav-item">
       <%= link_to 'Ofertas', offers_path, :class => "nav-link", :id => "offers" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to 'Reservas a Mis Propiedades', '/bookings/index_owner', :class => "nav-link", :id => "estates_bookings" %>
     </li>
   <% else %>
     <li class="nav-item">
