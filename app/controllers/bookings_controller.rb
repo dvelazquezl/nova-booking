@@ -22,7 +22,7 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
-    if !@booking.booking_state && can_access_to_show?(params, @booking)
+    if can_access_to_show?(params, @booking)
       room = Room.with_deleted.find(@booking.booking_details[0].room_id)
       @estate = Estate.with_deleted.find(room.estate_id)
       @diff = Booking.diff(@booking)
@@ -41,7 +41,7 @@ class BookingsController < ApplicationController
     #para saber si la reserva corresponde al actual owner logueado
     its_the_current_owner = Estate.find(@booking.estate_id).owner_id == helpers.current_owner.id
 
-    if !@booking.booking_state && its_the_current_owner
+    if its_the_current_owner
       room = Room.with_deleted.find(@booking.booking_details[0].room_id)
       @estate = Estate.with_deleted.find(room.estate_id)
       @diff = Booking.diff(@booking)
