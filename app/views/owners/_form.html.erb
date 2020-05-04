@@ -1,104 +1,53 @@
-
 <%= form_with(model: owner, local: true) do |form| %>
-
-  <%if owner.errors.any? %>
+  <% if owner.errors.any? %>
     <div>
-      <h2> <%- pluralize(owner.errors.count, "error") %>
+      <h2>
+        <%- pluralize(owner.errors.count, "error") %>
         Lo sentimos ha ocurrido un error
       </h2>
       <ul>
-        <%owner.errors.full_messages.each do |message| %>
+        <% owner.errors.full_messages.each do |message| %>
           <li><%= message %></li>
-        <%end %>
+        <% end %>
       </ul>
     </div>
-  <%end %>
+  <% end %>
   <div class="row">
-    <div class="col-lg-4">
-      <div class="card card-default">
-        <div class="card-body text-center">
-          <div class="py-4">
-
-            <%if owner.image.attached? %>
-              <div class="py-4 text-center" id="target">
-                <%= image_tag url_for(owner.image), alt: "rss fit", height: "150", width:"150"%>
-              </div>
-            <%else %>
-              <div id="target">
-                <img class="img-fluid thumb96" src="<%= image_path('angle/user/perfil.png')  %>"  />
-              </div>
-            <%end%>
-            <br>
-            <div class="form-group row">
-              <div class="form-group col-xl-12 col-md-12 col-12" >
-                <label for="pictureInput1" class="btn btn-secondary">
-                  <em class="fas fa-camera mr-2"></em> Cambiar Foto
-                </label>
-                <%= file_field_tag "picture", multiple: false, id: "pictureInput1", required: "required", accept: "image/*", direct_upload: true %>
-                <%= hidden_field_tag 'image' ,id: 'image'%>
-              </div>
-            </div>
-          </div>
-          <div class="my-3">
-            <div class="col-xl-12 col-md-12 col-12">
-              <label class="text-bold  text-right">Acerca de mi</label>
-              <%= form.text_area :about, class: "form-control" %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'profile_picture', owner: owner, form: form %>
     <div class="col-lg-8">
       <div class="card card-default">
         <div class="card-header d-flex align-items-center">
           <div class="d-flex justify-content-center col">
-            <div class="h4 m-0 text-center">Mi información</div>
+            <div class="h4 m-0 text-center">Completa la informacion de tu perfil</div>
           </div>
 
         </div>
+        <%= form.hidden_field :user_id, value: current_user.id %>
         <div class="card-body">
           <div class="row py-4 justify-content-center">
             <div class="col-12 col-sm-10">
               <form class="form-horizontal">
                 <div class="form-group row">
-                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right" >Nombre</label>
+                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right ">Teléfono: </label>
                   <div class="col-xl-10 col-md-9 col-8">
-                    <%= form.text_field :name, class: "form-control" %>
+                    <%= form.text_field :phone, class: "form-control", required: "required" %>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right">Email</label>
+                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right">Dirección: </label>
                   <div class="col-xl-10 col-md-9 col-8">
-                    <% if user_signed_in? %>
-                      <div class = "form-control"><%= current_user.email %></div>
-                    <% end %>
+                    <%= form.text_area :address, class: "form-control", required: "required" %>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right ">Teléfono</label>
+                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right">Acerca de mi: </label>
                   <div class="col-xl-10 col-md-9 col-8">
-                    <%= form.text_field :phone, class: "form-control" %>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="text-bold col-xl-2 col-md-3 col-4 col-form-label text-right" >Dirección</label>
-                  <div class="col-xl-10 col-md-9 col-8">
-                    <%= form.text_area :address, class: "form-control" %>
-                  </div>
-                </div>
-                <%= form.hidden_field :user_id, value: current_user.id %>
-
-                <div class="form-group row">
-                  <div class="col-xl-2 col-md-3 col-4"></div>
-                  <div class="col-xl-10 col-md-9 col-8">
+                    <%= form.text_area :about, class: "form-control", required: "required" %>
                   </div>
                 </div>
                 <div class="form-group row col-md-10">
                   <div class="actions">
-                    <%= form.submit "Guardar",  class: "btn btn-info" %>
-                  </div>
-                  <div>
-
+                    <%= form.submit "Guardar", class: "btn btn-info" %>
                   </div>
                 </div>
               </form>
@@ -109,24 +58,4 @@
     </div>
   </div>
 <% end %>
-
-<!-- Modal -->
-<div class="modal fade" id="crop_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><h4>Recortar imagen</h4></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="canvas"></div>
-      </div>
-      <div class="modal-footer">
-        <button id="close-input" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button id="result-input" type="button" class="btn btn-primary">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'crop_image_modal' %>

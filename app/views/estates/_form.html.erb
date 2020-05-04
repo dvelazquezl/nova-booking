@@ -2,7 +2,6 @@
   <% if estate.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(estate.errors.count, "error") %> prohibited this estate from being saved:</h2>
-
       <ul>
         <% estate.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -59,35 +58,22 @@
           </div>
           <div class="form-group">
             <label>Direccion de calle *</label>
-            </div>
+          </div>
           <div class="input-group">
             <%= form.text_field :address, class: "form-control", required: "required", placeholder: "Agrega tu direccion." %>
             <span class="input-group-btn">
               <button id = "btn-location" onclick="initMap2()" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
                 <em id="location-icon" class="fas fa-map-marker-alt"></em> Agregar Ubicación
+                <%= form.text_field :latitude , id: "latitude", class: "location", required: "required"%>
+                <%= form.text_field :longitude, id: "longitude", class: "location", required: "required"%>
+                <input type="hidden" id="tem_latitude">
+                <input type="hidden" id="tem_longitude">
               </button>
+
             </span>
           </div>
-          <!-- Modal -->
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
+          <%= render partial: "layouts/partials/modal",:locals => { id: "map2", text: "", title: "Agregar Ubicación", btn_text: "Guardar"}%>
 
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title"></h4>
-                </div>
-                <div class="form-group">
-                  <%= form.hidden_field :latitude , id: "latitude"%>
-                  <%= form.hidden_field :longitude, id: "longitude" %>
-                  <p>
-                  <div id="map2" ></div>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="form-group">
             <label>Ciudad *</label>
             <%= form.select :city_id,
@@ -134,7 +120,7 @@
             <fieldset>
               <div id="" class="field">
                 <%= form.label "Sube la foto de tu propiedad: " %>
-                <%= form.file_field :images, multiple: true, id: "pictureInput", required: "required", accept: "image/*", direct_upload: true %>
+                <%= form.file_field 'picture', multiple: false, id: "pictureInput", required: "required", accept: "image/*", direct_upload: true %>
               </div>
               <div id="target" class="scroll_images card d-flex flex-row justify-content-center flex-wrap">
               </div>
@@ -169,10 +155,12 @@
       </div>
     </div>
   </fieldset>
+
+  <%= render "cropper/cropper_modal" %>
 <% end %>
+
 <script>
     <%= render "selects.js" %>
-
     $("#form-estate").on("submit", function (evt) {
         $(".number").each(function (ind, input) {
             input.value = input.value.split(".").join("");

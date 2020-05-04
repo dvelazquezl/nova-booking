@@ -162,15 +162,6 @@
 input[type=file][data-direct-upload-url][disabled] {
   display: none;
 }
-#map {
-  width: 495px;
-  height: 400px;
-}
-
-#map2 {
-  width: 495px;
-  height: 400px;
-}
 
 .tooltip-inner {
   white-space: pre-wrap;
@@ -178,4 +169,10 @@ input[type=file][data-direct-upload-url][disabled] {
 
 .results-block #with_search_results{
   width:183px;
+}
+.location{
+  width:1px;
+  height: 1px;
+  background: transparent;
+  border: none;
 }

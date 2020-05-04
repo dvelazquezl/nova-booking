@@ -1,0 +1,28 @@
+<%= form_with(model: owner, local: true) do |form| %>
+
+  <% if owner.errors.any? %>
+    <div>
+      <h2>
+        <%- pluralize(owner.errors.count, "error") %>
+        Lo sentimos ha ocurrido un error
+      </h2>
+      <ul>
+        <% owner.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <%= render 'profile_picture', owner: owner, form: form %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+  <div class="form-group row">
+    <div class="col">
+      <div class="actions">
+        <%= form.submit "Guardar", class: "btn btn-info" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= render 'crop_image_modal' %>

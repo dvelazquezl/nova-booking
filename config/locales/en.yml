@@ -268,6 +268,11 @@ en:
         one:   propiedad
         few:   propiedades
         other: propiedades
+      comment:
+        zero:  comentarios
+        one:   comentario
+        few:   comentarios
+        other: comentarios
       booking:
         zero:  reservas
         one:   reserva
@@ -294,6 +299,9 @@ en:
         one_apartment: "Apartamento"
         home: "Casa"
         hotel: "Hotel"
+      booking_cancelable_status:
+        cancelable: "Cancelable"
+        non_cancelable: "No cancelable"
     offer:
       offer_status:
         in_progress: "En curso"
