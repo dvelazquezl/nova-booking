@@ -1,0 +1,47 @@
+<%= render 'owners/tabs', id: 'reviews' %>
+<% @comments.each do |comment| %>
+  <div class="card">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-2">
+          <a class="mr-4" href="#">
+            <%= image_tag comment.estate_images.first, alt: "rss feed", height: 100, width: 100 %>
+          </a>
+        </div>
+        <div class="col-10">
+          <div class="row">
+            <div class=" col-10">
+              <div class="lead font-weight-bold">Has dejado un comentario sobre
+                <%= comment.estate_name %>
+              </div>
+              <div class="text-right badge badge-pill badge-<%= get_score_color(comment.rating.to_i) %>">
+                <span><%= comment.rating %></span>
+              </div>
+              <h5 class="blockquote mb-0">
+                <%= comment.description %>
+              </h5>
+            </div>
+            <div class=" col-2">
+              <p>
+                <%= comment.created_at.strftime("%d-%m-%Y") %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="card-columns-2 card-body">
+  <div class="row row-flush">
+    <div class="col col-6 align-items-center">
+      <%= will_paginate @comments, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </div>
+    <div class="col col-9">
+      <%= page_entries_info @comments, :model => 'comment', :class => 'align-middle' %>
+    </div>
+  </div>
+</div>
