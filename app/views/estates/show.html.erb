@@ -28,7 +28,7 @@
                 </h1>
               </div>
               <div class="col-md-1 col-sm-12">
-                <%= link_to owner_path(@estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
+                <%= link_to contact_owner_path(@estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
                   Contacto
                 <% end %>
               </div>
@@ -94,6 +94,7 @@
 </div>
 <input type="hidden" id="d_start" value="<%=@date_from_formatted%>">
 <input type="hidden" id="d_end" value="<%=@date_to_formatted%>">
+<div id="contact-info"></div>
 <script>
 $(document).ready(function(){
 

@@ -1,0 +1,35 @@
+<div class="modal fade" id="contact-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><h4>Informacion de Contacto</h4></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-4">
+          <div class="card card-default">
+            <div class="card-body text-center">
+              <div class="py-4 text-center">
+                <% if owner.image.attached? %>
+                  <%= image_tag owner.image, alt: "rss fit", height: "150", width: "150",
+                                class: "img-fluid rounded-circle img-thumbnail thumb96" %>
+                <% end %>
+              </div>
+              <h3 class="m-0 text-bold"><%= owner.name %></h3>
+              <div class="my-3">
+                <div class="col-xl-12 col-md-8 col-8">
+                  <%= owner.about %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="close-input" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ class OwnerAbility
     else
       #Usuario visitante
       can :read, Owner
+      can :contact, Owner
     end
 
   end
