@@ -1,9 +1,9 @@
 <% provide :head_tags do %>
   <meta name='turbolinks-visit-control' content='reload'>
   <script>
-    document.addEventListener("DOMContentLoaded", function(){
-      initMap(<%=@estate.latitude%>, <%=@estate.longitude%>)
-    });
+      document.addEventListener("DOMContentLoaded", function () {
+          initMap(<%=@estate.latitude%>, <%=@estate.longitude%>)
+      });
   </script>
 <% end %>
 <div class="row results-filter-section">
@@ -13,7 +13,7 @@
             locals: {filterrific: filterrific}
         ) %>
     <!--COMENTARIOS-->
-    <%= render partial: "estates/comments", :locals => { comments: comments, can_comment: can_comment, email: email, name: name} %>
+    <%= render partial: "estates/comments", :locals => {comments: comments, can_comment: can_comment, email: email, name: name} %>
   </div>
   <!-- TITLES -->
   <div class="col-10">
@@ -28,15 +28,14 @@
                 </h1>
               </div>
               <div class="col-md-1 col-sm-12">
-                <%= link_to owner_path(@estate.owner_id), :class => "btn btn-outline-primary rounded-pill" do %>
-                  Contacto
-                <% end %>
+                <%= link_to 'Contacto', contact_owner_path(@estate.owner_id), class: "btn btn-outline-primary rounded-pill",
+                            remote: true %>
               </div>
               <div class="col-12 d-flex align-items-center">
-                <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
+                <button id="btn-location" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
                   <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
                 </button>
-                 <%= render partial: "layouts/partials/modal",:locals => { id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"}%>
+                <%= render partial: "layouts/partials/modal", :locals => {id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"} %>
                 <span>
                   <%= @estate.address %>
                 </span>
@@ -92,31 +91,32 @@
     </div>
   </div>
 </div>
-<input type="hidden" id="d_start" value="<%=@date_from_formatted%>">
-<input type="hidden" id="d_end" value="<%=@date_to_formatted%>">
+<input type="hidden" id="d_start" value="<%= @date_from_formatted %>">
+<input type="hidden" id="d_end" value="<%= @date_to_formatted %>">
+<div id="contact-info"></div>
 <script>
-$(document).ready(function(){
+    $(document).ready(function () {
 
-  $('#book').click(function(event) {
-      let booking_details = [];
-      const total_amount = $("#total").val().split(" ")[0].split(".").join("");
-      const date_start = $("#d_start").val();
-      const date_end = $("#d_end").val();
-      const estate_id = $('#estate-attr').val();
-      const discount = $("#price_normal").val().split(" ")[0].split(".").join("") - total_amount;
-      $('table > #rooms > tr').each(function () {
-          const quantity = parseInt($('option:selected', this).text());
-          if(quantity > 0){
-            const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
-            const price = parseInt($(this).find("#booking_info").find(".price").text());
-            const subtotal = quantity * price;
-            booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
-          }
+        $('#book').click(function (event) {
+            let booking_details = [];
+            const total_amount = $("#total").val().split(" ")[0].split(".").join("");
+            const date_start = $("#d_start").val();
+            const date_end = $("#d_end").val();
+            const estate_id = $('#estate-attr').val();
+            const discount = $("#price_normal").val().split(" ")[0].split(".").join("") - total_amount;
+            $('table > #rooms > tr').each(function () {
+                const quantity = parseInt($('option:selected', this).text());
+                if (quantity > 0) {
+                    const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
+                    const price = parseInt($(this).find("#booking_info").find(".price").text());
+                    const subtotal = quantity * price;
+                    booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
+                }
+            });
+            let pr = escape(JSON.stringify(booking_details))
+            const url = "/bookings/new?date_start=" + date_start + "&estate_id=" + estate_id + "&date_end=" + date_end + "&total_amount=" + total_amount.toString()
+                + "&discount=" + discount.toString() + "&booking_details=" + pr;
+            window.location.href = url;
         });
-       let pr = escape(JSON.stringify(booking_details))
-       const url = "/bookings/new?date_start="+date_start+"&estate_id="+estate_id+"&date_end="+date_end+"&total_amount="+total_amount.toString()
-                    +"&discount="+discount.toString()+"&booking_details="+pr;
-       window.location.href = url;
-      });
-});
+    });
 </script>

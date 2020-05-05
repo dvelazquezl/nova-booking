@@ -1,8 +1,8 @@
 # Owner controller (propietario)
 class OwnersController < ApplicationController
 
-  before_action :authenticate_user!, except: :show
-  before_action :set_owner, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, except: [:show, :contact]
+  before_action :set_owner, only: [:show, :contact, :update, :destroy]
   load_and_authorize_resource
   require 'base64'
 
@@ -12,6 +12,13 @@ class OwnersController < ApplicationController
 
   def show
     @user = User.find(@owner.user_id)
+  end
+
+  def contact
+    @user = User.find(@owner.user_id)
+    respond_to do |format|
+      format.js {}
+    end
   end
 
   def new
