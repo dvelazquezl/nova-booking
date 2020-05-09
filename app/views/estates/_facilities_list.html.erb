@@ -1,8 +1,17 @@
 <ul class="facilities-list">
   <% facilities.each do |facility| %>
+    <% if Facility.find_by(id: facility.facility_id).description != "Desayuno" %>
       <li class="facility">
         <i class="fas fa-check-circle text-info mr-2"></i>
-        <%=Facility.find_by(id: facility.facility_id).description %>
+          <%= Facility.find_by(id: facility.facility_id).description %>
       </li>
+    <% else %>
+      <li class="facility">
+        <br>
+        <i class="fas fa-coffee" style="color:green"></i>
+        &nbsp;<span style="color:green">Desayuno incluido</span>
+        <p style="color:green; text-indent:27px;">(<b>Muy bueno</b>)</p>
+      </li>
+    <% end %>
   <%end %>
 </ul>

@@ -22,7 +22,10 @@
 //= require activestorage
 //-- Selectize
 //= require selectize
+//= require jquery.easy-autocomplete
+//= require welcome
 
+//= require offers
 
 //= require croppie/croppie
 //= require bootbox/bootbox.all
@@ -39,29 +42,34 @@
 const HEIGHT = 150;
 const WIDTH = 150;
 $(document).on('change', '#pictureInput', function (event) {
+    let canvas = $("#canvas");
+    canvas.croppie('destroy');
+    let $result = $('#target');
     let files = event.target.files;
-
+    console.log(files)
     Array.from(files).forEach(file => {
         let reader = new FileReader();
         reader.onload = function (file) {
             let img = new Image();
             img.src = file.target.result;
-            img.classList.add("img-thumbnail");
-            img.setAttribute('alt', 'rss fit');
-            img.setAttribute('height', HEIGHT);
-            img.setAttribute('width', WIDTH);
-            $('#target').append(img);
+            const attributes = {
+                'alt': 'rss fit',
+                'height': HEIGHT,
+                'width': WIDTH
+            };
+            const classes = ["img-thumbnail"];
+            img.onload = () => cropper(canvas, img, "#target", $result, false, attributes, classes);
             $('img').css("display", "inline-block")
         };
         reader.readAsDataURL(file);
     });
 });
-let canvas,
-    $result;
+
+
 $(document).on('change', '#pictureInput1', function (event) {
-    canvas  = $("#canvas");
+    let canvas = $("#canvas");
     canvas.croppie('destroy');
-    $result = $('#target');
+    let $result = $('#target');
     let files = event.target.files;
     Array.from(files).forEach(file => {
         let reader = new FileReader();
@@ -69,83 +77,89 @@ $(document).on('change', '#pictureInput1', function (event) {
             let img = new Image();
             img.src = file.target.result;
             img.setAttribute('alt', 'Picture');
-            img.onload = function() {
-                let crop = canvas.croppie({
-                    viewport: {
-                        width: WIDTH,
-                        height: HEIGHT
-                    },
-                    boundary: {
-                        width: 300,
-                        height: 300
-                    },
-                    enableOrientation: true
-                });
-                $("#crop_modal").modal('show');
-                canvas.croppie('bind',{
-                    url: img.src,
-                    orientation: 1
-                }).then(function(){
-                    $('.cr-slider').attr({'min':0.1000, 'max':1.5000});
-                });
-                $('#result-input').click(function() {
-                    // Get a string base 64 data url
-                    canvas.croppie('result', {
-                        type: 'base64',
-                        size: 'viewport'
-                    }).then(function (resp) {
-                        $result.html($('<img>').attr('src', resp));
-                        $("#image").attr('value',resp);
-                    });
-                    $("#crop_modal").modal('hide');
-                });
-            };
+            img.onload = () => cropper(canvas, img, "#image", $result, true);
         };
 
         reader.readAsDataURL(file);
     });
 });
+
+/**
+ *
+ * @param canvas: del modal
+ * @param img: img a ser recortada
+ * @param elem_id: en caso de tener un campo (hidden) para almacenar la imagen, para enviar al server
+ * @param result: html donde se mostrara la imagen cortada en UI
+ * @param replace: si se debe reemplazar el contenido del tag HTML con la imagen
+ * @param attributes: para css
+ */
+function cropper(canvas, img, elem_id, result, replace, attributes, classes) {
+    let crop = canvas.croppie({
+        viewport: {
+            width: WIDTH,
+            height: HEIGHT
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        },
+        enableOrientation: true
+    });
+    $("#crop_modal").modal('show');
+    canvas.croppie('bind', {
+        url: img.src,
+        orientation: 1
+    }).then(function () {
+        $('.cr-slider').attr({'min': 0.1000, 'max': 1.5000});
+    });
+    $('#result-input').one("click", function () {
+        // Get a string base 64 data url
+        canvas.croppie('result', {
+            type: 'base64',
+            size: 'viewport'
+        }).then(function (resp) {
+            let crop_img = $('<img>');
+            crop_img.attr('src', resp);
+
+            if (attributes) {
+                // setear attr a imagen recortada
+                Object.entries(attributes).forEach(([key, value]) => {
+                    crop_img.attr(key, value.toString());
+                });
+            }
+            if (classes) crop_img.addClass(classes);
+
+            if (replace) {
+                result.html(crop_img);
+                $(elem_id).attr('value', resp);
+            } else {
+                let hidden = $('<input>');
+                hidden.attr('type', 'hidden');
+                hidden.attr('name', 'images[]');
+                hidden.attr('value', resp);
+                $(elem_id).append(crop_img);
+                $(elem_id).append(hidden);
+            }
+        });
+        $(this).val('');
+        $("#crop_modal").modal('hide');
+    });
+}
+
 // ****************************************************************************** //
 
 // Fuente: https://gist.github.com/gordonbrander/2230317
 
 var ID = function () {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return '_' + Math.random().toString(36).substr(2, 9);
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return '_' + Math.random().toString(36).substr(2, 9);
 };
 
 // ****************************************************************************** //
 
-$(document).on('change', '.picture .pictureInput2', function(event) {
-  let files = event.target.files;
-
-  $(this).closest('div').next().attr('id', ID());
-  let targetId = $(this).closest('div').next().attr('id');
-
-  Array.from(files).forEach(file => {
-    let reader = new FileReader();
-    reader.onload = function (file) {
-        let img = new Image();
-        img.src = file.target.result;
-        img.classList.add("img-thumbnail");
-        img.setAttribute('alt', 'rss fit');
-        img.setAttribute('height', HEIGHT);
-        img.setAttribute('width', WIDTH);
-        $('#'+targetId).append(img);
-        $('img').css("display", "inline-block")
-    };
-    reader.readAsDataURL(file);
-  });
-
-  if (Array.from(files).length > 0) {
-      $('#'+targetId).empty();
-  }
-
-});
-
-$(document).on('change', '.picture .pictureInputEdit', function(event) {
+$(document).on('change', '.picture .pictureInput2', function (event) {
     let files = event.target.files;
 
     $(this).closest('div').next().attr('id', ID());
@@ -160,7 +174,34 @@ $(document).on('change', '.picture .pictureInputEdit', function(event) {
             img.setAttribute('alt', 'rss fit');
             img.setAttribute('height', HEIGHT);
             img.setAttribute('width', WIDTH);
-            $('#'+targetId).append(img);
+            $('#' + targetId).append(img);
+            $('img').css("display", "inline-block")
+        };
+        reader.readAsDataURL(file);
+    });
+
+    if (Array.from(files).length > 0) {
+        $('#' + targetId).empty();
+    }
+
+});
+
+$(document).on('change', '.picture .pictureInputEdit', function (event) {
+    let files = event.target.files;
+
+    $(this).closest('div').next().attr('id', ID());
+    let targetId = $(this).closest('div').next().attr('id');
+
+    Array.from(files).forEach(file => {
+        let reader = new FileReader();
+        reader.onload = function (file) {
+            let img = new Image();
+            img.src = file.target.result;
+            img.classList.add("img-thumbnail");
+            img.setAttribute('alt', 'rss fit');
+            img.setAttribute('height', HEIGHT);
+            img.setAttribute('width', WIDTH);
+            $('#' + targetId).append(img);
             $('img').css("display", "inline-block")
         };
         reader.readAsDataURL(file);
@@ -221,14 +262,34 @@ $(document).on('click', '.add_fields', function (e) {
     e.preventDefault()
 });
 
-$(document).on('keyup', '.validame', function (e){
+$(document).on('keyup', '.validame', function (e) {
     let num = $(e.target).val();
     num = num.replace(/[\D\s\._\-]+/g, "");
-    num = num?parseInt(num, 10):0;
+    num = num ? parseInt(num, 10) : 0;
     $(e.target).val(function () {
         let aux = (num === 0) ? "" : num;
         return aux;
     });
 });
 
-let message = "Debe ser un número positivo"
+let message = "Debe ser un número positivo";
+
+$(document).on('turbolinks:load', function () {
+    $('.dropdown-toggle').dropdown()
+})
+
+function initMap(lat, lng) {
+    let myCoords = new google.maps.LatLng(lat, lng);
+    let mapOptions = {
+        center: myCoords,
+        zoom: 14
+    };
+
+    let map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    let marker = new google.maps.Marker({
+        position: myCoords,
+        map: map
+    });
+
+}

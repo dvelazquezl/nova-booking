@@ -1,0 +1,7 @@
+<%= render 'owners/tabs', id: 'offers' %>
+<p id="notice"><%= notice %></p>
+
+<%= render partial: "offers/filter", :locals => {filterrific: filterrific} %>
+<div id="filterrific_results">
+  <%= render partial: "offers/list", :locals => {offers: offers} %>
+</div>

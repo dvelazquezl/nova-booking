@@ -14,6 +14,7 @@
           #User logueado.
           can :read, Estate
           can :create, Estate
+          can :edit, Estate
           can :room, Estate
           can :estates_visited, Estate
           can :show_visited, Estate

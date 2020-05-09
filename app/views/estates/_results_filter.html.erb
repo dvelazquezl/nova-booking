@@ -6,7 +6,8 @@
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field :search_query, placeholder: "¿A dónde vas?",
                            :class => 'filterrific-periodically-observed form-control',
-                           :value => params[:city] %>
+                           :value => params[:city],
+                           :'id' => "with_search_results" %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'input-sm form-control date_start',
@@ -29,16 +30,13 @@
 </div>
 <script>
     $(function () {
-        let fromD = new Date(new Date($("#with_date_gte").val()).toDateString());
-        let toD = new Date(new Date($("#with_date_lte").val()).toDateString());
-        let ToEndDate = new Date();
-        let newEndDate = new Date();
-        let newStartDate = new Date();
-        toD.setDate(toD.getDate() + 1);
-        fromD.setDate(fromD.getDate() + 1);
-        ToEndDate.setDate(ToEndDate.getDate() + 365);
-        newEndDate.setDate(toD.getDate() - 1);
-        newStartDate.setDate(fromD.getDate() + 1);
+        let fromD = $("#with_date_gte").val();
+        let toD = $("#with_date_lte").val();
+        let startDate = stringToDate(fromD, "yyyy-mm-dd", "-");
+        let endDate = stringToDate(toD, "yyyy-mm-dd", "-");
+        let newStartDate = dateManipulation(startDate, 1, 0, 0, "+");
+        let newEndDate = dateManipulation(endDate, 1, 0, 0, "-");
+        let ToEndDate = dateManipulation(new Date(), 365, 0, 0, "+");
         $('#with_date_gte').datepicker({
             weekStart: 1,
             startDate: new Date(),
@@ -47,12 +45,10 @@
             orientation: "bottom auto",
             format: "dd MM yyyy",
             language: 'es',
-            todayHighlight: true,
-            forceParse: 0
-        }).datepicker('setDate', fromD).datepicker('update').on('changeDate', function (selected) {
-            fromD = new Date(selected.date.valueOf());
-            let date = new Date();
-            date.setDate(fromD.getDate() + 1);
+            todayHighlight: true
+        }).datepicker('setDate', startDate).on('changeDate', function (selected) {
+            newStartDate = new Date(selected.date.valueOf());
+            let date = dateManipulation(newStartDate, 1, 0, 0, "+");
             $('#with_date_lte').datepicker('setStartDate', date);
         });
         $('#with_date_lte').datepicker({
@@ -63,14 +59,40 @@
             orientation: "bottom auto",
             format: "dd MM yyyy",
             language: 'es',
-            todayHighlight: true,
-            forceParse: 0
-        }).datepicker('setDate', newStartDate).datepicker('update').on('changeDate', function (selected) {
-            toD = new Date(selected.date.valueOf());
-            let date = new Date();
-            date.setDate(toD.getDate() - 1);
+            todayHighlight: true
+        }).datepicker('setDate', endDate).on('changeDate', function (selected) {
+            newEndDate = new Date(selected.date.valueOf());
+            let date = dateManipulation(newEndDate, 1, 0, 0, "-");
             $('#with_date_gte').datepicker('setEndDate', date);
         });
+        $("#manual_filterrific_form").on("submit", function (evt) {
+            $(".number").each(function (ind, input) {
+                input.value = input.value.split(".").join("");
+            });
+        });
+        function stringToDate(_date, _format, _delimiter) {
+            var formatLowerCase = _format.toLowerCase();
+            var formatItems = formatLowerCase.split(_delimiter);
+            var dateItems = _date.split(_delimiter);
+            var monthIndex = formatItems.indexOf("mm");
+            var dayIndex = formatItems.indexOf("dd");
+            var yearIndex = formatItems.indexOf("yyyy");
+            var month = parseInt(dateItems[monthIndex]);
+            month -= 1;
+            var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+            return formatedDate;
+        }
+        function dateManipulation(date, days, hrs, mins, operator) {
+            date = new Date(date);
+            if (operator == "-") {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() - durationInMs);
+            } else {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() + durationInMs);
+            }
+            return newDate;
+        }
         $(".number").on("keyup", function (event) {
             let input = $(event.target).val();
             input = input.replace(/[\D\s\._\-]+/g, "");

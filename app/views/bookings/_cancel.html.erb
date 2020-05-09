@@ -1,0 +1,41 @@
+<% if user_signed_in? && is_owner? %>
+<div class="modal-header">
+  <h3 class="modal-title">Cancelar Reserva</h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<%= form_for booking_url, url: {action: "cancel_booking", params: {id: booking.id}} do |f| %>
+<div class="modal-body">
+  <h5>Estas por cancelar una reserva realizada en su propiedad.</h5>
+  <h5>Al cancelar se le notificara al usuario que creo la reserva con un mail<h5>
+</div>
+<div class="modal-footer">
+  <%= f.submit 'Cancelar Reserva', class: "btn btn-outline-danger btn-sm" %>
+</div>
+<% end %>
+<% else %>
+  <div class="modal-header">
+    <h3 class="modal-title">Cancela tu Reserva</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%= form_for booking_url, url: {action: "cancel_my_booking", params: {id: booking.id}} do |f| %>
+  <div class="modal-body">
+    <h4>Cuentanos por que quieres cancelar</h4>
+      <% CancellationMotive.all.each do |cm| %>
+        <%= radio_button_tag 'motive', cm.id %>&nbsp;&nbsp;
+        <label for="<%= cm.id %>"><%= cm.description %></label><br>
+      <% end %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit 'Cancelar Reserva', class: "btn btn-outline-danger btn-sm" %>
+  </div>
+  <% end %>
+<% end %>
+<script>
+  $(document).ready(function() {
+    $("#motive_1").prop("checked", true);
+  })
+</script>
