@@ -31,6 +31,8 @@ class BookingAbility
       can :create, Booking
       can :show, Booking
       can :confirmation, Booking
+      can :cancel_my_booking, Booking
+      can :cancel, Booking
     end
   end
 end

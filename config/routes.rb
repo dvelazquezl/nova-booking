@@ -18,7 +18,12 @@ Rails.application.routes.draw do
 
   resources :cities
   resources :departaments
-  resources :owners
+  resources :owners do
+    member do
+      get :contact
+    end
+  end
+
   resources :offers
   resources :estates do
     collection do

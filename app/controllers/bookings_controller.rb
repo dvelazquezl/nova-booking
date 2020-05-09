@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   authorize_resource
-  before_action :authenticate_user!, except: [:new, :create, :show, :confirmation]
+  before_action :authenticate_user!, except: [:new, :create, :show, :confirmation, :cancel, :cancel_my_booking]
   before_action :set_booking, only: [:show, :destroy]
   def index_owner
     owner = helpers.current_owner
@@ -118,7 +118,7 @@ class BookingsController < ApplicationController
     cancellation_motive_id = CancellationMotive.find(params[:motive]).id
 
     respond_to do |format|
-      if cancel_booking(booking, cancellation_motive_id)
+      if update_booking_attributes(booking, cancellation_motive_id)
         format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.js
         UserMailer.booking_cancelled_by_user_to_user(booking).deliver_now
@@ -130,7 +130,7 @@ class BookingsController < ApplicationController
     end
   end
 
-  def cancel_booking(booking, cm_id)
+  def update_booking_attributes(booking, cm_id)
     booking.update_attribute(:cancellation_motive, cm_id)
     booking.update_attribute(:booking_state, 'false')
   end

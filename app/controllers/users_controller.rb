@@ -10,10 +10,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    @owner.name = @user.name + " " + @user.last_name
     respond_to do |format|
-      if @user.update_without_password(user_params) and @owner.update_attributes(owner_params)
-        format.html { redirect_to owner_path(@owner), notice: 'Tu perfil fue actualizado correctamente.' }
+      if @user.update_without_password(user_params)
+        @owner.name = @user.name + " " + @user.last_name
+        if @owner.update_attributes(owner_params)
+          format.html { redirect_to owner_path(@owner), notice: 'Tu perfil fue actualizado correctamente.' }
+        else
+          format.html { render :edit }
+        end
       else
         format.html { render :edit }
       end
