@@ -33,7 +33,6 @@ $(function () {
     });
     $(document).on('keypress', '.price', function () {
         let input = $(event.target).val() + (event.charCode - 48);
-        console.log(input);
         return (input >= 1);
     });
 })
