@@ -59,6 +59,7 @@ class Booking < ApplicationRecord
     self.per_page = 5
     resourcify
 
+    # for user
     def self.update_booking_attributes(booking, cancellation_motive)
       booking.cancelled_at = Time.now()
       booking.booking_state = false
@@ -67,5 +68,15 @@ class Booking < ApplicationRecord
       booking.save
       UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
       UserMailer.booking_cancelled_by_user_to_user(booking).deliver_now
+    end
+
+    # for owner
+    def self.update_booking_attr(booking)
+      booking.cancelled_at = Time.now()
+      booking.booking_state = false
+
+      booking.save
+      UserMailer.booking_cancelled_by_owner_to_owner(booking).deliver_now
+      UserMailer.booking_cancelled_by_owner_to_client(booking).deliver_now
     end
 end
