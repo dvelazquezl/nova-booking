@@ -2,7 +2,6 @@ class BookingsController < ApplicationController
   authorize_resource
   before_action :authenticate_user!, except: [:new, :create, :show, :confirmation, :cancel, :cancel_my_booking]
   before_action :set_booking, only: [:show, :destroy, :cancel_my_booking, :cancel_booking]
-  include BookingsHelper
   
   def index_owner
     owner = helpers.current_owner
