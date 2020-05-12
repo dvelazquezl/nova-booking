@@ -10,6 +10,8 @@ class OwnerAbility
         owner = Owner.find_by user_id: user.id
         can :read, Owner
         can :create, Owner
+        can :change_profile_picture, Owner
+        can :contact, Owner
         if owner
           can :update, Owner, id: owner.id
         end
@@ -17,6 +19,7 @@ class OwnerAbility
     else
       #Usuario visitante
       can :read, Owner
+      can :contact, Owner
     end
 
   end

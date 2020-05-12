@@ -14,8 +14,25 @@
                     <h4 class="m-0" style="font-size:25px"><%= estate.name %></h4>
                     <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                     <p><%= estate.address %></p>
+                    <% if has_breakfast?(estate) %>
+                      <span class="badge bg-primary-light">Desayuno incluido</span>
+                    <% end %>
+                    <% offers = estate.available_offer_for(start_date, end_date) %>
+                    <% title, description = "" %>
+                    <% if offers.count > 1 %>
+                      <% title = "Ingrese para ver más detalles." %>
+                      <% description = "Varias Ofertas Disponibles!" %>
+                    <% elsif offers.count == 1 %>
+                      <% title = offers.first.description %>
+                      <% description = "Oferta Disponible" %>
+                    <% end %>
+                    <% if !title.nil? or !description.nil? %>
+                      </br>
+                      <span class="badge bg-success" data-toggle="tooltip" data-placement="bottom" title="<%= title %>"><%= description %></span>
+                    <% end %>
                   </div>
                   <div class="ml-auto">
+                    <label class="label-score"><%=label_score(estate.score) %></label>
                     <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>">
                       <span><%= estate.score %></span>
                     </div>

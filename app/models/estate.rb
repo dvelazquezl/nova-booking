@@ -4,6 +4,7 @@ class Estate < ApplicationRecord
   belongs_to :city
   has_many_attached :images
   has_many :bookings
+  has_many :offers
   has_many :comments
   has_many :facilities_estates
   has_many :facilities, through: :facilities_estates
@@ -16,22 +17,31 @@ class Estate < ApplicationRecord
   self.per_page = 5
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
+  scope :best_estates, -> () {
+    order("estates.score desc, (select count(id) from bookings where estate_id = estates.id) desc")
+  }
   scope :estates_by_client, -> (client_email) {
     where("estates.id in (
-            select distinct r.estate_id from rooms as r where r.id in(
-              select distinct bd.room_id
-              from bookings as b
-              inner join booking_details as bd on b.id = bd.booking_id
-              where b.client_email = ?
-            )
-           )", client_email)
+            select distinct b.estate_id
+		        from bookings as b
+		        where b.client_email = ?
+          )", client_email)
   }
   scope :only_published, -> { where(status: true) }
   scope :with_rooms, -> {Estate.only_published.joins(:rooms).where('rooms.quantity > 0').group(:id)}
 
   # filters on 'estate_type' attribute
-  scope :with_estate_type, ->(estate_types) {
-    where(estate_type: [*estate_types])
+  scope :with_estate_type, ->(estate_type) {
+    where(estate_type: [*estate_type])
+  }
+
+  scope :search_booking_cancelable, -> (option) {
+    case option.to_s
+    when /^cancelable/
+      where("booking_cancelable = true")
+    when /^non_cancelable/
+      where("booking_cancelable = false")
+    end
   }
 
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
@@ -45,6 +55,7 @@ class Estate < ApplicationRecord
                 score_min
                 score_max
                 with_estate_type
+                search_booking_cancelable
               ]
 
   scope :search_query, lambda { |query|
@@ -92,6 +103,7 @@ class Estate < ApplicationRecord
 
   extend Enumerize
   enumerize :estate_type, in: [:one_apartment, :home, :hotel]
+  enumerize :booking_cancelable_status, in: [:cancelable, :non_cancelable]
 
   scope :with_date_gte, ->(ref_date) {
     Estate.only_published.where("estates.id in
@@ -114,7 +126,7 @@ class Estate < ApplicationRecord
   }
 
   scope :with_date_lte, ->(ref_date) {
-    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date)
+    Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date).order(score: :desc)
   }
 
   # filters on 'price' attribute
@@ -155,6 +167,13 @@ class Estate < ApplicationRecord
 
   def inc_comments
     self.comments_quant += 1
+  end
+
+  # solo da la primera reserva disponible en fecha
+  def available_offer_for(date_start, date_end)
+    offers = []
+    self.offers.each { |offer| offers.push(offer) if offer.is_available_for?(date_start, date_end)}
+    offers
   end
 
   resourcify
