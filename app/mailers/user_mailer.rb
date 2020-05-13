@@ -59,7 +59,7 @@ class UserMailer < ApplicationMailer
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
     @client_email = booking.client_email
     @client_name = booking.client_name
-    @cancellation_motive = CancellationMotive.find_by(id: booking.cancellation_motive).description
+    @cancellation_motive = translate_to_spanish(booking.cancellation_motive)
     user_email = user_email(booking)
     mail(to: user_email, subject: 'NovaBooking! - Cancelacion de reserva')
   end
@@ -78,5 +78,20 @@ class UserMailer < ApplicationMailer
       user_id= Owner.find_by_id(estate.owner_id).user_id
       user_email = User.find_by_id(user_id).email
       return user_email
+    end
+
+    def translate_to_spanish(cancellation_motive)
+      case cancellation_motive
+      when "change_of_date"
+        "Cambio de fechas"
+      when "personal_motive"
+        "Motivos personales/el viaje ha sido cancelado"
+      when "more_than_one_booking"
+        "Mas de una reserva en la misma fecha y deseo cancelar las que no necesito"
+      when "better_option"
+        "He econtrado una mejor opcion"
+      when "none_of_the_above"
+        "No especificado"
+      end
     end
 end
