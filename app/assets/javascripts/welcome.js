@@ -22,6 +22,16 @@ $(function () {
     $("#with_search_results").easyAutocomplete(options_easy);
 });
 
+//Función en caso de que no ingrese datos en alguno de los inputs formatea para que funciona el filtro
+$(function () {
+    if ($("#price_max").val() == '1000000000') {
+        $("#price_max").val('');
+    }
+    if ($("#price_min").val() == '0') {
+        $("#price_min").val('');
+    }
+});
+
 //Función para validar entrada de inputs de precio (no permite ingresar ni pegar valores que no sean numericos)
 $(function () {
     $(".price").on("keyup", function (event) {
