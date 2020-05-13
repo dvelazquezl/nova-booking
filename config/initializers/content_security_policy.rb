@@ -14,32 +14,6 @@ Rails.application.config.content_security_policy do |policy|
   policy.object_src :none
   policy.script_src :self, :https, :unsafe_inline, 'https://maps.googleapis.com'
   policy.style_src :self, :https, :unsafe_inline, 'http://fonts.googleapis.com'
-# From Laboratory, Firefox Add-Ons
-# default-src 'none';
-# connect-src 'self';
-# font-src 'self' data: https://fonts.gstatic.com
-# form-action 'self';
-# img-src 'self' data: https://maps.googleapis.com
-#   https://maps.gstatic.com
-#   https://res-1.cloudinary.com
-#   https://res-2.cloudinary.com
-#   https://res-3.cloudinary.com
-#   https://res-4.cloudinary.com
-#   https://res-5.cloudinary.com
-# script-src 'self' 'unsafe-inline'
-#   https://maps.googleapis.com/maps-api-v3/api/js/40/12/common.js
-#   https://maps.googleapis.com/maps-api-v3/api/js/40/12/controls.js
-#   https://maps.googleapis.com/maps-api-v3/api/js/40/12/map.js
-#   https://maps.googleapis.com/maps-api-v3/api/js/40/12/marker.js
-#   https://maps.googleapis.com/maps-api-v3/api/js/40/12/onion.js
-#   https://maps.googleapis.com/maps-api-v3/api/js/40/12/util.js
-#   https://maps.googleapis.com/maps/api/js
-#   https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate
-#   https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent
-#   https://maps.googleapis.com/maps/api/js/ViewportInfoService.GetViewportInfo
-#   https://maps.googleapis.com/maps/vt
-# style-src 'self' 'unsafe-inline'
-#   https://fonts.googleapis.com/
 # Specify URI for violation reports
 # policy.report_uri "/csp-violation-report-endpoint"
 end
