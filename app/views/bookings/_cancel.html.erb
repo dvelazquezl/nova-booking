@@ -24,9 +24,9 @@
   <%= form_for booking_url, url: {action: "cancel_my_booking", params: {id: booking.id}} do |f| %>
   <div class="modal-body">
     <h4>Cuentanos por que quieres cancelar</h4>
-      <% Booking.cancellation_motive.options.each do |cm| %>
-        <%= radio_button_tag :cancellation_motive, cm.last %>&nbsp;&nbsp;
-        <label for="<%= cm.last %>"><%= cm.first %></label><br>
+      <% CancellationMotive.all.each do |cm| %>
+        <%= radio_button_tag 'motive', cm.id %>&nbsp;&nbsp;
+        <label for="<%= cm.id %>"><%= cm.description %></label><br>
       <% end %>
   </div>
   <div class="modal-footer">
@@ -36,6 +36,6 @@
 <% end %>
 <script>
   $(document).ready(function() {
-    $("#cancellation_motive_change_of_date").prop("checked", true);
+    $("#motive_1").prop("checked", true);
   })
 </script>

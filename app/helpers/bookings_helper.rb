@@ -6,7 +6,7 @@ module BookingsHelper
     date_start = booking.date_start
     today = Date.today
 
-    is_not_canceled = booking.booking_state
+    is_not_canceled = booking.cancelled_at == nil
 
     status = %w(Vigente Pasada Futura Cancelada)
 

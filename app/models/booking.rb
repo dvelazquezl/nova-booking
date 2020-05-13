@@ -14,6 +14,7 @@ class Booking < ApplicationRecord
                                           :none_of_the_above
                                         ]
 
+
     def self.booking_new(booking,params)
         booking.estate_id = params[:estate_id]
         booking.client_name = params[:client_name]
