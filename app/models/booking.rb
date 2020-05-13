@@ -3,7 +3,6 @@ class Booking < ApplicationRecord
     belongs_to :estate
     has_secure_token :confirmation_token
     accepts_nested_attributes_for :booking_details, :allow_destroy => true
-
     delegate :name, :images, :to => :estate, :prefix => true
 
     def self.booking_new(booking,params)
@@ -18,7 +17,8 @@ class Booking < ApplicationRecord
         booking_details.each {|value|
             booking.booking_details.build(room_id: value["room_id"],
                                            quantity: value["quantity"],
-                                           subtotal: value["subtotal"])
+                                           subtotal: value["subtotal"],
+                                           offer_discounts: JSON.parse(value["offer_discounts"].to_s.gsub("=>", ":").gsub(":nil,", ":null,")))
         }
         booking
     end
