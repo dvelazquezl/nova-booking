@@ -7,7 +7,6 @@ class Booking < ApplicationRecord
     delegate :name, :images, :to => :estate, :prefix => true
 
     extend Enumerize
-
     enumerize :cancellation_motive, in: [ :change_of_date,
                                           :personal_motive,
                                           :more_than_one_booking,
@@ -58,7 +57,7 @@ class Booking < ApplicationRecord
 
     self.per_page = 5
     resourcify
-
+    
     # for user
     def self.update_booking_attributes(booking, cancellation_motive)
       booking.cancelled_at = Time.now()
@@ -69,7 +68,6 @@ class Booking < ApplicationRecord
       UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
       UserMailer.booking_cancelled_by_user_to_user(booking).deliver_now
     end
-
     # for owner
     def self.update_booking_attr(booking)
       booking.cancelled_at = Time.now()
