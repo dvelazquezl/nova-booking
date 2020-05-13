@@ -41,8 +41,4 @@ module BookingsHelper
   def is_cancellable?(estate)
 		estate.booking_cancelable
   end
-
-  def is_my_booking?(booking)
-    current_user.email == booking.client_email
-  end
 end
