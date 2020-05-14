@@ -86,9 +86,9 @@
         <%= render 'room_detail_list', rooms: @rooms, estate: @estate %>
       </div>
       <% if user_signed_in? && is_owner? && (estate.owner_id == current_owner.id) %>
-        <%= link_to 'Volver Atrás', estates_path, class: "btn btn-outline-primary" %>
+        <%= link_to 'Atrás', estates_path, class: "btn btn-outline-primary" %>
       <%else %>
-        <%= link_to 'Volver Atrás', visited_estates_path, class: "btn btn-outline-primary" %>
+        <%= link_to 'Atrás', visited_estates_path, class: "btn btn-outline-primary" %>
       <%end %>
     </div>
   </div>

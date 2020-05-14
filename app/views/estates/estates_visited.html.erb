@@ -17,7 +17,7 @@
                     <p><%= estate.description %></p>
                   </div>
                   <div class="ml-auto">
-                    <label class="label-score"><%=label_score(estate.score.to_i) %></label>
+                    <label class="label-score text-muted"><%=label_score(estate.score) %></label>
                     <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>">
                       <span><%= estate.score %></span>
                     </div>
