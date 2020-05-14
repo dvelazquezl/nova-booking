@@ -21,9 +21,9 @@
         <td class="text-center"><%= offer.date_end.strftime("%d/%m/%Y") %></td>
         <td class="text-center">
           <% if offer.date_end < Date.today %>
-            <span class="badge badge-warning" style="font-size: 15px;">Vencida</span>
+            <span class="badge badge-warning">Vencida</span>
           <% else %>
-            <span class="badge badge-success" style="font-size: 15px;">Activa</span>
+            <span class="badge badge-success">Activa</span>
           <% end %>
         </td>
         <td class="text-center">
