@@ -33,6 +33,7 @@ class OffersController < ApplicationController
   # GET /offers/new
   def new
     @offer = Offer.new
+    @offer.set_default_date
     owner = helpers.current_owner
     estates = Estate.only_published.estates_by_owner(owner.id)
     offer_details = @offer.offer_details.build
