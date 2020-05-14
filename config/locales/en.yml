@@ -304,7 +304,7 @@ en:
         non_cancelable: "No cancelable"
     offer:
       offer_status:
-        in_progress: "En curso"
+        in_progress: "Activas"
         finished: "Vencidas"
     defaults:
       cancellation_motive:

@@ -91,7 +91,6 @@
         <div class="col-11" id="can_cancel">
           <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
         </div>
-        </div>
         <% else %>
         <div class="col-11" id="cant_cancel">
           <strong>Solamente se pueden cancelar reservas futuras</strong>
@@ -100,7 +99,7 @@
       </fieldset>
     </div>
     <div align="left">
-      <%= link_to 'Volver Atras', index_owner_path, class: "btn btn-secondary" %>
+      <%= link_to 'Atrás', index_owner_path, class: "btn btn-outline-primary" %>
     </div>
   </div>
 </div>
