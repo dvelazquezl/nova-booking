@@ -8,7 +8,7 @@ module BookingsHelper
 
     is_not_canceled = booking.booking_state
 
-    status = %w(Vigente Pasada Futura Cancelada)
+    status = %w(Vigente Terminada Pendiente Cancelada)
 
     if (is_not_canceled)
       if (date_start <= today && date_end >= today)
@@ -24,7 +24,7 @@ module BookingsHelper
   end
 
   def get_status_color(status_booking)
-    status = %w(Vigente Pasada Futura Cancelada)
+    status = %w(Vigente Terminada Pendiente Cancelada)
     colors = %w(success warning info danger)
     case status_booking
     when status.first
