@@ -29,7 +29,7 @@
               </div>
               <div class="card-body">
                 <div class="form-group col-10 font-weight-bold">
-                  <label>Estancia de <%=diff %> dia<%=plural_arg %></label>
+                  <label>Estancia de <%= diff %> dia<%= plural_arg %></label>
                 </div>
               </div>
             </div>
@@ -60,66 +60,78 @@
                 <th>Cantidad</th>
                 <th class="text-right">Precio Unitario</th>
                 <th class="text-right">Subtotal</th>
-                <th>Ver más</th>
+                <th>Ofertas</th>
               </tr>
               </thead>
 
-                <% subtotal = 0 %>
-                <%= form.fields_for :booking_details, booking.booking_details do |f| %>
-                  <tr class="breakrow">
-                    <td class="text-center"><%= Room.room_type_for(f.object.room_id) %></td>
-                    <td class="text-center"><%= Room.room_capacity_for(f.object.room_id) %></td>
-                    <td class="text-center"><%= f.object.quantity %></td>
-                    <td class="text-right"><%= number_to_currency(f.object.subtotal / f.object.quantity, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                    <td class="text-right"><%= number_to_currency(f.object.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                    <%= f.hidden_field :room_id %>
-                    <%= f.hidden_field :quantity %>
-                    <%= f.hidden_field :subtotal %>
-                    <%= f.hidden_field :booking_id %>
-                    <% subtotal += f.object.subtotal %>
-                    <td class="text-center">
-                      <button class="btn btn-link text-warning buttonrow" title="Ver oferta" type="button">
-                        <i class="fas fa-tags"></i>
-                      </button>
-                    </td>
-                    <div class="border border-primary datarow">
-                  <tr class="datarow">
-                    <td class="text-center font-weight-bold" colspan="6" style="font-size: 15px;">
-                      <u>Ofertas que incluye</u></td>
-                  </tr>
-                  <tr class="datarow">
-                    <td></td>
-                    <td class="font-weight-bold" colspan="2">Descripción</td>
-                    <td class="font-weight-bold">Días</td>
-                    <td class="font-weight-bold">Descuento</td>
-                    <td></td>
-                  </tr>
-                  <% f.object.offer_discounts.each do |ff| %>
-                    <tr class="datarow">
-                      <td></td>
-                      <td colspan="2"><%= ff['description'] %></td>
-                      <td><%= ff['quantity_days'] %></td>
-                      <td><%= ff['discount'] %>%</td>
-                      <td></td>
-                    </tr>
-                  <% end %>
+              <% subtotal = 0 %>
+              <% discount_room = [] %>
+              <% room = 0 %>
+              <%= form.fields_for :booking_details, booking.booking_details do |f| %>
+                <% discount_room[room] = 0 %>
+                <% f.object.offer_discounts.each do |ff| %>
+                    <% discount_room[room] += f.object.subtotal * (ff['quantity_days'].to_i) * (ff['discount'].to_i) / 100 %>
                   </tr>
                 <% end %>
-                <tr class="thead-light breakrow">
-                  <th><b>Total:</b></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th class="text-right font-weight-bold">
-                    <%= number_to_currency(form.object.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %>
-                    <%= form.hidden_field :total_amount %>
-                    <%= form.hidden_field :discount %>
-                    <%= form.hidden_field :date_creation %>
-                  </th>
-                  <th></th>
+                <tr class="breakrow">
+                  <td class="text-center"><%= Room.room_type_for(f.object.room_id) %></td>
+                  <td class="text-center"><%= Room.room_capacity_for(f.object.room_id) %></td>
+                  <td class="text-center"><%= f.object.quantity %></td>
+                  <td class="text-right"><%= number_to_currency(f.object.subtotal / f.object.quantity, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+                  <td class="text-right">
+                    <s><%= number_to_currency(f.object.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></s>
+                    <br>
+                    <%= number_to_currency(f.object.subtotal * diff - discount_room[room], :unit => "Gs", :separator => ".", :precision => 0) %>
+                  </td>
+                  <%= f.hidden_field :room_id %>
+                  <%= f.hidden_field :quantity %>
+                  <%= f.hidden_field :subtotal %>
+                  <%= f.hidden_field :booking_id %>
+                  <% subtotal += f.object.subtotal %>
+                  <td class="text-center">
+                    <button class="btn btn-link text-warning buttonrow" title="Ver oferta" type="button">
+                      <i class="fas fa-tags"></i>
+                    </button>
+                  </td>
+                  <div class="border border-primary datarow">
+                <tr class="datarow">
+                  <td class="text-center font-weight-bold" colspan="6" style="font-size: 15px;">
+                    <u>Ofertas que incluye</u></td>
                 </tr>
-                </tbody>
-                </table>
+                <tr class="datarow">
+                  <td></td>
+                  <td class="font-weight-bold" colspan="2">Descripción</td>
+                  <td class="font-weight-bold">Días</td>
+                  <td class="font-weight-bold">Descuento</td>
+                  <td></td>
+                </tr>
+                <% f.object.offer_discounts.each do |ff| %>
+                  <tr class="datarow">
+                    <td></td>
+                    <td colspan="2"><%= ff['description'] %></td>
+                    <td><%= ff['quantity_days'] %></td>
+                    <td><%= ff['discount'] %>%</td>
+                    <td></td>
+                  </tr>
+                <% end %>
+                </tr>
+                <% room += 1 %>
+              <% end %>
+              <tr class="thead-light breakrow">
+                <th><b>Total:</b></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th class="text-right font-weight-bold">
+                  <%= number_to_currency(form.object.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %>
+                  <%= form.hidden_field :total_amount %>
+                  <%= form.hidden_field :discount %>
+                  <%= form.hidden_field :date_creation %>
+                </th>
+                <th></th>
+              </tr>
+              </tbody>
+            </table>
             <!--table class="table">
               <thead class="table-primary">
               <tr>
