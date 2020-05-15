@@ -160,7 +160,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :discount, :booking_state, :estate_id, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
+    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :discount, :booking_state, :estate_id, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal, {offer_discounts: [:quantity_days, :discount, :description]}])
   end
 
   def current_ability

@@ -107,10 +107,20 @@
             $('table > #rooms > tr').each(function () {
                 const quantity = parseInt($('option:selected', this).text());
                 if (quantity > 0) {
+                    let offer_discounts = [];
                     const room_id = parseInt($(this).find("#booking_info").find(".room_id").text());
                     const price = parseInt($(this).find("#booking_info").find(".price").text());
                     const subtotal = quantity * price;
-                    booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal});
+                    let discounts = JSON.parse($(this).find("#booking_info").find(".discounts").text());
+                    let day_offers = JSON.parse($(this).find("#booking_info").find(".day_offers").text());
+                    let offer_descriptions = JSON.parse($(this).find("#booking_info").find(".offer_descriptions").text());
+                    for ( let i = 0, l = discounts.length; i < l; i++ ) {
+                        const discount_detail = parseInt(discounts[i]);
+                        const quantity_days = parseInt(day_offers[i]);
+                        const description = offer_descriptions[i];
+                        offer_discounts.push({quantity_days: quantity_days, discount: discount_detail, description: description})
+                    }
+                    booking_details.push({room_id: room_id, quantity: quantity, subtotal: subtotal, offer_discounts: offer_discounts});
                 }
             });
             let pr = escape(JSON.stringify(booking_details))

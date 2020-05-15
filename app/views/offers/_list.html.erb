@@ -21,9 +21,9 @@
         <td class="text-center"><%= l(offer.date_end, format: :long) %></td>
         <td class="text-center">
           <% if offer.date_end < Date.today %>
-            <span class="badge badge-warning" style="font-size: 15px;">Vencida</span>
+            <span class="badge badge-warning">Vencida</span>
           <% else %>
-            <span class="badge badge-success" style="font-size: 15px;">En curso</span>
+            <span class="badge badge-success">Activa</span>
           <% end %>
         </td>
         <td class="text-center">
@@ -51,9 +51,7 @@
   </div>
   <div class="ml-auto">
     <%= link_to new_offer_path do %>
-      <button class="btn btn btn-outline-info" title="Nueva oferta">
-        <i class="fas fa-plus text-light fa-1x"></i> Nueva Oferta
-      </button>
+      <button class="btn btn-info" title="Nueva oferta">Nueva Oferta</button>
     <% end %>
   </div>
 </div>

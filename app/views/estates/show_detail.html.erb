@@ -7,13 +7,9 @@
   </script>
 <% end %>
 <div class="row results-filter-section">
-  <!--COMENTARIOS-->
-  <div class="col-2">
-    <%= render partial: "estates/comments", :locals => { comments: comments, can_comment: can_comment, email: email, name: name} %>
-  </div>
-  <!-- TITLES -->
-  <div class="col-10">
-    <div class="container box-placeholder">
+  <!-- ESTATE -->
+  <div class="col-12">
+    <div class="box-placeholder">
       <!-- TITLES -->
       <div class="col-12">
         <div class="row title-section">
@@ -55,24 +51,29 @@
           </p>
         </div>
       </div>
-
       <!-- END -->
 
-      <!-- ESTATE DETAILS -->
-      <div class="col-12" id="estate-details">
-        <div class="row details">
-          <div class="col-md-8 col-sm-12" id="carousel-div">
-
-            <%= render partial: "estates/show_images", :locals => { images: @estate.images, h_size: '340px'} %>
-
+      <div class="col-12">
+        <div class="row">
+          <!--COMENTARIOS-->
+          <div class="col-2">
+            <%= render partial: "estates/comments", :locals => { comments: comments, can_comment: can_comment, email: email, name: name} %>
           </div>
-          <div class="col-md-4 col-sm-12" id="facilities-div">
-            <div class="row">
-              <div class="col-12 facilities-title">
-                <h3>Comodidades</h3>
+          <!-- ESTATE DETAILS -->
+          <div class="col-10" id="estate-details">
+            <div class="row details">
+              <div class="col-md-8 col-sm-12" id="carousel-div">
+                <%= render partial: "estates/show_images", :locals => { images: @estate.images, h_size: '340px'} %>
               </div>
-              <div class="col-12 overflow-auto facilities-list-div">
-                <%= render partial: "estates/facilities_list", :locals => { facilities: @estate.facilities_estates } %>
+              <div class="col-md-4 col-sm-12" id="facilities-div">
+                <div class="row">
+                  <div class="col-12 facilities-title">
+                    <h3>Comodidades</h3>
+                  </div>
+                  <div class="col-12 overflow-auto facilities-list-div">
+                    <%= render partial: "estates/facilities_list", :locals => { facilities: @estate.facilities_estates } %>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -85,10 +86,11 @@
         <div class="content-heading">Habitaciones</div>
         <%= render 'room_detail_list', rooms: @rooms, estate: @estate %>
       </div>
+
       <% if user_signed_in? && is_owner? && (estate.owner_id == current_owner.id) %>
-        <%= link_to 'Volver Atras', estates_path, class: "btn btn-secondary" %>
+        <%= link_to 'Atrás', estates_path, class: "btn btn-outline-primary" %>
       <%else %>
-        <%= link_to 'Volver Atras', visited_estates_path, class: "btn btn-secondary" %>
+        <%= link_to 'Atrás', visited_estates_path, class: "btn btn-outline-primary" %>
       <%end %>
     </div>
   </div>

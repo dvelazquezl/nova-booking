@@ -4,8 +4,8 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="form-group col-12">
         <div class="row has-search d-flex align-items-center results-block">
-            <%= f.text_field :search_query, placeholder: "¿A dónde vas?", id: 'with_search_results',
-            class: "filterrific-periodically-observed" %>
+          <%= f.text_field :search_query, placeholder: "¿A dónde vas?", id: 'with_search_results',
+                           class: "filterrific-periodically-observed" %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
           <%= f.text_field(:with_date_gte, placeholder: "Fecha de entrada", class: 'form-control datepicker',
@@ -18,7 +18,7 @@
                            id: 'with_date_lte') %>
         </div>
         <div class="row has-search d-flex align-items-center results-block">
-          <%= f.submit :Buscar, class: 'form-control btn btn-primary guardar' %>
+          <%= f.submit :Buscar, class: 'form-control btn btn-outline-primary guardar' %>
         </div>
       </div>
     </div>
@@ -29,10 +29,10 @@
       <h5>Tu presupuesto (Gs.)</h5>
       <div class="form-row">
         <div class="col-6">
-          <%= f.number_field :price_min, id: "price_min", class: "filterrific-periodically-observed form-control number", type: "text", placeholder: "Mínimo Gs." %>
+          <%= f.number_field :price_min, id: "price_min", class: "filterrific-periodically-observed form-control price", type: "text", placeholder: "Mínimo Gs." %>
         </div>
         <div class="col-6">
-          <%= f.number_field :price_max, id: "price_max", class: "filterrific-periodically-observed form-control number", type: "text", placeholder: "Máximo Gs." %>
+          <%= f.number_field :price_max, id: "price_max", class: "filterrific-periodically-observed form-control price", type: "text", placeholder: "Máximo Gs." %>
         </div>
       </div>
       <!--FIN-->
@@ -49,14 +49,14 @@
       <!--FIN-->
       <hr>
       <!--FILTRO POR PUNTUACION-->
-          <%= f.hidden_field :score_min, id:"score_min" %>
-          <%= f.hidden_field :score_max, id:"score_max"%>
+      <%= f.hidden_field :score_min, id: "score_min" %>
+      <%= f.hidden_field :score_max, id: "score_max" %>
       <p>
         <label for="amount">Rango de Puntuación:</label>
-        <input type="text" id="amount" readonly >
+        <input type="text" id="amount" readonly>
         <span class="fas fa-info-circle score_inf " data-toggle="tooltip" data-placement="right" title="0 sin puntuación"></span>
       </p>
-      <div id="slider-range" class= "filterrific-periodically-observed"></div>
+      <div id="slider-range" class="filterrific-periodically-observed"></div>
       <!--FIN-->
       <hr>
       <!--FILTRO POR CANCELABLE O NO-->
@@ -74,12 +74,6 @@
   <% end %>
 </div>
 <script>
-    if ($("#price_max").val() == '1000000000') {
-        $("#price_max").val('');
-    }
-    if ($("#price_min").val() == '0') {
-        $("#price_min").val('');
-    }
     $(function () {
         $("#slider-range").slider({
             range: true,
@@ -87,15 +81,15 @@
             max: 10,
             value: 0
         });
-        $( "#slider-range" ).change(function () {
-            let new_min =  $( "#slider-range" ).val()[0];
-            let new_max = $( "#slider-range" ).val()[1];
-            $( "#amount" ).val( "(" + new_min+ " - " + new_max+")" );
+        $("#slider-range").change(function () {
+            let new_min = $("#slider-range").val()[0];
+            let new_max = $("#slider-range").val()[1];
+            $("#amount").val("(" + new_min + " - " + new_max + ")");
             $("#score_min").val(new_min);
             $("#score_max").val(new_max);
         })
-        $( "#amount" ).val( "(" + $( "#slider-range" ).val()[0]+
-            " - " + $( "#slider-range" ).val()[1]+")" );
+        $("#amount").val("(" + $("#slider-range").val()[0] +
+            " - " + $("#slider-range").val()[1] + ")");
         let fromD = $("#with_date_gte").val();
         let toD = $("#with_date_lte").val();
         let startDate = stringToDate(fromD, "yyyy-mm-dd", "-");
@@ -136,39 +130,42 @@
                 input.value = input.value.split(".").join("");
             });
         });
-    function stringToDate(_date, _format, _delimiter) {
-        var formatLowerCase = _format.toLowerCase();
-        var formatItems = formatLowerCase.split(_delimiter);
-        var dateItems = _date.split(_delimiter);
-        var monthIndex = formatItems.indexOf("mm");
-        var dayIndex = formatItems.indexOf("dd");
-        var yearIndex = formatItems.indexOf("yyyy");
-        var month = parseInt(dateItems[monthIndex]);
-        month -= 1;
-        var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
-        return formatedDate;
-    }
-    function dateManipulation(date, days, hrs, mins, operator) {
-        date = new Date(date);
-        if (operator == "-") {
-            var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
-            var newDate = new Date(date.getTime() - durationInMs);
-        } else {
-            var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
-            var newDate = new Date(date.getTime() + durationInMs);
+
+        function stringToDate(_date, _format, _delimiter) {
+            var formatLowerCase = _format.toLowerCase();
+            var formatItems = formatLowerCase.split(_delimiter);
+            var dateItems = _date.split(_delimiter);
+            var monthIndex = formatItems.indexOf("mm");
+            var dayIndex = formatItems.indexOf("dd");
+            var yearIndex = formatItems.indexOf("yyyy");
+            var month = parseInt(dateItems[monthIndex]);
+            month -= 1;
+            var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+            return formatedDate;
         }
-        return newDate;
-    }
-    $(document).ready(function () {
-        $(".choose").click(function (e) {
-            if (!($("#with_date_gte").val())) {
-                e.preventDefault();
-                $("#with_date_gte").datepicker("show");
-            } else if (!($("#with_date_lte").val())) {
-                e.preventDefault();
-                $("#with_date_lte").datepicker("show");
+
+        function dateManipulation(date, days, hrs, mins, operator) {
+            date = new Date(date);
+            if (operator == "-") {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() - durationInMs);
+            } else {
+                var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                var newDate = new Date(date.getTime() + durationInMs);
             }
+            return newDate;
+        }
+
+        $(document).ready(function () {
+            $(".choose").click(function (e) {
+                if (!($("#with_date_gte").val())) {
+                    e.preventDefault();
+                    $("#with_date_gte").datepicker("show");
+                } else if (!($("#with_date_lte").val())) {
+                    e.preventDefault();
+                    $("#with_date_lte").datepicker("show");
+                }
+            });
         });
     });
-  });
 </script>
