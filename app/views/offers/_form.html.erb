@@ -7,8 +7,12 @@
             <div class="card-body">
               <div class="form-group col-10">
                 <label>Propiedad</label>
-                <input type="text" class="form-control valid" value="<%= estate_name %>" disabled required>
-                <%= form.hidden_field :estate_id%>
+                <% if offer.estate_id != nil %>
+                  <input type="text" class="form-control valid" value="<%= offer.estate_name %>" disabled required>
+                <% else %>
+                  <input type="text" class="form-control valid" disabled required>
+                <% end %>
+                <%= form.hidden_field :estate_id %>
               </div>
             </div>
             <div class="card-body">
@@ -23,7 +27,7 @@
               <div class="form-group  ">
                 <label>Desde</label>
                 <%= form.text_field(:date_start, placeholder: "Fecha de inicio", class: 'form-control datepicker',
-                                 readonly: true) %>
+                                    readonly: true) %>
               </div>
             </div>
             <div class="card-body">
@@ -138,6 +142,7 @@
             var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
             return formatedDate;
         }
+
         function dateManipulation(date, days, hrs, mins, operator) {
             date = new Date(date);
             if (operator == "-") {
@@ -149,6 +154,7 @@
             }
             return newDate;
         }
+
         $(document).ready(function () {
             $(".choose").click(function (e) {
                 if (!($("#offer_date_start").val())) {
