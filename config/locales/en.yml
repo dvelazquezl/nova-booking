@@ -304,5 +304,13 @@ en:
         non_cancelable: "No cancelable"
     offer:
       offer_status:
-        in_progress: "En curso"
+        in_progress: "Activas"
         finished: "Vencidas"
+    defaults:
+      cancellation_motive:
+        change_of_date: "Cambio de fechas o destino"
+        personal_motive: "Motivos personales/el viaje ha sido cancelado"
+        more_than_one_booking: "Mas de una reserva en la misma fecha y deseo cancelar las que no necesito"
+        better_option: "He econtrado una mejor opcion"
+        none_of_the_above: "Ninguna de las anteriores"
+        
