@@ -37,19 +37,18 @@ class OffersController < ApplicationController
     owner = helpers.current_owner
     estates = Estate.only_published.estates_by_owner(owner.id)
     offer_details = @offer.offer_details.build
-    estate_name = nil
     if params[:tag_estate_id].present? then
-      estate_name = Estate.find_by(id: params[:tag_estate_id]).name
       @offer.estate_id = params[:tag_estate_id]
     end
     from_estates = params[:from_estates].present? ? true : false
-
-    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name, from_estates: from_estates}
+    render :new, locals: {offer_details: offer_details, estates: estates, from_estates: from_estates}
 
   end
 
   # GET /offers/1/edit
   def edit
+    @offer.date_start = @offer.date_start.strftime("%Y-%m-%d")
+    @offer.date_end = @offer.date_end.strftime("%Y-%m-%d")
   end
 
   # POST /offers
