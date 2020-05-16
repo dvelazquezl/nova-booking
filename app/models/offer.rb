@@ -36,4 +36,9 @@ class Offer < ApplicationRecord
         ((self.date_start > date_start) and
         (self.date_end < date_end))
   end
+  def is_available_for_month?
+    (self.date_start..self.date_end).cover?(Date.today) or
+        (self.date_start..self.date_end).cover?(Date.today)
+  end
+
 end

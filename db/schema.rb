@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_214524) do
+ActiveRecord::Schema.define(version: 2020_05_12_020303) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
     t.integer "subtotal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.hstore "offer_discounts", array: true
     t.index ["booking_id"], name: "index_booking_details_on_booking_id"
     t.index ["room_id"], name: "index_booking_details_on_room_id"
   end
@@ -62,14 +64,22 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
     t.datetime "cancelled_at"
     t.boolean "notified"
     t.bigint "estate_id"
+    t.integer "discount"
+    t.integer "cancellation_motive"
     t.index ["estate_id"], name: "index_bookings_on_estate_id"
+  end
+
+  create_table "cancellation_motives", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
     t.bigint "departament_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["departament_id"], name: "index_cities_on_departament_id"
   end
 
@@ -89,25 +99,27 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
 
   create_table "departaments", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "estates", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.bigint "city_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "owner_id", null: false
     t.string "estate_type"
     t.boolean "status", default: false, null: false
     t.string "description"
     t.datetime "deleted_at"
-    t.integer "score", default: 0
+    t.decimal "score", default: "0.0"
     t.integer "comments_quant", default: 0
     t.integer "comments_rating_total", default: 0
     t.boolean "booking_cancelable"
+    t.decimal "latitude"
+    t.decimal "longitude"
     t.index ["city_id"], name: "index_estates_on_city_id"
     t.index ["deleted_at"], name: "index_estates_on_deleted_at"
     t.index ["owner_id"], name: "index_estates_on_owner_id"
@@ -115,8 +127,8 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
 
   create_table "facilities", force: :cascade do |t|
     t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "facility_type"
   end
 
@@ -158,8 +170,8 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
   create_table "owners", force: :cascade do |t|
     t.string "phone"
     t.string "address"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "about"
     t.string "name"
     t.bigint "user_id", null: false
@@ -182,8 +194,8 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
     t.integer "price"
     t.string "status"
     t.string "room_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "estate_id", null: false
     t.integer "quantity"
     t.datetime "deleted_at"
@@ -197,6 +209,8 @@ ActiveRecord::Schema.define(version: 2020_04_25_214524) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

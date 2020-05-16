@@ -20,6 +20,18 @@ class Estate < ApplicationRecord
   scope :best_estates, -> () {
     order("estates.score desc, (select count(id) from bookings where estate_id = estates.id) desc")
   }
+
+  scope :best_offers, -> (){
+    where("estates.id in(
+              select distinct estates.id from estates
+              inner join offers on estates.id = offers.estate_id
+              inner join offer_details on offers.id = offer_details.offer_id
+              where offers.date_end >= current_date
+              and offers.date_end  < date_trunc('month', current_date + interval '1 month')
+              order by estates.id )")
+  }
+
+
   scope :estates_by_client, -> (client_email) {
     where("estates.id in (
             select distinct b.estate_id
