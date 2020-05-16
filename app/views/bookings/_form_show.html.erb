@@ -160,7 +160,7 @@
             </tbody>
           </table>
         </div>
-        <% if status_booking == "Futura" && is_cancellable?(estate) %>
+        <% if status_booking == "Pendiente" && is_cancellable?(estate) %>
           <div class="col-11" id="can_cancel">
             <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
           </div>
@@ -176,10 +176,10 @@
               <b>No se pueden cancelar reservas vigentes.</b>
             </p>
           </div>
-        <% elsif status_booking == "Pasada" %>
+        <% elsif status_booking == "Terminada" %>
           <div class="col-11" id="cant_cancel">
             <p>
-              <b>No se pueden cancelar reservas pasadas.</b>
+              <b>No se pueden cancelar reservas terminadas.</b>
             </p>
           </div>
         <% else %>
