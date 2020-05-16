@@ -11,12 +11,14 @@ class WelcomeController < ApplicationController
         },
         )) || return
     estates = Estate.only_published.best_estates.take(quantity_hotels)
+    estates_best_offers = Estate.only_published.best_offers.take(quantity_hotels)
+
     respond_to do |format|
       format.html
       format.js
     end
 
-    render :index, locals: { filterrific: @filterrific, estates: estates }
+    render :index, locals: { filterrific: @filterrific, estates: estates, estates_best_offers: estates_best_offers}
   end
 
   def resources
