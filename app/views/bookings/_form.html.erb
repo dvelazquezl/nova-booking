@@ -79,9 +79,13 @@
                   <td class="text-center"><%= f.object.quantity %></td>
                   <td class="text-right"><%= number_to_currency(f.object.subtotal / f.object.quantity, :unit => "Gs", :separator => ".", :precision => 0) %></td>
                   <td class="text-right">
-                    <s><%= number_to_currency(f.object.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></s>
-                    <br>
-                    <%= number_to_currency(f.object.subtotal * diff - discount_room[room], :unit => "Gs", :separator => ".", :precision => 0) %>
+                    <%if(discount_room[room] > 0) %>
+                      <s><%= number_to_currency(f.object.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></s>
+                      <br>
+                      <%= number_to_currency(f.object.subtotal * diff - discount_room[room], :unit => "Gs", :separator => ".", :precision => 0) %>
+                    <%else %>
+                      <%= number_to_currency(f.object.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %>
+                    <%end %>
                   </td>
                   <%= f.hidden_field :room_id %>
                   <%= f.hidden_field :quantity %>
@@ -89,9 +93,13 @@
                   <%= f.hidden_field :booking_id %>
                   <% subtotal += f.object.subtotal %>
                   <td class="text-center">
-                    <button class="btn btn-link text-warning buttonrow" title="Ver oferta" type="button">
-                      <i class="fas fa-tags"></i>
-                    </button>
+                    <%if(discount_room[room] > 0) %>
+                      <button class="btn btn-link text-warning buttonrow" title="Ver oferta" type="button">
+                        <i class="fas fa-tags"></i>
+                      </button>
+                    <%else %>
+                      <span class="badge badge-danger">Sin ofertas</span>
+                    <%end %>
                   </td>
                   <div class="border border-primary datarow">
                 <tr class="datarow">
@@ -132,112 +140,6 @@
               </tr>
               </tbody>
             </table>
-            <!--table class="table">
-              <thead class="table-primary">
-              <tr>
-                <th>Tipo de habitación</th>
-                <th>Capacidad</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Total noches</th>
-                <th>Subtotal</th>
-              </tr>
-              </thead>
-              <tbody>
-              <%# subtotal = 0 %>
-              <%# i = 0 %>
-              <%#= form.fields_for :booking_details, booking.booking_details do |f| %>
-                <tr>
-                  <td><%#= Room.room_type_for(f.object.room_id) %></td>
-                  <td><%#= Room.room_capacity_for(f.object.room_id) %></td>
-                  <td><%#= f.object.quantity %></td>
-                  <td><%#= number_to_currency(f.object.subtotal / f.object.quantity, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                  <td><%#= diff %></td>
-                  <td><%#= number_to_currency(f.object.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                  <%#= f.hidden_field :room_id %>
-                  <%#= f.hidden_field :quantity %>
-                  <%#= f.hidden_field :subtotal %>
-                  <%#= f.hidden_field :booking_id %>
-                  <%# subtotal += f.object.subtotal %>
-                </tr>
-
-                <%# f.object.offer_discounts.each do |ff| %>
-                  <%#= hidden_field_tag "booking[booking_details_attributes][#{f.object.id.nil? ? i : f.object.id}][offer_discounts][][quantity_days]", ff['quantity_days'] %>
-                  <%#= hidden_field_tag "booking[booking_details_attributes][#{f.object.id.nil? ? i : f.object.id}][offer_discounts][][discount]", ff['discount'] %>
-                  <%#= hidden_field_tag "booking[booking_details_attributes][#{f.object.id.nil? ? i : f.object.id}][offer_discounts][][description]", ff['description'] %>
-                <%# end %>
-                <%# i += 1 %>
-              <%# end %>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <b><%#= number_to_currency(subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
-                </td>
-              </tr>
-              <%# booking.booking_details.each_with_index do |f, i| %>
-                <%# if i == 0 && booking.discount > 0 %>
-                  <thead class="table-primary">
-                  <tr>
-                    <th>Descuentos</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>Habitacion</td>
-                    <td>Precio unitario por cantidad</td>
-                    <td>Descripcion de oferta</td>
-                    <td>Dias con oferta</td>
-                    <td>Descuento(%)</td>
-                    <td>Subtotal</td>
-                  </tr>
-                  </thead>
-                <%# end %>
-                <%# f.offer_discounts.each do |ff| %>
-                  <tr>
-                    <td><%#= Room.room_type_for(f.room_id) %></td>
-                    <td><%#= number_to_currency(f.subtotal, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                    <td><%#= ff['description'] %></td>
-                    <td><%#= ff['quantity_days'] %></td>
-                    <td><%#= ff['discount'] %></td>
-                    <td><%#= number_to_currency(((f.subtotal * ff['quantity_days'].to_i) * (ff['discount'].to_i) / 100), :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                  </tr>
-                <%# end %>
-              <%# end %>
-              <%# if booking.discount > 0 %>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <b><%#= number_to_currency(booking.discount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
-                  </td>
-                </tr>
-              <%# end %>
-
-              <tr class="thead-light">
-                <th><b>Total:</b></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                  <b> <%#= number_to_currency(form.object.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
-                  <%#= form.hidden_field :total_amount %>
-                  <%#= form.hidden_field :discount %>
-                  <%#= form.hidden_field :date_creation %>
-                </th>
-              </tr>
-              </tbody>
-            </table-->
           </div>
         </fieldset>
         <fieldset>
