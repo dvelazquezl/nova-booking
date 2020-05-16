@@ -36,4 +36,10 @@ class Offer < ApplicationRecord
         ((self.date_start > date_start) and
         (self.date_end < date_end))
   end
+
+  def set_default_date
+    self.date_start = DateTime.now.strftime("%Y-%m-%d")
+    self.date_end = DateTime.now.next_day().strftime("%Y-%m-%d")
+  end
+
 end
