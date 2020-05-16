@@ -67,6 +67,7 @@
               <% subtotal = 0 %>
               <% discount_room = [] %>
               <% room = 0 %>
+              <% i = 0 %>
               <%= form.fields_for :booking_details, booking.booking_details do |f| %>
                 <% discount_room[room] = 0 %>
                 <% f.object.offer_discounts.each do |ff| %>
@@ -120,8 +121,12 @@
                     <td><%= ff['quantity_days'] %></td>
                     <td><%= ff['discount'] %>%</td>
                     <td></td>
+                    <%= hidden_field_tag "booking[booking_details_attributes][#{f.object.id.nil? ? i : f.object.id}][offer_discounts][][quantity_days]", ff['quantity_days'] %>
+                    <%= hidden_field_tag "booking[booking_details_attributes][#{f.object.id.nil? ? i : f.object.id}][offer_discounts][][discount]", ff['discount'] %>
+                    <%= hidden_field_tag "booking[booking_details_attributes][#{f.object.id.nil? ? i : f.object.id}][offer_discounts][][description]", ff['description'] %>
                   </tr>
                 <% end %>
+                <% i += 1 %>
                 </tr>
                 <% room += 1 %>
               <% end %>
@@ -154,8 +159,6 @@
       </div>
     </div>
   </div>
-
-
 <% end %>
 
 <script>
