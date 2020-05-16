@@ -47,7 +47,7 @@
                           <% if detail.room.id == r.id %>
                             <% discounts[i] =  detail.discount %>
                             <% day_offers[i].nil? ? day_offers[i] = 1 : day_offers[i] += 1 %>
-                            <% descriptions.push(offer.description.to_s + " " + detail.discount.to_s + "% de descuento") %>
+                            <% descriptions.push(offer.description.to_s) %>
                             <% price -= (r.price * detail.discount) / 100 %>
                             <% contains = true %>
                           <% end %>
