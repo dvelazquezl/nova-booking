@@ -123,13 +123,16 @@
                 <h4 class="card-title">
                   <%= estate_offer.name %>
                 </h4>
+                <p><div class="text-right badge badge-secondary" style="font-size: 10px;"> <%= estate_offer.score %> </div>
+                <label class="label-score" style="font-size: 13px;">&nbsp<%=label_score(estate_offer.score) %></label></p>
+
                 <small class="text-muted"><%= estate_offer.city_name %> | Mostrar en mapa</small>
                 <p><%= estate_offer.address %></p>
                 <hr>
 
                 <% best_offer = estate_offer.best_offer_of_the_month%>
                 <% dates, description, discounts = "" %>
-                <% dates = dates.concat("Del ", best_offer.date_start.strftime("%d-%m-%Y") , " al ", best_offer.date_end.strftime("%d-%m-%Y")) %>
+                <% dates = dates.concat("Oferta disponible desde el ", best_offer.date_start.strftime("%d-%m-%Y") , " al ", best_offer.date_end.strftime("%d-%m-%Y")) %>
                 <% description = best_offer.description %>
                 <h4><strong>Descuentos del</strong></h4>
                 <p class="font-title">
