@@ -17,6 +17,7 @@
                     <% if has_breakfast?(estate) %>
                       <span class="badge bg-warning">Desayuno incluido</span>
                     <% end %>
+
                     <% offers = estate.available_offer_for(start_date, end_date) %>
                     <% if !offers.empty? %>
                       <% title, description = "" %>

@@ -188,5 +188,36 @@ class Estate < ApplicationRecord
     offers
   end
 
+  # offers available in a 31 days range
+  # TO DO  >>>> get best offer of the  month <<<
+  # I got a scope called offer_with_discount which brings all offers
+  # with their average discount
+  # 1. order by avg_discount desc
+  # 2. take only offers that are available for the month from my scope
+  # 3. select first offer
+  def best_offer_of_the_month
+    offers_of_month = []
+    ordered_offers_of_month_avg = []
+    self.offers.each do |offer|
+      if offer.is_available_for_month?
+        offers_of_month.push(offer)
+      end
+    end
+
+    # loop over list of all offers ordered by best average discount
+    # if there are offers for this month re-order them
+    # take first offer from the ordered list
+    Offer.offer_with_avg_discount.each do |o|
+      if offers_of_month.include?(o)
+        ordered_offers_of_month_avg.push(o)
+      end
+    end
+
+    best_offer = ordered_offers_of_month_avg.first
+    best_offer
+  end
+
+
+
   resourcify
 end

@@ -1,5 +1,4 @@
-
-<section class="bg-white" style="border-radius: 15px;">
+<section class="bg-white" style="border-radius: 15px;" xmlns="http://www.w3.org/1999/html">
     <div class="row">
       <div class="col-2"></div>
       <div class="col">
@@ -63,7 +62,8 @@
                       <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                       <p><%= estate.address %></p>
                       <hr>
-                      <p class="font-title"><div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;"> <%= estate.score %> </div><label class="label-score">&nbsp<%=label_score(estate.score) %></label></p>
+                      <p class="font-title"><div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;"> <%= estate.score %> </div>
+                      <label class="label-score">&nbsp<%=label_score(estate.score) %></label></p>
                     </div>
                   </div>
                 </div>
@@ -127,25 +127,19 @@
                 <p><%= estate_offer.address %></p>
                 <hr>
 
+                <% best_offer = estate_offer.best_offer_of_the_month%>
+                <% dates, description, discounts = "" %>
+                <% dates = dates.concat("Del ", best_offer.date_start.strftime("%d-%m-%Y") , " al ", best_offer.date_end.strftime("%d-%m-%Y")) %>
+                <% description = best_offer.description %>
+                <h4><strong>Descuentos del</strong></h4>
                 <p class="font-title">
-                <div class="text-right badge badge-<%= get_score_color(estate_offer.score.to_i) %>" style="font-size: 17px;">
-                  <%= estate_offer.score %> </div>
-                <label class="label-score">&nbsp<%=label_score(estate_offer.score) %>
-              </label></p>
-                <% offers = estate_offer.available_offer_for(start_date, end_date) %>
-                <% title, description = "" %>
-                <% if offers.count > 1 %>
-                  <% title = "Ingrese para ver más detalles." %>
-                  <% description = "Varias Ofertas Disponibles!" %>
-                <% elsif offers.count == 1 %>
-                  <% title = offers.first.description %>
-                  <% description = "Oferta Disponible" %>
-                <% end %>
-                <% if !title.nil? or !description.nil? %>
-                  </br>
-                  <span class="badge bg-success" data-toggle="tooltip" data-placement="bottom" title="<%= title %>"><%= description %></span>
-                <% end %>
-
+                <% best_offer.offer_details.each do |od| %>
+                <span class="text-right badge bg-success" style="font-size: 17px;">
+                  <%= od.discount.to_s%>%
+                </span>
+                <%end %>
+                </p>
+                <p data-toggle="tooltip" data-placement="bottom" title="<%= dates %>"><%= description %></p>
 
               </div>
             </div>

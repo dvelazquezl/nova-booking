@@ -121,7 +121,7 @@ class EstatesController < ApplicationController
   # POST /estates
   # POST /estates.json
   def create
-    @estate = Estate.new(estate_params)
+    @estate = Estate.new(   estate_params)
     @estate.isPublished
 
     convert_base64_to_file(@estate, params[:images])
