@@ -3,7 +3,7 @@ empty_owner:
   phone:
   address:
   about:
-  user_id:
+  user_id: 14
 
 correct_owner:
   name: Juan Pérez
@@ -26,7 +26,7 @@ incorrect_address_owner:
   about: Estudiante de ingeniería
   user_id: 14
 
-incorrect_abuot_owner:
+incorrect_about_owner:
   name: Juan Pérez
   phone: +098555510 8
   address: Carlos Antonio López c/ Ad. Irrazabal
