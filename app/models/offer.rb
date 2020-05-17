@@ -37,9 +37,21 @@ class Offer < ApplicationRecord
         (self.date_end < date_end))
   end
 
+  # returns all offers with average discount for each offer details
+  scope :offer_with_avg_discount, -> {
+    joins(:offer_details)
+        .select('offers.*, AVG(offer_details.discount) AS avg_discount')
+        .group('offers.id')
+        .order('avg_discount desc')
+  }
+
   def set_default_date
     self.date_start = DateTime.now.strftime("%Y-%m-%d")
     self.date_end = DateTime.now.next_day().strftime("%Y-%m-%d")
   end
 
+  #End of offer is within a range of a month Today + 1 month
+  def is_available_for_month?
+    (self.date_end > Date.today && self.date_end <= Date.today+31)
+  end
 end
