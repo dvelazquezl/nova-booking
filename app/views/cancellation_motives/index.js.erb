@@ -1,8 +1,0 @@
-<% js = escape_javascript(
-  render(
-    :partial => 'cancellation_motives/list',
-    :locals => { :cancellation_motives => @cancellation_motives }
-  )
-) %>
-$("#results").html("<%= js %>");
-$('.pagination a').attr('data-remote', 'true');
