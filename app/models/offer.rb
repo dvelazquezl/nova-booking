@@ -52,6 +52,6 @@ class Offer < ApplicationRecord
 
   #End of offer is within a range of a month Today + 1 month
   def is_available_for_month?
-    (self.date_end > Date.today && self.date_end <= Date.today+31)
+    (self.date_end >= Date.today && self.date_end <= Date.today+31)
   end
 end
