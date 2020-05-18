@@ -17,7 +17,7 @@ class Estate < ApplicationRecord
   self.per_page = 5
 
   validates_presence_of :name, :address, :city_id, :owner_id, :latitude, :longitude
-  validates :score, numericality: { greater_than: 0, less_than_or_equal_to: 10 }
+  validates :score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
   scope :best_estates, -> () {
