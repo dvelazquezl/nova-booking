@@ -228,17 +228,26 @@
                   <table class="table">
                     <h2>Datos de la reserva:</h2>
                     <thead class="table-primary">
-                      <tr align="center">
-                        <th class="content-cell">Tipo de habitacion</th>
-                        <th class="content-cell">Capacidad</th>
-                        <th class="content-cell">Cantidad</th>
-                        <th class="content-cell">Precio unitario</th>
-                        <th class="content-cell">Subtotal</th>
-                      </tr>
+                    <tr align="center">
+                      <th class="content-cell">Tipo de habitacion</th>
+                      <th class="content-cell">Capacidad</th>
+                      <th class="content-cell">Cantidad</th>
+                      <th class="content-cell">Precio unitario</th>
+                      <th></th>
+                      <th class="content-cell">Subtotal</th>
+                    </tr>
                     </thead>
                     <tbody>
                     <% subtotal = 0 %>
+                    <% discount_room = [] %>
+                    <% room = 0 %>
                     <% @booking.booking_details.each do |f| %>
+                      <% discount_room[room] = 0 %>
+                      <%if f.offer_discounts != nil %>
+                        <% f.offer_discounts.each do |ff| %>
+                          <% discount_room[room] += f.subtotal * (ff['quantity_days'].to_i) * (ff['discount'].to_i) / 100 %>
+                        <% end %>
+                      <%end %>
                       <tr>
                         <td>
                           <%=Room.room_type_for(f.room_id)%>
@@ -246,39 +255,56 @@
                         <td class="text-center"><%=Room.room_capacity_for(f.room_id)%></td>
                         <td class="text-center"><%=f.quantity %></td>
                         <td class="text-right"><%= number_to_currency(f.subtotal / f.quantity, :unit => "Gs", :separator => ".", :precision => 0)%></td>
-                        <td class="text-right"><%= number_to_currency(f.subtotal, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                        <% subtotal+= f.subtotal %>
-                      </tr>
-                    <%end%>
-                    <% if @booking.discount > 0 %>
-                      <tr>
-                        <td>Descuento</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                          <%= number_to_currency(@booking.discount/@diff, :unit => "Gs", :separator => ".", :precision => 0) %>
-                        </td>
-                      </tr>
-                    <% end %>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td class="text-right">
-                          <b><%= number_to_currency( subtotal - @booking.discount/@diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+                          <% if (discount_room[room] > 0) %>
+                            <s><%= number_to_currency(f.subtotal * @diff, :unit => "Gs", :separator => ".", :precision => 0) %></s>
+                            <br>
+                            <%= number_to_currency(f.subtotal * @diff - discount_room[room], :unit => "Gs", :separator => ".", :precision => 0) %>
+                          <% else %>
+                            <%= number_to_currency(f.subtotal * @diff, :unit => "Gs", :separator => ".", :precision => 0) %>
+                          <% end %>
                         </td>
+                        <% subtotal+= f.subtotal %>
+                        <% if (discount_room[room] > 0) %>
+                        <tr class="datarow">
+                          <td class="text-center font-weight-bold" colspan="6" style="font-size: 15px;">
+                            <u>Ofertas que incluye</u></td>
+                        </tr>
+                        <tr class="datarow">
+                          <td></td>
+                          <td class="font-weight-bold" colspan="2">Descripción</td>
+                          <td class="font-weight-bold">Días</td>
+                          <td class="font-weight-bold">Descuento</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <%if f.offer_discounts != nil %>
+                          <% f.offer_discounts.each do |ff| %>
+                            <tr class="datarow">
+                              <td></td>
+                              <td colspan="2"><%= ff['description'] %></td>
+                              <td><%= ff['quantity_days'] %></td>
+                              <td><%= ff['discount'] %>%</td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                          <% end %>
+                        <% end %>
+                      <% end %>
                       </tr>
-                      <tr class="thead-light">
-                        <th><b>Total: <%=@diff%> noche<%=@plural_arg%></b></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th class="text-right">
-                          <b> <%= number_to_currency( @booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
-                        </th>
-                      </tr>
+                      <% room += 1 %>
+                    <%end%>
+                    <tr class="thead-light">
+                      <th><b>Total: <%=@diff%> noche<%=@plural_arg%></b></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th class="text-right" style="padding:5px;">
+                        <b> <%= number_to_currency( @booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+                      </th>
+                    </tr>
                     </tbody>
                   </table>
                   <br><hr>
