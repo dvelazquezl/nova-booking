@@ -1,30 +1,23 @@
-# README
+# NOVA BOOKING
+Mini Booking llamado Nova Booking :). 
 
-El projecto esta funcionando con las ultimas modificaciones hechas en el repositorio DEV hasta las 12:00 del dia 2 de Marzo del 2020
+Proyecto desarrollado en conjunto con compañeros del Octavo Semestre de la Facultad de Ingeniería de 
+la Universidad Nacional de Itapúa - Paraguay. 
 
-* Ruby version
-    2.6.3
-
-* Rails Version
-    5.2.1
-* rbenv o rvm (o tu versionador de ruby)
-
-* rbenv install 2.6.3 | rvm install ruby-2.6.3
-
-* rbenv global 2.6.3 | rvm use 2.6.3
-
-* gem install bundle 
-
-* bundle update
-
-* npm install
-
-* rails db:create, rails db:migrate (si no tienes la base de datos con las migraciones)
-
-* crear los css y los js correspondientes del MVC (modelo, vista, controlador) si no existen.
-
-* si hay algun error de compilacion, agregar las lineas correspondientes en config/initializers/assets.rb (siga el ejemplo de los que ya estan)
-
-* ...
-
-* Alguna duda, consulte a GOOGLE u otro developer XD
+La aplicación esta alojada en Heroku, puedes verlo [aquí.](https://novabooking-production.herokuapp.com/)
+## Instalación y ejecución
+### Requerimientos
+* Ruby (2.6.3)
+* Rails (5.2.1)
+* PostgreSQL (>= 10)
+### Configuración
+Descarga el proyecto en tu máquina local, configura el archivo `database.yml` con tu usuario y contraseña de 
+PostgreSQL y ejecuta los siguientes comandos en tu CLI:
+```
+gem install bundler
+bundle install
+npm install
+rails db:create
+rails db:migrate
+```
+Luego, ejecuta `bundle exec rails s` y ve a [http://localhost:3000/.](http://localhost:3000/)

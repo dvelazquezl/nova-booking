@@ -44,14 +44,5 @@ module Angle
                                  'angle/themes/theme-g.css',
                                  'angle/themes/theme-h.css'
                                 ]
-    # Controller assets
-    config.assets.precompile += [
-                                 # Scripts
-                                 'singleview.js',
-                                 # Stylesheets
-                                 'singleview.css'
-                                ]
-
-
   end
 end
