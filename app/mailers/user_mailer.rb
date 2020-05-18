@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
     @user_email = user_email(booking)
     @diff = Booking.diff(@booking)
     @plural_arg= (@diff > 1)? "s":" "
-    make_bootstrap_mail(to: booking.client_email, subject: 'NovaBooking!')
+    mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
   def new_booking_owner(booking)
@@ -54,15 +54,17 @@ class UserMailer < ApplicationMailer
     @user_email = user_email(booking)
     mail(to: booking.client_email, subject: 'NovaBooking! - Cancelacion de reserva')
   end
+  
   def booking_cancelled_by_user_to_owner(booking)
     @booking = booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)
     @client_email = booking.client_email
     @client_name = booking.client_name
-    @cancellation_motive = CancellationMotive.find_by(id: booking.cancellation_motive).description
+    @cancellation_motive = booking.cancellation_motive.text()
     user_email = user_email(booking)
     mail(to: user_email, subject: 'NovaBooking! - Cancelacion de reserva')
   end
+  
   def booking_cancelled_by_user_to_user(booking)
     @booking = booking
     @estate = Estate.find(Room.find(@booking.booking_details[0].room_id).estate_id)

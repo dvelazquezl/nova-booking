@@ -1,9 +1,9 @@
 <% provide :head_tags do %>
   <meta name='turbolinks-visit-control' content='reload'>
   <script>
-    document.addEventListener("DOMContentLoaded", function(){
-      initMap(<%=estate.latitude%>, <%=estate.longitude%>)
-    });
+      document.addEventListener("DOMContentLoaded", function () {
+          initMap(<%=estate.latitude%>, <%=estate.longitude%>)
+      });
   </script>
 <% end %>
 <% status_booking = get_status(booking) %>
@@ -32,10 +32,10 @@
                   </h1>
                 </div>
                 <div class="col-12 d-flex align-items-center">
-                <button id = "btn-location"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
-                  <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
-                </button>
-                <%= render partial: "layouts/partials/modal",:locals => { id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"}%>
+                  <button id="btn-location" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-link">
+                    <em id="location-icon" class="fas fa-map-marker-alt"></em> Ver Mapa
+                  </button>
+                  <%= render partial: "layouts/partials/modal", :locals => {id: "map", text: "", title: "Ubicación", btn_text: "Cerrar"} %>
                   <span>
                     <%= estate.address %>
                   </span>
@@ -60,7 +60,7 @@
         <div class="col-12" id="estate-details" align="left">
           <div class="row details">
             <div class="col-md-8 col-sm-12" id="carousel-div">
-              <%= render partial: "estates/show_images", :locals => { images: estate.images, h_size: '340px'} %>
+              <%= render partial: "estates/show_images", :locals => {images: estate.images, h_size: '340px'} %>
             </div>
             <div class="col-md-4 col-sm-12" id="facilities-div">
               <div class="row">
@@ -68,7 +68,7 @@
                   <h3>Comodidades</h3>
                 </div>
                 <div class="col-12 overflow-auto facilities-list-div">
-                  <%= render partial: "estates/facilities_list", :locals => { facilities: estate.facilities_estates } %>
+                  <%= render partial: "estates/facilities_list", :locals => {facilities: estate.facilities_estates} %>
                 </div>
               </div>
             </div>
@@ -81,25 +81,29 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <p class="lead">
-                <b><%=booking.client_name%></b>
+                <b><%= booking.client_name %></b>
               </p>
             </li>
             <li class="list-group-item">
-              <b>Correo: </b><%=booking.client_email%>
+              <b>Correo: </b><%= booking.client_email %>
             </li>
             <li class="list-group-item">
-              <b>Desde: </b><%=booking.date_start.strftime("%d-%m-%Y") %>
+              <b>Desde: </b><%= booking.date_start.strftime("%d-%m-%Y") %>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <b>Hasta: </b><%=booking.date_end.strftime("%d-%m-%Y") %>
+              <b>Hasta: </b><%= booking.date_end.strftime("%d-%m-%Y") %>
             </li>
-            <li class="list-group-item"></li>
+            <li class="list-group-item">
+              <%if booking.discount > 0 %>
+                <span class="badge badge-warning">Su reserva cuenta con oferta/s</span>
+              <%end %>
+            </li>
           </ul>
         </div>
         <br>
         <div class="col-11">
-          <table class="table">
+          <table class="table table-hover" id="tableMain">
             <thead class="table-primary">
-            <tr align="center">
+            <tr class="tableheader" align="center">
               <th>Tipo de habitación</th>
               <th>Capacidad</th>
               <th>Cantidad</th>
@@ -109,60 +113,86 @@
             </tr>
             </thead>
             <tbody>
+
             <% subtotal = 0 %>
+            <% discount_room = [] %>
+            <% room = 0 %>
             <% booking.booking_details.each do |f| %>
-              <tr>
+              <% discount_room[room] = 0 %>
+              <%if f.offer_discounts != nil %>
+                <% f.offer_discounts.each do |ff| %>
+                  <% discount_room[room] += f.subtotal * (ff['quantity_days'].to_i) * (ff['discount'].to_i) / 100 %>
+                <% end %>
+              <%end %>
+              <tr class="breakrow">
                 <td>
-                  <%=Room.room_type_for(f.room_id)%>
+                  <%= Room.room_type_for(f.room_id) %>
                 </td>
-                <td class="text-center"><%=Room.room_capacity_for(f.room_id)%></td>
-                <td class="text-center"><%=f.quantity %></td>
-                <td class="text-right"><%= number_to_currency(f.subtotal / f.quantity, :unit => "Gs", :separator => ".", :precision => 0)%></td>
-                <td class="text-right"><%= number_to_currency(f.subtotal, :unit => "Gs", :separator => ".", :precision => 0) %></td>
-                <% subtotal+= f.subtotal %>
-                <td class="text-center">
+                <td class="text-center"><%= Room.room_capacity_for(f.room_id) %></td>
+                <td class="text-center"><%= f.quantity %></td>
+                <td class="text-right"><%= number_to_currency(f.subtotal / f.quantity, :unit => "Gs", :separator => ".", :precision => 0) %></td>
+                <td class="text-right">
+                  <% if (discount_room[room] > 0) %>
+                    <s><%= number_to_currency(f.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %></s>
+                    <br>
+                    <%= number_to_currency(f.subtotal * diff - discount_room[room], :unit => "Gs", :separator => ".", :precision => 0) %>
+                  <% else %>
+                    <%= number_to_currency(f.subtotal * diff, :unit => "Gs", :separator => ".", :precision => 0) %>
+                  <% end %>
+                </td>
+                <% subtotal += f.subtotal %>
+                <td class="text-left">
                   <%= link_to room_estate_url(f.room_id), class: 'btn btn-link', remote: true do %>
                     <button class="btn btn-link text-primary" title="Ver"><i class="fas fa-eye"></i></button>
                   <% end %>
+                  <% if (discount_room[room] > 0) %>
+                    <button class="btn btn-link text-warning buttonrow" title="Ver oferta" type="button">
+                      <i class="fas fa-tags"></i>
+                    </button>
+                  <% end %>
                 </td>
+              <tr class="datarow">
+                <td class="text-center font-weight-bold" colspan="6" style="font-size: 15px;">
+                  <u>Ofertas que incluye</u></td>
               </tr>
-            <%end%>
-            <% if booking.discount > 0 %>
-              <tr>
-                <td>Descuento</td>
+              <tr class="datarow">
                 <td></td>
+                <td class="font-weight-bold" colspan="2">Descripción</td>
+                <td class="font-weight-bold">Días</td>
+                <td class="font-weight-bold">Descuento</td>
                 <td></td>
-                <td></td>
-                <td>
-                  <%= number_to_currency(booking.discount/diff, :unit => "Gs", :separator => ".", :precision => 0) %>
-                </td>
               </tr>
+              <%if f.offer_discounts != nil %>
+                <% f.offer_discounts.each do |ff| %>
+                  <tr class="datarow">
+                    <td></td>
+                    <td colspan="2"><%= ff['description'] %></td>
+                    <td><%= ff['quantity_days'] %></td>
+                    <td><%= ff['discount'] %>%</td>
+                    <td></td>
+                  </tr>
+                <% end %>
+              <%end %>
+              </tr>
+              <% room += 1 %>
             <% end %>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <b><%= number_to_currency( subtotal - booking.discount/diff, :unit => "Gs", :separator => ".", :precision => 0) %></b>
-                </td>
-              </tr>
-              <tr class="thead-light">
-                <th><b>Total: <%=diff%> noche<%=plural_arg%></b></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>
-                  <b> <%= number_to_currency( booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
-                </th>
-                <th></th>
-              </tr>
+            <tr class="thead-light breakrow">
+              <th><b>Total: <%= diff %> noche<%= plural_arg %></b></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-right">
+                <b> <%= number_to_currency(booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></b>
+              </th>
+              <th></th>
+            </tr>
             </tbody>
           </table>
+
         </div>
-        <% if status_booking == "Futura" && is_cancellable?(estate) %>
+        <% if status_booking == "Pendiente" && is_cancellable?(estate) %>
           <div class="col-11" id="can_cancel">
-            <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
+            <%= link_to 'Cancelar Reserva', cancel_path(booking), {:remote => true, 'data-toggle' => "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'} %>
           </div>
         <% elsif status_booking == "Cancelada" %>
           <div class="col-11" id="cant_cancel">
@@ -170,23 +200,23 @@
               <b>Esta reserva ya ha sido cancelada.</b>
             </p>
           </div>
-        <% elsif status_booking == "Vigente"%>
+        <% elsif status_booking == "Vigente" %>
           <div class="col-11" id="cant_cancel">
             <p>
               <b>No se pueden cancelar reservas vigentes.</b>
             </p>
           </div>
-        <% elsif status_booking == "Pasada" %>
+        <% elsif status_booking == "Terminada" %>
           <div class="col-11" id="cant_cancel">
             <p>
-              <b>No se pueden cancelar reservas pasadas.</b>
+              <b>No se pueden cancelar reservas terminadas.</b>
             </p>
           </div>
         <% else %>
           <div class="col-11" id="cant_cancel">
             <p>
               <b>Esta propiedad no permite la cancelacion de reserva por parte de usuarios.
-              Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
+                Si deseas cancelar tu reserva, ponte en contacto con el propietario o la administracion del lugar.</b>
             </p>
           </div>
         <% end %>
@@ -194,11 +224,11 @@
     </div>
     <% if user_signed_in? %>
       <div align="left">
-        <%= link_to 'Volver Atras', index_user_path, class: "btn btn-secondary" %>
+        <%= link_to 'Atrás', index_user_path, class: "btn btn-outline-primary" %>
       </div>
     <% end %>
   </div>
-  </div>
+</div>
 </div>
 
 <div id="room-content"></div>
@@ -207,3 +237,12 @@
     <div class="modal-content"></div>
   </div>
 </div>
+
+<script>
+    $('.datarow').slideToggle(200);
+    $(document).ready(function () {
+        $('.buttonrow').on('click', function () {
+            $(this).parent().parent().nextUntil('tr.breakrow').slideToggle(200);
+        });
+    });
+</script>

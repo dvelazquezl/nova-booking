@@ -6,9 +6,9 @@ module BookingsHelper
     date_start = booking.date_start
     today = Date.today
 
-    is_not_canceled = booking.booking_state
+    is_not_canceled = booking.cancelled_at == nil
 
-    status = %w(Vigente Pasada Futura Cancelada)
+    status = %w(Vigente Terminada Pendiente Cancelada)
 
     if (is_not_canceled)
       if (date_start <= today && date_end >= today)
@@ -24,7 +24,7 @@ module BookingsHelper
   end
 
   def get_status_color(status_booking)
-    status = %w(Vigente Pasada Futura Cancelada)
+    status = %w(Vigente Terminada Pendiente Cancelada)
     colors = %w(success warning info danger)
     case status_booking
     when status.first
@@ -40,5 +40,9 @@ module BookingsHelper
 
   def is_cancellable?(estate)
 		estate.booking_cancelable
+  end
+
+  def is_my_booking?(booking)
+    current_user.email == booking.client_email
   end
 end

@@ -109,7 +109,7 @@
 
 .scroll_comment {
   overflow-y: scroll;
-  height:700px;
+  height:450px;
 }
 
 .date{
@@ -175,4 +175,13 @@ input[type=file][data-direct-upload-url][disabled] {
   height: 1px;
   background: transparent;
   border: none;
+}
+
+#comment-card {
+  padding-top: 15%;
+}
+
+#comment-card .card-header h4 {
+  height: 40px;
+  font-family: PT Sans Narrow;
 }

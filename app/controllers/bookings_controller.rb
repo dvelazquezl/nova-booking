@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   authorize_resource
   before_action :authenticate_user!, except: [:new, :create, :show, :confirmation, :cancel, :cancel_my_booking]
-  before_action :set_booking, only: [:show, :destroy]
+  before_action :set_booking, only: [:show, :destroy, :cancel_booking, :cancel_my_booking]
   def index_owner
     owner = helpers.current_owner
     if owner
@@ -99,13 +99,10 @@ class BookingsController < ApplicationController
   end
 
   def cancel_booking
-    booking = Booking.find(params[:id])
     respond_to do |format|
-      if booking.update_attribute(:booking_state, 'false')
+      if Booking.update_booking_attr(@booking)
         format.html { redirect_to index_owner_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.json { head :no_content }
-        UserMailer.booking_cancelled_by_owner_to_owner(booking).deliver_now
-        UserMailer.booking_cancelled_by_owner_to_client(booking).deliver_now
       else
         format.html { redirect_to index_owner_url, alert: 'No se pudo cancelar.' }
         format.json { head :no_content }
@@ -114,25 +111,15 @@ class BookingsController < ApplicationController
   end
 
   def cancel_my_booking
-    booking = Booking.find(params[:id])
-    cancellation_motive_id = CancellationMotive.find(params[:motive]).id
-
     respond_to do |format|
-      if update_booking_attributes(booking, cancellation_motive_id)
+      if Booking.update_booking_attributes(@booking, params[:cancellation_motive])
         format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
         format.js
-        UserMailer.booking_cancelled_by_user_to_user(booking).deliver_now
-        UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
       else
         format.html { redirect_to index_user_url, alert: 'No se pudo cancelar.' }
         format.js
       end
     end
-  end
-
-  def update_booking_attributes(booking, cm_id)
-    booking.update_attribute(:cancellation_motive, cm_id)
-    booking.update_attribute(:booking_state, 'false')
   end
 
   def cancel
@@ -160,7 +147,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :discount, :booking_state, :estate_id, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal])
+    params.require(:booking).permit(:client_name, :client_email, :date_start, :date_end, :date_creation, :total_amount, :discount, :booking_state, :estate_id, booking_details_attributes: [:id, :booking_id, :room_id, :quantity, :subtotal, {offer_discounts: [:quantity_days, :discount, :description]}])
   end
 
   def current_ability
