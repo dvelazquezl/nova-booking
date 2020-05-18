@@ -8,7 +8,7 @@
         <div class="input-group">
           <%= select_tag :tag_estate_id, options_from_collection_for_select(estates, "id", "name"), class: "form-control", prompt: "Seleccionar" %>
           <span class="input-group-btn">
-            <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+            <%= button_tag(type: "submit", class: "btn btn-primary", id: "search-estate") do %>
               <i class="fas fa-search"></i>
             <% end %>
           </span>
