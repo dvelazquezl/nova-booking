@@ -47,7 +47,7 @@ class OffersController < ApplicationController
 
   # GET /offers/1/edit
   def edit
-    offer_details = @offer.offer_details.build
+    offer_details = @offer.offer_details
     estate_name = Estate.find_by(id: @offer.estate_id).name
     from_estates =  false
     render :edit, locals: {offer_details: offer_details, estate_name: estate_name, from_estates: from_estates}
