@@ -1,0 +1,53 @@
+correct_data:
+  description: Habitación Matrimonial
+  capacity: 2
+  price: 200000
+  status: published
+  room_type: double
+  estate: correct_data
+  quantity: 5
+
+empty_description:
+  description:
+  capacity: 2
+  price: 200000
+  status: published
+  room_type: double
+  estate: correct_data
+  quantity: 5
+
+empty_status:
+  description: Habitación Matrimonial
+  capacity: 2
+  price: 200000
+  status:
+  room_type: double
+  estate: correct_data
+  quantity: 5
+
+empty_room_type:
+  description: Habitación Matrimonial
+  capacity: 2
+  price: 200000
+  status: published
+  room_type:
+  estate: correct_data
+  quantity: 5
+
+capacity_less_than_1:
+  description: Habitación Matrimonial
+  capacity: 0
+  price: 200000
+  status: published
+  room_type: double
+  estate: correct_data
+  quantity: 5
+
+price_less_than_1:
+  description: Habitación Matrimonial
+  capacity: 2
+  price: 0
+  status: published
+  room_type: double
+  estate: correct_data
+  quantity: 5
