@@ -113,11 +113,21 @@ class BookingsController < ApplicationController
   def cancel_my_booking
     respond_to do |format|
       if Booking.update_booking_attributes(@booking, params[:cancellation_motive])
-        format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
-        format.js
+        if user_signed_in?
+          format.html { redirect_to index_user_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+          format.js
+        else
+          format.html { redirect_to root_url, notice: 'La reserva fue cancelada satifactoriamente.' }
+          format.js
+        end
       else
-        format.html { redirect_to index_user_url, alert: 'No se pudo cancelar.' }
-        format.js
+        if user_signed_in?
+          format.html { redirect_to index_user_url, alert: 'No se pudo cancelar.' }
+          format.js
+        else
+          format.html { redirect_to root_url, alert: 'No se pudo cancelar.' }
+          format.js
+        end
       end
     end
   end

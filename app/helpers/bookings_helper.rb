@@ -43,6 +43,10 @@ module BookingsHelper
   end
 
   def is_my_booking?(booking)
-    current_user.email == booking.client_email
+    if user_signed_in?
+      current_user.email == booking.client_email
+    else
+      !User.find_by_email(booking.client_email)
+    end
   end
 end
