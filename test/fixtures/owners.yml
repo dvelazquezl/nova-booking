@@ -1,3 +1,36 @@
-correct_data:
-  name: Cosme Fulanito
-  user_id: 1
+empty_owner:
+  name:
+  phone:
+  address:
+  about:
+  user_id: 14
+
+correct_owner:
+  name: Juan Pérez
+  phone: +0985555108
+  address: Carlos Antonio López c/ Ad. Irrazabal
+  about: Estudiante de ingeniería
+  user_id: 14
+
+incorrect_phone_owner:
+  name: Juan Pérez
+  phone: +098555510 8
+  address: Carlos Antonio López c/ Ad. Irrazabal
+  about: Estudiante de ingeniería
+  user_id: 14
+
+incorrect_address_owner:
+  name: Juan Pérez
+  phone: +0985555108
+  address: Carlos Antonio López c/#$ % Ad. Irrazabal
+  about: Estudiante de ingeniería
+  user_id: 14
+
+incorrect_about_owner:
+  name: Juan Pérez
+  phone: +098555510 8
+  address: Carlos Antonio López c/ Ad. Irrazabal
+  about: Estudiante de ingeniería§
+  user_id: 14
+
+

@@ -2,7 +2,7 @@ empty_name:
   name:
   address: Capitan Nicanor Torales
   city: correct_data
-  owner: correct_data
+  owner: correct_owner
   estate_type: published
   status: true
   description: this is a description
@@ -17,7 +17,7 @@ empty_address:
   name: Mandalay Bay Hotel
   address:
   city: correct_data
-  owner: correct_data
+  owner: correct_owner
   estate_type: published
   status: true
   description: this is a description
@@ -32,7 +32,7 @@ empty_description:
   name: Mandalay Bay Hotel
   address: Capitan Nicanor Torales
   city: correct_data
-  owner: correct_data
+  owner: correct_owner
   estate_type: published
   status: true
   description:
@@ -47,7 +47,7 @@ correct_data:
   name: Mandalay Bay Hotel
   address: Capitan Nicanor Torales
   city: correct_data
-  owner: correct_data
+  owner: correct_owner
   estate_type: published
   status: true
   description: this is a description
