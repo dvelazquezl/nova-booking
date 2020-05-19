@@ -27,3 +27,33 @@ empty_address:
   booking_cancelable: true
   latitude: -27.32888
   longitude: -55.870042
+
+empty_description:
+  name: Mandalay Bay Hotel
+  address: Capitan Nicanor Torales
+  city_id: 1
+  owner_id: 1
+  estate_type: published
+  status: true
+  description:
+  score: 9
+  comments_quant: 0
+  comments_rating_total: 0
+  booking_cancelable: true
+  latitude: -27.32888
+  longitude: -55.870042
+
+empty_city:
+  name: Mandalay Bay Hotel
+  address: Capitan Nicanor Torales
+  city_id:
+  owner_id: 1
+  estate_type: published
+  status: true
+  description: this is a description
+  score: 9
+  comments_quant: 0
+  comments_rating_total: 0
+  booking_cancelable: true
+  latitude: -27.32888
+  longitude: -55.870042
