@@ -1,8 +1,8 @@
 empty_name:
   name:
   address: Capitan Nicanor Torales
-  city_id: 1
-  owner_id: 1
+  city: correct_data
+  owner: correct_data
   estate_type: published
   status: true
   description: this is a description
@@ -16,8 +16,8 @@ empty_name:
 empty_address:
   name: Mandalay Bay Hotel
   address:
-  city_id: 1
-  owner_id: 1
+  city: correct_data
+  owner: correct_data
   estate_type: published
   status: true
   description: this is a description
@@ -31,8 +31,8 @@ empty_address:
 empty_description:
   name: Mandalay Bay Hotel
   address: Capitan Nicanor Torales
-  city_id: 1
-  owner_id: 1
+  city: correct_data
+  owner: correct_data
   estate_type: published
   status: true
   description:
@@ -43,11 +43,11 @@ empty_description:
   latitude: -27.32888
   longitude: -55.870042
 
-empty_city:
+correct_data:
   name: Mandalay Bay Hotel
   address: Capitan Nicanor Torales
-  city_id:
-  owner_id: 1
+  city: correct_data
+  owner: correct_data
   estate_type: published
   status: true
   description: this is a description

@@ -27,9 +27,14 @@ class EstateTest < ActiveSupport::TestCase
     assert_not estate.save
   end
 
-  test 'should not create estate without an city' do
-    estate = estates(:empty_city)
+  test 'should not create estate without a description' do
+    estate = estates(:empty_description)
     assert_not estate.save
+  end
+
+  test "should create estate with correct data" do
+    estate = estates(:correct_data)
+    assert estate.save
   end
 
 end
