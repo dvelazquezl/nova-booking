@@ -7,6 +7,19 @@ class Offer < ApplicationRecord
                                 reject_if: :all_blank
   delegate :name, :to => :estate, :prefix => true
   delegate :images, :to => :estate, :prefix => true
+  validate :offer_date_range
+
+  def offer_date_range
+    offers = OfferDetail.joins(:offer).where("date_start <= ?  AND date_end >= ?",date_start,date_start)
+    offers.each do |offer|
+      offer_details.each do |offer_detail|
+        if(offer_detail.room_id == offer.room_id)
+          room = Room.find(offer.room_id).description
+          errors.add(room, "ya existe una oferta de esta habitación dentro del rango de fecha")
+        end
+      end
+    end
+  end
 
   enumerize :offer_status, in: [:in_progress, :finished]
   self.per_page = 5
