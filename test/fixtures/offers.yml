@@ -1,0 +1,51 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+empty_description:
+  estate: correct_data
+  description:
+  date_start: 2020-04-23
+  date_end: 2020-04-23
+  date_creation: 2020-04-23
+
+empty_start_date:
+  estate: correct_data
+  description: Some description
+  date_start:
+  date_end: 2020-04-23
+  date_creation: 2020-04-23
+
+empty_end_date:
+  estate: correct_data
+  description: Some description
+  date_start: 2020-04-23
+  date_end:
+  date_creation: 2020-04-23
+
+empty_creation_date:
+  estate: correct_data
+  description: Some description
+  date_start: 2020-04-23
+  date_end: 2020-04-23
+  date_creation:
+
+start_date_in_past:
+  estate: correct_data
+  description: Some description
+  date_start: 2020-04-23
+  date_end: 2020-04-23
+  date_creation: 2020-04-23
+
+end_date_less_than_start:
+  estate: correct_data
+  description: Some description
+  date_start: 2021-05-23
+  date_end: 2021-05-20
+  date_creation: 2021-04-23
+
+correct_data:
+  estate: correct_data
+  description: Some description
+  date_start: 2021-05-23
+  date_end: 2021-06-23
+  date_creation: 2021-05-18
+
