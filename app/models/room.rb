@@ -7,7 +7,7 @@ class Room < ApplicationRecord
   has_many_attached :images
   has_many :booking_detail
 
-  validates_presence_of :description, :capacity, :status, :room_type, :estate_id, :quantity
+  validates_presence_of :description, :capacity, :status, :room_type, :quantity
   validates :capacity, :price, numericality: { greater_than: 0 }
 
   extend Enumerize
