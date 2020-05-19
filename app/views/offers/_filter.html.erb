@@ -11,6 +11,13 @@
                          {:class => 'filterrific-periodically-observed form-control'}
                 ) %>
           </div>
+          <div class="col-5 font-size-filter">Filtro por propiedad: </div>
+          <div class="col">
+            <%= f.select(:by_estate, filterrific.select_options[:by_estate],
+                         { include_blank: '- Todos -'},
+                         {:class => 'filterrific-periodically-observed form-control'}
+                ) %>
+          </div>
         </div>
       </div>
     </div>

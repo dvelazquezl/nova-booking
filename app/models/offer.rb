@@ -13,7 +13,8 @@ class Offer < ApplicationRecord
 
   filterrific(
       available_filters: [
-          :search_status
+          :search_status,
+          :by_estate
       ]
   )
 
@@ -28,6 +29,10 @@ class Offer < ApplicationRecord
 
   scope :offers_by_owner, -> (current_owner_id) {
     joins(:estate).where('estates.owner_id = ?', current_owner_id)
+  }
+
+  scope :by_estate, -> (estate_id) {
+    where(:estate_id => estate_id)
   }
 
   def is_available_for?(date_start, date_end)
