@@ -1,3 +1,11 @@
 correct_data:
-  name: Encarnación
-  departament_id: 1
+  name: Pedro Juan Caballero
+  departament: correct_name
+
+incorrect_city_name:
+  name: %$%^%&@Encarnacion
+  departament: correct_name
+
+incorrect_departament_name:
+  name: Pedro Juan Caballero
+  departament: incorrect_name
