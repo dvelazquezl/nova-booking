@@ -27,14 +27,14 @@
               <div class="form-group  ">
                 <label>Desde</label>
                 <%= form.text_field(:date_start, placeholder: "Fecha de inicio", class: 'form-control datepicker',
-                                    readonly: true) %>
+                                    readonly: true,id: "date_start") %>
               </div>
             </div>
             <div class="card-body">
               <div class="form-group">
                 <label>Hasta </label>
                 <%= form.text_field(:date_end, placeholder: "Fecha de finalizacion", class: 'form-control datepicker',
-                                    readonly: true) %>
+                                    readonly: true,id: "date_end") %>
               </div>
             </div>
           </div>
@@ -168,5 +168,8 @@
                 });
             });
         });
+    }else {
+        $("#date_start").val("<%=l(offer.date_start, format: :long)%>");
+        $("#date_end").val("<%=l(offer.date_end, format: :long)%>");
     }
 </script>
