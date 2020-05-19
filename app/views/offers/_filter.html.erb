@@ -3,16 +3,16 @@
   <div>
     <div class="card">
       <div class="card-body row">
-        <div class="col-3 row">
-          <div class="col-5 font-size-filter">Filtro por estado: </div>
-          <div class="col">
+        <div class="col-6 row">
+          <div class="col font-size-filter">Filtro por estado: </div>
+          <div class="col-3">
             <%= f.select(:search_status, filterrific.select_options[:search_status],
                          { include_blank: '- Todos -'},
                          {:class => 'filterrific-periodically-observed form-control'}
                 ) %>
           </div>
-          <div class="col-5 font-size-filter">Filtro por propiedad: </div>
-          <div class="col">
+          <div class="col font-size-filter">Filtro por propiedad: </div>
+          <div class="col-5">
             <%= f.select(:by_estate, filterrific.select_options[:by_estate],
                          { include_blank: '- Todos -'},
                          {:class => 'filterrific-periodically-observed form-control'}
