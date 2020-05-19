@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
     @user_email = user_email(booking)
     @diff = Booking.diff(@booking)
     @plural_arg= (@diff > 1)? "s":" "
-    make_bootstrap_mail(to: booking.client_email, subject: 'NovaBooking!')
+    mail(to: booking.client_email, subject: 'NovaBooking!')
   end
 
   def new_booking_owner(booking)

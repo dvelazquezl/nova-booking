@@ -14,12 +14,12 @@
         <div class="form-group" align="left">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <b>Creacion: </b><%= @offer.date_creation.strftime("%d/%m/%Y") %>
+              <b>Creacion: </b><%= l(@offer.date_creation, format: :long) %>
             </li>
             <li class="list-group-item">
-              <b>Desde: </b><%= @offer.date_start.strftime("%d/%m/%Y") %>
+              <b>Desde: </b><%= l(@offer.date_start, format: :long) %>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <b>Hasta: </b><%= @offer.date_end.strftime("%d/%m/%Y") %>
+              <b>Hasta: </b><%= l(@offer.date_end, format: :long) %>
             </li>
           </ul>
         </div>

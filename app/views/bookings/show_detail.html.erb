@@ -87,13 +87,13 @@
             </tbody>
           </table>
         </div>
-        <% if status_booking == "Futura" %>
+        <% if status_booking == "Pendiente" %>
         <div class="col-11" id="can_cancel">
           <%= link_to 'Cancelar Reserva', cancel_path(booking),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-outline-danger btn-sm'}  %>
         </div>
         <% else %>
         <div class="col-11" id="cant_cancel">
-          <strong>Solamente se pueden cancelar reservas futuras</strong>
+          <strong>Solamente se pueden cancelar reservas pendientes</strong>
         </div>
         <% end %>
       </fieldset>
