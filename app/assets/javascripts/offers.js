@@ -33,7 +33,9 @@ $(function () {
         const selectOptions = getOptionValues(changedSelect);
         // habilitar link para agregar mas filas
         let add_fields = document.getElementsByClassName('add_fields')[0];
-        (selectedValue !== "") ? add_fields.style.display = "block" : add_fields.style.display = "nonve";
+        (selectedValue !== "") ? add_fields.style.display = "block" : add_fields.style.display = "none";
+        // para esconder link agregar habitacion
+        if (getOptionValues($("#" + changedSelect.attr('id') + " option")).length === 2) add_fields.style.display = "none";
         // restar opcion seleccionada con todas las opciones
         // del select cambiado
         const subs = selectOptions.filter((option) => {
@@ -89,21 +91,27 @@ $(function () {
 
 // al eliminar una fila del formulario de ofertas
     $(document).on('click', '.delete-room', function () {
-        // obtener select de fila a eliminar
-        let select = $(this).parent().parent().children().first().children().first();
-        const selectVal = select.val();
-        $('.room-select').each((key, value) => {
-            const select = $("#" + value.id);
-            // obtener valores del select
-            const options = getOptionValues($("#" + value.id + " option"));
-            if (!options.includes(selectVal)) {
-                const selectedOption = select.children("option:selected").val();
-                select.append(`<option value="${selectVal}"> 
+        if ($('.delete-room').length >= 1) {
+            // obtener select de fila a eliminar
+            let select = $(this).parent().parent().children().first().children().first();
+            const selectVal = select.val();
+            // habilitar link de agregar habitacion
+            let add_fields = document.getElementsByClassName('add_fields')[0];
+            // por ej: si select tiene: Seleccionar, Mi Habitacion
+            if (getOptionValues(select).length >= 2) add_fields.style.display = "block";
+            $('.room-select').each((key, value) => {
+                const select = $("#" + value.id);
+                // obtener valores del select
+                const options = getOptionValues($("#" + value.id + " option"));
+                if (!options.includes(selectVal)) {
+                    const selectedOption = select.children("option:selected").val();
+                    select.append(`<option value="${selectVal}"> 
                                        ${generalOptions[selectVal]} 
                                   </option>`);
-                select.val(selectedOption);
-            }
-        })
+                    select.val(selectedOption);
+                }
+            })
+        }
     });
 
     $(document).on('click', '.add_fields', function (e) {
@@ -136,6 +144,8 @@ $(function () {
                                   </option>`);
         }
         lastSelect.val("");
+        // esconder link
+        $(this).hide();
     });
 
     let isInDOM = false;
