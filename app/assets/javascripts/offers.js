@@ -150,8 +150,9 @@ $(function () {
     let isInDOM = false;
     let observer = new MutationObserver(mutations => {
         const element = document.getElementsByClassName('add_fields')[0];
+        const flag = document.getElementById('invoices-items-table');
         const deleteBtn = document.getElementsByClassName('delete-room')[0];
-        if (document.body.contains(element) && !isInDOM) {
+        if (document.body.contains(element) && document.body.contains(flag) && !isInDOM) {
             element.style.display = "none";
             deleteBtn.style.display = "none";
             isInDOM = true;
