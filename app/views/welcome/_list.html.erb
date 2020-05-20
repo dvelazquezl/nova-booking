@@ -20,9 +20,12 @@
                     <% offers = estate.available_offer_for(start_date, end_date) %>
                     <% if !offers.empty? %>
                       <% title, description = "" %>
+                      <% n = 1 %>
                       <% description = (offers.count > 1) ? "Varias Ofertas Disponibles" : "Oferta Disponible" %>
                       <% offers.each do |offer| %>
+                        <% title.concat(n, " - ") %>
                         <% title.concat(offer.description, "\n") %>
+                        <% n += 1 %>
                       <%end%>
 
                       <!--Si la lista de ofertas no está vacía, siempre existirán title y description-->
