@@ -5,7 +5,7 @@
         <td class="col-7">
           <%= f.select :room_id,
                        options_from_collection_for_select(Room.rooms_published_by_estate(partial_param.estate_id), "id", "description", f.object.room_id), {prompt: "Seleccionar"},
-                       {class: 'form-control', required: 'true'}%>
+                       {class: 'room-select form-control', required: 'true'}%>
         </td>
         <td class="col-3">
           <div class="input-group">
@@ -17,7 +17,7 @@
         </td>
         <td class="col-2">
           <%if !f.object.persisted? %>
-            <%= link_to "Eliminar" do %>
+            <%= link_to "Eliminar", {class: "delete-room"} do %>
               <div class=" remove_fields2 btn btn-link text-danger">
                 <i class="fas fa-trash-alt"></i>
               </div>
