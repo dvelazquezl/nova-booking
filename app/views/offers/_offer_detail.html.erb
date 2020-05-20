@@ -9,17 +9,19 @@
         </td>
         <td class="col-3">
           <div class="input-group">
-            <%= f.number_field :discount, class: "form-control discount", required: "required", type: "text", onkeypress:"return (event.charCode >= 48 && event.charCode <= 57)", size:"3"%>
+            <%= f.number_field :discount, class: "form-control discount", required: "required", type: "text",:readonly => f.object.persisted?, onkeypress:"return (event.charCode >= 48 && event.charCode <= 57)", size:"3"%>
             <div class="input-group-prepend">
               <div class="percent_input">%</div>
             </div>
           </div>
         </td>
         <td class="col-2">
-          <%= link_to "Eliminar", {class: "delete-room"} do %>
-            <div class=" remove_fields2 btn btn-link text-danger">
-              <i class="fas fa-trash-alt"></i>
-            </div>
+          <%if !f.object.persisted? %>
+            <%= link_to "Eliminar" do %>
+              <div class=" remove_fields2 btn btn-link text-danger">
+                <i class="fas fa-trash-alt"></i>
+              </div>
+            <% end %>
           <% end %>
         </td>
       </tr>
