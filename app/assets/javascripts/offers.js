@@ -91,27 +91,26 @@ $(function () {
 
 // al eliminar una fila del formulario de ofertas
     $(document).on('click', '.delete-room', function () {
-        if ($('.delete-room').length >= 1) {
-            // obtener select de fila a eliminar
-            let select = $(this).parent().parent().children().first().children().first();
-            const selectVal = select.val();
-            // habilitar link de agregar habitacion
-            let add_fields = document.getElementsByClassName('add_fields')[0];
-            // por ej: si select tiene: Seleccionar, Mi Habitacion
-            if (getOptionValues(select).length >= 2) add_fields.style.display = "block";
-            $('.room-select').each((key, value) => {
-                const select = $("#" + value.id);
-                // obtener valores del select
-                const options = getOptionValues($("#" + value.id + " option"));
-                if (!options.includes(selectVal)) {
-                    const selectedOption = select.children("option:selected").val();
-                    select.append(`<option value="${selectVal}"> 
+        // obtener select de fila a eliminar
+        let select = $(this).parent().parent().children().first().children().first();
+        const selectVal = select.val();
+        // habilitar link de agregar habitacion
+        let add_fields = document.getElementsByClassName('add_fields')[0];
+        // por ej: si select tiene: Seleccionar, Mi Habitacion
+        if (getOptionValues(select).length >= 2) add_fields.style.display = "block";
+        $('.room-select').each((key, value) => {
+            const select = $("#" + value.id);
+            // obtener valores del select
+            const options = getOptionValues($("#" + value.id + " option"));
+            if (!options.includes(selectVal)) {
+                const selectedOption = select.children("option:selected").val();
+                select.append(`<option value="${selectVal}"> 
                                        ${generalOptions[selectVal]} 
                                   </option>`);
-                    select.val(selectedOption);
-                }
-            })
-        }
+                select.val(selectedOption);
+            }
+        });
+        $('.add_fields').show();
     });
 
     $(document).on('click', '.add_fields', function (e) {
@@ -151,11 +150,12 @@ $(function () {
     let isInDOM = false;
     let observer = new MutationObserver(mutations => {
         const element = document.getElementsByClassName('add_fields')[0];
+        const deleteBtn = document.getElementsByClassName('delete-room')[0];
         if (document.body.contains(element) && !isInDOM) {
             element.style.display = "none";
+            deleteBtn.style.display = "none";
             isInDOM = true;
         }
-
     });
 
     // observar todo menos los atributos
@@ -164,4 +164,13 @@ $(function () {
         subtree: true, // y sus descendants tambien
     });
 
+    // para maneja busqueda
+    $(document).on('click', '#search', function () {
+        $(this).attr('disabled', true);
+    });
+
+    $(document).on('change', '#tag_estate_id', function () {
+        $('#search').attr('disabled', false);
+        isInDOM = false;
+    });
 });
