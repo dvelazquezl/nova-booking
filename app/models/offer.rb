@@ -8,12 +8,29 @@ class Offer < ApplicationRecord
   delegate :name, :to => :estate, :prefix => true
   delegate :images, :to => :estate, :prefix => true
 
+  validates_presence_of :description, :date_start, :date_end, :date_creation
+
+  validate :start_date_cannot_be_in_the_past, :end_date_cannot_be_less_than_start_date
+
+  def start_date_cannot_be_in_the_past
+    if !date_start.blank? and date_start < Date.today
+      errors.add(:date_start, "can't be in the past")
+    end
+  end
+
+  def end_date_cannot_be_less_than_start_date
+    if !date_end.blank? and !date_start.blank? and date_end < date_start
+      errors.add(:date_end, "can't be less than start date")
+    end
+  end
+
   enumerize :offer_status, in: [:in_progress, :finished]
   self.per_page = 5
 
   filterrific(
       available_filters: [
-          :search_status
+          :search_status,
+          :by_estate
       ]
   )
 
@@ -28,6 +45,10 @@ class Offer < ApplicationRecord
 
   scope :offers_by_owner, -> (current_owner_id) {
     joins(:estate).where('estates.owner_id = ?', current_owner_id)
+  }
+
+  scope :by_estate, -> (estate_id) {
+    where(:estate_id => estate_id)
   }
 
   def is_available_for?(date_start, date_end)
