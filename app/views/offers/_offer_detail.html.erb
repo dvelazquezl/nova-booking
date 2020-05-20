@@ -16,13 +16,11 @@
           </div>
         </td>
         <td class="col-2">
-          <%if !f.object.persisted? %>
             <%= link_to "Eliminar", {class: "delete-room"} do %>
               <div class=" remove_fields2 btn btn-link text-danger">
                 <i class="fas fa-trash-alt"></i>
               </div>
-            <% end %>
-          <% end %>
+             <% end %>
         </td>
       </tr>
     </tbody>
