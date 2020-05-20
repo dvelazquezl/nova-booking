@@ -1,0 +1,44 @@
+empty_data:
+  estate: correct_data
+  client_email:
+  client_name:
+  description:
+  rating:
+
+empty_description:
+  estate: correct_data
+  client_email: correct_data
+  client_name: "Nelson Fleitas"
+  description:
+  rating: 1
+
+empty_rating:
+  estate: correct_data
+  client_email: correct_data
+  client_name: "Nelson Fleitas"
+  description: "This is a description"
+  rating:
+
+empty_client_email:
+  estate: correct_data
+  client_email:
+  client_name: "Nelson Fleitas"
+  description: "This is a description"
+  rating: 1
+
+empty_client_name:
+  estate: correct_data
+  client_email: correct_data
+  client_name:
+  description: "This is a description"
+  rating: 1
+
+correct_data:
+  estate: correct_data
+  client_email: correct_data
+  client_name: "Nelson Fleitas"
+  description: "This is a description"
+  rating: 5
+
+
+
