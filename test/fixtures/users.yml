@@ -1,0 +1,90 @@
+user:
+  name: Fulanito
+  last_name: Sultano
+  username: fusul
+  encrypted_password: 123456
+  email: fusu@gmail.com
+
+user_no_name:
+  name:
+  last_name: Sultano
+  username: fusu1
+  encrypted_password: 123456
+  email: fusu1@gmail.com
+
+user_name_length_less_than_two:
+  name: F
+  last_name: Sultano
+  username: fusu2
+  encrypted_password: 123456
+  email: fusu2@gmail.com
+
+user_name_length_more_than_50:
+  name: Fulanitoooooooooooooooooooooooooooooooooooooooooooo
+  last_name: Sultano
+  username: fusu3
+  encrypted_password: 123456
+  email: fusu3@gmail.com
+
+user_no_last_name:
+  name: Fulanito
+  last_name:
+  username: fusu4
+  encrypted_password: 123456
+  email: fusu4@gmail.com
+
+user_last_name_length_less_than_two:
+  name: Fulanito
+  last_name: S
+  username: fusu5
+  encrypted_password: 123456
+  email: fusu5@gmail.com
+
+user_last_name_length_more_than_50:
+  name: Fulanito
+  last_name: Sultanoooooooooooooooooooooooooooooooooooooooooooooo
+  username: fusu6
+  encrypted_password: 123456
+  email: fusu6@gmail.com
+
+user_no_username:
+  name: Fulanito
+  last_name: Sultano
+  username:
+  encrypted_password: 123456
+  email: fusu7@gmail.com
+
+user_username_length_less_than_five:
+  name: Fulanito
+  last_name: Sultano
+  username: fusu
+  encrypted_password: 123456
+  email: fusu8@gmail.com
+
+user_username_length_more_than_20:
+  name: Fulanito
+  last_name: Sultano
+  username: fusuuuuuuuuuuuuuuuuuu
+  encrypted_password: 123456
+  email: fusu9@gmail.com
+
+user_username_not_valid:
+  name: Fulanito
+  last_name: Sultano
+  username: fusu8*/?
+  encrypted_password: 123456
+  email: fusu10@gmail.com
+
+user_email_not_valid:
+  name: Fulanito
+  last_name: Sultano
+  username: fusu8
+  encrypted_password: 123456
+  email: fusu9.com
+
+user_role:
+  name: Fulanito
+  last_name: Sultano
+  username: fusu0000
+  encrypted_password: 1234568
+  email: fusu0000@gmail.com
