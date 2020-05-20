@@ -29,21 +29,26 @@ class Offer < ApplicationRecord
 
   filterrific(
       available_filters: [
-          :search_status
+          :search_status,
+          :by_estate
       ]
   )
 
   scope :search_status, -> (option) {
     case option.to_s
     when /^finished/
-      where("date_end < now()")
+      where("date_end < cast(current_date - interval '1 day' as date)")
     when /^in_progress/
-      where("date_end >= now()")
+      where("date_end >= cast(current_date - interval '1 day' as date)")
     end
   }
 
   scope :offers_by_owner, -> (current_owner_id) {
     joins(:estate).where('estates.owner_id = ?', current_owner_id)
+  }
+
+  scope :by_estate, -> (estate_id) {
+    where(:estate_id => estate_id)
   }
 
   def is_available_for?(date_start, date_end)

@@ -1,0 +1,17 @@
+correct_data:
+  client_name: "client"
+  client_email: "client@gmail.com"
+  date_start: "2020-07-16"
+  date_end: "2020-07-17"
+  date_creation:
+  total_amount: 230000
+  booking_state: true
+  created_at: "2020-05-18 19:41:33.187708"
+  updated_at: "2020-05-18 19:41:33.187708"
+  confirmation_token: "gqCzSPwNKWNzSsNMHPYGEWeN"
+  confirmed_at: "2020-05-18 19:44:21.925874"
+  cancelled_at:
+  notified: false
+  estate: correct_data
+  discount: 0
+  cancellation_motive:
