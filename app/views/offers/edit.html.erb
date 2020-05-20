@@ -1,6 +1,3 @@
-<h1>Editing Offer</h1>
+<div class="content-heading">Editando Oferta</div>
 
-<%= render 'form', offer: @offer %>
-
-<%= link_to 'Show', @offer %> |
-<%= link_to 'Back', offers_path %>
+<%= render 'form', offer: @offer, offer_details: offer_details, estate_name: estate_name, from_estates: from_estates %>

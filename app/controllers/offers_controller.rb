@@ -6,7 +6,7 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
-    offers=[]
+    offers = []
     owner = helpers.current_owner
     if owner
       (@filterrific = initialize_filterrific(
@@ -14,8 +14,9 @@ class OffersController < ApplicationController
           params[:filterrific],
           select_options: {
               search_status: Offer.offer_status.options,
+              by_estate: Estate.with_deleted.options_for_by_estate(owner.id)
           },
-          )) || return
+      )) || return
       offers = @filterrific.find.page(params[:page])
       respond_to do |format|
         format.html
@@ -33,22 +34,24 @@ class OffersController < ApplicationController
   # GET /offers/new
   def new
     @offer = Offer.new
+    @offer.set_default_date
     owner = helpers.current_owner
     estates = Estate.only_published.estates_by_owner(owner.id)
     offer_details = @offer.offer_details.build
-    estate_name = nil
     if params[:tag_estate_id].present? then
-      estate_name = Estate.find_by(id: params[:tag_estate_id]).name
       @offer.estate_id = params[:tag_estate_id]
     end
     from_estates = params[:from_estates].present? ? true : false
-
-    render :new, locals: {offer_details: offer_details, estates: estates, estate_name: estate_name, from_estates: from_estates}
+    render :new, locals: {offer_details: offer_details, estates: estates, from_estates: from_estates}
 
   end
 
   # GET /offers/1/edit
   def edit
+    offer_details = @offer.offer_details
+    estate_name = Estate.find_by(id: @offer.estate_id).name
+    from_estates =  false
+    render :edit, locals: {offer_details: offer_details, estate_name: estate_name, from_estates: from_estates}
   end
 
   # POST /offers
@@ -63,7 +66,7 @@ class OffersController < ApplicationController
         owner = helpers.current_owner
         estates = Estate.only_published.estates_by_owner(owner.id)
         flash[:alert] = "No se pudo crear la oferta. Seleccione una propiedad."
-        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}}
+        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false} }
       end
     end
   end

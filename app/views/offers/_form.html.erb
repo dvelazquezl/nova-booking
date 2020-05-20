@@ -7,14 +7,18 @@
             <div class="card-body">
               <div class="form-group col-10">
                 <label>Propiedad</label>
-                <input type="text" class="form-control valid" value="<%= estate_name %>" disabled required>
-                <%= form.hidden_field :estate_id%>
+                <% if offer.estate_id != nil %>
+                  <input type="text" class="form-control valid" value="<%= offer.estate_name %>" disabled required>
+                <% else %>
+                  <input type="text" class="form-control valid" disabled required>
+                <% end %>
+                <%= form.hidden_field :estate_id %>
               </div>
             </div>
             <div class="card-body">
               <div class="form-group col-10">
                 <label>Descripci&oacute;n *</label>
-                <%= form.text_field :description, class: "form-control", required: "required" %>
+                <%= form.text_field :description, class: "form-control", required: "required" ,:readonly => offer.persisted? %>
               </div>
             </div>
           </div>
@@ -22,13 +26,15 @@
             <div class="card-body">
               <div class="form-group  ">
                 <label>Desde</label>
-                <%= form.date_field :date_start, min: Date.today, class: "form-control", required: "required" %>
+                <%= form.text_field(:date_start, placeholder: "Fecha de inicio", class: 'form-control datepicker',
+                                    readonly: true,id: "date_start") %>
               </div>
             </div>
             <div class="card-body">
               <div class="form-group">
                 <label>Hasta </label>
-                <%= form.date_field :date_end, min: Date.today, class: "form-control", required: "required" %>
+                <%= form.text_field(:date_end, placeholder: "Fecha de finalizacion", class: 'form-control datepicker',
+                                    readonly: true,id: "date_end") %>
               </div>
             </div>
           </div>
@@ -85,3 +91,85 @@
   </div>
 
 <% end %>
+
+<script>
+    if(!<%=offer.persisted?%>) {
+        $(function () {
+            let fromD = $("#offer_date_start").val();
+            let toD = $("#offer_date_end").val();
+            let startDate = stringToDate(fromD, "yyyy-mm-dd", "-");
+            let endDate = stringToDate(toD, "yyyy-mm-dd", "-");
+            let newStartDate = dateManipulation(startDate, 1, 0, 0, "+");
+            let newEndDate = dateManipulation(endDate, 1, 0, 0, "-");
+            let ToEndDate = dateManipulation(new Date(), 365, 0, 0, "+");
+            $('#offer_date_start').datepicker({
+                weekStart: 1,
+                startDate: new Date(),
+                endDate: newEndDate,
+                autoclose: true,
+                orientation: "bottom auto",
+                format: "dd MM yyyy",
+                language: 'es',
+                todayHighlight: true
+            }).datepicker('setDate', startDate).on('changeDate', function (selected) {
+                newStartDate = new Date(selected.date.valueOf());
+                let date = dateManipulation(newStartDate, 1, 0, 0, "+");
+                $('#offer_date_end').datepicker('setStartDate', date);
+            });
+            $('#offer_date_end').datepicker({
+                weekStart: 1,
+                startDate: newStartDate,
+                endDate: ToEndDate,
+                autoclose: true,
+                orientation: "bottom auto",
+                format: "dd MM yyyy",
+                language: 'es',
+                todayHighlight: true
+            }).datepicker('setDate', endDate).on('changeDate', function (selected) {
+                newEndDate = new Date(selected.date.valueOf());
+                let date = dateManipulation(newEndDate, 1, 0, 0, "-");
+                $('#offer_date_start').datepicker('setEndDate', date);
+            });
+
+            function stringToDate(_date, _format, _delimiter) {
+                var formatLowerCase = _format.toLowerCase();
+                var formatItems = formatLowerCase.split(_delimiter);
+                var dateItems = _date.split(_delimiter);
+                var monthIndex = formatItems.indexOf("mm");
+                var dayIndex = formatItems.indexOf("dd");
+                var yearIndex = formatItems.indexOf("yyyy");
+                var month = parseInt(dateItems[monthIndex]);
+                month -= 1;
+                var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+                return formatedDate;
+            }
+
+            function dateManipulation(date, days, hrs, mins, operator) {
+                date = new Date(date);
+                if (operator == "-") {
+                    var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                    var newDate = new Date(date.getTime() - durationInMs);
+                } else {
+                    var durationInMs = (((24 * days) * 60) + (hrs * 60) + mins) * 60000;
+                    var newDate = new Date(date.getTime() + durationInMs);
+                }
+                return newDate;
+            }
+
+            $(document).ready(function () {
+                $(".choose").click(function (e) {
+                    if (!($("#offer_date_start").val())) {
+                        e.preventDefault();
+                        $("#offer_date_start").datepicker("show");
+                    } else if (!($("#offer_date_end").val())) {
+                        e.preventDefault();
+                        $("#offer_date_end").datepicker("show");
+                    }
+                });
+            });
+        });
+    }else {
+        $("#date_start").val("<%=l(offer.date_start, format: :long)%>");
+        $("#date_end").val("<%=l(offer.date_end, format: :long)%>");
+    }
+</script>

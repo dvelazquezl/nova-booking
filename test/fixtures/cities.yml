@@ -1,0 +1,11 @@
+correct_data:
+  name: Ciudad del esté
+  departament: correct_data
+
+incorrect_city_name:
+  name: dfgd ^5
+  departament: correct_data
+
+empty_name:
+  name:
+  departament: correct_data
