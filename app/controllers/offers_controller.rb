@@ -6,7 +6,7 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
-    offers=[]
+    offers = []
     owner = helpers.current_owner
     if owner
       (@filterrific = initialize_filterrific(
@@ -14,8 +14,9 @@ class OffersController < ApplicationController
           params[:filterrific],
           select_options: {
               search_status: Offer.offer_status.options,
+              by_estate: Estate.with_deleted.options_for_by_estate(owner.id)
           },
-          )) || return
+      )) || return
       offers = @filterrific.find.page(params[:page])
       respond_to do |format|
         format.html
@@ -65,7 +66,7 @@ class OffersController < ApplicationController
         owner = helpers.current_owner
         estates = Estate.only_published.estates_by_owner(owner.id)
         flash[:alert] = "No se pudo crear la oferta. Seleccione una propiedad."
-        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}}
+        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false} }
       end
     end
   end
