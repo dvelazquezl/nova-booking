@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+correct_data:
+  room: correct_data
+  discount: 50
+  offer: correct_data
+
+discount_less_than_1:
+  room: correct_data
+  discount: 0
+  offer: correct_data
+
+discount_greater_than_99:
+  room: correct_data
+  discount: 100
+  offer: correct_data
