@@ -14,7 +14,7 @@ class OffersController < ApplicationController
           params[:filterrific],
           select_options: {
               search_status: Offer.offer_status.options,
-              by_estate: Estate.options_for_by_estate(owner.id)
+              by_estate: Estate.with_deleted.options_for_by_estate(owner.id)
           },
       )) || return
       offers = @filterrific.find.page(params[:page])
