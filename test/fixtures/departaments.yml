@@ -1,0 +1,8 @@
+correct_data:
+  name: test
+
+incorrect_name:
+  name: 6564*)(a
+
+empty_name:
+  name:
