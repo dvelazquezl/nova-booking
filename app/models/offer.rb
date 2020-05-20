@@ -37,9 +37,9 @@ class Offer < ApplicationRecord
   scope :search_status, -> (option) {
     case option.to_s
     when /^finished/
-      where("date_end < now()")
+      where("date_end < cast(current_date - interval '1 day' as date)")
     when /^in_progress/
-      where("date_end >= now()")
+      where("date_end >= cast(current_date - interval '1 day' as date)")
     end
   }
 
