@@ -18,7 +18,7 @@
             <div class="card-body">
               <div class="form-group col-10">
                 <label>Descripci&oacute;n *</label>
-                <%= form.text_field :description, class: "form-control", required: "required" ,:readonly => offer.persisted? %>
+                <%= form.text_field :description, class: "form-control", required: "required" %>
               </div>
             </div>
           </div>
@@ -93,7 +93,6 @@
 <% end %>
 
 <script>
-    if(!<%=offer.persisted?%>) {
         $(function () {
             let fromD = $("#offer_date_start").val();
             let toD = $("#offer_date_end").val();
@@ -168,8 +167,4 @@
                 });
             });
         });
-    }else {
-        $("#offer_date_start").val("<%=l(offer.date_start, format: :long)%>");
-        $("#offer_date_end").val("<%=l(offer.date_end, format: :long)%>");
-    }
 </script>
