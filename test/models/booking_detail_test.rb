@@ -13,8 +13,8 @@ class BookingDetailTest < ActiveSupport::TestCase
   end
 
   test "should create booking detail with correct data" do
-    booking_detail = booking_details(:bd_correct_data)
-    assert booking_detail.save, "booking detail not saved"
+    booking_detail = booking_details(:correct_data)
+    assert booking_detail.save!
   end
 
 end
