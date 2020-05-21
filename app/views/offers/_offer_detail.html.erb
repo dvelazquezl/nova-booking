@@ -4,8 +4,8 @@
       <tr class="row">
         <td class="col-7">
           <%= f.select :room_id,
-                       options_from_collection_for_select(Room.rooms_published_by_estate(partial_param.estate_id), "id", "description", f.object.room_id), {prompt: "Seleccionar"},
-                       {class: 'room-select form-control', required: 'true'}%>
+                       options_from_collection_for_select(Room.rooms_published_by_estate(partial_param.estate_id), "id", "description",f.object.room_id), {prompt: "Seleccionar"},
+                       {class: 'room-select form-control', required: 'true', disabled: f.object.persisted?}%>
         </td>
         <td class="col-3">
           <div class="input-group">
