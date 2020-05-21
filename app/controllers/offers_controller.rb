@@ -75,7 +75,7 @@ class OffersController < ApplicationController
   # PATCH/PUT /offers/1.json
   def update
     respond_to do |format|
-      if @offer.update(offer_params)
+      if @offer.update(offer_params_update)
         format.html { redirect_to @offer, notice: 'La oferta fue actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @offer }
       else
@@ -105,6 +105,10 @@ class OffersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def offer_params
     params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, :estate_id, offer_details_attributes: [:id, :offer_id, :room_id, :discount])
+  end
+  # Only allow a list of trusted parameters through.
+  def offer_params_update
+    params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, offer_details_attributes: [:id, :offer_id, :room_id, :discount])
   end
 
   def current_ability
