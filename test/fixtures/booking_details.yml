@@ -1,24 +1,20 @@
-# para testear correctamente cambiar las referencias de booking y room
-# a los nombres especificados en sus respectivos archivos yml
-# si ya estan actualizados
-
 bd_quantity_0:
-  booking: booking1
-  room: room1
+  booking: correct_data
+  room_id: 2
   quantity: 0
   subtotal: 150000
   offer_discounts:
 
 bd_subtotal_0:
-  booking: booking1
-  room: room1
+  booking: correct_data
+  room_id: 2
   quantity: 5
   subtotal: 0
   offer_discounts:
 
-bd_correct_data:
-  booking: booking1
-  room: room1
+correct_data:
+  booking: correct_data
+  room_id: 9
   quantity: 1
   subtotal: 200000
   offer_discounts:

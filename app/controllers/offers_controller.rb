@@ -6,7 +6,7 @@ class OffersController < ApplicationController
   # GET /offers
   # GET /offers.json
   def index
-    offers=[]
+    offers = []
     owner = helpers.current_owner
     if owner
       (@filterrific = initialize_filterrific(
@@ -14,8 +14,9 @@ class OffersController < ApplicationController
           params[:filterrific],
           select_options: {
               search_status: Offer.offer_status.options,
+              by_estate: Estate.with_deleted.options_for_by_estate(owner.id)
           },
-          )) || return
+      )) || return
       offers = @filterrific.find.page(params[:page])
       respond_to do |format|
         format.html
@@ -47,8 +48,10 @@ class OffersController < ApplicationController
 
   # GET /offers/1/edit
   def edit
-    @offer.date_start = @offer.date_start.strftime("%Y-%m-%d")
-    @offer.date_end = @offer.date_end.strftime("%Y-%m-%d")
+    offer_details = @offer.offer_details
+    estate_name = Estate.find_by(id: @offer.estate_id).name
+    from_estates =  false
+    render :edit, locals: {offer_details: offer_details, estate_name: estate_name, from_estates: from_estates}
   end
 
   # POST /offers
@@ -72,8 +75,8 @@ class OffersController < ApplicationController
   # PATCH/PUT /offers/1.json
   def update
     respond_to do |format|
-      if @offer.update(offer_params)
-        format.html { redirect_to @offer, notice: 'Offer was successfully updated.' }
+      if @offer.update(offer_params_update)
+        format.html { redirect_to @offer, notice: 'La oferta fue actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @offer }
       else
         format.html { render :edit }
@@ -102,6 +105,10 @@ class OffersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def offer_params
     params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, :estate_id, offer_details_attributes: [:id, :offer_id, :room_id, :discount])
+  end
+  # Only allow a list of trusted parameters through.
+  def offer_params_update
+    params.require(:offer).permit(:description, :date_start, :date_end, :date_creation, offer_details_attributes: [:id, :offer_id, :room_id, :discount])
   end
 
   def current_ability
