@@ -98,3 +98,5 @@ gem 'bootstrap-email'
 gem 'paranoia'
 gem 'premailer-rails'
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
