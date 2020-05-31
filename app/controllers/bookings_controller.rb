@@ -10,6 +10,29 @@ class BookingsController < ApplicationController
     render :index_owner, locals: {bookings: @bookings}
   end
 
+  def index_user_bookings
+    owner = helpers.current_owner
+    if owner
+      @bookings = Booking.bookings_by_owner(owner).page(params[:page])
+    end
+    render :index_user_bookings, locals: {bookings: @bookings, date_from: params[:date_from], date_to: params[:date_to]}
+  end
+
+  def search
+    owner = helpers.current_owner
+    if owner
+      page = params[:page].nil? ? 1 : params[:page]
+      date_from = params[:date_from].nil? ? nil : Date.parse(params[:date_from])
+      date_to = params[:date_to].nil? ? nil : Date.parse(params[:date_to])
+      if date_from.nil? || date_to.nil?
+        @bookings = Booking.bookings_by_owner(owner).page(page)
+      else
+        @bookings = Booking.bookings_by_owner_between_dates(owner, date_from, date_to).page(page)
+      end
+    end
+    render :index_user_bookings, locals: {bookings: @bookings, date_from: date_from, date_to: date_to}
+  end
+
   def index_user
     email = current_user.email
     if email

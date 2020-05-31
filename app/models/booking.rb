@@ -53,12 +53,19 @@ class Booking < ApplicationRecord
     }
     scope :bookings_by_client, -> (current_client_email) { where(client_email: current_client_email) }
     scope :bookings_by_owner, -> (current_owner_id) {
-        joins(:estate).where('estates.owner_id = ?',current_owner_id)
+      joins(:estate).where('estates.owner_id = ?',current_owner_id)
+    }
+    scope :bookings_by_owner_between_dates, ->(
+        current_owner_id, date_from, date_to) {
+      joins(:estate).where('estates.owner_id = ?
+                     AND ((? BETWEEN date_start AND date_end)
+                     OR(? BETWEEN date_start AND date_end))',
+                           current_owner_id, date_from, date_to)
     }
 
     self.per_page = 5
     resourcify
-    
+
     # for user
     def self.update_booking_attributes(booking, cancellation_motive)
       booking.cancelled_at = Time.now()
