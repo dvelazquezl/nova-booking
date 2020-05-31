@@ -10,7 +10,8 @@ class Offer < ApplicationRecord
   validate :offer_date_range
 
   def offer_date_range
-    offers = OfferDetail.joins(:offer).where("date_start <= ?  AND date_end >= ?",date_start,date_start)
+    offers = OfferDetail.joins(:offer).where("(date_start <= ?  AND date_end >= ?)
+                                              OR (date_start <= ?  AND date_end >= ?)",date_start,date_start,date_end,date_end)
     offers.each do |offer|
       offer_details.each do |offer_detail|
         if(offer_detail.room_id == offer.room_id)
@@ -19,6 +20,15 @@ class Offer < ApplicationRecord
         end
       end
     end
+  end
+  def in_date_range(date_start,date_end,estate_id)
+    rooms = Room.find_by_sql(["SELECT r.id, r.description FROM rooms r
+                              INNER JOIN offer_details od ON r.id = od.room_id
+                              INNER JOIN offer o ON o.id = od_offer_id
+                              WHERE o.estate_id = ?
+                              WHERE NOT (o.date_start <= ?  AND o.date_end >= ?)
+                                    OR (o.date_start <= ?  AND o.date_end >= ?)", estate_id,date_start, date_start,date_end,date_end])
+    return rooms
   end
 
   validates_presence_of :description, :date_start, :date_end, :date_creation
