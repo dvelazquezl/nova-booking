@@ -21,14 +21,17 @@ class Offer < ApplicationRecord
       end
     end
   end
-  def in_date_range(date_start,date_end,estate_id)
-    rooms = Room.find_by_sql(["SELECT r.id, r.description FROM rooms r
+  def self.in_date_range(date_start,date_end,estate_id)
+    rooms_in_date_range = Room.find_by_sql(["SELECT r.id FROM rooms r
                               INNER JOIN offer_details od ON r.id = od.room_id
-                              INNER JOIN offer o ON o.id = od_offer_id
-                              WHERE o.estate_id = ?
-                              WHERE NOT (o.date_start <= ?  AND o.date_end >= ?)
-                                    OR (o.date_start <= ?  AND o.date_end >= ?)", estate_id,date_start, date_start,date_end,date_end])
-    return rooms
+                              INNER JOIN offers o ON o.id = od.offer_id
+                              WHERE o.estate_id = ? AND r.status = 'published'
+                              AND ((o.date_end <= ?  AND o.date_end >= ?)
+                              OR (o.date_start <= ?  AND o.date_end >= ?))", estate_id,date_start, date_start,date_end,date_end])
+
+
+    rooms = Room.select("id, description").where(estate_id: estate_id).where.not(id: rooms_in_date_range)
+    rooms
   end
 
   validates_presence_of :description, :date_start, :date_end, :date_creation
