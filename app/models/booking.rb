@@ -46,7 +46,13 @@ class Booking < ApplicationRecord
     def self.diff(booking)
         return diff = (booking.date_end.to_date -  booking.date_start.to_date).to_i
     end
-
+    filterrific :default_filter_params => {:sorted_by => 'name_asc'},
+                :available_filters => %w[
+                sorted_by
+                search_query
+                bookings_by_state
+                bookings_by_owner_between_dates
+              ]
     scope :request_assess, -> {where(cancelled_at: nil, booking_state: false, notified: false).where.not(confirmed_at: nil)}
     scope :finished, -> {
         where("date_end <= ?  AND booking_state = true", DateTime.now.to_date)
@@ -56,12 +62,68 @@ class Booking < ApplicationRecord
       joins(:estate).where('estates.owner_id = ?',current_owner_id)
     }
     scope :bookings_by_owner_between_dates, ->(
-        current_owner_id, date_from, date_to) {
-      joins(:estate).where('estates.owner_id = ?
+        data_attributes) {
+      if(data_attributes[:date_from].blank? || data_attributes[:date_to].blank?)
+        Booking.bookings_by_owner(data_attributes[:owner_id])
+      else
+        joins(:estate).where('estates.owner_id = ?
                      AND ((? BETWEEN date_start AND date_end)
                      OR(? BETWEEN date_start AND date_end))',
-                           current_owner_id, date_from, date_to)
+                             data_attributes[:owner_id], data_attributes[:date_from], data_attributes[:date_to])
+      end
     }
+
+    scope :sorted_by, ->(sort_option) {
+      # extract the sort direction from the param value.
+      direction = sort_option =~ /desc$/ ? 'desc' : 'asc'
+      bookings = Booking.arel_table
+      case sort_option.to_s
+      when /^name_/
+        order(bookings[:name].send(direction))
+      else
+        raise(ArgumentError, "Invalid sort option: #{sort_option.inspect}")
+      end
+    }
+
+    scope :search_query, lambda { |query|
+      return nil if query.blank?
+
+      # condition query, parse into individual keywords
+      terms = query.to_s.downcase.split(/\s+/)
+      # replace "*" with "%" for wildcard searches,
+      # append '%', remove duplicate '%'s
+      terms = terms.map { |e| ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%') }
+      # configure number of OR conditions for provision
+      # of interpolation arguments. Adjust this if you
+      # change the number of OR conditions.
+      num_or_conditions = 2
+      where(
+          terms.map do
+            or_clauses = [
+                'LOWER(estates.name) LIKE ?',
+                'LOWER(bookings.client_name) LIKE ?'
+            ].join(' OR ')
+            "(#{or_clauses})"
+          end.join(' AND '),
+          *terms.map { |e| [e] * num_or_conditions }.flatten
+      ).joins(:estate).references(:estates)
+    }
+
+    scope :bookings_by_state, lambda { |option|
+      return nil if option.blank?
+      if option == 1
+        Booking.finished
+      else
+        where("date_end >= ?  AND booking_state = true", DateTime.now.to_date)
+      end
+    }
+    
+    def self.options_for_sorted_by
+      [
+          ['Name (A-Z)', 'name_asc'],
+          ['Name (Z-A)', 'name_desc']
+      ]
+    end
 
     self.per_page = 5
     resourcify
