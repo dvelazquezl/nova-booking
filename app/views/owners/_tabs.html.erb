@@ -28,6 +28,9 @@
     <li class="nav-item">
       <%= link_to 'Reservas a Mis Propiedades', '/bookings/index_owner', :class => "nav-link", :id => "estates_bookings" %>
     </li>
+    <li class="nav-item">
+      <%= link_to 'Clientes Alojados', '/bookings/index_user_bookings', :class => "nav-link", :id => "estates_bookings_in_date" %>
+    </li>
   <% else %>
     <li class="nav-item">
       <%= link_to 'Configuraciones', edit_user_registration_path, :class => "nav-link", :id => "settings" %>

@@ -1,0 +1,7 @@
+<%= render 'owners/tabs', id: 'estates_bookings_in_date' %>
+<div id="results">
+  <%= render(
+          partial: 'bookings/list_user_bookings',
+          locals: {bookings: bookings, date_from: date_from, date_to: date_to}
+      ) %>
+</div>
