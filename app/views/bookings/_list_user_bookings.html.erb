@@ -2,26 +2,34 @@
   <%= puts filterrific.inspect %>
   <%= form_for_filterrific(filterrific, url: bookings_search_path) do |f| %>
     <div class="form-row">
-      <div class="form-group col-md-3">
+      <div class="form-group col-md">
         <%= f.text_field :search_query, class: "form-control", placeholder: "Nombre", value: f.object.search_query %>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.select :bookings_by_state, options_for_select([["Estado", ""], ["Vigente", 0],["Terminado", 1]], selected: f.object.bookings_by_state), {}, class: "form-control" %>
+      <div class="form-group col-md">
+        <%= f.select :bookings_by_state, options_for_select([["Seleccionar estado...", ""], ["Vigente", 0],["Terminada", 1]], selected: f.object.bookings_by_state), {}, class: "form-control" %>
+      </div>
+      <div class="form-group col-md">
+        <%= f.select :sorted_by, filterrific.select_options[:sorted_by],{}, class: "form-control" %>
+      </div>
+    <div class="form-group col-md">
+      <%= text_field_tag :date_from, if f.object.bookings_by_owner_between_dates.nil?
+                                       ''
+                                     else
+                                       f.object.bookings_by_owner_between_dates[:date_from].blank? ? '' : I18n.l(f.object.bookings_by_owner_between_dates[:date_from], format: '%d %B %Y')
+                                     end, class: "form-control datepicker", placeholder: "Fecha de entrada", style:"background-color: white", readonly:"true", id:"date_from" %>
+    </div>
+    <div class="form-group col-md">
+      <%= text_field_tag :date_to, if f.object.bookings_by_owner_between_dates.nil?
+                                     ''
+                                   else
+                                     f.object.bookings_by_owner_between_dates[:date_to].blank? ? '' : I18n.l(f.object.bookings_by_owner_between_dates[:date_to], format: '%d %B %Y')
+                                   end, class: "form-control datepicker", placeholder: "Fecha de salida", readonly:"true", style:"background-color: white", id:"date_to" %>
+    </div>
+      <div class="form-group col-md">
+        <%= f.submit :Buscar, class: "btn btn-info" %>
       </div>
     </div>
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <%= text_field_tag 'date_from', '',class: "form-control datepicker", placeholder: "Fecha de entrada", style:"background-color: white", readonly:"true", id:"date_from" %>
-    </div>
-    <div class="form-group col-md-3">
-      <%= text_field_tag 'date_to', '',class: "form-control datepicker", placeholder: "Fecha de salida", readonly:"true", style:"background-color: white", id:"date_to" %>
-    </div>
-  </div>
-    <div class="form-group col-md-2">
-      <%= f.hidden_field :bookings_by_owner_between_dates %>
-      <%= f.submit :Buscar, class: "btn btn-info" %>
-    </div>
-    <% end %>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
   <table class="table table-striped table-hover w-100" id="booking_table">
     <thead class="thead-light">
     <tr>
@@ -53,6 +61,7 @@
     <% end %>
     </tbody>
   </table>
+  </div>
   <div class="card card-columns-2 card-body bg-gray-light fixed-bottom">
     <div class="row row-flush">
       <div class="col">
@@ -63,26 +72,5 @@
       </div>
     </div>
   </div>
+  <% end %>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $("#date_from").datepicker({
-            weekStart: 1,
-            startDate: new Date(),
-            autoclose: true,
-            orientation: "bottom auto",
-            format: "dd MM yyyy",
-            language: 'es',
-            todayHighlight: true});
-        $("#date_to").datepicker({
-            weekStart: 1,
-            startDate: new Date(),
-            autoclose: true,
-            orientation: "bottom auto",
-            format: "dd MM yyyy",
-            language: 'es',
-            todayHighlight: true});
-
-    });
-</script>
