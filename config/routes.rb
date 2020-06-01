@@ -67,5 +67,5 @@ Rails.application.routes.draw do
   get '/api/i18n/:locale' => 'api#i18n'
 
   get '/reports/most_valuated_estates'
-
+  get '/reports/most_commented_estates'
 end

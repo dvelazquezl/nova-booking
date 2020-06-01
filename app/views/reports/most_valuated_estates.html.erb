@@ -9,6 +9,10 @@
     <%end %>
   </div>
 </div>
+<h4>Alojamientos por valoracion</h4>
+<p>valoracion:alojamiento(s)</p>
+<%= pie_chart Estate.group(:score).count %>
+<br>
 <div id="results">
   <%= render(
           partial: 'reports/valuated',
