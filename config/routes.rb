@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get 'estates/:id/show_detail', :to => 'estates#show_detail', :as => 'show_detail_estate'
   get 'estates/:id/show_visited', :to => 'estates#show_visited', :as => 'show_visited_estate'
 
+
   get 'bookings/show_detail/:id', :to => 'bookings#show_detail', :as => 'show_detail_booking'
   get 'bookings/index_user', :to => 'bookings#index_user', :as => 'index_user'
   get 'bookings/index_owner', :to => 'bookings#index_owner', :as => 'index_owner'
@@ -64,5 +65,7 @@ Rails.application.routes.draw do
 
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'
+
+  get '/reports/most_valuated_estates'
 
 end
