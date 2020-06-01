@@ -43,7 +43,6 @@ Rails.application.routes.draw do
   get 'bookings/index_owner', :to => 'bookings#index_owner', :as => 'index_owner'
   get 'bookings/index_user_bookings', :to => 'bookings#index_user_bookings', :as => 'index_user_bookings'
   get 'bookings/cancel/:id', :to => 'bookings#cancel', :as => 'cancel'
-  get 'bookings/search'
   resources :users, only: [:show, :edit, :update]
   resources :rooms
   resources :facilities, except: :show
