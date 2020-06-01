@@ -75,11 +75,17 @@ class Booking < ApplicationRecord
 
     scope :sorted_by, ->(sort_option) {
       # extract the sort direction from the param value.
-      direction = sort_option =~ /desc$/ ? 'desc' : 'asc'
-      bookings = Booking.arel_table
+      direction = /desc$/.match?(sort_option) ? "desc" : "asc"
       case sort_option.to_s
-      when /^name_/
-        order(bookings[:name].send(direction))
+      when /^client_name_/
+        order("LOWER(bookings.client_name) #{direction}")
+      when /^estate_name_/
+        order("LOWER(estates.name) #{direction}")
+          .includes(:estate).references(:estates)
+      when /^created_at_/
+        order("bookings.created_at #{direction}")
+      when /^all/
+        nil
       else
         raise(ArgumentError, "Invalid sort option: #{sort_option.inspect}")
       end
@@ -117,11 +123,16 @@ class Booking < ApplicationRecord
         where("date_end >= ?  AND booking_state = true", DateTime.now.to_date)
       end
     }
-    
+
     def self.options_for_sorted_by
       [
-          ['Name (A-Z)', 'name_asc'],
-          ['Name (Z-A)', 'name_desc']
+          ["Ordenar por...", "all"],
+          ["Nombre de cliente (a-z)", "client_name_asc"],
+          ["Nombre de cliente (z-a)", "client_name_desc"],
+          ["Nombre de propiedad (a-z)", "estate_name_asc"],
+          ["Nombre de propiedad (z-a)", "estate_name_desc"],
+          ["Fecha de reserva (mas nuevos primero)", "created_at_desc"],
+          ["Fecha de reserva (mas viejos primero)", "created_at_asc"],
       ]
     end
 
