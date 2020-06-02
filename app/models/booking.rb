@@ -48,6 +48,7 @@ class Booking < ApplicationRecord
     end
     filterrific :default_filter_params => {:sorted_by => 'name_asc'},
                 :available_filters => %w[
+                bookings_by_owner
                 sorted_by
                 search_query
                 bookings_by_state
@@ -58,19 +59,13 @@ class Booking < ApplicationRecord
         where("date_end <= ?  AND booking_state = true", DateTime.now.to_date)
     }
     scope :bookings_by_client, -> (current_client_email) { where(client_email: current_client_email) }
-    scope :bookings_by_owner, -> (current_owner_id) {
-      joins(:estate).where('estates.owner_id = ?',current_owner_id)
+    scope :bookings_by_owner, -> {
+      joins(:estate).where('estates.owner_id = ?',helpers.current_owner.id)
     }
-    scope :bookings_by_owner_between_dates, ->(
-        data_attributes) {
-      if(data_attributes[:date_from].blank? || data_attributes[:date_to].blank?)
-        Booking.bookings_by_owner(data_attributes[:owner_id])
-      else
-        joins(:estate).where('estates.owner_id = ?
-                     AND ((? BETWEEN date_start AND date_end)
-                     OR(? BETWEEN date_start AND date_end))',
-                             data_attributes[:owner_id], data_attributes[:date_from], data_attributes[:date_to])
-      end
+    scope :bookings_by_owner_between_dates, ->(data_attributes) {
+      return nil if(data_attributes[:date_from].blank? || data_attributes[:date_to].blank?)
+      where('(date_start BETWEEN ? AND ?)',
+            data_attributes[:date_from], data_attributes[:date_to])
     }
 
     scope :sorted_by, ->(sort_option) {
@@ -84,10 +79,14 @@ class Booking < ApplicationRecord
           .includes(:estate).references(:estates)
       when /^created_at_/
         order("bookings.created_at #{direction}")
+      when /^date_start_/
+        order("bookings.date_start #{direction}")
+      when /^date_end_/
+        order("bookings.date_end #{direction}")
       when /^all/
         nil
       else
-        raise(ArgumentError, "Invalid sort option: #{sort_option.inspect}")
+        nil
       end
     }
 
@@ -131,8 +130,12 @@ class Booking < ApplicationRecord
           ["Nombre de cliente (z-a)", "client_name_desc"],
           ["Nombre de propiedad (a-z)", "estate_name_asc"],
           ["Nombre de propiedad (z-a)", "estate_name_desc"],
-          ["Fecha de reserva (mas nuevos primero)", "created_at_desc"],
-          ["Fecha de reserva (mas viejos primero)", "created_at_asc"],
+          ["Fecha de creacion (mas nuevos primero)", "created_at_desc"],
+          ["Fecha de creacion (mas viejos primero)", "created_at_asc"],
+          ["Fecha de entrada (mayor a menor)", "date_start_desc"],
+          ["Fecha de entrada (menor a mayor)", "date_start_asc"],
+          ["Fecha de salida (mayor a menor)", "date_end_desc"],
+          ["Fecha de salida (menor a mayor)", "date_end_asc"],
       ]
     end
 
