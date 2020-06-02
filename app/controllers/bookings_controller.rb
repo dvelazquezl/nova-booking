@@ -23,6 +23,7 @@ class BookingsController < ApplicationController
         params[:filterrific],
         select_options: {
             sorted_by: Booking.options_for_sorted_by,
+            bookings_by_state: Booking.options_for_bookings_by_state
         },
         )) || return
     end
