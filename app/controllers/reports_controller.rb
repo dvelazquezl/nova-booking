@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  load_and_authorize_resource
+
   # alojamientos mas valorados
   def most_valuated_estates
     (@filterrific = initialize_filterrific(
@@ -28,5 +30,11 @@ class ReportsController < ApplicationController
     end
 
     render :most_commented_estates, locals: {estates: @estates}
+  end
+
+  private
+
+  def current_ability
+    @current_ability ||= ReportAbility.new(current_user)
   end
 end
