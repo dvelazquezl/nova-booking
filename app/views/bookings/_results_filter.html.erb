@@ -1,0 +1,43 @@
+<div>
+  <%= form_for_filterrific(filterrific, url: index_user_bookings_path) do |f| %>
+    <div class="form-row">
+      <div class="form-group col-md">
+        <%= f.text_field :search_query, class: "filterrific-periodically-observed form-control", placeholder: "Nombre", value: f.object.search_query, id: "search_query" %>
+      </div>
+      <div class="form-group col-md">
+        <%= f.select :bookings_by_state, filterrific.select_options[:bookings_by_state], {}, class: "form-control" %>
+      </div>
+      <div class="form-group col-md">
+        <%= f.select :sorted_by, filterrific.select_options[:sorted_by],{}, class: "form-control" %>
+      </div>
+      <div class="form-group col-md">
+        <%= text_field_tag :date_from, '', class: "form-control datepicker", placeholder: "Fecha de entrada", style:"background-color: white", readonly:"true", id:"date_from" %>
+      </div>
+      <div class="form-group col-md">
+        <%= text_field_tag :date_to, '', class: "form-control datepicker", placeholder: "Fecha de salida", readonly:"true", style:"background-color: white", id:"date_to" %>
+      </div>
+      <div class="form-group col-md">
+        <%= f.submit :Buscar, class: "btn btn-info" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<script>
+    $(function () {
+        $("#date_from").datepicker({
+            weekStart: 1,
+            autoclose: true,
+            orientation: "bottom auto",
+            format: "dd MM yyyy",
+            language: 'es',
+            todayHighlight: true});
+        $("#date_to").datepicker({
+            weekStart: 1,
+            autoclose: true,
+            orientation: "bottom auto",
+            format: "dd MM yyyy",
+            language: 'es',
+            todayHighlight: true});
+
+    });
+</script>

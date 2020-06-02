@@ -21,6 +21,8 @@ class BookingAbility
         #Solo un user con perfil de owner
         if owner
           can :index_owner, Booking
+          can :index_user_bookings, Booking
+          can :search, Booking
           can :show_detail, Booking
           can :cancel_booking, Booking
           can :cancel, Booking

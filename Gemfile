@@ -97,4 +97,4 @@ gem 'selectize-rails'
 gem 'bootstrap-email'
 gem 'paranoia'
 gem 'premailer-rails'
-
+gem "chartkick"
