@@ -220,4 +220,7 @@ class Estate < ApplicationRecord
     best_offer
   end
   resourcify
+  scope :most_commented, -> () {
+    order("estates.comments_quant desc")
+  }
 end

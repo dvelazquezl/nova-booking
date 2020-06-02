@@ -2,7 +2,11 @@
 #
 # Use this to set up shared configuration options for your entire application.
 # Any of the configuration options shown here can also be applied to single
+<<<<<<< HEAD
 # models by passing arguments to the `render :index` call.
+=======
+# models by passing arguments to the `render :pdf` call.
+>>>>>>> dev-2
 #
 # To learn more, check out the README:
 #
@@ -16,6 +20,11 @@ WickedPdf.config = {
   # exe_path: Gem.bin_path('wkhtmltopdf-binary', 'wkhtmltopdf')
 
   # Layout file to be used for all PDFs
+<<<<<<< HEAD
   # (but can be overridden in `render :index` calls)
   # layout: 'index.html',
+=======
+  # (but can be overridden in `render :pdf` calls)
+  # layout: 'pdf.html',
+>>>>>>> dev-2
 }
