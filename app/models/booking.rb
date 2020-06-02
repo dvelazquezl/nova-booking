@@ -64,8 +64,10 @@ class Booking < ApplicationRecord
     }
     scope :bookings_by_owner_between_dates, ->(data_attributes) {
       return nil if(data_attributes[:date_from].blank? || data_attributes[:date_to].blank?)
-      where('(date_start BETWEEN ? AND ?)',
-            data_attributes[:date_from], data_attributes[:date_to])
+      where('(date_start BETWEEN ? AND ?) OR (date_end BETWEEN ? AND ?) OR
+             (? BETWEEN date_start AND date_end) OR (? BETWEEN date_start AND date_end)',
+            data_attributes[:date_from], data_attributes[:date_to], data_attributes[:date_from],
+            data_attributes[:date_to], data_attributes[:date_from], data_attributes[:date_to])
     }
 
     scope :sorted_by, ->(sort_option) {
@@ -135,7 +137,15 @@ class Booking < ApplicationRecord
           ["Fecha de entrada (mayor a menor)", "date_start_desc"],
           ["Fecha de entrada (menor a mayor)", "date_start_asc"],
           ["Fecha de salida (mayor a menor)", "date_end_desc"],
-          ["Fecha de salida (menor a mayor)", "date_end_asc"],
+          ["Fecha de salida (menor a mayor)", "date_end_asc"]
+      ]
+    end
+
+    def self.options_for_bookings_by_state
+      [
+          ["Seleccionar estado...", ""],
+          ["Vigente", 0],
+          ["Terminada", 1]
       ]
     end
 
