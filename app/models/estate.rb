@@ -61,7 +61,7 @@ class Estate < ApplicationRecord
   scope :with_facilities, -> (facilities) {
     where('estates.id IN
           (SELECT fe.estate_id FROM public.facilities_estates AS fe
-           WHERE fe.estate_id = estates.id AND fe.facility_id IN (?))', facilities)
+           WHERE fe.estate_id = estates.id AND fe.facility_id IN (?))', facilities.delete_if {|facility| facility.blank? }  )
   }
 
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
