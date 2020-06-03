@@ -70,6 +70,17 @@
       </div>
       <!--FIN-->
       <hr>
+      <!--FILTRO POR COMODIDADES-->
+      <hr>
+      <h5>Comodidades</h5>
+      <div class="form-group col-12">
+        <div class="row has-search d-flex align-items-center results-block">
+          <%= f.collection_check_boxes :with_facilities, filterrific.select_options[:with_facilities],
+              :first, :last, {:class => 'filterrific-periodically-observed form-control'} %>
+        </div>
+      </div>
+      <!--FIN-->
+      <hr>
     </div>
   <% end %>
 </div>

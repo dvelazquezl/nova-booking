@@ -17,7 +17,7 @@ class Estate < ApplicationRecord
   self.per_page = 5
 
   validates_presence_of :name, :address, :city_id, :owner_id, :latitude, :longitude, :description
-  validates :score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :score, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 10}
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
   scope :best_estates, -> () {
@@ -58,6 +58,12 @@ class Estate < ApplicationRecord
     end
   }
 
+  scope :with_facilities, -> (facilities) {
+    where('estates.id IN
+          (SELECT fe.estate_id FROM public.facilities_estates AS fe
+           WHERE fe.estate_id = estates.id AND fe.facility_id IN (?))', facilities)
+  }
+
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
@@ -70,6 +76,7 @@ class Estate < ApplicationRecord
                 score_max
                 with_estate_type
                 search_booking_cancelable
+                with_facilities
               ]
 
   scope :search_query, lambda { |query|
@@ -219,5 +226,6 @@ class Estate < ApplicationRecord
     best_offer = ordered_offers_of_month_avg.first
     best_offer
   end
+
   resourcify
 end
