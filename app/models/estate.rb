@@ -13,6 +13,7 @@ class Estate < ApplicationRecord
                                 reject_if: :all_blank
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
+  delegate :name, :to => :owner, :prefix => true
   # default for will_paginate
   self.per_page = 5
 

@@ -154,9 +154,10 @@ class Booking < ApplicationRecord
 
     # for user
     def self.update_booking_attributes(booking, cancellation_motive)
-      booking.cancelled_at = Time.now()
+      booking.cancelled_at = Time.now
       booking.booking_state = false
       booking.cancellation_motive = cancellation_motive
+      booking.notified = true
 
       booking.save
       UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
@@ -164,8 +165,9 @@ class Booking < ApplicationRecord
     end
     # for owner
     def self.update_booking_attr(booking)
-      booking.cancelled_at = Time.now()
+      booking.cancelled_at = Time.now
       booking.booking_state = false
+      booking.notified = true
 
       booking.save
       UserMailer.booking_cancelled_by_owner_to_owner(booking).deliver_now
