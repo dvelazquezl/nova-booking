@@ -171,13 +171,10 @@ class Estate < ApplicationRecord
 
   # filters on 'capacity' attribute
   scope :max_capacity, ->(max_capacity) {
-    where("estates.id in (select distinct estate_id
-      from rooms r
-      where
-        (((? >= cast(r.capacity as integer))", max_capacity)
+    where("(? >= cast(r.capacity as integer))", max_capacity)
   }
   scope :min_capacity, ->(min_capacity) {
-    where("(? <= cast(r.capacity as integer))))", min_capacity)
+    where("(? <= cast(r.capacity as integer))", min_capacity)
   }
 
   def isPublished
