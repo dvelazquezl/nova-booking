@@ -192,16 +192,14 @@ class EstatesController < ApplicationController
     estate = Estate.find(params[:estate_id])
     rooms = estate.rooms
 
-    # # comprobar si alguna de las habitaciones reservadas esta ocupada
-    # free = true
-    # booked_rooms.each do |br|
-    #   if Time.now.between?(date_start(br), date_end(br))
-    #     free = false
-    #   end
-    # end
-
     respond_to do |format|
       if !estate.have_bookings_in_process?
+
+        future_bookings = estate.get_future_bookings
+        future_bookings.each do |b|
+          Booking.update_booking_attr(b)
+        end
+
         # actualizar estado de las habitaciones y de la propiedad
         rooms.each do |r|
           if r.status == 'published'
