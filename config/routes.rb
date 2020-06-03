@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :estates do
     collection do
       get 'estates_visited', :to => 'estates#estates_visited', :as => 'visited'
+      get 'all_estates', :to => 'estates#all_estates', :as => 'all'
       get :new_room
       post :unsuscribe_estate
     end
