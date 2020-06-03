@@ -70,6 +70,8 @@ class Estate < ApplicationRecord
                 score_max
                 with_estate_type
                 search_booking_cancelable
+                min_capacity
+                max_capacity
               ]
 
   scope :search_query, lambda { |query|
@@ -165,6 +167,17 @@ class Estate < ApplicationRecord
 
   scope :score_max, ->(score_max) {
     where("? >= score", score_max)
+  }
+
+  # filters on 'capacity' attribute
+  scope :max_capacity, ->(max_capacity) {
+    where("estates.id in (select distinct estate_id
+      from rooms r
+      where
+        (((? >= cast(r.capacity as integer))", max_capacity)
+  }
+  scope :min_capacity, ->(min_capacity) {
+    where("(? <= cast(r.capacity as integer))))", min_capacity)
   }
 
   def isPublished

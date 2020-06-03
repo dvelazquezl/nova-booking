@@ -58,7 +58,9 @@ class EstatesController < ApplicationController
     date_to = params[:to]
     price_max = ((params[:price_max] != '') && (params[:price_max] != nil)) ? params[:price_max] : 1000000000 #to do metodo y pasar los parametros
     price_min = ((params[:price_min] != '') && (params[:price_min] != nil)) ? params[:price_min] : 0
-    @rooms = @estate.rooms.without_deleted.available(params[:id], date_from, date_to, price_max, price_min)
+    max_capacity = ((params[:max_capacity] != '') && (params[:max_capacity] != nil)) ? params[:max_capacity] : 100
+    min_capacity = ((params[:min_capacity] != '') && (params[:min_capacity] != nil)) ? params[:min_capacity] : 0
+    @rooms = @estate.rooms.without_deleted.available(params[:id], date_from, date_to, price_max, price_min, max_capacity,min_capacity)
     @rooms.each do |room|
       quantity_available = Room.quantity_available(room.id, date_from, date_to).first
       room.quantity = quantity_available != nil ? quantity_available : 1
