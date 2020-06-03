@@ -224,6 +224,10 @@ class Estate < ApplicationRecord
     Booking.exists?(['booking_state = ? and ? BETWEEN date_start and date_end and estate_id = ?', true,  Time.now, self.id])
   end
 
+  def get_future_bookings
+    Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Time.now, self.id])
+  end
+
   resourcify
   scope :most_commented, -> () {
     order("estates.comments_quant desc")
