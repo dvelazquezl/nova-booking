@@ -192,21 +192,16 @@ class EstatesController < ApplicationController
     estate = Estate.find(params[:estate_id])
     rooms = estate.rooms
 
-    # filtra de la lista de habitaciones todas las que no estan reservadas
-    booked_rooms = rooms.select do |room|
-      BookingDetail.find_by_room_id(room.id)
-    end
-
-    # comprobar si alguna de las habitaciones reservadas esta ocupada
-    free = true
-    booked_rooms.each do |br|
-      if Time.now.between?(date_start(br), date_end(br))
-        free = false
-      end
-    end
+    # # comprobar si alguna de las habitaciones reservadas esta ocupada
+    # free = true
+    # booked_rooms.each do |br|
+    #   if Time.now.between?(date_start(br), date_end(br))
+    #     free = false
+    #   end
+    # end
 
     respond_to do |format|
-      if free
+      if !estate.have_bookings_in_process?
         # actualizar estado de las habitaciones y de la propiedad
         rooms.each do |r|
           if r.status == 'published'
@@ -217,11 +212,9 @@ class EstatesController < ApplicationController
         estate.update_attribute(:status, false)
 
         format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
-        format.json { head :no_content }
-        UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
+        #UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
       else
         format.html { redirect_to estates_path, alert: 'No se puede dar de baja esta propiedad. Una o mas habitaciones estan ocupadas.' }
-        format.json { head :no_content }
       end
     end
   end
