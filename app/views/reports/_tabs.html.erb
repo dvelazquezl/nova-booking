@@ -1,0 +1,27 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to 'Inicio', reports_path, :class => "nav-link", :id => "dashboard" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Propiedades mejor valoradas', reports_most_valuated_estates_path, :class => "nav-link", :id => "most_valuated" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Propiedades mas valoradas', reports_most_commented_estates_path, :class => "nav-link", :id => "most_commented" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Propiedades registradas', all_estates_path, :class => "nav-link", :id => "registered_estates" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Ciudades', cities_path, :class => "nav-link", :id => "cities" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Departamentos', departaments_path, :class => "nav-link", :id => "departments" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Comodidades', facilities_path, :class => "nav-link", :id => "facilities" %>
+  </li>
+</ul>
+<br>
+<script>
+    $(() => {$('#' + (<%= id %>).id).toggleClass('active');});
+</script>

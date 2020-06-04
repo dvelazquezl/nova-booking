@@ -35,6 +35,16 @@
     </tbody>
   </table>
 
+  <div class="row">
+    <div class="col-auto">
+      <%= link_to reports_most_valuated_estates_url(@estates, :format => :pdf) do %>
+        <button class="btn btn-info">
+          <i class="fas fa-print text-white fa-1x"></i>&nbsp;Imprimir PDF
+        </button>
+      <%end %>
+    </div>
+  </div>
+
   <div class="bg-footer"></div>
   <div class="card card-columns-2 card-body bg-gray-light fixed-bottom">
     <div class="row row-flush">

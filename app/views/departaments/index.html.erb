@@ -1,14 +1,5 @@
-<div class="content-heading">
-  <div>Departamentos</div>
-
-  <div class="ml-auto">
-    <%= link_to new_departament_path do %>
-      <button class="btn btn-info" title="Nuevo departamento">Nuevo Departamento</button>
-    <% end %>
-  </div>
-</div>
-
-<div id="results" align="center">
+<%= render 'reports/tabs', id: 'departments' %>
+<div id="results">
   <%= render(
           partial: 'departaments/list',
           locals: {departaments: departaments}
