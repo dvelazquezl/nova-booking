@@ -76,8 +76,7 @@
         <div class="row has-search d-flex results-block">
           <%= f.select :with_facilities, filterrific.select_options[:with_facilities],
                        {:include_hidden => false, :include_blank =>'- Todos -'},
-                       {:class => 'filterrific-periodically-observed form-control'} %>
-
+                       {:multiple => true, :class => 'filterrific-periodically-observed form-control'} %>
         </div>
       </div>
       <!--FIN-->
