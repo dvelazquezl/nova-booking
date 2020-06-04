@@ -149,7 +149,13 @@ class Estate < ApplicationRecord
   scope :with_date_lte, ->(ref_date) {
     Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date).order(score: :desc)
   }
-
+  # filters on 'capacity' attribute
+  scope :max_capacity, ->(max_capacity) {
+    where("(? >= cast(r.capacity as integer))", max_capacity)
+  }
+  scope :min_capacity, ->(min_capacity) {
+    where("(? <= cast(r.capacity as integer))", min_capacity)
+  }
   # filters on 'price' attribute
   scope :price_min, ->(price_min) {
     where("(? <= r.price)))", price_min)
@@ -170,13 +176,7 @@ class Estate < ApplicationRecord
     where("? >= score", score_max)
   }
 
-  # filters on 'capacity' attribute
-  scope :max_capacity, ->(max_capacity) {
-    where("(? >= cast(r.capacity as integer))", max_capacity)
-  }
-  scope :min_capacity, ->(min_capacity) {
-    where("(? <= cast(r.capacity as integer))", min_capacity)
-  }
+
 
   def isPublished
     self.status = self.rooms.any? { |room| room.status == "published" }
