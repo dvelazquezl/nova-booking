@@ -140,7 +140,7 @@ class EstatesController < ApplicationController
         format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
         format.json { render :show, status: :created, location: @estate }
       else
-        format.html { render :new , locals: {rooms: @rooms, estate_facilities: @estate_facilities}}
+        format.html { render :new, locals: {rooms: @rooms, estate_facilities: @estate_facilities} }
         format.json { render json: @estate.errors, status: :unprocessable_entity }
       end
     end
@@ -203,6 +203,7 @@ class EstatesController < ApplicationController
     rooms = estate.rooms
 
     respond_to do |format|
+      #Si la reserva no tiene reservas en proceso.
       if !estate.have_bookings_in_process?
 
         #Cancelar reservas futuras y enviar correos a los clientes
@@ -222,7 +223,6 @@ class EstatesController < ApplicationController
         estate.update_attribute(:status, false)
 
         format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
-        #UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
       else
         format.html { redirect_to estates_path, alert: 'No se puede dar de baja esta propiedad. Una o mas habitaciones estan ocupadas.' }
       end
