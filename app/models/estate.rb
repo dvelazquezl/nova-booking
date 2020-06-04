@@ -67,12 +67,12 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
+                min_capacity
+                max_capacity
                 score_min
                 score_max
                 with_estate_type
                 search_booking_cancelable
-                min_capacity
-                max_capacity
               ]
 
   scope :search_query, lambda { |query|
@@ -151,10 +151,10 @@ class Estate < ApplicationRecord
   }
   # filters on 'capacity' attribute
   scope :min_capacity, ->(min_capacity) {
-    where("(? <= cast(r.capacity as integer))", min_capacity)
+    where("estates.id in (select distinct estate_id from rooms r where ? <= cast(r.capacity as integer))", min_capacity)
   }
   scope :max_capacity, ->(max_capacity) {
-    where("estate.id in (select distinc estate_id from rooms r where (? >= cast(r.capacity as integer)))", max_capacity)
+    where("estates.id in (select distinct estate_id from rooms r where ? >= cast(r.capacity as integer))", max_capacity)
   }
 
   # filters on 'price' attribute
