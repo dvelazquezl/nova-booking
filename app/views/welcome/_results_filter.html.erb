@@ -71,12 +71,13 @@
       <!--FIN-->
       <hr>
       <!--FILTRO POR COMODIDADES-->
-      <hr>
-      <h5>Comodidades</h5>
+      <h5>Comodidades<br><small>(Ctrl + Click para seleccionar varias)</small></h5>
       <div class="form-group col-12">
-        <div class="row has-search d-flex align-items-center results-block">
-          <%= f.collection_check_boxes :with_facilities, filterrific.select_options[:with_facilities],
-              :first, :last, {:class => 'filterrific-periodically-observed form-control'} %>
+        <div class="row has-search d-flex results-block">
+          <%= f.select :with_facilities, filterrific.select_options[:with_facilities],
+                       {:include_hidden => false, :include_blank =>'- Todos -'},
+                       {:class => 'filterrific-periodically-observed form-control'} %>
+
         </div>
       </div>
       <!--FIN-->

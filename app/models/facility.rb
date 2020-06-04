@@ -13,7 +13,7 @@ class Facility < ApplicationRecord
   self.per_page = 10
 
   def self.options_for_select
-    order("LOWER(description)").map { |e| [e.id, e.description] }
+    where("facility_type = '#{facility_type.values.first}'").order("LOWER(description)").map { |e| [ e.description, e.id] }
   end
   resourcify
 
