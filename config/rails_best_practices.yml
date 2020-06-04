@@ -40,7 +40,8 @@ RemoveUnusedMethodsInControllersCheck: { except_methods:
     ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [
-     Offer#search_status
+     Offer#search_status,
+     Offer#by_estate
      ], ignored_files: 'user.rb' }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }
 ReplaceInstanceVariableWithLocalVariableCheck: { }
