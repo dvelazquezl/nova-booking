@@ -40,6 +40,16 @@ class EstatesController < ApplicationController
     end
   end
 
+  def all_estates
+    estates = Estate.all.order("owner_id asc, score asc, status desc").page(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+    render :all_estates, locals: {estates: estates}
+  end
+
   # GET /estates/1
   def show
     (@filterrific = initialize_filterrific(
