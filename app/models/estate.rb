@@ -222,11 +222,11 @@ class Estate < ApplicationRecord
   end
 
   def have_bookings_in_process?
-    Booking.exists?(['booking_state = ? and ? BETWEEN date_start and date_end and estate_id = ?', true,  Time.now, self.id])
+    Booking.exists?(['booking_state = ? and ? BETWEEN date_start and date_end and estate_id = ?', true,  Date.today, self.id])
   end
 
   def get_future_bookings
-    Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Time.now, self.id])
+    Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Date.today, self.id])
   end
 
   resourcify
