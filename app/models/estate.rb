@@ -71,6 +71,7 @@ class Estate < ApplicationRecord
                 score_max
                 with_estate_type
                 search_booking_cancelable
+                search_all_estates
               ]
 
   scope :search_query, lambda { |query|
@@ -167,6 +168,33 @@ class Estate < ApplicationRecord
   scope :score_max, ->(score_max) {
     where("? >= score", score_max)
   }
+
+  # INICIO filterrific para el index all_estates
+  scope :search_all_estates, lambda { |query|
+    return nil if query.blank?
+
+    # condition query, parse into individual keywords
+    terms = query.to_s.downcase.split(/\s+/)
+    # replace "*" with "%" for wildcard searches,
+    # append '%', remove duplicate '%'s
+    terms = terms.map { |e| ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%') }
+    # configure number of OR conditions for provision
+    # of interpolation arguments. Adjust this if you
+    # change the number of OR conditions.
+    num_or_conditions = 3
+    where(
+        terms.map do
+          or_clauses = [
+              'LOWER(cities.name) LIKE ?',
+              'LOWER(estates.name) LIKE ?',
+              'LOWER(owners.name) LIKE ?'
+          ].join(' OR ')
+          "(#{or_clauses})"
+        end.join(' AND '),
+        *terms.map { |e| [e] * num_or_conditions }.flatten
+    ).joins(:city).references(:cities).joins(:owner).references(:owners)
+  }
+  # FIN filterrific para el index all_estates
 
   def isPublished
     self.status = self.rooms.any? { |room| room.status == "published" }
