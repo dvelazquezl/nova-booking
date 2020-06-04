@@ -50,7 +50,7 @@ class Offer < ApplicationRecord
   end
 
   enumerize :offer_status, in: [:in_progress, :finished]
-  self.per_page = 5
+  self.per_page = 4
 
   filterrific(
       available_filters: [

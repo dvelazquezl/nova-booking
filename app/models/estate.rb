@@ -13,8 +13,9 @@ class Estate < ApplicationRecord
                                 reject_if: :all_blank
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
+  delegate :name, :to => :owner, :prefix => true
   # default for will_paginate
-  self.per_page = 5
+  self.per_page = 4
 
   validates_presence_of :name, :address, :city_id, :owner_id, :latitude, :longitude, :description
   validates :score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
@@ -219,5 +220,17 @@ class Estate < ApplicationRecord
     best_offer = ordered_offers_of_month_avg.first
     best_offer
   end
+
+  def have_bookings_in_process?
+    Booking.exists?(['booking_state = ? and ? BETWEEN date_start and date_end and estate_id = ?', true,  Date.today, self.id])
+  end
+
+  def get_future_bookings
+    Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Date.today, self.id])
+  end
+
   resourcify
+  scope :most_commented, -> () {
+    order("estates.comments_quant desc")
+  }
 end
