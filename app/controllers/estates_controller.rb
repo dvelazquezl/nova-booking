@@ -195,12 +195,14 @@ class EstatesController < ApplicationController
     respond_to do |format|
       if !estate.have_bookings_in_process?
 
+        #Cancelar reservas futuras y enviar correos a los clientes
         future_bookings = estate.get_future_bookings
         future_bookings.each do |b|
-          Booking.update_booking_attr(b)
+          b.update_attributes(:cancelled_at => Time.now, :booking_state => false)
+          UserMailer.booking_cancelled_by_owner_to_client(b).deliver_now
         end
 
-        # actualizar estado de las habitaciones y de la propiedad
+        # actualizar estado de las habitaciones
         rooms.each do |r|
           if r.status == 'published'
             r.update_attribute(:status, 'not_published')
