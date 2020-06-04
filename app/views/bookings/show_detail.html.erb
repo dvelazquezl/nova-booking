@@ -32,13 +32,13 @@
             <div class="card-body">
               <div class="form-group  ">
                 <label>Desde</label>
-                <input type="text" class="form-control" value=<%= booking.date_start.strftime("%d-%m-%Y") %> readonly>
+                <input type="text" class="form-control" value="<%= l(booking.date_start, format: :long) %>" readonly>
               </div>
             </div>
             <div class="card-body">
               <div class="form-group">
                 <label>Hasta </label>
-                <input type="text" class="form-control" value=<%= booking.date_end.strftime("%d-%m-%Y") %> readonly>
+                <input type="text" class="form-control" value="<%= l(booking.date_end, format: :long) %>" readonly>
               </div>
             </div>
           </div>
