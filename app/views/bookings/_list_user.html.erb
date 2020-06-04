@@ -12,8 +12,8 @@
                 <div class="media-body d-flex">
                   <div class="">
                     <h4 class="m-0" style="font-size:25px"><%= booking.estate_name %></h4>
-                    <small class="text-muted"><%= booking.date_start.strftime("%d/%m/%Y") %>
-                      - <%= booking.date_end.strftime("%d/%m/%Y") %></small>
+                    <small class="text-muted"><%= l(booking.date_start, format: :long) %>
+                      - <%= l(booking.date_end, format: :long) %></small>
                     <% status_booking = get_status(booking) %>
                     <p>
                       <label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></label>
