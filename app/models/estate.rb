@@ -78,6 +78,7 @@ class Estate < ApplicationRecord
                 score_max
                 with_estate_type
                 search_booking_cancelable
+                with_facilities
                 search_all_estates
               ]
 
