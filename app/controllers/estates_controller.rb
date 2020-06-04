@@ -14,7 +14,7 @@ class EstatesController < ApplicationController
           Estate.estates_by_owner(owner.id),
           params[:filterrific]
       )) || return
-      @estates = @filterrific.find.page(params[:page])
+      @estates = @filterrific.find.page(params[:page]).per_page(10)
       respond_to do |format|
         format.html
         format.js
@@ -41,7 +41,7 @@ class EstatesController < ApplicationController
   end
 
   def all_estates
-    estates = Estate.all.order("owner_id asc, score asc, status desc").page(params[:page])
+    estates = Estate.all.order("owner_id asc, score asc, status desc").page(params[:page]).per_page(8)
 
     respond_to do |format|
       format.html
