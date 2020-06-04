@@ -36,8 +36,9 @@
                   <div class="ml-auto">
                     <label class="label-score text-muted"><%=label_score(estate.score) %></label>
                     <%if  estate.score > 0 %>
-                    <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>"></div>
+                    <div class="text-right badge badge-pill badge-<%= get_score_color(estate.score.to_i) %>">
                       <span><%= estate.score %></span>
+                    </div>
                     <%end %>
 
                     <!--em class="fa-1x mr-2 fas fa-star"></em-->

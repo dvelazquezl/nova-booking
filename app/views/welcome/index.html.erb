@@ -64,10 +64,10 @@
                       <p><%= estate.address %></p>
                       <hr>
                       <p class="font-title">
-                      <%if estate.score.to_i > 0 %>
-                      <div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;">
-                      </div>
-                      <%= estate.score %>
+                      <%if estate.score > 0 %>
+                        <div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;">
+                          <%= estate.score %>
+                        </div>
                       <%end %>
                       <label class="label-score">&nbsp<%=label_score(estate.score) %></label></p>
                     </div>
