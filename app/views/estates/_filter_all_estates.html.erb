@@ -1,0 +1,15 @@
+  <div class="card">
+    <div class="card-body row">
+      <%= puts filterrific.inspect %>
+      <%= form_for_filterrific filterrific do |f| %>
+      <div class="form-row">
+        <div class="col-1"></div>
+        <div class="form-group col-md row">
+          <div class="col-md font-size-filter">Filtro por dueño, propiedad y ciudad: </div>
+          <%= f.text_field :search_all_estates, placeholder: "Buscar..",
+                           class: "filterrific-periodically-observed" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>

@@ -13,8 +13,9 @@ class Estate < ApplicationRecord
                                 reject_if: :all_blank
   belongs_to :owner
   delegate :name, :to => :city, :prefix => true
+  delegate :name, :to => :owner, :prefix => true
   # default for will_paginate
-  self.per_page = 5
+  self.per_page = 4
 
   validates_presence_of :name, :address, :city_id, :owner_id, :latitude, :longitude, :description
   validates :score, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 10}
@@ -77,7 +78,7 @@ class Estate < ApplicationRecord
                 score_max
                 with_estate_type
                 search_booking_cancelable
-                with_facilities
+                search_all_estates
               ]
 
   scope :search_query, lambda { |query|
@@ -175,6 +176,33 @@ class Estate < ApplicationRecord
     where("? >= score", score_max)
   }
 
+  # INICIO filterrific para el index all_estates
+  scope :search_all_estates, lambda { |query|
+    return nil if query.blank?
+
+    # condition query, parse into individual keywords
+    terms = query.to_s.downcase.split(/\s+/)
+    # replace "*" with "%" for wildcard searches,
+    # append '%', remove duplicate '%'s
+    terms = terms.map { |e| ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%') }
+    # configure number of OR conditions for provision
+    # of interpolation arguments. Adjust this if you
+    # change the number of OR conditions.
+    num_or_conditions = 3
+    where(
+        terms.map do
+          or_clauses = [
+              'LOWER(cities.name) LIKE ?',
+              'LOWER(estates.name) LIKE ?',
+              'LOWER(owners.name) LIKE ?'
+          ].join(' OR ')
+          "(#{or_clauses})"
+        end.join(' AND '),
+        *terms.map { |e| [e] * num_or_conditions }.flatten
+    ).joins(:city).references(:cities).joins(:owner).references(:owners)
+  }
+  # FIN filterrific para el index all_estates
+
   def isPublished
     self.status = self.rooms.any? { |room| room.status == "published" }
   end
@@ -228,5 +256,16 @@ class Estate < ApplicationRecord
     best_offer
   end
 
+  def have_bookings_in_process?
+    Booking.exists?(['booking_state = ? and ? BETWEEN date_start and date_end and estate_id = ?', true,  Date.today, self.id])
+  end
+
+  def get_future_bookings
+    Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Date.today, self.id])
+  end
+
   resourcify
+  scope :most_commented, -> () {
+    order("estates.comments_quant desc")
+  }
 end

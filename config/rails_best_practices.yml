@@ -13,7 +13,7 @@ MoveCodeIntoControllerCheck: { }
 MoveCodeIntoHelperCheck: { array_count: 3 }
 MoveCodeIntoModelCheck: { use_count: 2 }
 MoveFinderToNamedScopeCheck: { }
-MoveModelLogicIntoModelCheck: { use_count: 4 }
+MoveModelLogicIntoModelCheck: { use_count: 5 }
 NeedlessDeepNestingCheck: { nested_count: 2 }
 NotRescueExceptionCheck: { }
 NotUseDefaultRouteCheck: { }
@@ -33,11 +33,15 @@ RemoveUnusedMethodsInControllersCheck: { except_methods:
      OffersController#current_ability,
      ErrorsController#not_found_error,
      ErrorsController#server_error,
-     CancellationMotivesController#current_ability
+     CancellationMotivesController#current_ability,
+     ReportsController#current_ability,
+     ReportsController#most_commented_estates,
+     ReportsController#most_valuated_estates
     ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [
-     Offer#search_status
+     Offer#search_status,
+     Offer#by_estate
      ], ignored_files: 'user.rb' }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }
 ReplaceInstanceVariableWithLocalVariableCheck: { }

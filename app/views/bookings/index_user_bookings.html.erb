@@ -1,0 +1,13 @@
+<%= render 'owners/tabs', id: 'estates_bookings_in_date' %>
+<div id="filter-section">
+  <%= render(
+          partial: "bookings/results_filter",
+          locals: {filterrific: filterrific}
+      ) %>
+</div>
+<div id="results">
+  <%= render(
+          partial: 'bookings/list_user_bookings',
+          locals: {bookings: bookings, filterrific: filterrific}
+      ) %>
+</div>
