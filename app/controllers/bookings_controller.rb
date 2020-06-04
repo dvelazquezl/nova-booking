@@ -27,7 +27,7 @@ class BookingsController < ApplicationController
         },
         )) || return
     end
-    @bookings = @filterrific.find.page(params[:page])
+    @bookings = @filterrific.find.page(params[:page]).per_page(10)
     render :index_user_bookings, locals: {bookings: @bookings, filterrific: @filterrific}
   end
 

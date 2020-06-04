@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
 
   def index
     @comments = Comment.where(client_email: current_user.try(:email))
-                    .paginate(page: params[:page], per_page: 5)
+                    .paginate(page: params[:page], per_page: 4)
   end
 
   def save

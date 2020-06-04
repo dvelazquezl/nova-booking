@@ -149,7 +149,7 @@ class Booking < ApplicationRecord
       ]
     end
 
-    self.per_page = 5
+    self.per_page = 4
     resourcify
 
     # for user
