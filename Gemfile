@@ -75,6 +75,7 @@ gem 'jquery-validation-rails'
 gem 'listen'
 gem "mini_magick"
 gem 'sass-rails'
+gem 'sendgrid-ruby'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 
