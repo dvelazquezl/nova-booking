@@ -15,7 +15,7 @@ class Estate < ApplicationRecord
   delegate :name, :to => :city, :prefix => true
   delegate :name, :to => :owner, :prefix => true
   # default for will_paginate
-  self.per_page = 5
+  self.per_page = 4
 
   validates_presence_of :name, :address, :city_id, :owner_id, :latitude, :longitude, :description
   validates :score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }

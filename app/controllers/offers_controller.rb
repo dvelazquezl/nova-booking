@@ -17,7 +17,7 @@ class OffersController < ApplicationController
               by_estate: Estate.with_deleted.options_for_by_estate(owner.id)
           },
       )) || return
-      offers = @filterrific.find.page(params[:page])
+      offers = @filterrific.find.page(params[:page]).per_page(8)
       respond_to do |format|
         format.html
         format.js
