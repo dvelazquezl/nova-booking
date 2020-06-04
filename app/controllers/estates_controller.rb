@@ -14,7 +14,7 @@ class EstatesController < ApplicationController
           Estate.estates_by_owner(owner.id),
           params[:filterrific]
       )) || return
-      @estates = @filterrific.find.page(params[:page])
+      @estates = @filterrific.find.page(params[:page]).per_page(10)
       respond_to do |format|
         format.html
         format.js
@@ -41,7 +41,7 @@ class EstatesController < ApplicationController
   end
 
   def all_estates
-    estates = Estate.all.order("owner_id asc, score asc, status desc").page(params[:page])
+    estates = Estate.all.order("owner_id asc, score asc, status desc").page(params[:page]).per_page(8)
 
     respond_to do |format|
       format.html
@@ -142,7 +142,7 @@ class EstatesController < ApplicationController
         format.html { redirect_to estates_url, notice: 'Propiedad creada exitosamente.' }
         format.json { render :show, status: :created, location: @estate }
       else
-        format.html { render :new , locals: {rooms: @rooms, estate_facilities: @estate_facilities}}
+        format.html { render :new, locals: {rooms: @rooms, estate_facilities: @estate_facilities} }
         format.json { render json: @estate.errors, status: :unprocessable_entity }
       end
     end
@@ -204,22 +204,18 @@ class EstatesController < ApplicationController
     estate = Estate.find(params[:estate_id])
     rooms = estate.rooms
 
-    # filtra de la lista de habitaciones todas las que no estan reservadas
-    booked_rooms = rooms.select do |room|
-      BookingDetail.find_by_room_id(room.id)
-    end
-
-    # comprobar si alguna de las habitaciones reservadas esta ocupada
-    free = true
-    booked_rooms.each do |br|
-      if Time.now.between?(date_start(br), date_end(br))
-        free = false
-      end
-    end
-
     respond_to do |format|
-      if free
-        # actualizar estado de las habitaciones y de la propiedad
+      #Si la reserva no tiene reservas en proceso.
+      if !estate.have_bookings_in_process?
+
+        #Cancelar reservas futuras y enviar correos a los clientes
+        future_bookings = estate.get_future_bookings
+        future_bookings.each do |b|
+          b.update_attributes(:cancelled_at => Time.now, :booking_state => false)
+          UserMailer.booking_cancelled_by_owner_to_client(b).deliver_now
+        end
+
+        # actualizar estado de las habitaciones
         rooms.each do |r|
           if r.status == 'published'
             r.update_attribute(:status, 'not_published')
@@ -229,11 +225,8 @@ class EstatesController < ApplicationController
         estate.update_attribute(:status, false)
 
         format.html { redirect_to estates_path, notice: 'Propiedad dada de baja exitosamente.' }
-        format.json { head :no_content }
-        UserMailer.unsuscribe_estate(estate, booked_rooms).deliver_now
       else
         format.html { redirect_to estates_path, alert: 'No se puede dar de baja esta propiedad. Una o mas habitaciones estan ocupadas.' }
-        format.json { head :no_content }
       end
     end
   end
