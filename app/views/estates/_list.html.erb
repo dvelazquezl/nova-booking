@@ -48,7 +48,11 @@
               <% end %>
             </div>
           </td>
-          <td class="text-center"><%= check_box_tag 'estate_id', estate.id, false, class: 'selectable' %></td>
+          <% if estate.status %>
+            <td class="text-center"><%= check_box_tag 'estate_id', estate.id, false, class: 'selectable' %></td>
+          <%else %>
+            <td class="text-center"><%= check_box_tag 'estate_id', estate.id, false, class: 'selectable', :disabled => true %></td>
+        <% end %>
         </tr>
       <% end %>
       </tbody>
@@ -72,7 +76,7 @@
         </div>
       </div>
       <div class="col-auto">
-        <%= submit_tag 'Dar de baja', data: {confirm: 'Estás seguro?'}, class: 'btn btn-outline-danger', disabled: true,
+        <%= submit_tag 'Dar de baja', data: {confirm: 'Las reservas futuras de la propiedad seran canceladas. Desea continuar?'}, class: 'btn btn-outline-danger', disabled: true,
                        id: 'dar_de_baja' %>
       </div>
     </div>
