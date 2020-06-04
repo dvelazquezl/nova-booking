@@ -23,7 +23,7 @@
                 <% else %>
                   <input type="text" class="form-control valid" disabled required>
                 <% end %>
-                <%= form.hidden_field :estate_id %>
+                <%= form.hidden_field :estate_id%>
               </div>
             </div>
             <div class="card-body">
@@ -176,6 +176,19 @@
                         $("#offer_date_end").datepicker("show");
                     }
                 });
+            });
+            $(".datepicker").change(function () {
+                    let date_start = $("#offer_date_start").datepicker('getDate');
+                    let date_s = date_start.getFullYear()+"-" + (date_start.getMonth() + 1)+"-" +date_start.getDate();
+
+                    let date_end = $("#offer_date_end").datepicker('getDate');
+                    let date_e = date_end.getFullYear()+"-" + (date_end.getMonth() + 1)+"-" +date_end.getDate();
+
+                    let description =  $("#offer_description").val();
+                    let tag_estate_id = $("#offer_estate_id").val();
+                    const url = "/offers/new?date_start=" + date_s + "&tag_estate_id=" + tag_estate_id +
+                        "&date_end=" + date_e + "&from_estates=true" + "&description=" +description ;
+                    window.location.href = url;
             });
         });
 </script>

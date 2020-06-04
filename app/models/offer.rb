@@ -26,9 +26,8 @@ class Offer < ApplicationRecord
                               INNER JOIN offer_details od ON r.id = od.room_id
                               INNER JOIN offers o ON o.id = od.offer_id
                               WHERE o.estate_id = ? AND r.status = 'published'
-                              AND ((o.date_end <= ?  AND o.date_end >= ?)
+                              AND ((o.date_start <= ?  AND o.date_end >= ?)
                               OR (o.date_start <= ?  AND o.date_end >= ?))", estate_id,date_start, date_start,date_end,date_end])
-
 
     rooms = Room.select("id, description").where(estate_id: estate_id).where.not(id: rooms_in_date_range)
     rooms

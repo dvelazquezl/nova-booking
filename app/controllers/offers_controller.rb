@@ -38,6 +38,11 @@ class OffersController < ApplicationController
     owner = helpers.current_owner
     estates = Estate.only_published.estates_by_owner(owner.id)
     offer_details = @offer.offer_details.build
+    if params[:date_start].present? && params[:date_end].present?then
+      @offer.date_start = params[:date_start];
+      @offer.date_end = params[:date_end];
+      @offer.description= params[:description];
+    end
     if params[:tag_estate_id].present? then
       @offer.estate_id = params[:tag_estate_id]
     end
