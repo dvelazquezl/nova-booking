@@ -41,6 +41,14 @@
     <% end %>
     </tbody>
   </table>
+
+  <div class="ml-auto">
+    <%= link_to new_offer_path do %>
+      <button class="btn btn-info" title="Nueva oferta">Nueva Oferta</button>
+    <% end %>
+  </div>
+
+  <div class="bg-footer"></div>
   <div class="card card-columns-2 card-body bg-gray-light fixed-bottom">
     <div class="row row-flush">
       <div class="col col-6 align-items-center">
@@ -50,10 +58,5 @@
         <%= page_entries_info offers, :model => 'offer', :class => 'align-middle' %>
       </div>
     </div>
-  </div>
-  <div class="ml-auto">
-    <%= link_to new_offer_path do %>
-      <button class="btn btn-info" title="Nueva oferta">Nueva Oferta</button>
-    <% end %>
   </div>
 </div>
