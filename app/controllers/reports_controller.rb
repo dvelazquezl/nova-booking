@@ -15,11 +15,31 @@ class ReportsController < ApplicationController
     @estates = @filterrific.find.page(params[:page])
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :most_valuated_estates, locals: {estates: @estates}
+      end
+      format.pdf do
+        render locals: {estates: @estates},
+               template: "reports/most_valuated_estates.pdf.erb",
+               page_size: 'A4',
+               header:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_header.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               footer:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_footer.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               pdf: "Propiedades_mas_valuadas.pdf"
+        end
       format.js
     end
 
-    render :most_valuated_estates, locals: {estates: @estates}
+
   end
 
   # alojamientos mas comentados
@@ -31,11 +51,29 @@ class ReportsController < ApplicationController
     @estates = @filterrific.find.page(params[:page])
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :most_commented_estates, locals: {estates: @estates}
+      end
       format.js
+      format.pdf do
+        render locals: {estates: @estates},
+               template: "reports/most_commented_estates.pdf.erb",
+               page_size: 'A4',
+               header:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_header.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               footer:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_footer.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               pdf: "Propiedades_mas_comentadas.pdf"
+      end
     end
-
-    render :most_commented_estates, locals: {estates: @estates}
   end
 
   # alojamientos mas reservados
@@ -47,11 +85,30 @@ class ReportsController < ApplicationController
     @estates = @filterrific.find.page(params[:page])
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :most_booked_estates, locals: {estates: @estates}
+      end
       format.js
+      format.pdf do
+        render locals: {estates: @estates},
+               template: "reports/most_booked_estates.pdf.erb",
+               page_size: 'A4',
+               header:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_header.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               footer:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_footer.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               pdf: "Propiedades_mas_visitadas.pdf"
+      end
     end
 
-    render :most_booked_estates, locals: {estates: @estates}
   end
 
   private

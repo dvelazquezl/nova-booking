@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset='utf-8' />
+    <%= wicked_pdf_stylesheet_link_tag "reports" %>
+    <script src="https://cdnjs.com/libraries/Chart.js" />
+    <%= wicked_pdf_javascript_include_tag "most_commented_estates_pdf" %>
+  </head>
+  <body>
+    <br>
+    <div class="content-heading">
+      <h2 class="col-12">Alojamientos mas comentados</h2>
+    </div>
+    <hr>
+    <h4>Alojamientos por cantidad de comentarios</h4>
+    <p>comentarios:alojamiento(s)</p>
+    <%= pie_chart Estate.group(:comments_quant).count %>
+    <br>
+    <div id="results">
+      <%= render(
+              partial: 'reports/commented.html.erb',
+              locals: {estates: @estates}
+          ) %>
+    </div>
+  </body>
+</html>

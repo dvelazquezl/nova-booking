@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset='utf-8' />
+    <%= wicked_pdf_stylesheet_link_tag "reports" %>
+    <script src="https://cdnjs.com/libraries/Chart.js" />
+    <%= wicked_pdf_javascript_include_tag "most_valuated_estates_pdf" %>
+  </head>
+  <body>
+    <br>
+    <div class="content-heading">
+      <h2 class="col-12">Alojamientos mas valorados.</h2>
+    </div>
+    <hr>
+    <h4>Alojamientos por valoracion</h4>
+    <p>valoracion:alojamiento(s)</p>
+    <%= pie_chart Estate.group(:score).count %>
+    <br>
+    <div id="results">
+      <%= render(
+              partial: 'reports/valuated.html.erb',
+              locals: {estates: @estates}
+          ) %>
+    </div>
+  </body>
+</html>

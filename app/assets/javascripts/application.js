@@ -39,7 +39,9 @@
 // for image preview for file fields
 // div where image will be added should have id="target"
 //= require chartkick
+//= require Chart.min
 //= require Chart.bundle
+
 
 const HEIGHT = 150;
 const WIDTH = 150;
