@@ -7,6 +7,31 @@ class Offer < ApplicationRecord
                                 reject_if: :all_blank
   delegate :name, :to => :estate, :prefix => true
   delegate :images, :to => :estate, :prefix => true
+  validate :offer_date_range
+
+  def offer_date_range
+    offers = OfferDetail.joins(:offer).where("(date_start <= ?  AND date_end >= ?)
+                                              OR (date_start <= ?  AND date_end >= ?)",date_start,date_start,date_end,date_end)
+    offers.each do |offer|
+      offer_details.each do |offer_detail|
+        if(offer_detail.room_id == offer.room_id)
+          room = Room.find(offer.room_id).description
+          errors.add(room, "ya existe una oferta de esta habitación dentro del rango de fecha")
+        end
+      end
+    end
+  end
+  def self.in_date_range(date_start,date_end,estate_id)
+    rooms_in_date_range = Room.find_by_sql(["SELECT r.id FROM rooms r
+                              INNER JOIN offer_details od ON r.id = od.room_id
+                              INNER JOIN offers o ON o.id = od.offer_id
+                              WHERE o.estate_id = ? AND r.status = 'published'
+                              AND ((o.date_start <= ?  AND o.date_end >= ?)
+                              OR (o.date_start <= ?  AND o.date_end >= ?))", estate_id,date_start, date_start,date_end,date_end])
+
+    rooms = Room.select("id, description").where(estate_id: estate_id).where.not(id: rooms_in_date_range)
+    rooms
+  end
 
   validates_presence_of :description, :date_start, :date_end, :date_creation
 
