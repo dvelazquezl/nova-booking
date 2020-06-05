@@ -120,11 +120,11 @@ class Booking < ApplicationRecord
       if option == 0
         where("(? BETWEEN date_start AND date_end)", DateTime.now.to_date)
       elsif option == 1
-        where("date_end <= ?", DateTime.now.to_date)
+        where("date_end < ?", DateTime.now.to_date).where(cancelled_at: nil)
       elsif option == 2
         where.not(cancelled_at: nil)
       elsif option == 3
-        where("date_start > ? AND cancelled_at = NULL", DateTime.now.to_date)
+        where("date_start > ?", DateTime.now.to_s).where(cancelled_at: nil)
       end
     }
 
