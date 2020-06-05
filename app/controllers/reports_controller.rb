@@ -14,8 +14,7 @@ class ReportsController < ApplicationController
         render :most_valuated_estates, locals: {estates: @estates}
       end
       format.pdf do
-        render javascript_delay: 5000,
-               locals: {estates: @estates},
+        render locals: {estates: @estates},
                template: "reports/most_valuated_estates.pdf.erb",
                page_size: 'A4',
                header:  {
@@ -51,8 +50,7 @@ class ReportsController < ApplicationController
       end
       format.js
       format.pdf do
-        render javascript_delay: 5000,
-               locals: {estates: @estates},
+        render locals: {estates: @estates},
                template: "reports/most_commented_estates.pdf.erb",
                page_size: 'A4',
                header:  {
@@ -81,11 +79,30 @@ class ReportsController < ApplicationController
     @estates = @filterrific.find.page(params[:page])
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :most_booked_estates, locals: {estates: @estates}
+      end
       format.js
+      format.pdf do
+        render locals: {estates: @estates},
+               template: "reports/most_booked_estates.pdf.erb",
+               page_size: 'A4',
+               header:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_header.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               footer:  {
+                   html: {
+                       template: 'layouts/partials/_pdf_footer.html.erb',
+                       layout: 'layouts/decoration_pdf.html.erb'
+                   }
+               },
+               pdf: "Propiedades_mas_visitadas.pdf"
+      end
     end
 
-    render :most_booked_estates, locals: {estates: @estates}
   end
 
   private
