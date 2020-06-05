@@ -224,6 +224,10 @@ class Estate < ApplicationRecord
     self.comments_quant += 1
   end
 
+  def inc_bookings
+    self.bookings_quant += 1
+  end
+
   # solo da la primera reserva disponible en fecha
   def available_offer_for(date_start, date_end)
     offers = []
@@ -268,5 +272,9 @@ class Estate < ApplicationRecord
   resourcify
   scope :most_commented, -> () {
     order("estates.comments_quant desc")
+  }
+
+  scope :most_booked, -> () {
+    order("estates.bookings_quant desc")
   }
 end
