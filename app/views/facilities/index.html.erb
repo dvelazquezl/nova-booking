@@ -1,14 +1,6 @@
-<div class="content-heading">
-  <div>Comodidades</div>
-  <div class="ml-auto">
-    <%= link_to new_facility_path do %>
-      <button class="btn btn-info" title="Nueva comodidad">Nueva Comodidad
-      </button>
-    <% end %>
-  </div>
-</div>
+<%= render 'reports/tabs', id: 'facilities' %>
 
-<div id="results" align="center">
+<div id="results">
   <%= render(
           partial: 'facilities/list',
           locals: {facilities: facilities}

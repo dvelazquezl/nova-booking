@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_203420) do
+ActiveRecord::Schema.define(version: 2020_06_05_022819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2020_05_18_203420) do
     t.boolean "booking_cancelable"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.integer "bookings_quant", default: 0
     t.index ["city_id"], name: "index_estates_on_city_id"
     t.index ["deleted_at"], name: "index_estates_on_deleted_at"
     t.index ["owner_id"], name: "index_estates_on_owner_id"

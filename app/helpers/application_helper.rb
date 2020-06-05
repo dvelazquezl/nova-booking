@@ -27,6 +27,7 @@
       colors.third
     end
   end
+
   def label_score(score)
     label = " "
     if score == 0
@@ -53,5 +54,9 @@
       label = "Excepcional "
     end
     return label
+  end
+
+  def published_status_color(status)
+    status ? "green" : "warning"
   end
 end

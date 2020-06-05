@@ -283,7 +283,11 @@ en:
         one:   oferta
         few:   ofertas
         other: ofertas
-
+      owner:
+        zero:  propietarios
+        one:   propietario
+        few:   propietarios
+        other: propietarios
   enumerize:
     room:
       room_type:

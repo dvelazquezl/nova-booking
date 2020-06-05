@@ -30,17 +30,6 @@
             </li>
           <% end %>
 
-          <% if user_signed_in? && (current_user.has_role? :admin) %>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ciudades
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item"><%= link_to 'Ciudades', cities_path, :class => "nav-link" %></a>
-                <a class="dropdown-item"><%= link_to 'Departamentos', departaments_path, :class => "nav-link"  %></a>
-              </div>
-            </li>
-          <%end %>
-
           <% if user_signed_in? %>
             <li class="nav-item active">
               <%= link_to 'Lugares visitadas', visited_estates_path, :class => "nav-link" %>
@@ -56,12 +45,20 @@
               <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <% if user_signed_in? && is_owner? %>
+              <% if user_signed_in? && is_owner? && (current_user.has_role? :admin) %>
+                <a class="dropdown-item"><%= link_to 'Administración', dashboard_path, :class => "nav-link" %></a>
                 <a class="dropdown-item"><%= link_to 'Panel de Control', owner_path(current_owner), :class => "nav-link" %></a>
-                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link"  %></a>
+                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link" %></a>
+              <% elsif user_signed_in? && !is_owner? && (current_user.has_role? :admin) %>
+                <a class="dropdown-item"><%= link_to 'Administración', dashboard_path, :class => "nav-link" %></a>
+                <a class="dropdown-item"><%= link_to 'Panel de Control', user_path(current_user.id), :class => "nav-link" %></a>
+                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link" %></a>
+              <% elsif user_signed_in? && is_owner? %>
+                <a class="dropdown-item"><%= link_to 'Panel de Control', owner_path(current_owner), :class => "nav-link" %></a>
+                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link" %></a>
               <% elsif user_signed_in? && !is_owner? %>
                 <a class="dropdown-item"><%= link_to 'Panel de Control', user_path(current_user.id), :class => "nav-link" %></a>
-                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link"  %></a>
+                <a class="dropdown-item"><%= link_to "Cerrar Sesión", destroy_user_session_path, method: :delete, :class => "nav-link" %></a>
               <% else %>
                 <a class="dropdown-item"><%= link_to "Iniciar Sesión", new_user_session_path, :class => "nav-link" %></a>
                 <a class="dropdown-item"><%= link_to "Registrarse", new_user_registration_path, :class => "nav-link" %></a>

@@ -278,6 +278,14 @@ class Estate < ApplicationRecord
     Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Date.today, self.id])
   end
 
+  TYPES = { estate_type.values.first => "Departamento",
+                 estate_type.values.second => "Casa",
+                 estate_type.values.third => "Hotel"}
+
+  def type
+    TYPES[self.estate_type]
+  end
+
   resourcify
   scope :most_commented, -> () {
     order("estates.comments_quant desc")
