@@ -1,51 +1,74 @@
-<div class="content-heading">
+<div class="content-heading align-content-center">
   Administraci&oacute;n Nova Booking
 </div>
-<div class="row">
-  <div class="col-xl-3 col-lg-6">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-12 py-lg-5 bg-green rounded text-center">
-        <div class="h3 text-bold text-uppercase">propiedades registradas</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-3 border-primary">
+        <div class="h3 text-center card-header bg-primary"><%= link_to 'Propiedades mejor valoradas', reports_most_valuated_estates_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 card-text">Ver las propiedades con mejor valoraci&oacute;n</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mb-3 border-info">
+        <div class="h3 text-center card-header bg-info"><%= link_to 'Propiedades más comentadas', reports_most_commented_estates_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 card-text">Ver las propedades con mayor cantidad de comentarios</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mb-3 border-success">
+        <div class="h3 text-center card-header bg-success"><%= link_to 'Propiedades más visitadas', dashboard_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 card-text">Ver las propiedades m&aacute;s visitadas</p>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="col-xl-3 col-lg-6">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-12 py-lg-5 bg-pink rounded text-center">
-        <div class="h3 text-bold text-uppercase">propiedades mejor valoradas</div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-3 border-success">
+        <div class="h3 text-center card-header bg-success"><%= link_to 'Propiedades registradas', all_estates_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 text-center card-text">Ver todas las propiedades registradas</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mb-3 border-danger">
+        <div class="h3 text-center card-header bg-danger"><%= link_to 'Propietarios registrados', dashboard_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 text-center card-text">Ver todos los propietarios registrados</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mb-3 border-primary">
+        <div class="h3 text-center card-header bg-primary"><%= link_to 'Comodidades', facilities_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 text-center card-text">Ver todas las comodidades registradas</p>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="col-xl-3 col-lg-6">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-12 py-lg-5 bg-warning rounded text-center">
-        <div class="h3 text-bold text-uppercase">Propiedades m&aacute;s comentadas</div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card mb-3 border-info">
+        <div class="h3 text-center card-header bg-info"><%= link_to 'Ciudades', cities_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 text-center card-text">Ver todas las ciudades registradas</p>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-xl-3 col-md-6">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-12 py-lg-5 bg-primary rounded text-center">
-        <div class="h3 text-bold text-uppercase">ciudades</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xl-3 col-md-6">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-12 py-lg-5 bg-purple rounded text-center">
-        <div class="h3 text-bold text-uppercase">departamentos</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-xl-3 col-md-6">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-12 py-lg-5 bg-purple rounded text-center">
-        <div class="h3 text-bold text-uppercase">comodidades</div>
+    <div class="col-lg-4">
+      <div class="card mb-3 border-warning">
+        <div class="h3 text-center card-header bg-warning"><%= link_to 'Departamentos', departaments_path, :class => "text-white" %></div>
+        <div class="card-body">
+          <p class="h4 text-center card-text">Ver todos los departamentos registrados</p>
+        </div>
       </div>
     </div>
   </div>
