@@ -8,7 +8,7 @@ class OwnerAbility
         can :manage, :all
       else
         owner = Owner.find_by user_id: user.id
-        can :read, Owner
+        can :show, Owner, id: owner.id
         can :create, Owner
         can :change_profile_picture, Owner
         can :contact, Owner
@@ -18,7 +18,6 @@ class OwnerAbility
       end
     else
       #Usuario visitante
-      can :read, Owner
       can :contact, Owner
     end
 
