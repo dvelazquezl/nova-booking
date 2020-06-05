@@ -70,4 +70,5 @@ Rails.application.routes.draw do
 
   get '/reports/most_valuated_estates'
   get '/reports/most_commented_estates'
+  get '/reports/most_booked_estates'
 end
