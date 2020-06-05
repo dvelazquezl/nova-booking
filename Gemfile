@@ -97,4 +97,9 @@ gem 'selectize-rails'
 gem 'bootstrap-email'
 gem 'paranoia'
 gem 'premailer-rails'
+
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 gem "chartkick"
+gem "chart-js-rails"
