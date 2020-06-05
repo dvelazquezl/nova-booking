@@ -26,8 +26,8 @@
           <% end %>
         <% end %>
         <td class="text-center"><%= description %></td>
-        <td class="text-center"><%= booking.created_at.strftime("%d-%m-%Y") %></td>
-        <td class="text-center"><%= booking.date_start.strftime("%d-%m-%Y") %> / <%= booking.date_end.strftime("%d-%m-%Y") %></td>
+        <td class="text-center"><%= l(booking.created_at.to_date, format: :long) %></td>
+        <td class="text-center"><%= l(booking.date_start, format: :long) %> / <%= l(booking.date_end, format: :long) %></td>
         <%  status_booking = get_status(booking) %>
         <td class="text-center"><label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></label></td>
       </tr>
