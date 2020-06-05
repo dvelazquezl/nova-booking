@@ -217,8 +217,8 @@
                           <li></b><%= @booking.client_name %></li>
                           <li><%= @booking.client_email %></li>
                           <li>
-                            <p><strong>Desde:</strong> <%=@booking.date_start.strftime("%d-%m-%Y") %>
-                            &emsp;<strong>Hasta:</strong> <%=@booking.date_end.strftime("%d-%m-%Y") %></p>
+                            <p><strong>Desde:</strong> <%= l(@booking.date_start, format: :long) %>
+                            &emsp;<strong>Hasta:</strong> <%=l(@booking.date_end, format: :long) %></p>
                           </li>
                         </ul>
                       </td>

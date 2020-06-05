@@ -88,9 +88,9 @@
               <b>Correo: </b><%= booking.client_email %>
             </li>
             <li class="list-group-item">
-              <b>Desde: </b><%= booking.date_start.strftime("%d-%m-%Y") %>
+              <b>Desde: </b><%= l(booking.date_start, format: :long) %>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <b>Hasta: </b><%= booking.date_end.strftime("%d-%m-%Y") %>
+              <b>Hasta: </b><%= l(booking.date_end, format: :long) %>
             </li>
             <li class="list-group-item">
               <%if booking.discount > 0 %>

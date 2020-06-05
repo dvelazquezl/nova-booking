@@ -63,7 +63,13 @@
                       <small class="text-muted"><%= estate.city_name %> | Mostrar en mapa</small>
                       <p><%= estate.address %></p>
                       <hr>
-                      <p class="font-title"><div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;"> <%= estate.score %> </div><label class="label-score">&nbsp<%=label_score(estate.score) %></label></p>
+                      <p class="font-title">
+                      <%if estate.score > 0 %>
+                        <div class="text-right badge badge-<%= get_score_color(estate.score.to_i) %>" style="font-size: 17px;">
+                          <%= estate.score %>
+                        </div>
+                      <%end %>
+                      <label class="label-score">&nbsp<%=label_score(estate.score) %></label></p>
                     </div>
                   </div>
                 </div>
@@ -122,7 +128,10 @@
                 <h4 class="card-title">
                   <%= estate_offer.name %>
                 </h4>
-                <p><div class="text-right badge badge-secondary" style="font-size: 10px;"> <%= estate_offer.score %> </div>
+                <p>
+                <%if estate_offer.score > 0 %>
+                 <div class="text-right badge badge-secondary" style="font-size: 10px;"> <%= estate_offer.score %> </div>
+                <%end %>
                 <label class="label-score" style="font-size: 13px;">&nbsp<%=label_score(estate_offer.score) %></label></p>
                 <small class="text-muted"><%= estate_offer.city_name %> | Mostrar en mapa</small>
                 <p><%= estate_offer.address %></p>

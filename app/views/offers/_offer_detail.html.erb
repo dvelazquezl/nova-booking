@@ -1,10 +1,11 @@
+
 <fieldset style="margin: 0; border: 0; padding: 0;">
   <table class="table">
     <tbody>
       <tr class="row">
         <td class="col-7">
           <%= f.select :room_id,
-                       options_from_collection_for_select(Room.rooms_published_by_estate(partial_param.estate_id), "id", "description",f.object.room_id), {prompt: "Seleccionar"},
+                       options_from_collection_for_select(Offer.in_date_range(partial_param.date_start,partial_param.date_end,partial_param.estate_id), "id", "description",f.object.room_id), {prompt: "Seleccionar"},
                        {class: 'room-select form-control', required: 'true', disabled: f.object.persisted?}%>
         </td>
         <td class="col-3">
