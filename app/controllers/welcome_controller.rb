@@ -33,6 +33,8 @@ class WelcomeController < ApplicationController
   def results
     params[:filterrific]["price_min"] = params[:filterrific]["price_min"] == '' ? '0' : params[:filterrific]["price_min"]
     params[:filterrific]["price_max"] = params[:filterrific]["price_max"] == '' ? '1000000000' : params[:filterrific]["price_max"] #to do
+    params[:filterrific]["min_capacity"] = params[:filterrific]["min_capacity"] == '' ? '0' : params[:filterrific]["min_capacity"]
+    params[:filterrific]["max_capacity"] = params[:filterrific]["max_capacity"] == '' ? '100' : params[:filterrific]["max_capacity"]
     params[:filterrific]["with_date_gte"] = Date.parse(params[:filterrific]["with_date_gte"])
     params[:filterrific]["with_date_lte"] = Date.parse(params[:filterrific]["with_date_lte"])
     (@filterrific = initialize_filterrific(
