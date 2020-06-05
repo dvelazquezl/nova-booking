@@ -74,6 +74,8 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
+                min_capacity
+                max_capacity
                 score_min
                 score_max
                 with_estate_type
@@ -155,6 +157,13 @@ class Estate < ApplicationRecord
 
   scope :with_date_lte, ->(ref_date) {
     Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date).order(score: :desc)
+  }
+  # filters on 'capacity' attribute
+  scope :min_capacity, ->(min_capacity) {
+    where("estates.id in (select distinct estate_id from rooms r where ? <= cast(r.capacity as integer))", min_capacity)
+  }
+  scope :max_capacity, ->(max_capacity) {
+    where("estates.id in (select distinct estate_id from rooms r where ? >= cast(r.capacity as integer))", max_capacity)
   }
 
   # filters on 'price' attribute
