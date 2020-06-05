@@ -1,7 +1,12 @@
+# frozen_string_literal: true
+
+# reports controller
 class ReportsController < ApplicationController
   load_and_authorize_resource
 
-  # alojamientos mas valorados
+  def index; end
+
+  # alojamientos mas valoradosPa
   def most_valuated_estates
     (@filterrific = initialize_filterrific(
       Estate.best_estates,
@@ -16,6 +21,7 @@ class ReportsController < ApplicationController
 
     render :most_valuated_estates, locals: {estates: @estates}
   end
+
   # alojamientos mas comentados
   def most_commented_estates
     (@filterrific = initialize_filterrific(

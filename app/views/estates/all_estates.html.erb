@@ -1,3 +1,5 @@
+<%= render 'reports/tabs', id: 'registered_estates' %>
+
 <%= render partial: "estates/filter_all_estates", :locals => {filterrific: filterrific} %>
 <div id="filterrific_results">
   <%= render partial: "estates/list_all_estates", :locals => {estates: estates} %>

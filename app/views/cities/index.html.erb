@@ -1,14 +1,6 @@
-<div class="content-heading">
-  <div>Ciudades</div>
+<%= render 'reports/tabs', id: 'cities' %>
 
-  <div class="ml-auto">
-    <%= link_to new_city_path do %>
-      <button class="btn btn-info" title="Nueva ciudad">Nueva Ciudad</button>
-    <% end %>
-  </div>
-</div>
-
-<div id="results" align="center">
+<div id="results">
   <%= render(
           partial: 'cities/list',
           locals: {cities: cities}
