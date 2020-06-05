@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     member do
       get :contact
     end
+    collection do
+      get :index
+    end
   end
 
   resources :offers
