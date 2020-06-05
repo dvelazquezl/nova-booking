@@ -89,6 +89,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.save
         @estate = Booking.estate(@booking)
+        @estate.inc_bookings
         if user_signed_in?
           Booking.set_state(@booking)
           format.html { redirect_to @booking, notice: 'La reserva fue creada satifactoriamente.' }

@@ -18,15 +18,9 @@
           <td class="text-center"><%= estate.address %></td>
           <td class="text-center"><%= City.find_by(id: estate.city_id).name %></td>
           <td class="text-center">
-            <% if estate.status %>
-              <span class="badge badge-green float-center">
-                <%= "Publicado" %>
-              </span>
-            <% else %>
-              <span class="badge badge-warning float-center">
-                <%= "No publicado" %>
-              </span>
-            <% end %>
+            <span class="badge badge-<%= published_status_color(estate.status) %> float-center">
+              <%= estate.status ? "Publicado" : "No Publicado" %>
+            </span>
           </td>
           <td class="text-center">
             <div class="btn-group" role="group">
@@ -50,9 +44,9 @@
           </td>
           <% if estate.status %>
             <td class="text-center"><%= check_box_tag 'estate_id', estate.id, false, class: 'selectable' %></td>
-          <%else %>
+          <% else %>
             <td class="text-center"><%= check_box_tag 'estate_id', estate.id, false, class: 'selectable', :disabled => true %></td>
-        <% end %>
+          <% end %>
         </tr>
       <% end %>
       </tbody>

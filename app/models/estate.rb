@@ -233,6 +233,10 @@ class Estate < ApplicationRecord
     self.comments_quant += 1
   end
 
+  def inc_bookings
+    self.bookings_quant += 1
+  end
+
   # solo da la primera reserva disponible en fecha
   def available_offer_for(date_start, date_end)
     offers = []
@@ -274,8 +278,20 @@ class Estate < ApplicationRecord
     Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Date.today, self.id])
   end
 
+  TYPES = { estate_type.values.first => "Departamento",
+                 estate_type.values.second => "Casa",
+                 estate_type.values.third => "Hotel"}
+
+  def type
+    TYPES[self.estate_type]
+  end
+
   resourcify
   scope :most_commented, -> () {
     order("estates.comments_quant desc")
+  }
+
+  scope :most_booked, -> () {
+    order("estates.bookings_quant desc")
   }
 end
