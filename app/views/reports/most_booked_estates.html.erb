@@ -1,14 +1,5 @@
-<p></p>
-<div class="content-heading">
-  <div class="col-8">Alojamientos mas visitados</div>
-  <div class="ml-auto">
-    <%= link_to '' do%>
-      <button class="btn btn-secondary">
-        <i class="fas fa-print text-primary fa-1x"></i> Imprimir PDF
-      </button>
-    <%end %>
-  </div>
-</div>
+<%= render 'tabs', id: 'most_visited' %>
+
 <h4>Alojamientos por reservaciones</h4>
 <p>reservas:alojamiento(s)</p>
 <%= pie_chart Estate.group(:bookings_quant).count %>
