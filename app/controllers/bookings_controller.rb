@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
   def index_owner
     owner = helpers.current_owner
     if owner
-      @bookings = Booking.bookings_by_owner(owner).page(params[:page])
+      @bookings = Booking.bookings_by_owner(owner.id).page(params[:page])
     end
     render :index_owner, locals: {bookings: @bookings}
   end
@@ -13,21 +13,23 @@ class BookingsController < ApplicationController
   def index_user_bookings
     owner = helpers.current_owner
     if owner
-    if !params[:filterrific].nil?
-    date_from = params['date_from'].blank? ? nil : Date.parse(params['date_from'])
-    date_to = params['date_to'].blank? ? nil :Date.parse(params['date_to'])
-    params['filterrific']['bookings_by_owner_between_dates'] = {date_from: date_from, date_to: date_to}
-    end
-    (@filterrific = initialize_filterrific(
-        Booking,
+      if !params[:filterrific].nil?
+        date_from = params[:date_from].blank? ? nil : Date.parse(params[:date_from])
+        date_to = params[:date_to].blank? ? nil :Date.parse(params[:date_to])
+        params[:filterrific][:bookings_by_owner_between_dates] = {date_from: date_from, date_to: date_to}
+      end
+      (@filterrific = initialize_filterrific(
+        Booking.bookings_by_owner(owner.id),
         params[:filterrific],
         select_options: {
             sorted_by: Booking.options_for_sorted_by,
-            bookings_by_state: Booking.options_for_bookings_by_state
+            bookings_by_state: Booking.options_for_bookings_by_state,
         },
         )) || return
+
+      @bookings = @filterrific.find.page(params[:page]).per_page(10)
     end
-    @bookings = @filterrific.find.page(params[:page])
+
     render :index_user_bookings, locals: {bookings: @bookings, filterrific: @filterrific}
   end
 

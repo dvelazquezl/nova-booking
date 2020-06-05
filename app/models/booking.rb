@@ -48,7 +48,6 @@ class Booking < ApplicationRecord
     end
     filterrific :default_filter_params => {:sorted_by => 'name_asc'},
                 :available_filters => %w[
-                bookings_by_owner
                 sorted_by
                 search_query
                 bookings_by_state
@@ -59,8 +58,8 @@ class Booking < ApplicationRecord
         where("date_end <= ?  AND booking_state = true", DateTime.now.to_date)
     }
     scope :bookings_by_client, -> (current_client_email) { where(client_email: current_client_email) }
-    scope :bookings_by_owner, -> {
-      joins(:estate).where('estates.owner_id = ?',helpers.current_owner.id)
+    scope :bookings_by_owner, -> (current_owner_id) {
+      joins(:estate).where('estates.owner_id = ?', current_owner_id)
     }
     scope :bookings_by_owner_between_dates, ->(data_attributes) {
       return nil if(data_attributes[:date_from].blank? || data_attributes[:date_to].blank?)
@@ -118,10 +117,14 @@ class Booking < ApplicationRecord
 
     scope :bookings_by_state, lambda { |option|
       return nil if option.blank?
-      if option == 1
+      if option == 0
+        where("(? BETWEEN date_start AND date_end)", DateTime.now.to_date)
+      elsif option == 1
         Booking.finished
-      else
-        where("date_end >= ?  AND booking_state = true", DateTime.now.to_date)
+      elsif option == 2
+        where.not(cancelled_at: nil)
+      elsif option == 3
+        where("date_start > ?", DateTime.now.to_date)
       end
     }
 
@@ -145,18 +148,21 @@ class Booking < ApplicationRecord
       [
           ["Seleccionar estado...", ""],
           ["Vigente", 0],
-          ["Terminada", 1]
+          ["Terminada", 1],
+          ["Cancelada", 2],
+          ["Pendiente", 3]
       ]
     end
 
-    self.per_page = 5
+    self.per_page = 4
     resourcify
 
     # for user
     def self.update_booking_attributes(booking, cancellation_motive)
-      booking.cancelled_at = Time.now()
+      booking.cancelled_at = Time.now
       booking.booking_state = false
       booking.cancellation_motive = cancellation_motive
+      booking.notified = true
 
       booking.save
       UserMailer.booking_cancelled_by_user_to_owner(booking).deliver_now
@@ -164,8 +170,9 @@ class Booking < ApplicationRecord
     end
     # for owner
     def self.update_booking_attr(booking)
-      booking.cancelled_at = Time.now()
+      booking.cancelled_at = Time.now
       booking.booking_state = false
+      booking.notified = true
 
       booking.save
       UserMailer.booking_cancelled_by_owner_to_owner(booking).deliver_now

@@ -1,6 +1,6 @@
 <h4>Gracias por tu visita a <%=@estate.name%>!!</h4>
 
-<br>Tu reserva fue desde <%=@booking.date_start%> al <%=@booking.date_end%> (Estancia de <%=@diff%> noche<%=@plural_arg%>)
+<br>Tu reserva fue desde <%=l(@booking.date_start, format: :long) %> al <%=l(@booking.date_end, format: :long) %> (Estancia de <%=@diff%> noche<%=@plural_arg%>)
 <br>¿Cómo estuvo tu estancia en <%=@estate.name%>?
 
  <%=link_to "Déjanos tu opinión en este enlace", root_url + "estates/" + @estate.id.to_s + "/show_visited/?confirmation_token=" + @booking.confirmation_token%>

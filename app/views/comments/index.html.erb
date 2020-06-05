@@ -25,7 +25,7 @@
             </div>
             <div class=" col-2">
               <p>
-                <%= comment.created_at.strftime("%d-%m-%Y") %>
+                <%= l(comment.created_at.to_date, format: :long) %>
               </p>
             </div>
           </div>
@@ -35,7 +35,8 @@
   </div>
 <% end %>
 
-<div class="card-columns-2 card-body">
+<div class="bg-footer"></div>
+<div class="card card-columns-2 card-body bg-gray-light fixed-bottom">
   <div class="row row-flush">
     <div class="col col-6 align-items-center">
       <%= will_paginate @comments, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>

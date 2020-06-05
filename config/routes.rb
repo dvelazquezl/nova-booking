@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   end
 
   resources :offers
+
+  get 'estates/all_estates', :to => 'estates#all_estates', :as => 'all_estates'
   resources :estates do
     collection do
       get 'estates_visited', :to => 'estates#estates_visited', :as => 'visited'

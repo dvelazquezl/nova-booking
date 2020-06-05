@@ -15,7 +15,7 @@
       <tr>
         <td class="text-center"><%=booking.estate_name %></td>
         <td class="text-center"><%= booking.client_name %></td>
-        <td class="text-center"><%= booking.date_start.strftime("%d-%m-%Y") %> / <%= booking.date_end.strftime("%d-%m-%Y") %></td>
+        <td class="text-center"><%= l(booking.date_start, format: :long) %> / <%= l(booking.date_end, format: :long) %></td>
         <%  status_booking = get_status(booking) %>
         <td class="text-center"><label class=" badge badge-pill badge-<%= get_status_color(status_booking) %>"><%= status_booking %></label></td>
         <td class="text-center"><%= number_to_currency( booking.total_amount, :unit => "Gs", :separator => ".", :precision => 0) %></td>
@@ -30,6 +30,8 @@
     <% end %>
     </tbody>
   </table>
+
+  <div class="bg-footer"></div>
   <div class="card card-columns-2 card-body bg-gray-light fixed-bottom">
     <div class="row row-flush">
       <div class="col">
