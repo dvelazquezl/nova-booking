@@ -102,4 +102,4 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem "chartkick"
-
+gem "chart-js-rails"
