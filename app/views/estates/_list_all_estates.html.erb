@@ -29,15 +29,9 @@
         <td class="text-center"><%= estate.address %></td>
         <td class="text-center"><%= estate.city_name %></td>
         <td class="text-center">
-          <% if estate.status %>
-              <span class="badge badge-green float-center">
-                <%= "Publicado" %>
-              </span>
-          <% else %>
-              <span class="badge badge-warning float-center">
-                <%= "No publicado" %>
-              </span>
-          <% end %>
+          <span class="badge badge-<%= published_status_color(estate.status) %> float-center">
+            <%= estate.status ? "Publicado" : "No Publicado" %>
+          </span>
         </td>
         </tr>
   <% end %>

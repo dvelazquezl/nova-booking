@@ -7,7 +7,7 @@ class OwnersController < ApplicationController
   require 'base64'
 
   def index
-    @owners = Owner.all
+    @owners = Owner.all.includes(:estates).paginate(page: params[:page], per_page: 4)
   end
 
   def show
