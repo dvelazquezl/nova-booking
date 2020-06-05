@@ -6,7 +6,7 @@
       <th class="text-center">Direccion</th>
       <th class="text-center">Ciudad</th>
       <th class="text-center">Estado</th>
-      <th class="text-center">Valoracion</th>
+      <th class="text-center">Reservas</th>
       <th class="text-center"></th>
     </tr>
     </thead>
@@ -27,23 +27,13 @@
             </span>
           <% end %>
         </td>
-        <td class="text-center"><%= estate.score %></td>
+        <td class="text-center"><%= estate.bookings.count %></td>
         <td class="text-center">
         </td>
       </tr>
     <% end %>
     </tbody>
   </table>
-
-  <div class="row">
-    <div class="col-auto">
-      <%= link_to reports_most_valuated_estates_url(@estates, :format => :pdf) do %>
-        <button class="btn btn-info">
-          <i class="fas fa-print text-white fa-1x"></i>&nbsp;Imprimir PDF
-        </button>
-      <%end %>
-    </div>
-  </div>
 
   <div class="bg-footer"></div>
   <div class="card card-columns-2 card-body bg-gray-light fixed-bottom">

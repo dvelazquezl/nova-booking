@@ -1,14 +1,5 @@
-<p></p>
-<div class="content-heading">
-  <div class="col-8">Alojamientos mas valorados</div>
-  <div class="ml-auto">
-    <%= link_to reports_most_valuated_estates_url(@estates, :format => :pdf) do%>
-      <button class="btn btn-secondary">
-        <i class="fas fa-print text-primary fa-1x"></i> Imprimir PDF
-      </button>
-    <%end %>
-  </div>
-</div>
+<%= render 'tabs', id: 'most_valuated' %>
+
 <h4>Alojamientos por valoracion</h4>
 <p>valoracion:alojamiento(s)</p>
 <%= pie_chart Estate.group(:score).count %>

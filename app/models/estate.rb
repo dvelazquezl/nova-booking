@@ -18,7 +18,7 @@ class Estate < ApplicationRecord
   self.per_page = 4
 
   validates_presence_of :name, :address, :city_id, :owner_id, :latitude, :longitude, :description
-  validates :score, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :score, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 10}
 
   scope :estates_by_owner, -> (current_owner_id) { where(owner_id: current_owner_id) }
   scope :best_estates, -> () {
@@ -59,6 +59,13 @@ class Estate < ApplicationRecord
     end
   }
 
+  scope :with_facilities, -> (facilities) {
+    return nil if facilities == ['']
+    where('estates.id IN
+          (SELECT fe.estate_id FROM public.facilities_estates AS fe
+           WHERE fe.estate_id = estates.id AND fe.facility_id IN (?))', facilities  )
+  }
+
   filterrific :default_filter_params => {:sorted_by => 'name_asc'},
               :available_filters => %w[
                 sorted_by
@@ -67,10 +74,13 @@ class Estate < ApplicationRecord
                 with_date_gte
                 price_min
                 price_max
+                min_capacity
+                max_capacity
                 score_min
                 score_max
                 with_estate_type
                 search_booking_cancelable
+                with_facilities
                 search_all_estates
               ]
 
@@ -148,6 +158,13 @@ class Estate < ApplicationRecord
   scope :with_date_lte, ->(ref_date) {
     Estate.only_published.where("((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0)))", ref_date, ref_date).order(score: :desc)
   }
+  # filters on 'capacity' attribute
+  scope :min_capacity, ->(min_capacity) {
+    where("estates.id in (select distinct estate_id from rooms r where ? <= cast(r.capacity as integer))", min_capacity)
+  }
+  scope :max_capacity, ->(max_capacity) {
+    where("estates.id in (select distinct estate_id from rooms r where ? >= cast(r.capacity as integer))", max_capacity)
+  }
 
   # filters on 'price' attribute
   scope :price_min, ->(price_min) {
@@ -216,6 +233,10 @@ class Estate < ApplicationRecord
     self.comments_quant += 1
   end
 
+  def inc_bookings
+    self.bookings_quant += 1
+  end
+
   # solo da la primera reserva disponible en fecha
   def available_offer_for(date_start, date_end)
     offers = []
@@ -257,8 +278,20 @@ class Estate < ApplicationRecord
     Booking.where(['booking_state = ? and date_start > ? and estate_id = ?', true,  Date.today, self.id])
   end
 
+  TYPES = { estate_type.values.first => "Departamento",
+                 estate_type.values.second => "Casa",
+                 estate_type.values.third => "Hotel"}
+
+  def type
+    TYPES[self.estate_type]
+  end
+
   resourcify
   scope :most_commented, -> () {
     order("estates.comments_quant desc")
+  }
+
+  scope :most_booked, -> () {
+    order("estates.bookings_quant desc")
   }
 end

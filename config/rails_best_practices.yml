@@ -36,7 +36,8 @@ RemoveUnusedMethodsInControllersCheck: { except_methods:
      CancellationMotivesController#current_ability,
      ReportsController#current_ability,
      ReportsController#most_commented_estates,
-     ReportsController#most_valuated_estates
+     ReportsController#most_valuated_estates,
+     ReportsController#most_booked_estates
     ] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [

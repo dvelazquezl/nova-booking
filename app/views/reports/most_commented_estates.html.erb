@@ -1,14 +1,5 @@
-<p></p>
-<div class="content-heading">
-  <div class="col-8">Alojamientos mas comentados</div>
-  <div class="ml-auto">
-    <%= link_to reports_most_commented_estates_url(@estates, :format => :pdf) do%>
-      <button class="btn btn-secondary">
-        <i class="fas fa-print text-primary fa-1x"></i> Imprimir PDF
-      </button>
-    <%end %>
-  </div>
-</div>
+<%= render 'tabs', id: 'most_commented' %>
+
 <h4>Alojamientos por cantidad de comentarios</h4>
 <p>comentarios:alojamiento(s)</p>
 <%= pie_chart Estate.group(:comments_quant).count %>

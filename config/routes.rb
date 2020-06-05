@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     member do
       get :contact
     end
+    collection do
+      get :index
+    end
   end
 
   resources :offers
@@ -68,6 +71,8 @@ Rails.application.routes.draw do
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'
 
+  get '/dashboard', to: 'reports#index', as: 'dashboard'
   get '/reports/most_valuated_estates'
   get '/reports/most_commented_estates'
+  get '/reports/most_booked_estates'
 end
