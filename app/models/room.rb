@@ -16,8 +16,7 @@ class Room < ApplicationRecord
   enumerize :status, in: [:published, :not_published]
 
   scope :rooms_published_by_estate, -> (estate_id) { where("status = 'published' and estate_id = ?",estate_id)}
-
-  scope :available, ->(estate_id, from, to, price_max, price_min) {
+  scope :available, ->(estate_id, from, to, price_max, price_min, max_capacity, min_capacity) {
     where(
         "rooms.id in (select distinct ro.id
           from public.rooms as ro
@@ -25,6 +24,8 @@ class Room < ApplicationRecord
           and ro.status = 'published'
           and ? <= ro.price
           and ? >= ro.price
+          and ? <= cast(ro.capacity as integer)
+          and ? >= cast(ro.capacity as integer)
           and ro.id not in
             (select distinct r.id
               from public.rooms as r
@@ -39,7 +40,7 @@ class Room < ApplicationRecord
                   where b1.booking_state != false
                     and r1.id = r.id
                     and ((b1.date_start >= ?) or (b1.date_end >= ?))
-                    and ((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0))", estate_id, price_min, price_max,from, from, to, to
+                    and ((b1.date_end <= ?) or (b1.date_start <= ?)))) <= 0))", estate_id, price_min, price_max,min_capacity,max_capacity,from, from, to, to
     )
   }
 
