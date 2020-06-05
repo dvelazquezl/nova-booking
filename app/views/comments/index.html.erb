@@ -25,7 +25,7 @@
             </div>
             <div class=" col-2">
               <p>
-                <%= comment.created_at.strftime("%d-%m-%Y") %>
+                <%= l(comment.created_at.to_date, format: :long) %>
               </p>
             </div>
           </div>

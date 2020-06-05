@@ -70,6 +70,7 @@
       </div>
       <!--FIN-->
       <hr>
+
       <!--FILTRO POR CAPACIDAD-->
       <h5>Capacidad de Habitación</h5>
       <div class="form-row">
@@ -78,6 +79,19 @@
         </div>
         <div class="col-6">
           <%= f.number_field :max_capacity, id: "max_capacity", class: "filterrific-periodically-observed form-control price", type: "text", placeholder: "100" %>
+        </div>
+      </div>
+      <!--FIN-->
+      <hr>
+      
+      <!--FILTRO POR COMODIDADES-->
+      <h5>Comodidades<br><small>(Ctrl + Click para seleccionar varias)</small></h5>
+      <div class="form-group col-12">
+        <div class="row has-search d-flex results-block">
+          <%= f.select :with_facilities, filterrific.select_options[:with_facilities],
+                       {:include_hidden => false, :include_blank =>'- Todos -'},
+                       {:multiple => true, :class => 'filterrific-periodically-observed form-control'} %>
+
         </div>
       </div>
       <!--FIN-->

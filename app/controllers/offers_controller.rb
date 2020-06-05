@@ -38,6 +38,11 @@ class OffersController < ApplicationController
     owner = helpers.current_owner
     estates = Estate.only_published.estates_by_owner(owner.id)
     offer_details = @offer.offer_details.build
+    if params[:date_start].present? && params[:date_end].present?then
+      @offer.date_start = params[:date_start];
+      @offer.date_end = params[:date_end];
+      @offer.description= params[:description];
+    end
     if params[:tag_estate_id].present? then
       @offer.estate_id = params[:tag_estate_id]
     end
@@ -65,8 +70,8 @@ class OffersController < ApplicationController
       else
         owner = helpers.current_owner
         estates = Estate.only_published.estates_by_owner(owner.id)
-        flash[:alert] = "No se pudo crear la oferta. Seleccione una propiedad."
-        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false} }
+        flash[:alert] = "No se pudo crear la oferta"
+        format.html { render :new, locals: {offer_details: nil, estates: estates, estate_name: nil, from_estates: false}}
       end
     end
   end

@@ -41,13 +41,17 @@ class EstatesController < ApplicationController
   end
 
   def all_estates
-    estates = Estate.all.order("owner_id asc, score asc, status desc").page(params[:page]).per_page(8)
+    (filterrific = initialize_filterrific(
+        Estate,
+        params[:filterrific],
+        )) || return
+    estates = filterrific.find.order("owner_id asc, score asc, status desc").page(params[:page]).per_page(8)
 
     respond_to do |format|
       format.html
       format.js
     end
-    render :all_estates, locals: {estates: estates}
+    render :all_estates, locals: {estates: estates, filterrific: filterrific}
   end
 
   # GET /estates/1
